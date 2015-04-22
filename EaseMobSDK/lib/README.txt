@@ -1,0 +1,2 @@
+由于github有文件大小限制，单个文件上传不得超过100MB，所以将超过限制的文件从git上删除，由开发人员自行配置。
+此路径下存放 libEaseMobClientSDK.a， libEaseMobClientSDKLite.a 两个文件，开发人员只需将这两个文件拷贝到跟当前跟此 README 的同级目录就行。
