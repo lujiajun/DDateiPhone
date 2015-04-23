@@ -1,6 +1,10 @@
-ChatDemo-UI2.0/ChatDemo-UI2.0.xcodeproj/xcuserdata
-ChatDemo-UI2.0/ChatDemo-UI2.0.xcodeproj/project.xcworkspace/xcuserdata
-ChatDemo-UI2.0/ChatDemo-UI2.0.xcworkspace/xcuserdata
+ChatDemo-UI2.0.xcodeproj/xcuserdata
+ChatDemo-UI2.0.xcodeproj/project.xcworkspace/xcuserdata
+ChatDemo-UI2.0.xcworkspace/xcuserdata
 
 *.DS_Store
 build
+
+# 由于文件超过github大小限制所以不上传
+EaseMobSDK/lib/libEaseMobClientSDK.a
+EaseMobSDK/lib/libEaseMobClientSDKLite.a
