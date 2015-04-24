@@ -29,7 +29,7 @@
 
 - (void) updateTable:(DDUser *)tableRow;
 
--(void) addNewUser:(NSString *) name;
+-(DDUser *) addNewUser:(NSString *) name;
 
 @end
 

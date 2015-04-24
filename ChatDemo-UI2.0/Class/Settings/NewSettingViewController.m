@@ -158,11 +158,11 @@
             
             //            NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://beijingdoubled.oss-cn-beijing.aliyuncs.com/9FA2EF31-A30B-4DA0-B3E0-33DF28DC4E96"]];
             //            UIImage *result = [UIImage imageWithData:data];
-            UIImage *img=[UIImage imageNamed:@"80.png"];
+            UIImage *img=[UIImage imageNamed:@"Logo_new.png"];
             //            UIImageView *imgHead=[[UIImageView alloc] initWithImage:result];
             UIImageView *imgHead=[[UIImageView alloc] initWithImage:img];
             
-            imgHead.frame=CGRectMake(50, 10, 200, 150);
+            imgHead.frame=CGRectMake(50, 10, self.tableView.frame.size.width-100, 150);
             [imgHead setContentMode:UIViewContentModeScaleToFill];
             
             
@@ -237,9 +237,15 @@
         else if (indexPath.row == 3)
             
         {
-            UIImage *image = [UIImage imageNamed:@"80.png"];
-            cell.imageView.image=image;
-            cell.textLabel.text = NSLocalizedString(@"title.setting", @"Setting");
+            UIImage *img=[UIImage imageNamed:@"mail"];
+            UIImageView *imgHead=[[UIImageView alloc] initWithImage:img];
+            imgHead.frame=CGRectMake(20, 15, 30, 30);
+            [cell.contentView addSubview:imgHead];
+            UILabel *sets=[[UILabel alloc] initWithFrame:CGRectMake(60, 5, 100, 50)];
+            sets.text= NSLocalizedString(@"title.setting", @"Setting");
+            [cell.contentView addSubview:sets];
+            
+//            cell.textLabel.text = NSLocalizedString(@"title.setting", @"Setting");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         

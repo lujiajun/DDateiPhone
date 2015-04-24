@@ -20,8 +20,6 @@
 #import "AWSCore/AWSCore.h"
 #import "AliCloudController.h"
 
-
-
 @interface AppDelegate ()
 
 @end

@@ -13,6 +13,7 @@
 #import "DDBDynamoDB.h"
 #import "Constants.h"
 #import "NickNameController.h"
+#import "PersonalSignController.h"
 
 
 
@@ -26,16 +27,19 @@
 }
 
 @property (strong, nonatomic) UISwitch *pushDisplaySwitch;
+
 @property (strong,nonatomic)  NSString *username;
 
 
 @end
+static DDUser   *dduser;
 
 @implementation PersonalController
 
 - (id)initWithStyle:(UITableViewStyle)style
+
 {
-    self = [super initWithStyle:style];
+        self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
         _noDisturbingStart = -1;
@@ -44,11 +48,14 @@
     }
     return self;
 }
++(DDUser *) instanceDDuser{
+    return dduser;
+}
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
     
+    [super viewDidLoad];
     self.title = NSLocalizedString(@"title.personal", @"Personal Info");
     
     UIButton *saveButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
@@ -57,15 +64,55 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:saveButton];
     
     self.tableView.tableFooterView = [[UIView alloc] init];
-    NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
-     _username = [loginInfo objectForKey:kSDKUsername];
-    //查询
-    DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
-    [ddbDynamoDB addNewUser:_username];
-    
-    [self refreshPushOptions];
+  
+//    [self refreshPushOptions];
     [self.tableView reloadData];
-}
+    
+        //chaxun
+        NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
+        NSString *username = [loginInfo objectForKey:kSDKUsername];
+        //查询
+        DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
+    //同步方法
+        AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+        BFTask *bftask= [dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil];
+        bftask.waitUntilFinished;
+        dduser= bftask.result;
+        if (bftask.result) {
+            DDUser *user = bftask.result;
+            if(user.UID==nil){
+                dduser=[ddbDynamoDB addNewUser:_username];
+
+            }
+        }
+        }
+        //异步方法
+//       [[dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil]
+//         continueWithBlock:^id(BFTask *task) {
+//             if (task.error) {
+//                 NSLog(@"The request failed. Error: [%@]", task.error);
+//             }
+//             if (task.exception) {
+//                 NSLog(@"The request failed. Exception: [%@]", task.exception);
+//             }
+//             if (task.result) {
+//                 DDUser *dduser = task.result;
+//                 if(dduser.UID==nil){
+//                     dduser=[DDUser new];
+//                     dduser.UID=username;
+//                     dduser.nickName=@"test";
+//                     [ddbDynamoDB insertTableRow:dduser];
+//    
+//                 }
+//    
+//                 //Do something with the result.
+//             }
+//             return nil;
+//         }];
+//    
+//
+    
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -91,21 +138,17 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return 1;
 }
-
+//
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    if (section == 0) {
-        return 5;
-    }
-    else if (section == 1)
-    {
-        return 3;
-    }
+//    if (section == 0) {
+//        return 5;
+//    }
     
-    return 0;
+    return 5;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -117,13 +160,7 @@
     return NO;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if (section == 1) {
-        return NSLocalizedString(@"setting.notDisturb", @"No disturbing");
-    }
-    return nil;
-}
+
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -140,44 +177,41 @@
             
             UIImageView *imageView = [[UIImageView alloc] init];
             imageView.image = [UIImage imageNamed:@"80.png"];
-            imageView.frame = CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 10, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, self.pushDisplaySwitch.frame.size.width, self.pushDisplaySwitch.frame.size.height);
+            imageView.frame = CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 10, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, self.pushDisplaySwitch.frame.size.width, self.pushDisplaySwitch.frame.size.width);
             [cell.contentView addSubview:imageView];
             
            
         }else if(indexPath.row==1){
         
             cell.textLabel.text = @"姓名";
+            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 80, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, 100, self.pushDisplaySwitch.frame.size.height)];
+            mylable.text=dduser.nickName;
+            mylable.textAlignment=NSTextAlignmentRight;
+            [cell.contentView addSubview:mylable];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }else if(indexPath.row==2){
-            cell.textLabel.text = @"签名";
+            cell.textLabel.text = @"学校";
+            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 80, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, 100, self.pushDisplaySwitch.frame.size.height)];
+            mylable.text=dduser.university;
+            mylable.textAlignment=NSTextAlignmentRight;
+            [cell.contentView addSubview:mylable];
+
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }else if(indexPath.row==3){
-            cell.textLabel.text = @"学校";
+            cell.textLabel.text = @"性别";
+            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 80, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2,100, self.pushDisplaySwitch.frame.size.height)];
+            mylable.text=dduser.gender;
+            mylable.textAlignment=NSTextAlignmentRight;
+            [cell.contentView addSubview:mylable];
+
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }else if(indexPath.row==4){
-            cell.textLabel.text = @"爱好";
+            cell.textLabel.text = @"年级";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
     }
-    else if (indexPath.section == 1)
-    {
-        if (indexPath.row == 0) {
-            cell.textLabel.text = NSLocalizedString(@"setting.open", @"Open");
-            cell.accessoryType = _noDisturbingStatus == ePushNotificationNoDisturbStatusDay ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-        }
-        else if (indexPath.row == 1)
-        {
-            cell.textLabel.text = NSLocalizedString(@"setting.nightOpen", @"only open at night (22:00 - 7:00)");
-            cell.accessoryType = _noDisturbingStatus == ePushNotificationNoDisturbStatusCustom ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-        }
-        else if (indexPath.row == 2)
-        {
-            cell.textLabel.text = NSLocalizedString(@"setting.close", @"Close");
-            cell.accessoryType = _noDisturbingStatus == ePushNotificationNoDisturbStatusClose ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-        }
-    }
-    
+       
     return cell;
 }
 
@@ -217,8 +251,11 @@
                 [self.navigationController pushViewController:pushController animated:YES];
 
             }
-                break;
-                
+            break;
+            case 2:{
+                PersonalSignController *personsign=[PersonalSignController alloc];
+                 [self.navigationController pushViewController:personsign animated:YES];
+            }
             default:
                 break;
         }
@@ -289,7 +326,8 @@
     NSLog(@"buttonIndex = [%d]",buttonIndex);
     switch (buttonIndex) {
         case 0://照相机
-        {                 UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        {
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
             imagePicker.delegate = self;
             imagePicker.allowsEditing = YES;
             imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -343,17 +381,20 @@
        
         NSString *name= [aliCloud uploadPic:data];
         //xiugai头像
-        DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
-        DDUser *dduser=  [ddbDynamoDB getTableUser:_username];
-        if(dduser==nil){
-            dduser=[DDUser new];
-            dduser.UID=_username;
-            dduser.picPath=[DDPicPath stringByAppendingString:name];
-            [ddbDynamoDB insertTableRow:dduser];
-        }else{
-            dduser.picPath=[DDPicPath stringByAppendingString:name];
-            [ddbDynamoDB updateTable:dduser];
-        }
+//        DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
+//        dduser.picPath=[DDPicPath stringByAppendingString:name];
+//        [ddbDynamoDB updateTable:dduser];
+
+//        DDUser *dduser=  [ddbDynamoDB getTableUser:_username];
+//        if(dduser==nil){
+//            dduser=[DDUser new];
+//            dduser.UID=_username;
+//            dduser.picPath=[DDPicPath stringByAppendingString:name];
+//            [ddbDynamoDB insertTableRow:dduser];
+//        }else{
+//            dduser.picPath=[DDPicPath stringByAppendingString:name];
+//            [ddbDynamoDB updateTable:dduser];
+//        }
 
     
     }

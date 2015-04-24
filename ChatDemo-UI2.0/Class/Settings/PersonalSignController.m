@@ -12,11 +12,11 @@
 #import "AliCloudController.h"
 #import "DDBDynamoDB.h"
 #import "Constants.h"
-#import "NickNameController.h"
+#import "PersonalSignController.h"
 
 
 
-@interface NickNameController ()
+@interface PersonalSignController ()
 {
     EMPushNotificationDisplayStyle _pushDisplayStyle;
     EMPushNotificationNoDisturbStatus _noDisturbingStatus;
@@ -32,7 +32,7 @@
 
 @end
 
-@implementation NickNameController
+@implementation PersonalSignController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -50,7 +50,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"姓名";
+    self.title = @"个性签名";
     
     UIButton *saveButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
     [saveButton setTitle:NSLocalizedString(@"save", @"Save") forState:UIControlStateNormal];
@@ -133,10 +133,10 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             
-             _nicktext = [[UITextField alloc] initWithFrame:CGRectMake(0, 10, cell.frame.size.width, 30)];
+            _nicktext = [[UITextField alloc] initWithFrame:CGRectMake(0, 10, cell.frame.size.width, 30)];
             [_nicktext setBorderStyle:UITextBorderStyleBezel]; //外框类型
             
-            _nicktext.placeholder = [PersonalController instanceDDuser].nickName; //默认显示的字
+            _nicktext.placeholder = _username; //默认显示的字
             [cell.contentView addSubview:_nicktext];
             
             
@@ -183,7 +183,7 @@
         if (task.result) {
             DDUser *dduser = task.result;
             if(dduser.UID!=nil){
-                dduser.nickName=_nicktext.text;
+                dduser.university=_nicktext.text;
                 [ddbDynamoDB updateTable:dduser];
                 
                 
@@ -191,16 +191,16 @@
             
             //Do something with the result.
         }
-//        PersonalController *pushController = [[PersonalController alloc] initWithStyle:UITableViewStylePlain];
-//
-//        [self.navigationController pushViewController:pushController animated:YES];
-       
-
+        //        PersonalController *pushController = [[PersonalController alloc] initWithStyle:UITableViewStylePlain];
+        //
+        //        [self.navigationController pushViewController:pushController animated:YES];
+        
+        
         return nil;
     }];
-
+    
     [self.navigationController popViewControllerAnimated:YES];
-  
+    
 }
 
 

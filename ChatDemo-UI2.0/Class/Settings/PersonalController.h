@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DDBDynamoDB.h"
 
 @interface PersonalController : UITableViewController
 
++(DDUser *) instanceDDuser;
 @end

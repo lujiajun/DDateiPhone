@@ -12,7 +12,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NickNameController : UITableViewController
+@interface PersonalSignController : UITableViewController
 
 
 @end

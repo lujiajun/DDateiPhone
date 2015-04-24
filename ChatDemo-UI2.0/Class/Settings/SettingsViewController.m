@@ -18,6 +18,8 @@
 #import "DebugViewController.h"
 #import "WCAlertView.h"
 #import "PersonalController.h"
+#import "DDBDynamoDB.h"
+
 
 
 @interface SettingsViewController ()
@@ -29,6 +31,8 @@
 
 @property (strong, nonatomic) UISwitch *beInvitedSwitch;
 @property (strong, nonatomic) UILabel *beInvitedLabel;
+
+@property (strong,nonatomic)  NSString *username;
 
 @end
 
@@ -193,6 +197,7 @@
     if (indexPath.row == 0) {
         PersonalController *pushController = [[PersonalController alloc] initWithStyle:UITableViewStylePlain];
         [self.navigationController pushViewController:pushController animated:YES];
+        
     }
     else if (indexPath.row == 2) {
         PushNotificationViewController *pushController = [[PushNotificationViewController alloc] initWithStyle:UITableViewStylePlain];

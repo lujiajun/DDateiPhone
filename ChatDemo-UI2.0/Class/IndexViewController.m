@@ -1,3 +1,4 @@
+
 /************************************************************
  *  * EaseMob CONFIDENTIAL
  * __________________
@@ -152,13 +153,11 @@
     [self.view addSubview:_inviteButton];
     
     //添加图片
-    CGRect logoRect=CGRectMake(10,10,320, 450);
-    _logo=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"indexbox.png"]];//设置图片
-    _logo.contentMode=UIViewContentModeScaleToFill;//设置内容填充模式
-    
-    _logo.frame=logoRect;//设置控件大小和位置（相对于父控件的位置）
-    [self.view addSubview:_logo];
-    
+//    UIImageView *imageView = [[UIImageView alloc] init];
+//    imageView.image = [UIImage imageNamed:@"80.png"];
+//    imageView.frame = CGRectMake(0,0,0,self.tableView.frame.size.width);
+//    [self.view addSubview:imageView];
+//    
     return _inviteInfo;
     //    if (!_inviteBar) {
     //        _inviteBar = [[UITextField alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 44)];
