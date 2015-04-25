@@ -48,6 +48,7 @@
     _usernameTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 10, 300, 30)];
     [_usernameTextField setBorderStyle:UITextBorderStyleBezel]; //外框类型
     _usernameTextField.placeholder = @"请输入用户名"; //默认显示的字
+    
     [self.view addSubview:_usernameTextField];
     
     _passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 45, 300, 30)];

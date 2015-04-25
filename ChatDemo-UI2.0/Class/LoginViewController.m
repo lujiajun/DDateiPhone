@@ -15,6 +15,7 @@
 #import "OSSArgs.h"
 #import "DDRegisterController.h"
 #import "DDLoginController.h"
+#import "DDRegisterFinishController.h"
 
 @interface LoginViewController ()<IChatManagerDelegate,UITextFieldDelegate>
 
@@ -73,6 +74,7 @@
 
 //注册账号
 - (IBAction)doRegister:(id)sender {
+//     DDRegisterFinishController *personsign=[DDRegisterFinishController alloc];
     DDRegisterController *personsign=[DDRegisterController alloc];
     [self.navigationController pushViewController:personsign animated:YES];
 

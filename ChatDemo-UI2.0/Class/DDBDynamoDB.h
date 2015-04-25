@@ -33,12 +33,12 @@
 
 @end
 
-@interface DDUser : AWSDynamoDBModel <AWSDynamoDBModeling>
+@interface DDUser : AWSDynamoDBObjectModel <AWSDynamoDBModeling>
 
 @property (nonatomic, strong) NSString *UID;
 @property (nonatomic, strong) NSString *nickName;
 @property (nonatomic, strong) NSString *password;
-//@property (nonatomic, strong) NSInteger  *isPic;
+@property (nonatomic, strong) NSNumber  *isPic;
 @property (nonatomic, strong) NSString *picPath;
 //@property(nonatomic,strong)   NSString *firstName;
 //@property(nonatomic,strong)   NSString *lastName;
@@ -48,8 +48,8 @@
 @property(nonatomic,strong)   NSString *grade;
 //@property(nonatomic,strong)   NSString *phoneNumber;
 //@property(nonatomic,assign)   BOOL     *isDoublerID;
-//@property(nonatomic,strong)   NSInteger *isDoublerID;
-@property(nonatomic,strong)   NSString *waitingID;
+@property(nonatomic,strong)   NSNumber *isDoublerID;
+//@property(nonatomic,strong)   NSString *waitingID;
 //@property(nonatomic,assign)   BOOL *autoLogin;
 //@property(nonatomic,assign)   BOOL *vibrate;
 //@property(nonatomic,assign)   BOOL *silent;
@@ -57,7 +57,7 @@
 
 @end
 
-@interface DDBTableRowTopScore : AWSDynamoDBModel <AWSDynamoDBModeling>
+@interface DDBTableRowTopScore : AWSDynamoDBObjectModel <AWSDynamoDBModeling>
 
 @property (nonatomic, strong) NSString *UserId;
 @property (nonatomic, strong) NSString *GameTitle;
@@ -67,7 +67,7 @@
 
 @end
 
-@interface DDBTableRowWins : AWSDynamoDBModel <AWSDynamoDBModeling>
+@interface DDBTableRowWins : AWSDynamoDBObjectModel <AWSDynamoDBModeling>
 
 @property (nonatomic, strong) NSString *UserId;
 @property (nonatomic, strong) NSString *GameTitle;
@@ -77,7 +77,7 @@
 
 @end
 
-@interface DDBTableRowLosses : AWSDynamoDBModel <AWSDynamoDBModeling>
+@interface DDBTableRowLosses : AWSDynamoDBObjectModel <AWSDynamoDBModeling>
 
 @property (nonatomic, strong) NSString *UserId;
 @property (nonatomic, strong) NSString *GameTitle;

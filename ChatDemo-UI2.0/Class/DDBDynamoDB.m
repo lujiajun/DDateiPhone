@@ -31,7 +31,7 @@
     user.password=@"ere";
     user.university=@"北京大学";
     user.picPath=@"xxx";
-    user.waitingID=@"uu";
+//    user.waitingID=@"uu";
     [self insertTableRow:user];
 }
 
@@ -66,6 +66,7 @@
 -(void) updateTable:(DDUser *)tableRow{
     AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
     [dynamoDBObjectMapper save: tableRow];
+    
 
 }
 

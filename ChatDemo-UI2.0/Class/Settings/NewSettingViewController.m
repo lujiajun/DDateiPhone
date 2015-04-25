@@ -20,6 +20,7 @@
 #import "WCAlertView.h"
 #import "AliCloudController.h"
 #import "DDBDynamoDB.h"
+#import "Constants.h"
 
 @interface NewSettingViewController ()
 
@@ -34,7 +35,7 @@
 @property(strong,nonatomic) UIImagePickerController  *imagePicker;
 
 @end
-
+static DDUser   *uuser;
 @implementation NewSettingViewController
 
 @synthesize autoLoginSwitch = _autoLoginSwitch;
@@ -42,6 +43,9 @@
 
 #define kIMGCOUNT 5
 
++(DDUser *) instanceDDuser{
+    return uuser;
+}
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -59,7 +63,26 @@
     
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableFooterView = self.footerView;
+    //chaxun
+    [self initdduser];
     
+
+
+}
+
+-(void)initdduser{
+    if(uuser==nil){
+        NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
+        NSString *username = [loginInfo objectForKey:kSDKUsername];
+        //查询
+        DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
+        //同步方法
+        AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+        BFTask *bftask= [dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil];
+        bftask.waitUntilFinished;
+        uuser= bftask.result;
+        
+    } 
 }
 
 - (void)didReceiveMemoryWarning
@@ -143,26 +166,25 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
+    [self initdduser];
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            //            DDBDynamoDBManager *dynamoManager=[DDBDynamoDBManager alloc];
-            
-//            [self addUser];
-            
-            //            cell.textLabel.text = NSLocalizedString(@"setting.autoLogin", @"automatic login");
             cell.accessoryType = UITableViewCellAccessoryNone;
-            //            self.autoLoginSwitch.frame = CGRectMake(self.tableView.frame.size.width - (self.autoLoginSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - self.autoLoginSwitch.frame.size.height) / 2, self.autoLoginSwitch.frame.size.width, self.autoLoginSwitch.frame.size.height);
-            //            [cell.contentView addSubview:self.autoLoginSwitch];
+            UIImage *img=[UIImage alloc];
             
+            if(uuser && uuser.picPath){
+                NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:uuser.picPath]]];
+                img = [UIImage imageWithData:data];
+            }else {
+                img=[UIImage imageNamed:@"Logo_new.png"];
+            }
             
-            //            NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://beijingdoubled.oss-cn-beijing.aliyuncs.com/9FA2EF31-A30B-4DA0-B3E0-33DF28DC4E96"]];
-            //            UIImage *result = [UIImage imageWithData:data];
-            UIImage *img=[UIImage imageNamed:@"Logo_new.png"];
-            //            UIImageView *imgHead=[[UIImageView alloc] initWithImage:result];
             UIImageView *imgHead=[[UIImageView alloc] initWithImage:img];
+            imgHead.layer.masksToBounds =YES;
             
-            imgHead.frame=CGRectMake(50, 10, self.tableView.frame.size.width-100, 150);
+            imgHead.layer.cornerRadius =50;
+            imgHead.frame=CGRectMake(self.tableView.frame.size.width/2, 10, 100, 100);
             [imgHead setContentMode:UIViewContentModeScaleToFill];
             
             
@@ -220,14 +242,14 @@
         else if (indexPath.row == 2)
         {
             UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(60, 0, 200, 20)];
-            mylable.text=@"个性签名：请不要爱上我";
+            mylable.text=[@"学校：" stringByAppendingString:uuser.university];
             mylable.textAlignment=NSTextAlignmentLeft;
             [cell.contentView addSubview:mylable];
             UILabel *school=[[UILabel alloc]initWithFrame:CGRectMake(60, 20, 200, 20)];
-            school.text=@"学校：浙江大学";
+            school.text=[@"年级：" stringByAppendingString:uuser.grade];
             [cell.contentView addSubview:school];
             UILabel *intr=[[UILabel alloc]initWithFrame:CGRectMake(60, 40, 200, 20)];
-            intr.text=@"游泳，跑步";
+            intr.text=[@"性别：" stringByAppendingString:uuser.gender];
             [cell.contentView addSubview:intr];
             //            cell.textLabel.text = NSLocalizedString(@"title.buddyBlock", @"Black List");
             //            cell.textLabel.text=@"CESHI";
@@ -267,7 +289,7 @@
     user.password=@"ere";
     user.university=@"北京大学";
     user.picPath=@"xxx";
-    user.waitingID=@"uu";
+//    user.waitingID=@"uu";
     [self insertTableRow:user];
 }
 
