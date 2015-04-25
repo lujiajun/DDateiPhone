@@ -1,6 +1,7 @@
 ChatDemo-UI2.0.xcodeproj/xcuserdata
 ChatDemo-UI2.0.xcodeproj/project.xcworkspace/xcuserdata
 ChatDemo-UI2.0.xcworkspace/xcuserdata
+Pods/Pods.xcodeproj/xcuserdata
 
 *.DS_Store
 build
