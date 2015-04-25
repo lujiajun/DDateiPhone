@@ -44,7 +44,7 @@ static DDUser   *dduser;
     [super viewDidLoad];
     self.title = @"注册";
     _usernameTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 10, 250, 30)];
-    [_usernameTextField setBorderStyle:UITextBorderStyleBezel]; //外框类型
+    [_usernameTextField setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
     _usernameTextField.placeholder = @"请输入11位手机号"; //默认显示的字
     [self.view addSubview:_usernameTextField];
     
@@ -54,12 +54,12 @@ static DDUser   *dduser;
 //    [button addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
 
     UITextField  *code = [[UITextField alloc] initWithFrame:CGRectMake(0, 45, 250, 30)];
-    [code setBorderStyle:UITextBorderStyleBezel]; //外框类型
+    [code setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
     code.placeholder = @"请输入验证码"; //默认显示的字
     [self.view addSubview:code];
     
     _passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 80, 250, 30)];
-    [_passwordTextField setBorderStyle:UITextBorderStyleBezel]; //外框类型
+    [_passwordTextField setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
     _passwordTextField.placeholder = @"请输入不少于6位密码"; //默认显示的字
     
     [self.view addSubview:_passwordTextField];
@@ -131,8 +131,11 @@ static DDUser   *dduser;
 //                 }
 //             } onQueue:nil];
 //        }
-    DDSchoolRegisterController *personsign=[[DDSchoolRegisterController alloc] initWithNibName:_usernameTextField.text password:_passwordTextField.text];
-    [self.navigationController pushViewController:personsign animated:YES];
+    if(!self.isEmpty){
+        DDSchoolRegisterController *personsign=[[DDSchoolRegisterController alloc] initWithNibName:_usernameTextField.text password:_passwordTextField.text];
+        [self.navigationController pushViewController:personsign animated:YES];
+    }
+   
     
 }
 

@@ -52,19 +52,19 @@ static DDUser   *dduser;
     nickname.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:nickname];
     
-    UITextField *nicknamevalue=[[UITextField alloc]initWithFrame:CGRectMake(nickname.frame.size.width+4, 30, 120, 30)];
-    nicknamevalue.text=@"nicknamevalue";
+    UITextField *nicknamevalue=[[UITextField alloc]initWithFrame:CGRectMake(nickname.frame.size.width+4, 30, 180, 30)];
+    nicknamevalue.placeholder=@"nicknamevalue";
     nicknamevalue.textAlignment=NSTextAlignmentLeft;
-    [nicknamevalue setBorderStyle:UITextBorderStyleBezel];
+    [nicknamevalue setBorderStyle:UITextBorderStyleRoundedRect];
     [self.view addSubview:nicknamevalue];
     //性别
-    UITextField *gender=[[UITextField alloc]initWithFrame:CGRectMake(10, nickname.frame.size.height*2+10, 60, 30)];
+    UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(10, nickname.frame.size.height*2+10, 60, 30)];
     gender.text=@"性别:";
     gender.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:gender];
-    UILabel *gendervalue=[[UILabel alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, nickname.frame.size.height*2+10, 120, 30)];
+    UITextField *gendervalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, nickname.frame.size.height*2+10, 120, 30)];
     gendervalue.text=@"gendervalue";
-    
+    [gendervalue setBorderStyle:UITextBorderStyleRoundedRect];
     gendervalue.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:gendervalue];
 
@@ -73,7 +73,7 @@ static DDUser   *dduser;
     university.text=@"学校:";
     university.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:university];
-    UILabel *universityvalue=[[UILabel alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, nickname.frame.size.height*3+10, 120, 30)];
+    UILabel *universityvalue=[[UILabel alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, nickname.frame.size.height*3+10, 180, 30)];
     universityvalue.text=_university;
     universityvalue.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:universityvalue];
@@ -83,19 +83,19 @@ static DDUser   *dduser;
     city.text=@"城市:";
     city.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:city];
-    UILabel *cityvalue=[[UILabel alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, nickname.frame.size.height*4+10, 120, 30)];
+    UILabel *cityvalue=[[UILabel alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, nickname.frame.size.height*4+10, 180, 30)];
     cityvalue.text=_city;
     cityvalue.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:cityvalue];
 
     //年级
-    UITextField *grade=[[UITextField alloc]initWithFrame:CGRectMake(10, nickname.frame.size.height*5+10, 60, 30)];
+    UILabel *grade=[[UILabel alloc]initWithFrame:CGRectMake(10, nickname.frame.size.height*5+10, 60, 30)];
     grade.text=@"年级:";
     grade.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:grade];
-    UILabel *gradevalue=[[UILabel alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, nickname.frame.size.height*5+10, 120, 30)];
-    gradevalue.text=@"gradevalue";
-    
+    UITextField *gradevalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, nickname.frame.size.height*5+10, 180, 30)];
+    [gradevalue setBorderStyle:UITextBorderStyleRoundedRect];
+    gradevalue.placeholder=@"gradevalue";
     gradevalue.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:gradevalue];
     
@@ -104,9 +104,10 @@ static DDUser   *dduser;
     birdate.text=@"出生日期:";
     birdate.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:birdate];
-    UILabel *birdatevalue=[[UILabel alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, nickname.frame.size.height*6+10, 120, 30)];
-    birdatevalue.text=@"gradevalue";
+    UITextField *birdatevalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, nickname.frame.size.height*6+10, 180, 30)];
+    birdatevalue.placeholder=@"gradevalue";
     birdatevalue.textAlignment=NSTextAlignmentLeft;
+    [birdatevalue setBorderStyle:UITextBorderStyleRoundedRect];
     [self.view addSubview:birdatevalue];
     
     UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, nickname.frame.size.height*7+30, 300, 30)];

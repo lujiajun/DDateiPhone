@@ -122,6 +122,21 @@ static DDUser   *dduser;
     // Dispose of any resources that can be recreated.
 }
 
+//判断账号和密码是否为空
+- (BOOL)isEmpty{
+    BOOL ret = NO;
+    if (_commbox.textField.text.length == 0 || _passwordTextField.text.length == 0) {
+        ret = YES;
+        [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
+                                message:NSLocalizedString(@"login.inputNameAndPswd", @"Please enter username and password")
+                     customizationBlock:nil
+                        completionBlock:nil
+                      cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                      otherButtonTitles: nil];
+    }
+    
+    return ret;
+}
 
 
 
