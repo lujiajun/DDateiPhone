@@ -6,244 +6,242 @@
  Copyright (c) 2015年 dhcdht. All rights reserved.
  */
 //general
-"register" = "Register";
-"login" = "Login";
-"logout" = "Logout";
-"password" = "Password";
-"username" = "Username";
+"register" = "注册";
+"login" = "登录";
+"logout" = "登出";
+"password" = "密码";
+"username" = "个人账户";
 
-"sure" = "OK";
-"yes" = "YES";
-"cancel" = "Cancel";
-"no" = "NO";
+"ok" = "确定";
+"yes" = "是";
+"cancel" = "取消";
+"no" = "否";
 
-"search" = "Search";
-"error" = "Error";
-"delete" = "Delete";
-"copy" = "Copy";
-"save" = "Save";
-"prompt" = "Prompt";
-"add" = "Add";
-"send" = "Send";
-"open" = "Open";
-"down" = "Down";
-"choose" = "Choose";
-"accept" = "Accept";
-"reject" = "Reject";
+"search" = "搜索";
+"error" = "错误";
+"delete" = "删除";
+"copy" = "复制";
+"save" = "保存";
+"prompt" = "提示";
+"add" = "添加";
+"send" = "发送";
+"open" = "打开";
+"down" = "完成";
+"choose" = "选择";
+"accept" = "接受";
+"reject" = "拒绝";
 
-"sendingApply" = "sending apply...";
-"acceptFail" = "accept failure";
-"rejectFail" = "reject failure";
-"refreshData" = "Refresh data...";
-"loadData" = "Load data...";
-"saySomething" = "Say somthing";
-"searchResults" = "The search results";
-"doneWithCount" = "Done(%i)";
-"sureToDelete" = "please make sure to delete";
-"receiveCmd" = "receive cmd message";
-"receiveMessage" = "you have a new message";
-"loginAtOtherDevice" = "your login account has been in other places";
-"loginUserRemoveFromServer" = "your account has been removed from the server side";
+"sendingApply" = "正在发送申请...";
+"acceptFail" = "接受失败";
+"rejectFail" = "拒绝失败";
+"refreshData" = "刷新数据...";
+"loadData" = "加载数据...";
+"saySomething" = "说点啥子吧";
+"searchResults" = "搜索结果";
+"doneWithCount" = "确定(%i)";
+"sureToDelete" = "请确定删除";
+"receiveCmd" = "有透传消息";
+"receiveMessage" = "您有一条新消息";
+"loginAtOtherDevice" = "你的账号已在其他地方登录";
+"loginUserRemoveFromServer" = "你的账号已被从服务器端移除";
 
 //app
-"AppName" = "EaseMobDemo";
+"AppName" = "DoubleDate";
 
 //error des
-"error.connectServerFail" = "Connect to the server failed!";
-"error.connectServerTimeout" = "Connect to the server timed out!";
+"error.connectServerFail" = "连接服务器失败!";
+"error.connectServerTimeout" = "连接服务器超时!";
 
 //login
-"login.beginAutoLogin" = "Start automatic login...";
-"login.endAutoLogin" = "End automatic login...";
-"login.errorAutoLogin" = "Automatic logon failure.";
-"login.nameNotSupportZh" = "Name does not support Chinese";
-"login.ongoing" = "Is Login...";
-"login.fail" = "Logon failure";
-"login.inputNameAndPswd" = "Please enter username and password";
-"login.inputApnsNickname" = "Please enter nickname for apns";
+"login.beginAutoLogin" = "自动登录开始...";
+"login.endAutoLogin" = "自动登录结束...";
+"login.errorAutoLogin" = "自动登录失败.";
+"login.nameNotSupportZh" = "用户名不支持中文";
+"login.ongoing" = "正在登陆...";
+"login.fail" = "登录失败";
+"login.inputNameAndPswd" = "请输入账号和密码";
+"register.school" = "请选择地区和学校";
+"register.nicknameandgender"="请输入昵称和性别";
+"login.inputApnsNickname" = "填写推送消息时使用的昵称";
 
 //register
-"register.ongoing" = "Is to register...";
-"register.fail" = "Registration failed";
-"register.success" = "Registered successfully, please log in";
-"register.repeat" = "You registered user already exists!";
+"register.ongoing" = "正在注册...";
+"register.fail" = "注册失败";
+"register.success" = "注册成功，请登陆";
+"register.repeat" = "您注册的用户已存在!";
 
 //apns
-"apns.failToRegisterApns" = "Fail to register apns";
-"apns.failToBindDeviceToken" = "Fail to bind device token";
+"apns.failToRegisterApns" = "注册推送失败";
+"apns.failToBindDeviceToken" = "消息推送与设备绑定失败";
 
 //friend
-"friend.add" = "add friend";
-"friend.somebodyAddWithName" = "%@ add you as a friend";
-"friend.beRefusedToAdd" = "you are shameless refused by '%@'";
-"friend.inputNameToSearch" = "input to find friends";
-"friend.repeat" = "'%@'has been your friend!";
-"friend.repeatApply" = "you have send fridend request to '%@'!";
-"friend.notAddSelf" = "can't add yourself as a friend";
-"friend.repeatInvite" = "%@ have sent the application to you";
-"friend.somebodyInvite" = "%@ invite you as a friend";
-"friend.sendApply" = "sending application...";
-"friend.sendApplyFail" = "send application fails, please operate again";
-"friend.sendApplySuccess" = "send successfully";
-"friend.black" = "Black List";
-"friend.notChatSelf" = "can't talk to yourself";
-"friend.notDeleteSelf" = "can't delete self";
-"friend.block" = "join the blacklist";
+"friend.add" = "添加好友";
+"friend.somebodyAddWithName" = "%@ 添加你为好友";
+"friend.beRefusedToAdd" = "你被'%@'无耻的拒绝了";
+"friend.inputNameToSearch" = "输入要查找的好友";
+"friend.repeat" = "'%@'已经是你的好友了!";
+"friend.repeatApply" = "您已向'%@'发送好友请求了!";
+"friend.notAddSelf" = "不能添加自己为好友";
+"friend.repeatInvite" = "%@已经给你发来了申请";
+"friend.somebodyInvite" = "%@ 邀请你为好友";
+"friend.sendApply" = "正在发送申请...";
+"friend.sendApplyFail" = "发送申请失败，请重新操作";
+"friend.sendApplySuccess" = "发送申请成功";
+"friend.black" = "黑名单";
+"friend.notChatSelf" = "不能跟自己聊天";
+"friend.notDeleteSelf" = "不能删除自己";
+"friend.block" = "加入黑名单";
 
 //group
-"group.somebodyInvite" = "%@ invite you to join group \'%@\'";
-"group.applyJoin" = "%@ apply to join groups\'%@\'";
-"group.applyJoinWithName" = "%@ apply to join groups\'%@\'：%@";
-"group.sendApplyFail" = "send application failure:%@\nreason：%@";
-"group.beRefusedToJoin" = "be refused to join the group\'%@\'";
-"group.beKicked" = "you have been kicked out from the group of \'%@\'";
-"group.agreedAndJoined" = "agreed and joined the group of \'%@\'";
-"group.join" = "join the group";
-"group.joined" = "joined";
-"group.owner" = "Owner";
-"group.describe" = "Describe";
-"group.join.ongoing" = "join the group...";
-"group.join.fail" = "again failed to join the group, please";
-"group.sendingApply" = "send group of application...";
-"group.sendApplyRepeat" = "application has been sent";
+"group.somebodyInvite" = "%@ 邀请你加入群组\'%@\'";
+"group.applyJoin" = "%@ 申请加入群组\'%@\'";
+"group.applyJoinWithName" = "%@ 申请加入群组\'%@\'：%@";
+"group.sendApplyFail" = "发送申请失败:%@\n原因：%@";
+"group.beRefusedToJoin" = "被拒绝加入群组\'%@\'";
+"group.beKicked" = "你被从群组\'%@\'中踢出";
+"group.agreedAndJoined" = "同意并已加入群组\'%@\'";
+"group.join" = "加入群组";
+"group.joined" = "已加入";
+"group.owner" = "群主";
+"group.describe" = "群组简介";
+"group.join.ongoing" = "加入群组...";
+"group.join.fail" = "加入群组失败，请重新操作";
+"group.sendingApply" = "发送加群申请...";
+"group.sendApplyRepeat" = "申请已发送";
 
 //Create Group
-"group.create.addOccupant" = "add members";
-"group.create.inputName" = "please enter the group name";
-"group.create.inputDescribe" = "please enter a group description";
-"group.create.groupPermission" = "group permission";
-"group.create.private" = "private group";
-"group.create.occupantPermissions" = "members invite permissions";
-"group.create.allowedOccupantInvite" = "allows group members to invite others";
-"group.create.unallowedOccupantInvite" = "don't allow group members to invite others";
-"group.create.ongoing" = "create a group...";
-"group.create.success" = "create group success";
-"group.create.fail" = "Failed to create a group, please operate again";
-"group.create.public" = "public group";
-"group.create.occupantJoinPermissions" = "members join permissions";
-"group.create.open" = "random join";
-"group.create.needApply" = "you need administrator agreed to join the group";
+"group.create.addOccupant" = "添加成员";
+"group.create.inputName" = "请输入群组名称";
+"group.create.inputDescribe" = "请输入群组简介";
+"group.create.groupPermission" = "群组权限";
+"group.create.private" = "私有群";
+"group.create.occupantPermissions" = "成员邀请权限";
+"group.create.allowedOccupantInvite" = "允许群成员邀请其他人";
+"group.create.unallowedOccupantInvite" = "不允许群成员邀请其他人";
+"group.create.ongoing" = "创建群组...";
+"group.create.success" = "创建群组成功";
+"group.create.fail" = "创建群组失败，请重新操作";
+"group.create.public" = "公有群";
+"group.create.occupantJoinPermissions" = "成员加入权限";
+"group.create.open" = "随便加入";
+"group.create.needApply" = "加入群组需要管理员同意";
 
 //Group Bans
-"group.ban.removing" = "members are removing from the blacklist...";
-"group.ban.fetching" = "getting group blacklist...";
-"group.ban.fetchFail" = "fail to get blacklist: %@";
+"group.ban.removing" = "正在将成员移出黑名单...";
+"group.ban.fetching" = "获取群组黑名单...";
+"group.ban.fetchFail" = "获取黑名单失败: %@";
 
 //Group Detail
-"group.removeAllMessages" = "remove all messages";
-"group.destroy" = "dissolution of the group";
-"group.leave" = "quit the group";
-"group.id" = "groupID";
-"group.occupantCount" = "members count";
-"group.addingOccupant" = "add a group member...";
-"group.fetchInfoFail" = "failed to get the group details, please try again later";
-"group.removingOccupant" = "deleting member...";
-"group.destroyFail" = "dissolution of group failure";
-"group.leaveFail" = "exit the group failure";
+"group.removeAllMessages" = "清空聊天记录";
+"group.destroy" = "解散群组";
+"group.leave" = "退出群组";
+"group.id" = "群组ID";
+"group.occupantCount" = "群组人数";
+"group.addingOccupant" = "添加组成员...";
+"group.fetchInfoFail" = "获取群组详情失败，请稍后重试";
+"group.removingOccupant" = "正在删除成员...";
+"group.destroyFail" = "解散群组失败";
+"group.leaveFail" = "退出群组失败";
 
 //Group Setting
-"group.setting.receiveAndPrompt" = "receive and prompt group of messages";
-"group.setting.receiveAndUnprompt" = "receive not only hint of messages";
-"group.setting.blockMessage" = "shielding of the message";
-"group.setting.save" = "set properties";
-"group.setting.success" = "set success";
-"group.setting.fail" = "set failure";
+"group.setting.receiveAndPrompt" = "接收并提示群消息";
+"group.setting.receiveAndUnprompt" = "只接收不提示群消息";
+"group.setting.blockMessage" = "屏蔽群消息";
+"group.setting.save" = "设置属性";
+"group.setting.success" = "设置成功";
+"group.setting.fail" = "设置失败";
 
 //message
-"message.image" = "image";
-"message.location" = "location";
-"message.voice" = "audio";
-"message.vidio" = "vidio";
-"message.image1" = "[image]";
-"message.location1" = "[location]";
-"message.voice1" = "[audio]";
-"message.vidio1" = "[vidio]";
-"message.beginReceiveOffine" = "begin to receive offline messages";
-"message.endReceiveOffine" = "end to receive offline messages";
-"message.toolBar.inputPlaceHolder" = "input a new message";
-"message.toolBar.record.upCancel" = " Fingers up slide, cancel sending ";
-"message.toolBar.record.loosenCancel" = " loosen the fingers, to cancel sending ";
-"message.toolBar.record.touch" = "hold down to talk";
-"message.toolBar.record.send" = "loosen to send";
-"DXMessageToolBarDelegate.record" = "hold down to talk";
-"DXMessageToolBarDelegate.send" = "loosen to send";
+"message.image" = "图片";
+"message.location" = "位置";
+"message.voice" = "音频";
+"message.vidio" = "视频";
+"message.image1" = "[图片]";
+"message.location1" = "[位置]";
+"message.voice1" = "[音频]";
+"message.vidio1" = "[视频]";
+"message.beginReceiveOffine" = "开始接收离线消息";
+"message.endReceiveOffine" = "离线消息接收成功";
+"message.toolBar.inputPlaceHolder" = "输入新消息";
+"message.toolBar.record.upCancel" = " 手指上滑，取消发送 ";
+"message.toolBar.record.loosenCancel" = " 松开手指，取消发送 ";
+"message.toolBar.record.touch" = "按住说话";
+"message.toolBar.record.send" = "松开发送";
 
-"message.downloadingAudio" = "downloading voice, click later";
-"message.downloadingVideo" = "downloading video...";
-"message.videoFail" = "video for failure!";
-"message.downloadingImage" = "downloading a image...";
-"message.imageFail" = "image for failure!";
-"message.thumImageFail" = "thumbnail for failure!";
-"message.simulatorNotSupportCamera" = "simulator does not support taking picture";
-"message.simulatorNotSupportVideo" = "simulator does not support vidio";
-"message.startRecordFail" = "failure to start recording";
-"message.noMessage" = "no messages";
+"message.downloadingAudio" = "正在下载语音，稍后点击";
+"message.downloadingVideo" = "正在获取视频...";
+"message.videoFail" = "视频获取失败!";
+"message.downloadingImage" = "正在获取大图...";
+"message.imageFail" = "大图获取失败!";
+"message.thumImageFail" = "缩略图获取失败!";
+"message.simulatorNotSupportCamera" = "模拟器不支持拍照";
+"message.simulatorNotSupportVideo" = "模拟器不支持录像";
+"message.startRecordFail" = "开始录音失败";
+"message.noMessage" = "消息已经清空";
 
 //network
-"network.disconnection" = "Network disconnection";
+"network.disconnection" = "当前网络连接失败";
 
 //reconnection
-"reconnection.retry" = "Fail to log in your account, is try again... \nclick 'logout' button to jump to the login page \nclick 'continue to wait for' button for reconnection successful";
-"reconnection.ongoing" = "reconnecting...";
-"reconnection.fail" = "reconnection failure, later will continue to reconnection";
-"reconnection.success" = "reconnection successful！";
-"reconnection.wait" = "continue to wait";
+"reconnection.retry" = "你的账号登录失败，正在重试中... \n点击 '登出' 按钮跳转到登录页面 \n点击 '继续等待' 按钮等待重连成功";
+"reconnection.ongoing" = "正在重连中...";
+"reconnection.fail" = "重连失败，稍候将继续重连";
+"reconnection.success" = "重连成功！";
+"reconnection.wait" = "继续等待";
 
 //location
-"location.messageType" = "location message";
-"location.fail" = "locate failure";
-"location.ongoning" = "locating...";
+"location.messageType" = "位置信息";
+"location.fail" = "定位失败";
+"location.ongoning" = "正在定位...";
 
 //title
-
-"title.index"="Index";
-"title.conversation" = "Conversations";
-"title.addressbook" = "AddressBook";
-"title.setting" = "Setting";
-"title.group" = "Group";
-"title.chooseContact" = "select the contact";
-"title.debug" = "Debug";
-"title.groupBlackList" = "Group black list";
-"title.createGroup" = "Create a group";
-"title.publicGroup" = "Public group";
-"title.groupSetting" = "Group Setting";
-"title.apnsSetting" = "Apns Settings";
-"title.personal"="Personal Info";
-"title.buddyBlock" = "Black List";
-"title.apply" = "Application and notification";
-"title.groupApply" = "Group Notification";
-"title.groupSubjectChanging" = "Change group name";
+"title.index"="首页";
+"title.conversation" = "会话";
+"title.addressbook" = "通讯录";
+"title.setting" = "设置";
+"title.group" = "群组";
+"title.chooseContact" = "选择联系人";
+"title.debug" = "诊断";
+"title.groupBlackList" = "群组黑名单";
+"title.createGroup" = "创建群组";
+"title.publicGroup" = "公有群组";
+"title.groupSetting" = "群设置";
+"title.apnsSetting" = "消息推送设置";
+"title.personal"="个人信息";
+"title.buddyBlock" = "黑名单";
+"title.apply" = "申请与通知";
+"title.groupApply" = "群组通知";
+"title.groupSubjectChanging" = "修改群名称";
 
 //setting
-"setting.autoLogin" = "automatic login";
-"setting.loginUser" = "log out(%@)";
-"setting.logoutOngoing" = "loging out...";
+"setting.autoLogin" = "自动登录";
+"setting.loginUser" = "退出登录(%@)";
+"setting.logoutOngoing" = "正在退出...";
 
-"setting.notDisturb" = "No disturbing";
-"setting.showDetail" = "notify the display messages";
-"setting.open" = "open";
-"setting.nightOpen" = "only open at night (22:00 - 7:00)";
-"setting.close" = "close";
-"setting.sureNotDisturb" = "this setting will cause all day in the don't disturb mode, will no longer receive push messages. Whether or not to continue?";
+"setting.notDisturb" = "功能消息免打扰";
+"setting.showDetail" = "通知显示消息详情";
+"setting.open" = "开启";
+"setting.nightOpen" = "只在夜间开启 (22:00 - 7:00)";
+"setting.close" = "关闭";
+"setting.sureNotDisturb" = "此设置会导致全天都处于免打扰模式, 不会再收到推送消息. 是否继续?";
 
-"setting.uploadLog" = "upload run log";
-"setting.sdkVersion" = "SDK version";
-"setting.uploading" = "uploading...";
-"setting.uploadSuccess" = "uploaded successfully";
+"setting.uploadLog" = "上传运行日志";
+"setting.sdkVersion" = "SDK 版本";
+"setting.uploading" = "正在上传...";
+"setting.uploadSuccess" = "上传成功";
 
 //NSDateCategory
-"NSDateCategory.text1" = "one minute";
-"NSDateCategory.text2" = "%.f minutes ago";
-"NSDateCategory.text3" = "%.f hours ago";
-"NSDateCategory.text4" = "%.f days ago";
-"NSDateCategory.text5" = "M-d";
-"NSDateCategory.text6" = "%.f years ago";
-"NSDateCategory.text7" = "M-d %@";
-"NSDateCategory.text8" = "M-d HH:mm";
-"NSDateCategory.text9" = "aa hh:mm";
-"NSDateCategory.text10" = "aa hh:mm";
-"NSDateCategory.text11" = "aa hh:mm";
-"NSDateCategory.text12" = "aa hh:mm";
-"NSDateCategory.text13" = "M-d HH:mm";
-"NSDateCategory.text14" = "today %@";
-
+"NSDateCategory.text1" = "1分钟内";
+"NSDateCategory.text2" = "%.f分钟前";
+"NSDateCategory.text3" = "%.f小时前";
+"NSDateCategory.text4" = "%.f天前";
+"NSDateCategory.text5" = "M月d日";
+"NSDateCategory.text6" = "%.f年前";
+"NSDateCategory.text7" = "昨天 %@";
+"NSDateCategory.text8" = "昨天HH:mm";
+"NSDateCategory.text9" = "凌晨hh:mm";
+"NSDateCategory.text10" = "上午hh:mm";
+"NSDateCategory.text11" = "下午hh:mm";
+"NSDateCategory.text12" = "晚上hh:mm";
+"NSDateCategory.text13" = "昨天HH:mm";
+"NSDateCategory.text14" = "今天 %@";
