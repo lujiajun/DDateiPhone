@@ -53,7 +53,7 @@
     _passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 45, 300, 30)];
     [_passwordTextField setBorderStyle:UITextBorderStyleBezel]; //外框类型
     _passwordTextField.placeholder = @"请输入不少于6位密码"; //默认显示的字
-    
+    _passwordTextField.secureTextEntry = YES;
     [self.view addSubview:_passwordTextField];
     
     UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 80, 300, 30)];

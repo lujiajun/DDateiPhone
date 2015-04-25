@@ -23,7 +23,7 @@
 
 
 @property  (strong,nonatomic) Commbox     *commbox;
-@property  (strong,nonatomic) Commbox *universitycommbox;
+@property  (strong,nonatomic) Commbox     *universitycommbox;
 
 
 @end
@@ -109,9 +109,11 @@ static DDUser   *dduser;
 
 //注册账号
 - (void)next{
-        
-    DDRegisterFinishController *personsign=[[DDRegisterFinishController alloc] init:_username password:_password city:_commbox.textField.text university:_universitycommbox.textField.text];
-    [self.navigationController pushViewController:personsign animated:YES];
+    if(!self.isEmpty){
+        DDRegisterFinishController *personsign=[[DDRegisterFinishController alloc] init:_username password:_password city:_commbox.textField.text university:_universitycommbox.textField.text];
+        [self.navigationController pushViewController:personsign animated:YES];
+    }
+    
 }
 
 
@@ -125,10 +127,10 @@ static DDUser   *dduser;
 //判断账号和密码是否为空
 - (BOOL)isEmpty{
     BOOL ret = NO;
-    if (_commbox.textField.text.length == 0 || _passwordTextField.text.length == 0) {
+    if (_commbox.textField.text.length == 0 || _universitycommbox.textField.text.length == 0) {
         ret = YES;
         [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
-                                message:NSLocalizedString(@"login.inputNameAndPswd", @"Please enter username and password")
+                                message:NSLocalizedString(@"register.school", @"Please choose your city and university")
                      customizationBlock:nil
                         completionBlock:nil
                       cancelButtonTitle:NSLocalizedString(@"ok", @"OK")

@@ -60,6 +60,8 @@
 "login.ongoing" = "正在登陆...";
 "login.fail" = "登录失败";
 "login.inputNameAndPswd" = "请输入账号和密码";
+"register.school" = "请选择地区和学校";
+"register.nicknameandgender"="请输入昵称和性别";
 "login.inputApnsNickname" = "填写推送消息时使用的昵称";
 
 //register
