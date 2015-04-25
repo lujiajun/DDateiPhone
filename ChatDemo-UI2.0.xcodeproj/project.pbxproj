@@ -74,24 +74,13 @@
 		8A40212C1AE3956B00806014 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A40212B1AE3956B00806014 /* Constants.m */; };
 		8A4021521AE3A63E00806014 /* NickNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4021511AE3A63E00806014 /* NickNameController.m */; };
 		8A46EDBF1AE9F3FC0062F518 /* PersonalSignController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A46EDBE1AE9F3FC0062F518 /* PersonalSignController.m */; };
-		8A46EDD21AEA871B0062F518 /* autoscaling-2011-01-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDC11AEA871B0062F518 /* autoscaling-2011-01-01.json */; };
-		8A46EDD31AEA871B0062F518 /* cognito-identity-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDC21AEA871B0062F518 /* cognito-identity-2014-06-30.json */; };
-		8A46EDD41AEA871B0062F518 /* cognito-sync-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDC31AEA871B0062F518 /* cognito-sync-2014-06-30.json */; };
-		8A46EDD51AEA871B0062F518 /* dynamodb-2012-08-10.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDC41AEA871B0062F518 /* dynamodb-2012-08-10.json */; };
-		8A46EDD61AEA871B0062F518 /* ec2-2014-09-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDC51AEA871B0062F518 /* ec2-2014-09-01.json */; };
-		8A46EDD71AEA871B0062F518 /* elasticloadbalancing-2012-06-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDC61AEA871B0062F518 /* elasticloadbalancing-2012-06-01.json */; };
-		8A46EDD81AEA871B0062F518 /* email-2010-12-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDC71AEA871B0062F518 /* email-2010-12-01.json */; };
-		8A46EDD91AEA871B0062F518 /* kinesis-2013-12-02.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDC81AEA871B0062F518 /* kinesis-2013-12-02.json */; };
-		8A46EDDA1AEA871B0062F518 /* lambda-2015-03-31.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDC91AEA871B0062F518 /* lambda-2015-03-31.json */; };
-		8A46EDDB1AEA871B0062F518 /* machinelearning-2014-12-12.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDCA1AEA871B0062F518 /* machinelearning-2014-12-12.json */; };
-		8A46EDDC1AEA871B0062F518 /* mobileanalytics-2014-06-30.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDCB1AEA871B0062F518 /* mobileanalytics-2014-06-30.json */; };
-		8A46EDDD1AEA871B0062F518 /* monitoring-2010-08-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDCC1AEA871B0062F518 /* monitoring-2010-08-01.json */; };
-		8A46EDDE1AEA871B0062F518 /* s3-2006-03-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDCD1AEA871B0062F518 /* s3-2006-03-01.json */; };
-		8A46EDDF1AEA871B0062F518 /* sdb-2009-04-15.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDCE1AEA871B0062F518 /* sdb-2009-04-15.json */; };
-		8A46EDE01AEA871B0062F518 /* sns-2010-03-31.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDCF1AEA871B0062F518 /* sns-2010-03-31.json */; };
-		8A46EDE11AEA871B0062F518 /* sqs-2012-11-05.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDD01AEA871B0062F518 /* sqs-2012-11-05.json */; };
-		8A46EDE21AEA871B0062F518 /* sts-2011-06-15.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDD11AEA871B0062F518 /* sts-2011-06-15.json */; };
+		8A46EDE51AEA93F00062F518 /* DDRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A46EDE41AEA93F00062F518 /* DDRegisterController.m */; };
+		8A46EDE71AEA9DFA0062F518 /* getCode.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDE61AEA9DFA0062F518 /* getCode.png */; };
+		8A46EDEA1AEAA5CC0062F518 /* DDLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A46EDE91AEAA5CC0062F518 /* DDLoginController.m */; };
 		8A4BD0B31AE20F2900FFDFF1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90911122192EEBB8008A48AA /* AppDelegate.m */; };
+		8A4F270C1AEB36D60050D86E /* DDSchoolRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F270B1AEB36D60050D86E /* DDSchoolRegisterController.m */; };
+		8A4F270F1AEB53410050D86E /* Commbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F270E1AEB53410050D86E /* Commbox.m */; };
+		8A4F27121AEB5BDD0050D86E /* DDRegisterFinishController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F27111AEB5BDD0050D86E /* DDRegisterFinishController.m */; };
 		8ADB384E1AE286BD00FCC6FC /* PersonalController.h in Resources */ = {isa = PBXBuildFile; fileRef = 8ADB384D1AE286BD00FCC6FC /* PersonalController.h */; };
 		8ADB38501AE286F000FCC6FC /* PersonalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB384F1AE286F000FCC6FC /* PersonalController.m */; };
 		8ADB388C1AE2A17100FCC6FC /* UsernickController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB388B1AE2A17100FCC6FC /* UsernickController.m */; };
@@ -508,23 +497,17 @@
 		8A4021511AE3A63E00806014 /* NickNameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NickNameController.m; sourceTree = "<group>"; };
 		8A46EDBD1AE9F3E30062F518 /* PersonalSignController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalSignController.h; sourceTree = "<group>"; };
 		8A46EDBE1AE9F3FC0062F518 /* PersonalSignController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalSignController.m; sourceTree = "<group>"; };
-		8A46EDC11AEA871B0062F518 /* autoscaling-2011-01-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "autoscaling-2011-01-01.json"; sourceTree = "<group>"; };
-		8A46EDC21AEA871B0062F518 /* cognito-identity-2014-06-30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cognito-identity-2014-06-30.json"; sourceTree = "<group>"; };
-		8A46EDC31AEA871B0062F518 /* cognito-sync-2014-06-30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cognito-sync-2014-06-30.json"; sourceTree = "<group>"; };
-		8A46EDC41AEA871B0062F518 /* dynamodb-2012-08-10.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "dynamodb-2012-08-10.json"; sourceTree = "<group>"; };
-		8A46EDC51AEA871B0062F518 /* ec2-2014-09-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ec2-2014-09-01.json"; sourceTree = "<group>"; };
-		8A46EDC61AEA871B0062F518 /* elasticloadbalancing-2012-06-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "elasticloadbalancing-2012-06-01.json"; sourceTree = "<group>"; };
-		8A46EDC71AEA871B0062F518 /* email-2010-12-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "email-2010-12-01.json"; sourceTree = "<group>"; };
-		8A46EDC81AEA871B0062F518 /* kinesis-2013-12-02.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "kinesis-2013-12-02.json"; sourceTree = "<group>"; };
-		8A46EDC91AEA871B0062F518 /* lambda-2015-03-31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lambda-2015-03-31.json"; sourceTree = "<group>"; };
-		8A46EDCA1AEA871B0062F518 /* machinelearning-2014-12-12.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "machinelearning-2014-12-12.json"; sourceTree = "<group>"; };
-		8A46EDCB1AEA871B0062F518 /* mobileanalytics-2014-06-30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mobileanalytics-2014-06-30.json"; sourceTree = "<group>"; };
-		8A46EDCC1AEA871B0062F518 /* monitoring-2010-08-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "monitoring-2010-08-01.json"; sourceTree = "<group>"; };
-		8A46EDCD1AEA871B0062F518 /* s3-2006-03-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "s3-2006-03-01.json"; sourceTree = "<group>"; };
-		8A46EDCE1AEA871B0062F518 /* sdb-2009-04-15.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sdb-2009-04-15.json"; sourceTree = "<group>"; };
-		8A46EDCF1AEA871B0062F518 /* sns-2010-03-31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sns-2010-03-31.json"; sourceTree = "<group>"; };
-		8A46EDD01AEA871B0062F518 /* sqs-2012-11-05.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sqs-2012-11-05.json"; sourceTree = "<group>"; };
-		8A46EDD11AEA871B0062F518 /* sts-2011-06-15.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sts-2011-06-15.json"; sourceTree = "<group>"; };
+		8A46EDE31AEA93D00062F518 /* DDRegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDRegisterController.h; sourceTree = "<group>"; };
+		8A46EDE41AEA93F00062F518 /* DDRegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDRegisterController.m; sourceTree = "<group>"; };
+		8A46EDE61AEA9DFA0062F518 /* getCode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = getCode.png; path = dd/getCode.png; sourceTree = "<group>"; };
+		8A46EDE81AEAA5AB0062F518 /* DDLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLoginController.h; sourceTree = "<group>"; };
+		8A46EDE91AEAA5CC0062F518 /* DDLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLoginController.m; sourceTree = "<group>"; };
+		8A4F270A1AEB36910050D86E /* DDSchoolRegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDSchoolRegisterController.h; sourceTree = "<group>"; };
+		8A4F270B1AEB36D60050D86E /* DDSchoolRegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDSchoolRegisterController.m; sourceTree = "<group>"; };
+		8A4F270D1AEB530E0050D86E /* Commbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Commbox.h; sourceTree = "<group>"; };
+		8A4F270E1AEB53410050D86E /* Commbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Commbox.m; sourceTree = "<group>"; };
+		8A4F27101AEB5B8E0050D86E /* DDRegisterFinishController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDRegisterFinishController.h; sourceTree = "<group>"; };
+		8A4F27111AEB5BDD0050D86E /* DDRegisterFinishController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDRegisterFinishController.m; sourceTree = "<group>"; };
 		8ADB384D1AE286BD00FCC6FC /* PersonalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalController.h; sourceTree = "<group>"; };
 		8ADB384F1AE286F000FCC6FC /* PersonalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalController.m; sourceTree = "<group>"; };
 		8ADB388A1AE2A15900FCC6FC /* UsernickController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsernickController.h; sourceTree = "<group>"; };
@@ -1146,31 +1129,6 @@
 			path = "OSS-Universal";
 			sourceTree = "<group>";
 		};
-		8A46EDC01AEA871B0062F518 /* service-definitions */ = {
-			isa = PBXGroup;
-			children = (
-				8A46EDC11AEA871B0062F518 /* autoscaling-2011-01-01.json */,
-				8A46EDC21AEA871B0062F518 /* cognito-identity-2014-06-30.json */,
-				8A46EDC31AEA871B0062F518 /* cognito-sync-2014-06-30.json */,
-				8A46EDC41AEA871B0062F518 /* dynamodb-2012-08-10.json */,
-				8A46EDC51AEA871B0062F518 /* ec2-2014-09-01.json */,
-				8A46EDC61AEA871B0062F518 /* elasticloadbalancing-2012-06-01.json */,
-				8A46EDC71AEA871B0062F518 /* email-2010-12-01.json */,
-				8A46EDC81AEA871B0062F518 /* kinesis-2013-12-02.json */,
-				8A46EDC91AEA871B0062F518 /* lambda-2015-03-31.json */,
-				8A46EDCA1AEA871B0062F518 /* machinelearning-2014-12-12.json */,
-				8A46EDCB1AEA871B0062F518 /* mobileanalytics-2014-06-30.json */,
-				8A46EDCC1AEA871B0062F518 /* monitoring-2010-08-01.json */,
-				8A46EDCD1AEA871B0062F518 /* s3-2006-03-01.json */,
-				8A46EDCE1AEA871B0062F518 /* sdb-2009-04-15.json */,
-				8A46EDCF1AEA871B0062F518 /* sns-2010-03-31.json */,
-				8A46EDD01AEA871B0062F518 /* sqs-2012-11-05.json */,
-				8A46EDD11AEA871B0062F518 /* sts-2011-06-15.json */,
-			);
-			name = "service-definitions";
-			path = "ChatDemo-UI2.0/service-definitions";
-			sourceTree = "<group>";
-		};
 		8A4BD07A1AE1F8EB00FFDFF1 /* otherservice */ = {
 			isa = PBXGroup;
 			children = (
@@ -1187,6 +1145,16 @@
 			children = (
 				8A4020AE1AE356ED00806014 /* IndexViewController.h */,
 				8A4020AF1AE3571600806014 /* IndexViewController.m */,
+				8A46EDE31AEA93D00062F518 /* DDRegisterController.h */,
+				8A46EDE41AEA93F00062F518 /* DDRegisterController.m */,
+				8A46EDE81AEAA5AB0062F518 /* DDLoginController.h */,
+				8A46EDE91AEAA5CC0062F518 /* DDLoginController.m */,
+				8A4F270A1AEB36910050D86E /* DDSchoolRegisterController.h */,
+				8A4F270B1AEB36D60050D86E /* DDSchoolRegisterController.m */,
+				8A4F270D1AEB530E0050D86E /* Commbox.h */,
+				8A4F270E1AEB53410050D86E /* Commbox.m */,
+				8A4F27101AEB5B8E0050D86E /* DDRegisterFinishController.h */,
+				8A4F27111AEB5BDD0050D86E /* DDRegisterFinishController.m */,
 			);
 			name = Index;
 			sourceTree = "<group>";
@@ -1194,6 +1162,7 @@
 		8ADB38511AE28F3400FCC6FC /* dd */ = {
 			isa = PBXGroup;
 			children = (
+				8A46EDE61AEA9DFA0062F518 /* getCode.png */,
 				8A4020F41AE3597900806014 /* 查看两人聊天室信息.png */,
 				8A4020F51AE3597900806014 /* 聊天—编组方式.png */,
 				8A4020F61AE3597900806014 /* 认证图标.png */,
@@ -1409,7 +1378,6 @@
 		9091101B192EEA70008A48AA = {
 			isa = PBXGroup;
 			children = (
-				8A46EDC01AEA871B0062F518 /* service-definitions */,
 				8A4020B51AE3579F00806014 /* Oss-Universal */,
 				EBC0CDEC1AD6652800E90053 /* EaseMobSDK */,
 				9091102D192EEA70008A48AA /* ChatDemo-UI2.0 */,
@@ -2436,7 +2404,6 @@
 				EBD2AB5E1A7CDAC000D16528 /* chatBar_keyboard@2x.png in Resources */,
 				EBD2AB781A7CDAC000D16528 /* chatBar_more_camera@2x.png in Resources */,
 				EBD2AB641A7CDAC000D16528 /* chatBar_moreSelected@2x.png in Resources */,
-				8A46EDE11AEA871B0062F518 /* sqs-2012-11-05.json in Resources */,
 				EBD2AB0C1A7CDAC000D16528 /* chatFire_audioPlaying1@2x.png in Resources */,
 				8A4021201AE3597900806014 /* like图标2.png in Resources */,
 				EBD2AB541A7CDAC000D16528 /* chat_location_preview@2x.png in Resources */,
@@ -2453,7 +2420,6 @@
 				EBD2AB501A7CDAC000D16528 /* chat_location_detail_disclosure@2x.png in Resources */,
 				8A4021161AE3597900806014 /* email.png in Resources */,
 				EBD2AB621A7CDAC000D16528 /* chatBar_more@2x.png in Resources */,
-				8A46EDD91AEA871B0062F518 /* kinesis-2013-12-02.json in Resources */,
 				EBD2AB841A7CDAC000D16528 /* chat_receiver_audio_playing000.png in Resources */,
 				EBD2AB091A7CDAC000D16528 /* chatFire_audioPlaying0.png in Resources */,
 				EBD2AB651A7CDAC000D16528 /* chatBar_record.png in Resources */,
@@ -2479,7 +2445,6 @@
 				EBD2AB061A7CDAC000D16528 /* 80.png in Resources */,
 				8A4021131AE3597900806014 /* 邀请和添加朋友弹出框.png in Resources */,
 				EBD2ABAD1A7CDAC000D16528 /* tabbar_chats.png in Resources */,
-				8A46EDD81AEA871B0062F518 /* email-2010-12-01.json in Resources */,
 				8A4020B21AE3572C00806014 /* AliCloudController.h in Resources */,
 				EBD2AB4D1A7CDAC000D16528 /* chat_location_annotation_someone.png in Resources */,
 				EBC0CE591AD6652900E90053 /* EaseMob.bundle in Resources */,
@@ -2490,7 +2455,6 @@
 				8A4021151AE3597900806014 /* chaton.png in Resources */,
 				EBD2AD481A7CEFE100D16528 /* chatBar_colorMore_audioCallSelected@2x.png in Resources */,
 				EBD2AB581A7CDAC000D16528 /* messageSendFail@2x.png in Resources */,
-				8A46EDD31AEA871B0062F518 /* cognito-identity-2014-06-30.json in Resources */,
 				EBD2ABB21A7CDAC000D16528 /* tabbar_contacts@2x.png in Resources */,
 				EBD2AB201A7CDAC000D16528 /* VoiceSearchFeedback008@2x.png in Resources */,
 				EBD2AB9E1A7CDAC000D16528 /* password.png in Resources */,
@@ -2498,7 +2462,6 @@
 				EBD2AB011A7CDAC000D16528 /* 114.png in Resources */,
 				EBD2AB511A7CDAC000D16528 /* chat_location_detail_disclosureHL.png in Resources */,
 				EBD2AB2A1A7CDAC000D16528 /* VoiceSearchFeedback013@2x.png in Resources */,
-				8A46EDDC1AEA871B0062F518 /* mobileanalytics-2014-06-30.json in Resources */,
 				EBD2ABB71A7CDAC000D16528 /* tabbar_settingHL.png in Resources */,
 				EBD2AD471A7CEFE100D16528 /* chatBar_colorMore_audioCall@2x.png in Resources */,
 				EBD2AB211A7CDAC000D16528 /* VoiceSearchFeedback009.png in Resources */,
@@ -2509,7 +2472,6 @@
 				EBD2AB9C1A7CDAC000D16528 /* account.png in Resources */,
 				EBD2AB471A7CDAC000D16528 /* chatBar_more_face.png in Resources */,
 				EBD2AB241A7CDAC000D16528 /* VoiceSearchFeedback010@2x.png in Resources */,
-				8A46EDD61AEA871B0062F518 /* ec2-2014-09-01.json in Resources */,
 				EBD2AB0E1A7CDAC000D16528 /* chatFire_audioPlaying2@2x.png in Resources */,
 				EBD2AB711A7CDAC000D16528 /* chatBar_colorMore_location@2x.png in Resources */,
 				EBD2AB701A7CDAC000D16528 /* chatBar_colorMore_cameraSelected@2x.png in Resources */,
@@ -2519,7 +2481,6 @@
 				EBD2AB8D1A7CDAC000D16528 /* chat_receiver_audio_playing_full@2x.png in Resources */,
 				EBD2AB331A7CDAC000D16528 /* VoiceSearchFeedback018.png in Resources */,
 				EBD2AB6A1A7CDAC000D16528 /* chatBar_recordSelected@2x.png in Resources */,
-				8A46EDDB1AEA871B0062F518 /* machinelearning-2014-12-12.json in Resources */,
 				EBD2ABBA1A7CDAC000D16528 /* tabbarBackground@2x.png in Resources */,
 				EBD2AB5F1A7CDAC000D16528 /* chatBar_keyboardSelected.png in Resources */,
 				EBD2AB2E1A7CDAC000D16528 /* VoiceSearchFeedback015@2x.png in Resources */,
@@ -2555,29 +2516,23 @@
 				8A40211F1AE3597900806014 /* like图标1.png in Resources */,
 				EBD2AB671A7CDAC000D16528 /* chatBar_recordBg.png in Resources */,
 				EBD2AB521A7CDAC000D16528 /* chat_location_detail_disclosureHL@2x.png in Resources */,
-				8A46EDDD1AEA871B0062F518 /* monitoring-2010-08-01.json in Resources */,
 				8A4021281AE3597900806014 /* settingon.png in Resources */,
 				EBD2AB341A7CDAC000D16528 /* VoiceSearchFeedback018@2x.png in Resources */,
 				EBD2AB5D1A7CDAC000D16528 /* chatBar_keyboard.png in Resources */,
 				EBD2AB7A1A7CDAC000D16528 /* chatBar_more_cameraSelected@2x.png in Resources */,
 				EBD2AB0F1A7CDAC000D16528 /* chatFire_audioPlaying3.png in Resources */,
 				EBD2ABBB1A7CDAC000D16528 /* tabbarSelectBg.png in Resources */,
-				8A46EDDA1AEA871B0062F518 /* lambda-2015-03-31.json in Resources */,
 				EBD2ABA11A7CDAC000D16528 /* back@2x.png in Resources */,
 				8A4021241AE3597900806014 /* luanch.png in Resources */,
 				EBD2AB111A7CDAC000D16528 /* VoiceSearchFeedback001.png in Resources */,
 				EBD2ABA01A7CDAC000D16528 /* add@2x.png in Resources */,
-				8A46EDD71AEA871B0062F518 /* elasticloadbalancing-2012-06-01.json in Resources */,
 				8A4021171AE3597900806014 /* friendoff.png in Resources */,
 				EBD2AB8A1A7CDAC000D16528 /* chat_receiver_audio_playing003.png in Resources */,
 				EBD2ABB41A7CDAC000D16528 /* tabbar_contactsHL@2x.png in Resources */,
 				EBD2AB0B1A7CDAC000D16528 /* chatFire_audioPlaying1.png in Resources */,
 				3C372B5F19FE60DC005925B6 /* (null) in Resources */,
-				8A46EDD41AEA871B0062F518 /* cognito-sync-2014-06-30.json in Resources */,
-				8A46EDDF1AEA871B0062F518 /* sdb-2009-04-15.json in Resources */,
 				EBD2AB8F1A7CDAC000D16528 /* chat_receiver_bg@2x.png in Resources */,
 				8A40211E1AE3597900806014 /* like图标0.png in Resources */,
-				8A46EDDE1AEA871B0062F518 /* s3-2006-03-01.json in Resources */,
 				EBD2ABA91A7CDAC000D16528 /* groupPrivateHeader@2x.png in Resources */,
 				EBD2AB8E1A7CDAC000D16528 /* chat_receiver_bg.png in Resources */,
 				EBD2AB681A7CDAC000D16528 /* chatBar_recordBg@2x.png in Resources */,
@@ -2595,7 +2550,6 @@
 				EBD2AB451A7CDAC000D16528 /* chatBar_more_cardSelected.png in Resources */,
 				EBD2AB361A7CDAC000D16528 /* VoiceSearchFeedback019@2x.png in Resources */,
 				EBD2AB3A1A7CDAC000D16528 /* call_out@2x.png in Resources */,
-				8A46EDE01AEA871B0062F518 /* sns-2010-03-31.json in Resources */,
 				EBD2AB571A7CDAC000D16528 /* imageDownloadFail@2x.png in Resources */,
 				EBD2AB931A7CDAC000D16528 /* chat_sender_audio_playing_001@2x.png in Resources */,
 				EBD2AB391A7CDAC000D16528 /* call_out.png in Resources */,
@@ -2606,6 +2560,7 @@
 				EBD2ABA61A7CDAC000D16528 /* group_invitee_delete@2x.png in Resources */,
 				8A40210F1AE3597900806014 /* 查看两人聊天室信息.png in Resources */,
 				EBD2AB971A7CDAC000D16528 /* chat_sender_audio_playing_003@2x.png in Resources */,
+				8A46EDE71AEA9DFA0062F518 /* getCode.png in Resources */,
 				3C3D2D1C1A6E5A760099EF88 /* Localizable.strings in Resources */,
 				EBD2AB871A7CDAC000D16528 /* chat_receiver_audio_playing001@2x.png in Resources */,
 				EBD2AB0D1A7CDAC000D16528 /* chatFire_audioPlaying2.png in Resources */,
@@ -2632,7 +2587,6 @@
 				EBD2AB291A7CDAC000D16528 /* VoiceSearchFeedback013.png in Resources */,
 				EBD2AB761A7CDAC000D16528 /* chatBar_colorMore_videoSelected@2x.png in Resources */,
 				90EF2CED192F2B4E00BDC549 /* sr_refresh@2X.png in Resources */,
-				8A46EDD51AEA871B0062F518 /* dynamodb-2012-08-10.json in Resources */,
 				EBD2AB6C1A7CDAC000D16528 /* chatBar_recordSelectedBg@2x.png in Resources */,
 				EBD2AB0A1A7CDAC000D16528 /* chatFire_audioPlaying0@2x.png in Resources */,
 				8A40211D1AE3597900806014 /* inviteFriend.png in Resources */,
@@ -2640,7 +2594,6 @@
 				EBD2ABA51A7CDAC000D16528 /* titleBar@2x.png in Resources */,
 				EBD2AB831A7CDAC000D16528 /* messageToolbarBg@2x.png in Resources */,
 				EBD2AB751A7CDAC000D16528 /* chatBar_colorMore_video@2x.png in Resources */,
-				8A46EDD21AEA871B0062F518 /* autoscaling-2011-01-01.json in Resources */,
 				EBD2AB191A7CDAC000D16528 /* VoiceSearchFeedback005.png in Resources */,
 				EBD2AB951A7CDAC000D16528 /* chat_sender_audio_playing_002@2x.png in Resources */,
 				8A4021181AE3597900806014 /* friendon.png in Resources */,
@@ -2651,7 +2604,6 @@
 				EBD2AB3C1A7CDAC000D16528 /* call_out_h@2x.png in Resources */,
 				EBD2ABB11A7CDAC000D16528 /* tabbar_contacts.png in Resources */,
 				EBD2AB491A7CDAC000D16528 /* chatBar_more_faceSelected.png in Resources */,
-				8A46EDE21AEA871B0062F518 /* sts-2011-06-15.json in Resources */,
 				EBD2AB1F1A7CDAC000D16528 /* VoiceSearchFeedback008.png in Resources */,
 				EBD2AB2B1A7CDAC000D16528 /* VoiceSearchFeedback014.png in Resources */,
 				EBD2ABAE1A7CDAC000D16528 /* tabbar_chats@2x.png in Resources */,
@@ -2723,6 +2675,8 @@
 				90A706051A8B63B200376154 /* EMSDWebImageDecoder.m in Sources */,
 				8A4020B01AE3571600806014 /* IndexViewController.m in Sources */,
 				90EF2CEF192F2B4E00BDC549 /* SRSlimeView.m in Sources */,
+				8A46EDE51AEA93F00062F518 /* DDRegisterController.m in Sources */,
+				8A4F27121AEB5BDD0050D86E /* DDRegisterFinishController.m in Sources */,
 				9003D9131939D8D000DC38A4 /* AddFriendCell.m in Sources */,
 				9003D8741939D8D000DC38A4 /* FacialView.m in Sources */,
 				90EF2CEE192F2B4E00BDC549 /* SRRefreshView.m in Sources */,
@@ -2754,6 +2708,7 @@
 				90A706141A8B63B200376154 /* PSTCollectionView.m in Sources */,
 				90A7061E1A8B63B200376154 /* PSTGridLayoutRow.m in Sources */,
 				9003D89F1939D8D000DC38A4 /* EMChatAudioBubbleView.m in Sources */,
+				8A4F270F1AEB53410050D86E /* Commbox.m in Sources */,
 				90A7061A1A8B63B200376154 /* PSTCollectionViewLayout.m in Sources */,
 				9003D8A01939D8D000DC38A4 /* EMChatBaseBubbleView.m in Sources */,
 				8A4020B41AE3574800806014 /* AliCloudController.m in Sources */,
@@ -2761,6 +2716,7 @@
 				90A706031A8B63B200376154 /* EMSDImageCache.m in Sources */,
 				90133EC11972DFF400C49B56 /* UIViewController+DismissKeyboard.m in Sources */,
 				90A706101A8B63B200376154 /* UIImageView+EMHighlightedWebCache.m in Sources */,
+				8A46EDEA1AEAA5CC0062F518 /* DDLoginController.m in Sources */,
 				9003D9141939D8D000DC38A4 /* AddFriendViewController.m in Sources */,
 				9003D9121939D8D000DC38A4 /* ContactsViewController.m in Sources */,
 				90A7060A1A8B63B200376154 /* MKAnnotationView+EMWebCache.m in Sources */,
@@ -2821,6 +2777,7 @@
 				9003D8751939D8D000DC38A4 /* DXChatBarMoreView.m in Sources */,
 				90A706061A8B63B200376154 /* EMSDWebImageDownloader.m in Sources */,
 				EB3CC3A31ACD343D00FB8662 /* CallSessionViewController.m in Sources */,
+				8A4F270C1AEB36D60050D86E /* DDSchoolRegisterController.m in Sources */,
 				3C13D94B1A12095D00903622 /* GroupBansViewController.m in Sources */,
 				9003D8A61939D8D000DC38A4 /* EMChatViewBaseCell.m in Sources */,
 				90A7060C1A8B63B200376154 /* UIButton+EMWebCache.m in Sources */,

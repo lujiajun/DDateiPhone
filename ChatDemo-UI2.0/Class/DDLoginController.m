@@ -1,50 +1,40 @@
 /************************************************************
-  *  * EaseMob CONFIDENTIAL 
-  * __________________ 
-  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved. 
-  *  
-  * NOTICE: All information contained herein is, and remains 
-  * the property of EaseMob Technologies.
-  * Dissemination of this information or reproduction of this material 
-  * is strictly forbidden unless prior written permission is obtained
-  * from EaseMob Technologies.
-  */
+ *  * EaseMob CONFIDENTIAL
+ * __________________
+ * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of EaseMob Technologies.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from EaseMob Technologies.
+ */
 
 #import "LoginViewController.h"
 #import "EMError.h"
 #import "OSSArgs.h"
+#import "DDRegisterController.h"
+#import "DDLoginController.h"
 
-@interface LoginViewController ()<IChatManagerDelegate,UITextFieldDelegate>
+@interface DDLoginController ()<IChatManagerDelegate,UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (weak, nonatomic) IBOutlet UIButton *registerButton;
-@property (weak, nonatomic) IBOutlet UIButton *loginButton;
-@property (weak, nonatomic) IBOutlet UISwitch *useIpSwitch;
+@property (strong, nonatomic)  UITextField *usernameTextField;
+@property (strong, nonatomic)  UITextField *passwordTextField;
+@property (strong, nonatomic)  UIButton *registerButton;
+@property (strong, nonatomic)  UIButton *loginButton;
+@property (strong, nonatomic)  UISwitch *useIpSwitch;
 
 
-- (IBAction)doRegister:(id)sender;
-- (IBAction)doLogin:(id)sender;
-- (IBAction)useIpAction:(id)sender;
 
 @end
 
-@implementation LoginViewController
+@implementation DDLoginController
 
 @synthesize usernameTextField = _usernameTextField;
 @synthesize passwordTextField = _passwordTextField;
 @synthesize registerButton = _registerButton;
 @synthesize loginButton = _loginButton;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -54,14 +44,27 @@
     
     [_useIpSwitch setOn:[[EaseMob sharedInstance].chatManager isUseIp] animated:YES];
     
-    self.title = NSLocalizedString(@"AppName", @"DoubleDate");
+    self.title = @"登录";
+    _usernameTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 10, 300, 30)];
+    [_usernameTextField setBorderStyle:UITextBorderStyleBezel]; //外框类型
+    _usernameTextField.placeholder = @"请输入用户名"; //默认显示的字
+    [self.view addSubview:_usernameTextField];
+    
+    _passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 45, 300, 30)];
+    [_passwordTextField setBorderStyle:UITextBorderStyleBezel]; //外框类型
+    _passwordTextField.placeholder = @"请输入不少于6位密码"; //默认显示的字
+    
+    [self.view addSubview:_passwordTextField];
+    
+    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 80, 300, 30)];
+    registerButton.backgroundColor=[UIColor redColor];
+    [registerButton setTitle:@"登录" forState:UIControlStateNormal];
+    [self.view addSubview:registerButton];
+    [registerButton addTarget:self action:@selector(doLogin) forControlEvents:UIControlEventTouchUpInside];
+ 
+    
+    
 }
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -69,52 +72,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-//注册账号
-- (IBAction)doRegister:(id)sender {
-    if (![self isEmpty]) {
-        //隐藏键盘
-        [self.view endEditing:YES];
-        //判断是否是中文，但不支持中英文混编
-        if ([self.usernameTextField.text isChinese]) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"login.nameNotSupportZh", @"Name does not support Chinese")
-                                  message:nil
-                                  delegate:nil
-                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-                                  otherButtonTitles:nil];
-            
-            [alert show];
-            
-            return;
-        }
-        [self showHudInView:self.view hint:NSLocalizedString(@"register.ongoing", @"Is to register...")];
-        //异步注册账号
-        [[EaseMob sharedInstance].chatManager asyncRegisterNewAccount:_usernameTextField.text
-                                                             password:_passwordTextField.text
-                                                       withCompletion:
-         ^(NSString *username, NSString *password, EMError *error) {
-             [self hideHud];
-             
-             if (!error) {
-                 TTAlertNoTitle(NSLocalizedString(@"register.success", @"Registered successfully, please log in"));
-             }else{
-                 switch (error.errorCode) {
-                     case EMErrorServerNotReachable:
-                         TTAlertNoTitle(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
-                         break;
-                     case EMErrorServerDuplicatedAccount:
-                         TTAlertNoTitle(NSLocalizedString(@"register.repeat", @"You registered user already exists!"));
-                         break;
-                     case EMErrorServerTimeout:
-                         TTAlertNoTitle(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
-                         break;
-                     default:
-                         TTAlertNoTitle(NSLocalizedString(@"register.fail", @"Registration failed"));
-                         break;
-                 }
-             }
-         } onQueue:nil];
-    }
-}
+
 
 //点击登陆后的操作
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password
@@ -180,7 +138,7 @@
 }
 
 //登陆账号
-- (IBAction)doLogin:(id)sender {
+- (void)doLogin {
     if (![self isEmpty]) {
         [self.view endEditing:YES];
         //支持是否为中文
@@ -209,12 +167,6 @@
     }
 }
 
-//是否使用ip
-- (IBAction)useIpAction:(id)sender
-{
-    UISwitch *ipSwitch = (UISwitch *)sender;
-    [[EaseMob sharedInstance].chatManager setIsUseIp:ipSwitch.isOn];
-}
 
 //判断账号和密码是否为空
 - (BOOL)isEmpty{
