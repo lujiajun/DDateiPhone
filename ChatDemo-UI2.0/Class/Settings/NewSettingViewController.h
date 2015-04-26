@@ -11,11 +11,12 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "DDBDynamoDB.h"
 
 @interface NewSettingViewController : UITableViewController
 
 - (void)refreshConfig;
 
 -(void) btnClick;
-
++(DDUser *) instanceDDuser;
 @end

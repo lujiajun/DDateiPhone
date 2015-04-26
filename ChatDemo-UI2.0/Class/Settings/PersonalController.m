@@ -29,10 +29,10 @@
 @property (strong, nonatomic) UISwitch *pushDisplaySwitch;
 
 @property (strong,nonatomic)  NSString *username;
+@property (strong,nonatomic)  DDUser   *dduser;
 
 
 @end
-static DDUser   *dduser;
 
 @implementation PersonalController
 
@@ -48,9 +48,7 @@ static DDUser   *dduser;
     }
     return self;
 }
-+(DDUser *) instanceDDuser{
-    return dduser;
-}
+
 
 - (void)viewDidLoad
 {
@@ -67,51 +65,7 @@ static DDUser   *dduser;
   
 //    [self refreshPushOptions];
     [self.tableView reloadData];
-    
-        //chaxun
-        NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
-        NSString *username = [loginInfo objectForKey:kSDKUsername];
-        //查询
-        DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
-    //同步方法
-        AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-        BFTask *bftask= [dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil];
-        bftask.waitUntilFinished;
-        dduser= bftask.result;
-        if (bftask.result) {
-            DDUser *user = bftask.result;
-            if(user.UID==nil){
-                dduser=[ddbDynamoDB addNewUser:_username];
-
-            }
-        }
-        }
-        //异步方法
-//       [[dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil]
-//         continueWithBlock:^id(BFTask *task) {
-//             if (task.error) {
-//                 NSLog(@"The request failed. Error: [%@]", task.error);
-//             }
-//             if (task.exception) {
-//                 NSLog(@"The request failed. Exception: [%@]", task.exception);
-//             }
-//             if (task.result) {
-//                 DDUser *dduser = task.result;
-//                 if(dduser.UID==nil){
-//                     dduser=[DDUser new];
-//                     dduser.UID=username;
-//                     dduser.nickName=@"test";
-//                     [ddbDynamoDB insertTableRow:dduser];
-//    
-//                 }
-//    
-//                 //Do something with the result.
-//             }
-//             return nil;
-//         }];
-//    
-//
-    
+}
 
 
 - (void)didReceiveMemoryWarning
@@ -185,14 +139,17 @@ static DDUser   *dduser;
         
             cell.textLabel.text = @"姓名";
             UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 80, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, 100, self.pushDisplaySwitch.frame.size.height)];
-            mylable.text=dduser.nickName;
+            mylable.text=NewSettingViewController.instanceDDuser.nickName;
+        
             mylable.textAlignment=NSTextAlignmentRight;
             [cell.contentView addSubview:mylable];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }else if(indexPath.row==2){
             cell.textLabel.text = @"学校";
             UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 80, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, 100, self.pushDisplaySwitch.frame.size.height)];
-            mylable.text=dduser.university;
+        
+            mylable.text=[NewSettingViewController instanceDDuser].university;
+            
             mylable.textAlignment=NSTextAlignmentRight;
             [cell.contentView addSubview:mylable];
 
@@ -200,7 +157,7 @@ static DDUser   *dduser;
         }else if(indexPath.row==3){
             cell.textLabel.text = @"性别";
             UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 80, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2,100, self.pushDisplaySwitch.frame.size.height)];
-            mylable.text=dduser.gender;
+            mylable.text=NewSettingViewController.instanceDDuser.gender;
             mylable.textAlignment=NSTextAlignmentRight;
             [cell.contentView addSubview:mylable];
 

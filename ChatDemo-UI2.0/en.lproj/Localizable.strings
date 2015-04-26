@@ -60,6 +60,8 @@
 "login.ongoing" = "Is Login...";
 "login.fail" = "Logon failure";
 "login.inputNameAndPswd" = "Please enter username and password";
+"register.school" = "plsase enter city and school";
+"register.nicknameandgender"="please enter nickname and gender";
 "login.inputApnsNickname" = "Please enter nickname for apns";
 
 //register
