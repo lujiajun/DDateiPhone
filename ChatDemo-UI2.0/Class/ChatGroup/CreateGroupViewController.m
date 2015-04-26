@@ -14,13 +14,14 @@
 
 #import "ContactSelectionViewController.h"
 #import "EMTextView.h"
+#import "DDBDynamoDB.h"
 
 @interface CreateGroupViewController ()<UITextFieldDelegate, UITextViewDelegate, EMChooseViewDelegate>
 
 @property (strong, nonatomic) UIView *switchView;
 @property (strong, nonatomic) UIBarButtonItem *rightItem;
-@property (strong, nonatomic) UITextField *textField;
-@property (strong, nonatomic) EMTextView *textView;
+@property (strong, nonatomic) UIImageView *chatRoomCover;
+@property (strong, nonatomic) EMTextView *mottoTextView;
 
 @property (nonatomic) BOOL isPublic;
 @property (strong, nonatomic) UILabel *groupTypeLabel;//群组类型
@@ -71,9 +72,9 @@
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
     
-    [self.view addSubview:self.textField];
-    [self.view addSubview:self.textView];
-    [self.view addSubview:self.switchView];
+    [self.view addSubview:self.chatRoomCover];
+    [self.view addSubview:self.mottoTextView];
+//    [self.view addSubview:self.switchView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,42 +85,43 @@
 
 #pragma mark - getter
 
-- (UITextField *)textField
+- (UIImageView *)chatRoomCover
 {
-    if (_textField == nil) {
-        _textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, 300, 40)];
-        _textField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-        _textField.layer.borderWidth = 0.5;
-        _textField.layer.cornerRadius = 3;
-        _textField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 30)];
-        _textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        _textField.leftViewMode = UITextFieldViewModeAlways;
-        _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        _textField.font = [UIFont systemFontOfSize:15.0];
-        _textField.backgroundColor = [UIColor whiteColor];
-        _textField.placeholder = NSLocalizedString(@"group.create.inputName", @"please enter the group name");
-        _textField.returnKeyType = UIReturnKeyDone;
-        _textField.delegate = self;
-    }
-    
-    return _textField;
+	if (_chatRoomCover == nil) {
+		_chatRoomCover = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
+		_chatRoomCover.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+		_chatRoomCover.layer.borderWidth = 0.5;
+		_chatRoomCover.layer.cornerRadius = 3;
+		_chatRoomCover.backgroundColor = [UIColor whiteColor];
+
+		UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
+        button.titleLabel.font = [UIFont systemFontOfSize:14.0];
+        [button setTitle:@"设置封面" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+		button.backgroundColor = [UIColor redColor];
+		button.center = CGPointMake(_chatRoomCover.frame.size.width / 2, _chatRoomCover.frame.size.height / 2);
+        [button addTarget:self action:@selector(addContacts:) forControlEvents:UIControlEventTouchUpInside];
+        [_chatRoomCover addSubview:button];
+	}
+
+	return _chatRoomCover;
 }
 
-- (EMTextView *)textView
+- (EMTextView *)mottoTextView
 {
-    if (_textView == nil) {
-        _textView = [[EMTextView alloc] initWithFrame:CGRectMake(10, 70, 300, 80)];
-        _textView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-        _textView.layer.borderWidth = 0.5;
-        _textView.layer.cornerRadius = 3;
-        _textView.font = [UIFont systemFontOfSize:14.0];
-        _textView.backgroundColor = [UIColor whiteColor];
-        _textView.placeholder = NSLocalizedString(@"group.create.declaration", @"please enter the Double Date declaration");
-        _textView.returnKeyType = UIReturnKeyDone;
-        _textView.delegate = self;
+    if (_mottoTextView == nil) {
+        _mottoTextView = [[EMTextView alloc] initWithFrame:CGRectMake(10, 220, 300, 80)];
+        _mottoTextView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+        _mottoTextView.layer.borderWidth = 0.5;
+        _mottoTextView.layer.cornerRadius = 3;
+        _mottoTextView.font = [UIFont systemFontOfSize:14.0];
+        _mottoTextView.backgroundColor = [UIColor whiteColor];
+        _mottoTextView.placeholder = NSLocalizedString(@"group.create.declaration", @"please enter the Double Date declaration");
+        _mottoTextView.returnKeyType = UIReturnKeyDone;
+        _mottoTextView.delegate = self;
     }
     
-    return _textView;
+    return _mottoTextView;
 }
 
 - (UIView *)switchView
@@ -225,12 +227,25 @@
     __weak CreateGroupViewController *weakSelf = self;
 	NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
 	NSString *username = [loginInfo objectForKey:kSDKUsername];
-	NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), username, self.textField.text];
-	[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:self.textView.text description:self.textView.text invitees:source initialWelcomeMessage:messageStr styleSetting:setting completion: ^(EMGroup *group, EMError *error) {
+	NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), username, self.mottoTextView.text];
+	[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:self.mottoTextView.text description:self.mottoTextView.text invitees:source initialWelcomeMessage:messageStr styleSetting:setting completion: ^(EMGroup *group, EMError *error) {
 	    [weakSelf hideHud];
 	    if (group && !error) {
 	        [weakSelf showHint:NSLocalizedString(@"group.create.success", @"create group success")];
 	        [weakSelf.navigationController popViewControllerAnimated:YES];
+
+	        DDBDynamoDB *dao = [[DDBDynamoDB alloc] init];
+	        CHATROOM2 *chatRoom2 = [CHATROOM2 new];
+	        NSString *username2 = [[selectedSources objectAtIndex:0] username];
+	        chatRoom2.RID = [[username stringByAppendingString:@"__________"] stringByAppendingString:username2];
+	        chatRoom2.clickNum = 0;
+	        chatRoom2.gender = [dao getTableUser:username].gender;
+	        chatRoom2.gradeFrom = @"无限制";
+	        chatRoom2.motto = self.mottoTextView.text;
+	        chatRoom2.picturePath = @"";
+            chatRoom2.schoolRestrict = @"无限制";
+	        chatRoom2.UID1 = username;
+	        chatRoom2.UID2 = username2;
 		} else {
 	        [weakSelf showHint:NSLocalizedString(@"group.create.fail", @"Failed to create a group, please operate again")];
 		}
@@ -282,7 +297,7 @@
 
 - (void)addContacts:(id)sender
 {
-    if (self.textView.text.length == 0) {
+    if (self.mottoTextView.text.length == 0) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"group.create.declaration.tip", @"请输入Double Date宣言") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
         [alertView show];
         return;

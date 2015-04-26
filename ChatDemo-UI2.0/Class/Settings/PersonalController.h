@@ -11,5 +11,4 @@
 
 @interface PersonalController : UITableViewController
 
-+(DDUser *) instanceDDuser;
 @end
