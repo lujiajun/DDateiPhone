@@ -19,4 +19,6 @@
 
 -(void) btnClick;
 +(DDUser *) instanceDDuser;
+
+-(void) setDDUser:(DDUser *) user;
 @end

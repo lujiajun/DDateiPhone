@@ -136,7 +136,7 @@
              _nicktext = [[UITextField alloc] initWithFrame:CGRectMake(0, 10, cell.frame.size.width, 30)];
             [_nicktext setBorderStyle:UITextBorderStyleBezel]; //外框类型
             
-            _nicktext.placeholder = [PersonalController instanceDDuser].nickName; //默认显示的字
+            _nicktext.placeholder = NewSettingViewController.instanceDDuser.nickName; //默认显示的字
             [cell.contentView addSubview:_nicktext];
             
             
@@ -167,40 +167,18 @@
 
 - (void)savePushOptions
 {
-    //查询出dduser ,并修改
-    //查询
+
+    //        xiugai头像
     DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
+    DDUser *user=[DDUser new];
+    user=NewSettingViewController.instanceDDuser;
+    user.nickName=_nicktext.text;
+    NewSettingViewController *newSetting=[NewSettingViewController alloc];
+    [newSetting setDDUser:user];
     
-    AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    
-    [[dynamoDBObjectMapper load:[DDUser class] hashKey:_username rangeKey:nil] continueWithBlock:^id(BFTask *task) {
-        if (task.error) {
-            NSLog(@"The request failed. Error: [%@]", task.error);
-        }
-        if (task.exception) {
-            NSLog(@"The request failed. Exception: [%@]", task.exception);
-        }
-        if (task.result) {
-            DDUser *dduser = task.result;
-            if(dduser.UID!=nil){
-                dduser.nickName=_nicktext.text;
-                [ddbDynamoDB updateTable:dduser];
-                
-                
-            }
-            
-            //Do something with the result.
-        }
-//        PersonalController *pushController = [[PersonalController alloc] initWithStyle:UITableViewStylePlain];
-//
-//        [self.navigationController pushViewController:pushController animated:YES];
-       
-
-        return nil;
-    }];
-
+    [ddbDynamoDB updateTable:user];
+ 
     [self.navigationController popViewControllerAnimated:YES];
-  
 }
 
 

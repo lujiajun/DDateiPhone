@@ -81,6 +81,7 @@
 		8A4F270C1AEB36D60050D86E /* DDSchoolRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F270B1AEB36D60050D86E /* DDSchoolRegisterController.m */; };
 		8A4F270F1AEB53410050D86E /* Commbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F270E1AEB53410050D86E /* Commbox.m */; };
 		8A4F27121AEB5BDD0050D86E /* DDRegisterFinishController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F27111AEB5BDD0050D86E /* DDRegisterFinishController.m */; };
+		8A7DBEE31AECC48400D7941F /* DDPersonalUpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7DBEE21AECC48400D7941F /* DDPersonalUpdateController.m */; };
 		8ADB384E1AE286BD00FCC6FC /* PersonalController.h in Resources */ = {isa = PBXBuildFile; fileRef = 8ADB384D1AE286BD00FCC6FC /* PersonalController.h */; };
 		8ADB38501AE286F000FCC6FC /* PersonalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB384F1AE286F000FCC6FC /* PersonalController.m */; };
 		8ADB388C1AE2A17100FCC6FC /* UsernickController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB388B1AE2A17100FCC6FC /* UsernickController.m */; };
@@ -508,6 +509,8 @@
 		8A4F270E1AEB53410050D86E /* Commbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Commbox.m; sourceTree = "<group>"; };
 		8A4F27101AEB5B8E0050D86E /* DDRegisterFinishController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDRegisterFinishController.h; sourceTree = "<group>"; };
 		8A4F27111AEB5BDD0050D86E /* DDRegisterFinishController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDRegisterFinishController.m; sourceTree = "<group>"; };
+		8A7DBEE11AECC48400D7941F /* DDPersonalUpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPersonalUpdateController.h; sourceTree = "<group>"; };
+		8A7DBEE21AECC48400D7941F /* DDPersonalUpdateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPersonalUpdateController.m; sourceTree = "<group>"; };
 		8ADB384D1AE286BD00FCC6FC /* PersonalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalController.h; sourceTree = "<group>"; };
 		8ADB384F1AE286F000FCC6FC /* PersonalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalController.m; sourceTree = "<group>"; };
 		8ADB388A1AE2A15900FCC6FC /* UsernickController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsernickController.h; sourceTree = "<group>"; };
@@ -1546,6 +1549,8 @@
 		90911125192EEBB8008A48AA /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				8A7DBEE11AECC48400D7941F /* DDPersonalUpdateController.h */,
+				8A7DBEE21AECC48400D7941F /* DDPersonalUpdateController.m */,
 				9091112D192EEC0F008A48AA /* SettingsViewController.h */,
 				9091112E192EEC0F008A48AA /* SettingsViewController.m */,
 				3C117120197D243B00E2DBEC /* PushNotificationViewController.h */,
@@ -2693,6 +2698,7 @@
 				9003D8711939D8D000DC38A4 /* DXFaceView.m in Sources */,
 				90F3ED471A75F3A4005A0135 /* ChatViewController+Category.m in Sources */,
 				8A4020C51AE357DD00806014 /* NewSettingViewController.m in Sources */,
+				8A7DBEE31AECC48400D7941F /* DDPersonalUpdateController.m in Sources */,
 				90A706081A8B63B200376154 /* EMSDWebImageManager.m in Sources */,
 				90911117192EEAED008A48AA /* THProgressView.m in Sources */,
 				3C5EB36319407CAF005C7704 /* EMChooseViewController.m in Sources */,

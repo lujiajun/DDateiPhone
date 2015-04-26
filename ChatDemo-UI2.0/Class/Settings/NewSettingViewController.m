@@ -21,7 +21,8 @@
 #import "AliCloudController.h"
 #import "DDBDynamoDB.h"
 #import "Constants.h"
-
+#import "DDRegisterFinishController.h"
+#import "DDPersonalUpdateController.h"
 @interface NewSettingViewController ()
 
 @property (strong, nonatomic) UIView *footerView;
@@ -46,6 +47,9 @@ static DDUser   *uuser;
 +(DDUser *) instanceDDuser{
     return uuser;
 }
+-(void) setDDUser:(DDUser *) user{
+    uuser=user;
+}
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -58,8 +62,8 @@ static DDUser   *uuser;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = NSLocalizedString(@"title.setting", @"Setting");
-    self.view.backgroundColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
+    self.title =@"个人主页";
+    self.view.backgroundColor = [UIColor redColor];
     
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableFooterView = self.footerView;
@@ -171,33 +175,57 @@ static DDUser   *uuser;
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             cell.accessoryType = UITableViewCellAccessoryNone;
+            //background
+            UIImage *bak=[UIImage imageNamed:@"settingback"];
+            UIImageView *bakview=[[UIImageView alloc] initWithImage:bak];
+            bakview.frame=CGRectMake(0, 0, cell.frame.size.width, 160);
+            [cell.contentView addSubview:bakview];
+ 
+            //touxiang
             UIImage *img=[UIImage alloc];
-            
             if(uuser && uuser.picPath){
                 NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:uuser.picPath]]];
                 img = [UIImage imageWithData:data];
             }else {
                 img=[UIImage imageNamed:@"Logo_new.png"];
             }
-            
             UIImageView *imgHead=[[UIImageView alloc] initWithImage:img];
             imgHead.layer.masksToBounds =YES;
-            
             imgHead.layer.cornerRadius =50;
-            imgHead.frame=CGRectMake(self.tableView.frame.size.width/2, 10, 100, 100);
+            imgHead.frame=CGRectMake(self.tableView.frame.size.width/2-50, 10, 100, 100);
             [imgHead setContentMode:UIViewContentModeScaleToFill];
-            
-            
-            [cell.contentView addSubview:imgHead] ;
-            
-            
+
+            [bakview addSubview:imgHead] ;
+            //添加nickname
+            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width/2-35, 112, 70, 20)];
+            mylable.text=uuser.nickName;
+            mylable.textAlignment=NSTextAlignmentCenter;
+            [bakview addSubview:mylable];
+            //添加性别图标
+            NSString *sex;
+            if(uuser.gender ==@"男" || uuser.gender ==@"Male"){
+                sex=@"sexbox";
+            }else{
+                sex=@"sexgirl";
+            }
+            UIImage *seximg=[UIImage imageNamed:sex];
+            UIImageView *sexview=[[UIImageView alloc] initWithImage:seximg];
+            sexview.frame=CGRectMake(self.tableView.frame.size.width/2+35, 112, 10, 10);
+            [bakview addSubview:sexview];
+            //添加double 号
+            UILabel *doubledate=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width/2-35, 134, 70, 20)];
+            doubledate.text=[@"Double号:" stringByAppendingString:uuser.UID];
+            doubledate.textAlignment=NSTextAlignmentLeft;
+            doubledate.font=[UIFont fontWithName:@"Helvetica" size:12];
+            [bakview addSubview:doubledate];
+
         }
         else if (indexPath.row == 1)
         {
             // 1.创建UIScrollView
             UIScrollView *scrollView = [[UIScrollView alloc] init];
             [scrollView setBackgroundColor:[UIColor whiteColor]];
-            scrollView.frame = CGRectMake(70, 165, 400, 60); // frame中的size指UIScrollView的可视范围
+            scrollView.frame = CGRectMake(70, 162, 400, 90); // frame中的size指UIScrollView的可视范围
             scrollView.backgroundColor = [UIColor whiteColor];
             [self.view addSubview:scrollView];
             
@@ -206,24 +234,23 @@ static DDUser   *uuser;
             imageView.image = [UIImage imageNamed:@"80.png"];
             CGFloat imgW = imageView.image.size.width; // 图片的宽度
             CGFloat imgH = imageView.image.size.height; // 图片的高度
-            imageView.frame = CGRectMake(0, 0, imgW, imgH);
+            imageView.frame = CGRectMake(0, 0, imgW, imgW);
             [scrollView addSubview:imageView];
             
             UIImageView *imageViewTwo = [[UIImageView alloc] init];
             imageViewTwo.image = [UIImage imageNamed:@"80.png"];
             CGFloat imgTwoW = imageViewTwo.image.size.width; // 图片的宽度
             CGFloat imgTwoH = imageViewTwo.image.size.height; // 图片的高度
-            imageViewTwo.frame = CGRectMake(imgW+5, 0, imgTwoW, imgTwoH);
+            imageViewTwo.frame = CGRectMake(imgW+5, 0, imgW, imgW);
             [scrollView addSubview:imageViewTwo];
             
-            UIButton *addPic=[UIButton buttonWithType:UIButtonTypeRoundedRect];
-            addPic.frame=CGRectMake(imgW+imgTwoW+10, 0, 40, 20);
-            [addPic setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [addPic setTitle:@"添加" forState:UIControlStateNormal];
-            [addPic setBackgroundColor:[UIColor redColor]];
-            [scrollView addSubview:addPic];
-            [addPic addTarget:self action:@selector(btnClick) forControlEvents:(UIControlEventTouchUpInside)];// 按钮事件
+            UIImageView *imageViewadd = [[UIImageView alloc] init];
+            imageViewTwo.image = [UIImage imageNamed:@"addpic.png"];
+            imageViewTwo.frame = CGRectMake(imgW+5, 0, imgW, imgW);
             
+            [imageViewadd setUserInteractionEnabled:YES];
+            [imageViewadd addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addPicClick:)]];
+            [scrollView addSubview:imageViewadd];
             // 3.设置scrollView的属性
             
             // 设置UIScrollView的滚动范围（内容大小）
@@ -241,27 +268,63 @@ static DDUser   *uuser;
         }
         else if (indexPath.row == 2)
         {
-            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(60, 0, 200, 20)];
-            mylable.text=[@"学校：" stringByAppendingString:uuser.university];
+            //background
+            UIImage *bak=[UIImage imageNamed:@"files"];
+            UIImageView *bakview=[[UIImageView alloc] initWithImage:bak];
+            bakview.frame=CGRectMake(0, 0, cell.frame.size.width, 160);
+            [cell.contentView addSubview:bakview];
+            
+            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(30, 5, 100, 20)];
+            mylable.text=[@"学校：   " stringByAppendingString:uuser.university];
             mylable.textAlignment=NSTextAlignmentLeft;
-            [cell.contentView addSubview:mylable];
-            UILabel *school=[[UILabel alloc]initWithFrame:CGRectMake(60, 20, 200, 20)];
-            school.text=[@"年级：" stringByAppendingString:uuser.grade];
-            [cell.contentView addSubview:school];
-            UILabel *intr=[[UILabel alloc]initWithFrame:CGRectMake(60, 40, 200, 20)];
-            intr.text=[@"性别：" stringByAppendingString:uuser.gender];
-            [cell.contentView addSubview:intr];
+            mylable.font=[UIFont fontWithName:@"Helvetica" size:12];
+            [bakview addSubview:mylable];
+            //isdoubled
+            UIImageView *imageView = [[UIImageView alloc] init];
+            imageView.image = [UIImage imageNamed:@"confirm.png"];
+            imageView.frame = CGRectMake(140, 5, 20, 15);
+            [bakview addSubview:imageView];
+            
+            //bianji
+            UIImageView *bianjiView = [[UIImageView alloc] init];
+            bianjiView.image = [UIImage imageNamed:@"bianji"];
+            bianjiView.frame = CGRectMake(cell.frame.size.width-30, 5, 15, 15);
+            [bakview addSubview:bianjiView];
+            
+            UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(30, bianjiView.frame.origin.y+20, 200, 20)];
+            city.text=@"城市：   北京" ;
+            city.font=[UIFont fontWithName:@"Helvetica" size:12];
+            [bakview addSubview:city];
+            
+            UILabel *school=[[UILabel alloc]initWithFrame:CGRectMake(30, city.frame.origin.y+20, 200, 20)];
+            school.text=[@"年级：   " stringByAppendingString:uuser.grade];
+            school.font=[UIFont fontWithName:@"Helvetica" size:12];
+            [bakview addSubview:school];
+            
+            UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(30, school.frame.origin.y+20, 200, 20)];
+            gender.text=[@"性别：   " stringByAppendingString:uuser.gender];
+            gender.font=[UIFont fontWithName:@"Helvetica" size:12];
+            [bakview addSubview:gender];
+            
+            UILabel *intre=[[UILabel alloc]initWithFrame:CGRectMake(30, gender.frame.origin.y+20, 200, 20)];
+            intre.text=[@"爱好：   " stringByAppendingString:@"testrttttttttttttttttttttttttt"];
+            intre.font=[UIFont fontWithName:@"Helvetica" size:12];
+            [bakview addSubview:intre];
+            
+            UILabel *sign=[[UILabel alloc]initWithFrame:CGRectMake(30, intre.frame.origin.y+20, 200, 20)];
+            sign.text=[@"签名：   " stringByAppendingString:@"testrttttttttttttttttttttttttt"];
+            sign.font=[UIFont fontWithName:@"Helvetica" size:12];
+            [bakview addSubview:sign];
             //            cell.textLabel.text = NSLocalizedString(@"title.buddyBlock", @"Black List");
             //            cell.textLabel.text=@"CESHI";
             //            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
         }
         else if (indexPath.row == 3)
-            
         {
-            UIImage *img=[UIImage imageNamed:@"mail"];
+            UIImage *img=[UIImage imageNamed:@"setting"];
             UIImageView *imgHead=[[UIImageView alloc] initWithImage:img];
-            imgHead.frame=CGRectMake(20, 15, 30, 30);
+            imgHead.frame=CGRectMake(20, 15, 15, 15);
             [cell.contentView addSubview:imgHead];
             UILabel *sets=[[UILabel alloc] initWithFrame:CGRectMake(60, 5, 100, 50)];
             sets.text= NSLocalizedString(@"title.setting", @"Setting");
@@ -269,28 +332,24 @@ static DDUser   *uuser;
             
 //            cell.textLabel.text = NSLocalizedString(@"title.setting", @"Setting");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }else if(indexPath.row==4){
+            UIImage *img=[UIImage imageNamed:@"help"];
+            UIImageView *imgHead=[[UIImageView alloc] initWithImage:img];
+            imgHead.frame=CGRectMake(20, 15, 15, 15);
+            [cell.contentView addSubview:imgHead];
+            UILabel *sets=[[UILabel alloc] initWithFrame:CGRectMake(60, 5, 100, 50)];
+            sets.text= @"帮助";
+            [cell.contentView addSubview:sets];
+            
+            //            cell.textLabel.text = NSLocalizedString(@"title.setting", @"Setting");
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
         }
         
         
     }
     
     return cell;
-}
-
--(void) addUser{
-    DDUser *user=[DDUser new];
-    
-    user.UID=@"liufei1";
-    user.nickName=@"dafei";
-    user.gender=@"男";
-    user.grade=@"大二";
-//    user.isDoublerID=YES;
-//    user.isPic=YES;
-    user.password=@"ere";
-    user.university=@"北京大学";
-    user.picPath=@"xxx";
-//    user.waitingID=@"uu";
-    [self insertTableRow:user];
 }
 
 - (void)insertTableRow:(DDUser *)tableRow {
@@ -300,17 +359,17 @@ static DDUser   *uuser;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row==0){
-        return 163;
+        return 160;
     }else if(indexPath.row==1){
-        return 70;
+        return 100;
     }else if(indexPath.row==2){
-        return 70;
+        return 150;
     }
-    return 50;
+    return 40;
 }
 
 
--(void) btnClick{
+-(void) addPicClick:(UITapGestureRecognizer *)gestureRecognizer{
     UIActionSheet* actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:@"请选择文件来源"
                                   delegate:self
@@ -381,35 +440,7 @@ static DDUser   *uuser;
         AliCloudController *aliCloud=[AliCloudController alloc];
         aliCloud.initSdk;
         NSString *name= [aliCloud uploadPic:data];
-        
-        
-        
-        //图片保存的路径
-        //这里将图片放在沙盒的documents文件夹中
-        //        NSString * DocumentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-        //
-        //        //文件管理器
-        //        NSFileManager *fileManager = [NSFileManager defaultManager];
-        //
-        //        //把刚刚图片转换的data对象拷贝至沙盒中 并保存为image.png
-        //        [fileManager createDirectoryAtPath:DocumentsPath withIntermediateDirectories:YES attributes:nil error:nil];
-        //        [fileManager createFileAtPath:[DocumentsPath stringByAppendingString:@"/image.png"] contents:data attributes:nil];
-        //
-        //        //得到选择后沙盒中图片的完整路径
-        //        NSString    *filePath = [[NSString alloc]initWithFormat:@"%@%@",DocumentsPath,  @"/image.png"];
-        //
-        //        //关闭相册界面
-        //        [picker dismissModalViewControllerAnimated:YES];
-        //
-        //        //创建一个选择后图片的小图标放在下方
-        //        //类似微薄选择图后的效果
-        //        UIImageView *smallimage = [[UIImageView alloc] initWithFrame:
-        //                                    CGRectMake(50, 120, 40, 40)];
-        //
-        //        smallimage.image = image;
-        //        //加在视图中
-        //        [self.view addSubview:smallimage];
-        
+    
     }
     
 }
@@ -432,7 +463,7 @@ static DDUser   *uuser;
     }
     else if (indexPath.row == 2)
     {
-        BlackListViewController *blackController = [[BlackListViewController alloc] initWithNibName:nil bundle:nil];
+        DDPersonalUpdateController *blackController = [[DDPersonalUpdateController alloc] initWithNibName:nil bundle:nil];
         [self.navigationController pushViewController:blackController animated:YES];
     }
     else if (indexPath.row == 3)

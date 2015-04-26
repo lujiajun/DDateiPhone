@@ -30,6 +30,8 @@
 
 @property (strong,nonatomic)  NSString *username;
 @property (strong,nonatomic)  DDUser   *dduser;
+@property  (strong,nonatomic) UIImage *imghead;
+@property  (strong,nonatomic ) UIImageView *imageView;
 
 
 @end
@@ -128,11 +130,19 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             cell.textLabel.text = @"头像";
+            _imghead=[UIImage alloc];
             
-            UIImageView *imageView = [[UIImageView alloc] init];
-            imageView.image = [UIImage imageNamed:@"80.png"];
-            imageView.frame = CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 10, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, self.pushDisplaySwitch.frame.size.width, self.pushDisplaySwitch.frame.size.width);
-            [cell.contentView addSubview:imageView];
+            if(NewSettingViewController.instanceDDuser && NewSettingViewController.instanceDDuser.picPath){
+                NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:NewSettingViewController.instanceDDuser.picPath]]];
+                _imghead = [UIImage imageWithData:data];
+            }else {
+                _imghead=[UIImage imageNamed:@"Logo_new.png"];
+            }
+            
+             _imageView = [[UIImageView alloc] init];
+            _imageView.image = _imghead;
+            _imageView.frame = CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 10, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, self.pushDisplaySwitch.frame.size.width, self.pushDisplaySwitch.frame.size.width);
+            [cell.contentView addSubview:_imageView];
             
            
         }else if(indexPath.row==1){
@@ -140,7 +150,6 @@
             cell.textLabel.text = @"姓名";
             UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 80, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, 100, self.pushDisplaySwitch.frame.size.height)];
             mylable.text=NewSettingViewController.instanceDDuser.nickName;
-        
             mylable.textAlignment=NSTextAlignmentRight;
             [cell.contentView addSubview:mylable];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -334,25 +343,27 @@
         {
             data = UIImagePNGRepresentation(image);
         }
+        //关闭相册界面
+        [picker dismissModalViewControllerAnimated:YES];
+        UIImageView *smallimage = [[UIImageView alloc] initWithFrame:_imageView.frame];
+        
+        smallimage.image = image;
+        [self.view addSubview: smallimage];
+        
         AliCloudController *aliCloud=[AliCloudController alloc];
        
         NSString *name= [aliCloud uploadPic:data];
-        //xiugai头像
-//        DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
-//        dduser.picPath=[DDPicPath stringByAppendingString:name];
-//        [ddbDynamoDB updateTable:dduser];
-
-//        DDUser *dduser=  [ddbDynamoDB getTableUser:_username];
-//        if(dduser==nil){
-//            dduser=[DDUser new];
-//            dduser.UID=_username;
-//            dduser.picPath=[DDPicPath stringByAppendingString:name];
-//            [ddbDynamoDB insertTableRow:dduser];
-//        }else{
-//            dduser.picPath=[DDPicPath stringByAppendingString:name];
-//            [ddbDynamoDB updateTable:dduser];
-//        }
-
+     
+        
+//        xiugai头像
+        DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
+        DDUser *user=[DDUser new];
+        user=NewSettingViewController.instanceDDuser;
+        user.picPath=name;
+        NewSettingViewController *newSetting=[NewSettingViewController alloc];
+        [newSetting setDDUser:user];
+       
+        [ddbDynamoDB updateTable:user];
     
     }
     
