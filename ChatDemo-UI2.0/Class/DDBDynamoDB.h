@@ -18,18 +18,24 @@
 
 @class DDUser;
 @class BFTask;
+@class CHATROOM2;
 
 @interface DDBDynamoDB : NSObject
 
-- ( void) addUser;
+- (void)addUser;
 
-- (void) insertTableRow:(DDUser *)tableRow;
+- (void)insertTableRow:(DDUser *)tableRow;
 
-- (DDUser *) getTableUser:(NSString*)uid;
+- (DDUser *)getTableUser:(NSString *)uid;
 
-- (void) updateTable:(DDUser *)tableRow;
+- (void)updateTable:(DDUser *)tableRow;
 
--(DDUser *) addNewUser:(NSString *) name;
+- (DDUser *)addNewUser:(NSString *)name;
+
+
+#pragma mark - ChatRoom2
+- (void)insertChatroom2:(CHATROOM2 *)chatRoom2;
+
 
 @end
 
@@ -57,32 +63,16 @@
 
 @end
 
-@interface DDBTableRowTopScore : AWSDynamoDBObjectModel <AWSDynamoDBModeling>
+@interface CHATROOM2 : AWSDynamoDBObjectModel <AWSDynamoDBModeling>
 
-@property (nonatomic, strong) NSString *UserId;
-@property (nonatomic, strong) NSString *GameTitle;
-@property (nonatomic, strong) NSNumber *TopScore;
-@property (nonatomic, strong) NSNumber *Wins;
-@property (nonatomic, strong) NSNumber *Losses;
-
-@end
-
-@interface DDBTableRowWins : AWSDynamoDBObjectModel <AWSDynamoDBModeling>
-
-@property (nonatomic, strong) NSString *UserId;
-@property (nonatomic, strong) NSString *GameTitle;
-@property (nonatomic, strong) NSNumber *TopScore;
-@property (nonatomic, strong) NSNumber *Wins;
-@property (nonatomic, strong) NSNumber *Losses;
-
-@end
-
-@interface DDBTableRowLosses : AWSDynamoDBObjectModel <AWSDynamoDBModeling>
-
-@property (nonatomic, strong) NSString *UserId;
-@property (nonatomic, strong) NSString *GameTitle;
-@property (nonatomic, strong) NSNumber *TopScore;
-@property (nonatomic, strong) NSNumber *Wins;
-@property (nonatomic, strong) NSNumber *Losses;
+@property (nonatomic, strong) NSString *RID;
+@property (nonatomic, strong) NSString *clickNum;
+@property (nonatomic, strong) NSString *gender;
+@property (nonatomic, strong) NSString *gradeFrom;
+@property (nonatomic, strong) NSString *motto;
+@property (nonatomic, strong) NSString *picturePath;
+@property (nonatomic, strong) NSString *schoolRestrict;
+@property (nonatomic, strong) NSString *UID1;
+@property (nonatomic, strong) NSString *UID2;
 
 @end

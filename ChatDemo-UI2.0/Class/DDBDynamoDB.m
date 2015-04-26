@@ -15,6 +15,7 @@
 
 #import "DDBDynamoDB.h"
 #import "AWSDynamoDB/AWSDynamoDB.h"
+#import "BFExecutor.h"
 
 
 @implementation DDBDynamoDB
@@ -131,6 +132,31 @@
 }
 
 
+#pragma mark - ChatRoom2
+- (void)insertChatroom2:(CHATROOM2 *)chatRoom2 {
+	AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+	[[dynamoDBObjectMapper save:chatRoom2] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id (BFTask *task) {
+		if (!task.error) {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Succeeded"
+			                                                message:@"Successfully inserted the data into the table."
+			                                               delegate:nil
+			                                      cancelButtonTitle:@"OK"
+			                                      otherButtonTitles:nil];
+            [alert show];
+		} else {
+			NSLog(@"Error: [%@]", task.error);
+
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+			                                                message:@"Failed to insert the data into the table."
+			                                               delegate:nil
+			                                      cancelButtonTitle:@"OK"
+			                                      otherButtonTitles:nil];
+			[alert show];
+		}
+        return nil;
+    }];
+}
+
 
 @end
 
@@ -147,50 +173,14 @@
 
 @end
 
-@implementation DDBTableRowTopScore
+@implementation CHATROOM2
 
 + (NSString *)dynamoDBTableName {
-    return @"";
+    return @"CHATROOM2";
 }
 
 + (NSString *)hashKeyAttribute {
-    return @"GameTitle";
-}
-
-+ (NSString *)rangeKeyAttribute {
-    return @"TopScore";
-}
-
-@end
-
-@implementation DDBTableRowWins
-
-+ (NSString *)dynamoDBTableName {
-    return @"";
-}
-
-+ (NSString *)hashKeyAttribute {
-    return @"GameTitle";
-}
-
-+ (NSString *)rangeKeyAttribute {
-    return @"Wins";
-}
-
-@end
-
-@implementation DDBTableRowLosses
-
-+ (NSString *)dynamoDBTableName {
-    return @"";
-}
-
-+ (NSString *)hashKeyAttribute {
-    return @"GameTitle";
-}
-
-+ (NSString *)rangeKeyAttribute {
-    return @"Losses";
+    return @"RID";
 }
 
 @end
