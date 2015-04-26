@@ -97,10 +97,11 @@
 		UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
         button.titleLabel.font = [UIFont systemFontOfSize:14.0];
         [button setTitle:@"设置封面" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithRed:32 / 255.0 green:134 / 255.0 blue:158 / 255.0 alpha:1.0] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 		button.backgroundColor = [UIColor redColor];
 		button.center = CGPointMake(_chatRoomCover.frame.size.width / 2, _chatRoomCover.frame.size.height / 2);
-        [button addTarget:self action:@selector(addContacts:) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(chooseChatRoomCoverImage:) forControlEvents:UIControlEventTouchUpInside];
         [_chatRoomCover addSubview:button];
 	}
 
@@ -238,14 +239,15 @@
 	        CHATROOM2 *chatRoom2 = [CHATROOM2 new];
 	        NSString *username2 = [[selectedSources objectAtIndex:0] username];
 	        chatRoom2.RID = [[username stringByAppendingString:@"__________"] stringByAppendingString:username2];
-	        chatRoom2.clickNum = 0;
-	        chatRoom2.gender = [dao getTableUser:username].gender;
-	        chatRoom2.gradeFrom = @"无限制";
-	        chatRoom2.motto = self.mottoTextView.text;
-	        chatRoom2.picturePath = @"";
-            chatRoom2.schoolRestrict = @"无限制";
+	        chatRoom2.ClickNum = 0;
+	        chatRoom2.Gender = [dao getTableUser:username].gender;
+	        chatRoom2.GradeFrom = @"无限制";
+	        chatRoom2.Motto = self.mottoTextView.text;
+	        chatRoom2.PicturePath = @"http://t12.baidu.com/it/u=4095575894,102452705&fm=32&s=A98AA55F526172A6F6A058E50300A060&w=623&h=799&img.JPEG";
+            chatRoom2.SchoolRestrict = @"无限制";
 	        chatRoom2.UID1 = username;
 	        chatRoom2.UID2 = username2;
+            [dao insertChatroom2:chatRoom2];
 		} else {
 	        [weakSelf showHint:NSLocalizedString(@"group.create.fail", @"Failed to create a group, please operate again")];
 		}
@@ -308,6 +310,51 @@
     ContactSelectionViewController *selectionController = [[ContactSelectionViewController alloc] init];
     selectionController.delegate = self;
     [self.navigationController pushViewController:selectionController animated:YES];
+}
+
+- (void)chooseChatRoomCoverImage:(id)sender
+{
+    UIActionSheet* actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:@"请选择文件来源"
+                                  delegate:self
+                                  cancelButtonTitle:@"取消"
+                                  destructiveButtonTitle:nil
+                                  otherButtonTitles:@"照相机",@"本地相簿",nil];
+    [actionSheet showInView:self.view];
+}
+
+
+
+#pragma mark - ActionSheet
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0://照相机
+        {
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+            imagePicker.delegate = self;
+            imagePicker.allowsEditing = YES;
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            //            imagePicker.mediaTypes =  [[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil];
+            [self presentModalViewController:imagePicker animated:YES];
+            //            [imagePicker release];
+        }
+            break;
+        case 1://本地相簿
+        {
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+            imagePicker.delegate = self;
+            imagePicker.allowsEditing = YES;
+            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            //            imagePicker.mediaTypes =  [[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil];
+            [self presentModalViewController:imagePicker animated:YES];
+            //            [imagePicker release];
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

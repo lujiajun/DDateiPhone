@@ -66,12 +66,12 @@
 @interface CHATROOM2 : AWSDynamoDBObjectModel <AWSDynamoDBModeling>
 
 @property (nonatomic, strong) NSString *RID;
-@property (nonatomic, strong) NSString *clickNum;
-@property (nonatomic, strong) NSString *gender;
-@property (nonatomic, strong) NSString *gradeFrom;
-@property (nonatomic, strong) NSString *motto;
-@property (nonatomic, strong) NSString *picturePath;
-@property (nonatomic, strong) NSString *schoolRestrict;
+@property (nonatomic, strong) NSString *ClickNum;
+@property (nonatomic, strong) NSString *Gender;
+@property (nonatomic, strong) NSString *GradeFrom;
+@property (nonatomic, strong) NSString *Motto;
+@property (nonatomic, strong) NSString *PicturePath;
+@property (nonatomic, strong) NSString *SchoolRestrict;
 @property (nonatomic, strong) NSString *UID1;
 @property (nonatomic, strong) NSString *UID2;
 
