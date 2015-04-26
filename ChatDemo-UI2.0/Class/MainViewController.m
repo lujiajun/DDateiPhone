@@ -19,6 +19,7 @@
 #import "ApplyViewController.h"
 #import "CallSessionViewController.h"
 #import "IndexViewController.h"
+#import "CreateGroupViewController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -33,6 +34,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     UIBarButtonItem *_addFriendItem;
     UIBarButtonItem *_inviteFriendItem;
+    UIBarButtonItem *_createGroupItem;
     
 }
 @property (strong, nonatomic) UISwitch *autoLoginSwitch;
@@ -90,6 +92,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [inviteButton addTarget:_contactsVC action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
     _inviteFriendItem = [[UIBarButtonItem alloc] initWithCustomView:inviteButton];
     
+    //创建二人聊天室
+    UIButton *createGroupButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+    [createGroupButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+    [createGroupButton addTarget:self action:@selector(createGroup) forControlEvents:UIControlEventTouchUpInside];
+    _createGroupItem = [[UIBarButtonItem alloc] initWithCustomView:createGroupButton];
+    
     self.navigationItem.rightBarButtonItem = _inviteFriendItem;
     [self setupUnreadMessageCount];
     [self setupUntreatedApplyCount];
@@ -123,7 +131,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         self.navigationItem.rightBarButtonItem = _inviteFriendItem;
     }else if (item.tag == 1){
         self.title = NSLocalizedString(@"title.conversation", @"Conversations");
-        self.navigationItem.rightBarButtonItem = _addFriendItem;
+        self.navigationItem.rightBarButtonItem = _createGroupItem;
     }else if (item.tag == 2){
         self.title = NSLocalizedString(@"title.addressbook", @"AddressBook");
         self.navigationItem.rightBarButtonItem = _addFriendItem;
@@ -307,6 +315,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 {
     [[EMSDKFull sharedInstance].callManager addDelegate:self delegateQueue:nil];
     _callController = nil;
+}
+
+- (void)createGroup
+{
+    CreateGroupViewController *createChatroom = [[CreateGroupViewController alloc] init];
+    [self.navigationController pushViewController:createChatroom animated:YES];
 }
 
 #pragma mark - IChatManagerDelegate 消息变化
