@@ -8,7 +8,7 @@
 
 #import "PersonalController.h"
 #include "UsernickController.h"
-#import "NewSettingViewController.h"
+#import "IndexViewController.h"
 #import "AliCloudController.h"
 #import "DDBDynamoDB.h"
 #import "Constants.h"
@@ -104,7 +104,7 @@
 //        return 5;
 //    }
     
-    return 5;
+    return 3;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -132,8 +132,8 @@
             cell.textLabel.text = @"头像";
             _imghead=[UIImage alloc];
             
-            if(NewSettingViewController.instanceDDuser && NewSettingViewController.instanceDDuser.picPath){
-                NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:NewSettingViewController.instanceDDuser.picPath]]];
+            if(IndexViewController.instanceDDuser && IndexViewController.instanceDDuser.picPath){
+                NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:IndexViewController.instanceDDuser.picPath]]];
                 _imghead = [UIImage imageWithData:data];
             }else {
                 _imghead=[UIImage imageNamed:@"Logo_new.png"];
@@ -147,32 +147,21 @@
            
         }else if(indexPath.row==1){
         
-            cell.textLabel.text = @"姓名";
+            cell.textLabel.text = @"昵称";
             UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 80, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, 100, self.pushDisplaySwitch.frame.size.height)];
-            mylable.text=NewSettingViewController.instanceDDuser.nickName;
+            mylable.text=IndexViewController.instanceDDuser.nickName;
             mylable.textAlignment=NSTextAlignmentRight;
             [cell.contentView addSubview:mylable];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }else if(indexPath.row==2){
-            cell.textLabel.text = @"学校";
+            cell.textLabel.text = @"密码";
             UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 80, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, 100, self.pushDisplaySwitch.frame.size.height)];
         
-            mylable.text=[NewSettingViewController instanceDDuser].university;
+            mylable.text=[IndexViewController instanceDDuser].university;
             
             mylable.textAlignment=NSTextAlignmentRight;
             [cell.contentView addSubview:mylable];
 
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }else if(indexPath.row==3){
-            cell.textLabel.text = @"性别";
-            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 80, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2,100, self.pushDisplaySwitch.frame.size.height)];
-            mylable.text=NewSettingViewController.instanceDDuser.gender;
-            mylable.textAlignment=NSTextAlignmentRight;
-            [cell.contentView addSubview:mylable];
-
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }else if(indexPath.row==4){
-            cell.textLabel.text = @"年级";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
@@ -207,7 +196,7 @@
         switch (indexPath.row) {
             case 0:{
                 //[addPic addTarget:self action:@selector(btnClick) forControlEvents:(UIControlEventTouchUpInside)];// 按钮事件
-                NewSettingViewController *newSetting=[NewSettingViewController alloc];
+//                NewSettingViewController *newSetting=[NewSettingViewController alloc];
                 [self btnClick];
             }break;
             case 1:
@@ -358,9 +347,9 @@
 //        xiugai头像
         DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
         DDUser *user=[DDUser new];
-        user=NewSettingViewController.instanceDDuser;
+        user=IndexViewController.instanceDDuser;
         user.picPath=name;
-        NewSettingViewController *newSetting=[NewSettingViewController alloc];
+        IndexViewController *newSetting=[IndexViewController alloc];
         [newSetting setDDUser:user];
        
         [ddbDynamoDB updateTable:user];

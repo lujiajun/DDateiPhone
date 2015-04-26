@@ -152,6 +152,7 @@
     user.university=_universityvalue.text;
     user.gender=_gendervalue.text;
     user.grade=_gradevalue.text;
+    
     NewSettingViewController *newSetting=[NewSettingViewController alloc];
     [newSetting setDDUser:user];
     

@@ -44,24 +44,35 @@
     
     [_useIpSwitch setOn:[[EaseMob sharedInstance].chatManager isUseIp] animated:YES];
     
+    
+    //背景
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    imageView.image = [UIImage imageNamed:@"registerbak.png"];
+    //    imageView.frame = CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height);
+    imageView.userInteractionEnabled=YES;
+    [self.view addSubview:imageView];
+    
+    
     self.title = @"登录";
-    _usernameTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 10, 300, 30)];
-    [_usernameTextField setBorderStyle:UITextBorderStyleBezel]; //外框类型
+    _usernameTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 10, self.view.frame.size.width, 30)];
+    [_usernameTextField setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
     _usernameTextField.placeholder = @"请输入用户名"; //默认显示的字
     
-    [self.view addSubview:_usernameTextField];
+    [imageView addSubview:_usernameTextField];
     
-    _passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 45, 300, 30)];
-    [_passwordTextField setBorderStyle:UITextBorderStyleBezel]; //外框类型
+    _passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width, 30)];
+    [_passwordTextField setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
     _passwordTextField.placeholder = @"请输入不少于6位密码"; //默认显示的字
     _passwordTextField.secureTextEntry = YES;
     [self.view addSubview:_passwordTextField];
     
-    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 80, 300, 30)];
+    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, 30)];
     registerButton.backgroundColor=[UIColor redColor];
     [registerButton setTitle:@"登录" forState:UIControlStateNormal];
-    [self.view addSubview:registerButton];
+    [imageView addSubview:registerButton];
     [registerButton addTarget:self action:@selector(doLogin) forControlEvents:UIControlEventTouchUpInside];
+
  
     
     

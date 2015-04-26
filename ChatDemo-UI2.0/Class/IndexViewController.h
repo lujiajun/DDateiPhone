@@ -4,5 +4,7 @@
 
 @interface IndexViewController : UITableViewController
 
++(DDUser *) instanceDDuser;
+-(void) setDDUser:(DDUser *) user;
 
 @end

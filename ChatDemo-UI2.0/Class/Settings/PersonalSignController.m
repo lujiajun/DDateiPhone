@@ -52,10 +52,10 @@
     
     self.title = @"个性签名";
     
-    UIButton *saveButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
-    [saveButton setTitle:NSLocalizedString(@"save", @"Save") forState:UIControlStateNormal];
-    [saveButton addTarget:self action:@selector(savePushOptions) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:saveButton];
+//    UIButton *saveButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
+//    [saveButton setTitle:NSLocalizedString(@"save", @"Save") forState:UIControlStateNormal];
+//    [saveButton addTarget:self action:@selector(savePushOptions) forControlEvents:UIControlEventTouchUpInside];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:saveButton];
     
     self.tableView.tableFooterView = [[UIView alloc] init];
 //    NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];

@@ -196,10 +196,10 @@
 "location.ongoning" = "正在定位...";
 
 //title
-"title.index"="首页";
-"title.conversation" = "会话";
+"title.index"="Double Date";
+"title.conversation" = "聊聊聊";
 "title.addressbook" = "通讯录";
-"title.setting" = "设置";
+"title.setting" = "我";
 "title.group" = "群组";
 "title.chooseContact" = "选择联系人";
 "title.debug" = "诊断";

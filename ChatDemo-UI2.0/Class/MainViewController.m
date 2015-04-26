@@ -180,9 +180,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)setupSubviews
 {
     //    self.tabBar.backgroundImage = [[UIImage imageNamed:@"tabbarBackground"] stretchableImageWithLeftCapWidth:25 topCapHeight:25];
-    self.tabBar.backgroundColor=[UIColor whiteColor];
+    self.tabBar.backgroundColor=[UIColor grayColor];
     //    self.tabBar.selectionIndicatorImage = [[UIImage imageNamed:@"tabbarSelectBg"] stretchableImageWithLeftCapWidth:25 topCapHeight:25];
-    
+   
     //index
     _indexVC = [[IndexViewController alloc] init];
 //    [_indexVC networkChanged:_connectionState];

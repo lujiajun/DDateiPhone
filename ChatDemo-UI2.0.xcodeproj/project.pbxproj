@@ -81,6 +81,8 @@
 		8A4F270C1AEB36D60050D86E /* DDSchoolRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F270B1AEB36D60050D86E /* DDSchoolRegisterController.m */; };
 		8A4F270F1AEB53410050D86E /* Commbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F270E1AEB53410050D86E /* Commbox.m */; };
 		8A4F27121AEB5BDD0050D86E /* DDRegisterFinishController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F27111AEB5BDD0050D86E /* DDRegisterFinishController.m */; };
+		8A6C0E141AED3459009D5208 /* ChatRoomDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6C0E131AED3459009D5208 /* ChatRoomDetail.m */; };
+		8A6C0E161AED4352009D5208 /* infoline.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A6C0E151AED4352009D5208 /* infoline.png */; };
 		8A7DBEE31AECC48400D7941F /* DDPersonalUpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7DBEE21AECC48400D7941F /* DDPersonalUpdateController.m */; };
 		8A7DBEE81AECC6CD00D7941F /* login.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEE41AECC6CD00D7941F /* login.png */; };
 		8A7DBEE91AECC6CD00D7941F /* register.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEE51AECC6CD00D7941F /* register.png */; };
@@ -99,6 +101,9 @@
 		8ADB388C1AE2A17100FCC6FC /* UsernickController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB388B1AE2A17100FCC6FC /* UsernickController.m */; };
 		8AFE465A1AECE3A700B57368 /* settingback.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE46591AECE3A700B57368 /* settingback.png */; };
 		8AFE465C1AECFFAF00B57368 /* jianbian.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE465B1AECFFAF00B57368 /* jianbian.png */; };
+		8AFE465F1AED034A00B57368 /* clicknum1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE465D1AED034A00B57368 /* clicknum1.png */; };
+		8AFE46601AED034A00B57368 /* clicknum2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE465E1AED034A00B57368 /* clicknum2.png */; };
+		8AFE46631AED08B100B57368 /* DDHeadPicUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AFE46621AED08B100B57368 /* DDHeadPicUpdate.m */; };
 		9003D8681939D8D000DC38A4 /* ChatListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003D7791939D8D000DC38A4 /* ChatListCell.m */; };
 		9003D8691939D8D000DC38A4 /* ChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003D77B1939D8D000DC38A4 /* ChatListViewController.m */; };
 		9003D86E1939D8D000DC38A4 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003D7861939D8D000DC38A4 /* ChatViewController.m */; };
@@ -523,6 +528,9 @@
 		8A4F270E1AEB53410050D86E /* Commbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Commbox.m; sourceTree = "<group>"; };
 		8A4F27101AEB5B8E0050D86E /* DDRegisterFinishController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDRegisterFinishController.h; sourceTree = "<group>"; };
 		8A4F27111AEB5BDD0050D86E /* DDRegisterFinishController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDRegisterFinishController.m; sourceTree = "<group>"; };
+		8A6C0E121AED3350009D5208 /* ChatRoomDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomDetail.h; sourceTree = "<group>"; };
+		8A6C0E131AED3459009D5208 /* ChatRoomDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomDetail.m; sourceTree = "<group>"; };
+		8A6C0E151AED4352009D5208 /* infoline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = infoline.png; path = dd/infoline.png; sourceTree = "<group>"; };
 		8A7DBEE11AECC48400D7941F /* DDPersonalUpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPersonalUpdateController.h; sourceTree = "<group>"; };
 		8A7DBEE21AECC48400D7941F /* DDPersonalUpdateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPersonalUpdateController.m; sourceTree = "<group>"; };
 		8A7DBEE41AECC6CD00D7941F /* login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login.png; sourceTree = "<group>"; };
@@ -543,6 +551,10 @@
 		8ADB388B1AE2A17100FCC6FC /* UsernickController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsernickController.m; sourceTree = "<group>"; };
 		8AFE46591AECE3A700B57368 /* settingback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settingback.png; path = dd/settingback.png; sourceTree = "<group>"; };
 		8AFE465B1AECFFAF00B57368 /* jianbian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jianbian.png; path = dd/jianbian.png; sourceTree = "<group>"; };
+		8AFE465D1AED034A00B57368 /* clicknum1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clicknum1.png; path = dd/clicknum1.png; sourceTree = "<group>"; };
+		8AFE465E1AED034A00B57368 /* clicknum2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clicknum2.png; path = dd/clicknum2.png; sourceTree = "<group>"; };
+		8AFE46611AED087900B57368 /* DDHeadPicUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHeadPicUpdate.h; sourceTree = "<group>"; };
+		8AFE46621AED08B100B57368 /* DDHeadPicUpdate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHeadPicUpdate.m; sourceTree = "<group>"; };
 		9003D7781939D8D000DC38A4 /* ChatListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatListCell.h; sourceTree = "<group>"; };
 		9003D7791939D8D000DC38A4 /* ChatListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatListCell.m; sourceTree = "<group>"; };
 		9003D77A1939D8D000DC38A4 /* ChatListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatListViewController.h; sourceTree = "<group>"; };
@@ -1186,6 +1198,8 @@
 				8A4F270E1AEB53410050D86E /* Commbox.m */,
 				8A4F27101AEB5B8E0050D86E /* DDRegisterFinishController.h */,
 				8A4F27111AEB5BDD0050D86E /* DDRegisterFinishController.m */,
+				8A6C0E121AED3350009D5208 /* ChatRoomDetail.h */,
+				8A6C0E131AED3459009D5208 /* ChatRoomDetail.m */,
 			);
 			name = Index;
 			sourceTree = "<group>";
@@ -1193,6 +1207,9 @@
 		8ADB38511AE28F3400FCC6FC /* dd */ = {
 			isa = PBXGroup;
 			children = (
+				8A6C0E151AED4352009D5208 /* infoline.png */,
+				8AFE465D1AED034A00B57368 /* clicknum1.png */,
+				8AFE465E1AED034A00B57368 /* clicknum2.png */,
 				8AFE465B1AECFFAF00B57368 /* jianbian.png */,
 				8AFE46591AECE3A700B57368 /* settingback.png */,
 				8A7DBEEC1AECCAE300D7941F /* addpic.png */,
@@ -1607,6 +1624,8 @@
 				8A4021511AE3A63E00806014 /* NickNameController.m */,
 				8A46EDBD1AE9F3E30062F518 /* PersonalSignController.h */,
 				8A46EDBE1AE9F3FC0062F518 /* PersonalSignController.m */,
+				8AFE46611AED087900B57368 /* DDHeadPicUpdate.h */,
+				8AFE46621AED08B100B57368 /* DDHeadPicUpdate.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -2539,6 +2558,7 @@
 				EBD2AB2E1A7CDAC000D16528 /* VoiceSearchFeedback015@2x.png in Resources */,
 				909E89C21A6E7A270064B20F /* LoginViewController.xib in Resources */,
 				EBD2AB381A7CDAC000D16528 /* VoiceSearchFeedback020@2x.png in Resources */,
+				8AFE46601AED034A00B57368 /* clicknum2.png in Resources */,
 				EBD2AB961A7CDAC000D16528 /* chat_sender_audio_playing_003.png in Resources */,
 				EBD2AB5B1A7CDAC000D16528 /* chatBar_faceSelected.png in Resources */,
 				EBD2AB9F1A7CDAC000D16528 /* password@2x.png in Resources */,
@@ -2563,6 +2583,7 @@
 				8A4021221AE3597900806014 /* like图标go.png in Resources */,
 				EBD2AB4F1A7CDAC000D16528 /* chat_location_detail_disclosure.png in Resources */,
 				EBD2AB9B1A7CDAC000D16528 /* chat_sender_bg@2x.png in Resources */,
+				8AFE465F1AED034A00B57368 /* clicknum1.png in Resources */,
 				EBD2AB141A7CDAC000D16528 /* VoiceSearchFeedback002@2x.png in Resources */,
 				8A7DBEF61AECCAE300D7941F /* confirm.png in Resources */,
 				EBD2AB151A7CDAC000D16528 /* VoiceSearchFeedback003.png in Resources */,
@@ -2577,6 +2598,7 @@
 				EBD2AB0F1A7CDAC000D16528 /* chatFire_audioPlaying3.png in Resources */,
 				8A7DBEF51AECCAE300D7941F /* bianji.png in Resources */,
 				8A7DBEEA1AECC6CD00D7941F /* registerbak.png in Resources */,
+				8A6C0E161AED4352009D5208 /* infoline.png in Resources */,
 				EBD2ABBB1A7CDAC000D16528 /* tabbarSelectBg.png in Resources */,
 				EBD2ABA11A7CDAC000D16528 /* back@2x.png in Resources */,
 				8A4021241AE3597900806014 /* luanch.png in Resources */,
@@ -2747,6 +2769,7 @@
 				905326B519333E8E00F064D7 /* TTGlobalUICommon.m in Sources */,
 				90A705FC1A8B63B200376154 /* MWGridViewController.m in Sources */,
 				90A7060F1A8B63B200376154 /* UIImage+EMWebP.m in Sources */,
+				8AFE46631AED08B100B57368 /* DDHeadPicUpdate.m in Sources */,
 				8A4021521AE3A63E00806014 /* NickNameController.m in Sources */,
 				3C6BBA0619419EBD00A64684 /* EMRemarkImageView.m in Sources */,
 				9003D8A21939D8D000DC38A4 /* EMChatLocationBubbleView.m in Sources */,
@@ -2791,6 +2814,7 @@
 				90911118192EEAED008A48AA /* WCAlertView.m in Sources */,
 				90133E611972D11000C49B56 /* NSString+Valid.m in Sources */,
 				9003D9161939D8D000DC38A4 /* ApplyViewController.m in Sources */,
+				8A6C0E141AED3459009D5208 /* ChatRoomDetail.m in Sources */,
 				8A4020AD1AE34F2D00806014 /* DDBDynamoDB.m in Sources */,
 				90A706071A8B63B200376154 /* EMSDWebImageDownloaderOperation.m in Sources */,
 				909110F0192EEAED008A48AA /* MBProgressHUD+Add.m in Sources */,

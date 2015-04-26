@@ -23,6 +23,8 @@
 #import "Constants.h"
 #import "DDRegisterFinishController.h"
 #import "DDPersonalUpdateController.h"
+#import "DDHeadPicUpdate.h"
+#import "PersonalController.h"
 @interface NewSettingViewController ()
 
 @property (strong, nonatomic) UIView *footerView;
@@ -457,8 +459,8 @@ static DDUser   *uuser;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row == 1) {
-        PushNotificationViewController *pushController = [[PushNotificationViewController alloc] initWithStyle:UITableViewStylePlain];
+    if (indexPath.row == 0) {
+        PersonalController *pushController = [PersonalController alloc] ;
         [self.navigationController pushViewController:pushController animated:YES];
     }
     else if (indexPath.row == 2)

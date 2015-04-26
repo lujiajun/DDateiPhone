@@ -25,6 +25,7 @@
 #import "DDPersonalUpdateController.h"
 #import "IndexViewController.h"
 #import "DDBDynamoDB.h"
+#import "ChatRoomDetail.h"
 
 @interface IndexViewController ()
 
@@ -49,7 +50,12 @@ static DDUser   *uuser;
 @synthesize ipSwitch = _ipSwitch;
 
 #define kIMGCOUNT 5
-
++(DDUser *) instanceDDuser{
+    return uuser;
+}
+-(void) setDDUser:(DDUser *) user{
+    uuser=user;
+}
 
 - (void)viewDidLoad
 {
@@ -165,6 +171,8 @@ static DDUser   *uuser;
                 UIImage *background=[UIImage imageNamed:@"jianbian"];
                 UIImageView *bakgroundview=[[UIImageView alloc] initWithImage:background];
                 bakgroundview.frame=CGRectMake(5, 5, cell.frame.size.width-10, 150);
+                bakgroundview.layer.masksToBounds =YES;
+                bakgroundview.layer.cornerRadius =25;
                 [cell.contentView addSubview:bakgroundview];
                 //查询用户
                 BFTask *bftask1= [_dynamoDBObjectMapper load:[DDUser class] hashKey:root.UID1 rangeKey:nil];
@@ -217,16 +225,34 @@ static DDUser   *uuser;
                     isboyimg=[UIImage imageNamed:@"sexgirl"];
                 }
                 UIImageView *isboyview=[[UIImageView alloc] initWithImage:isboyimg];
-                isboyview.frame=CGRectMake(bakview.frame.size.width-50, bakview.frame.origin.y+100, 20, 20);
+                isboyview.frame=CGRectMake(bakview.frame.size.width-40, bakview.frame.origin.y+80, 20, 20);
                 [bakview addSubview:isboyview];
+                //点击数
+                UIImage *clicknumber2=[UIImage imageNamed:@"clicknum2"];
+                
+                UIImageView *clicknumber2view=[[UIImageView alloc] initWithImage:clicknumber2];
+                clicknumber2view.frame=CGRectMake(bakview.frame.size.width-60, bakview.frame.origin.y+110, 56, 25);
+                [bakview addSubview:clicknumber2view];
+                
+                UIImage *clicknumber1=[UIImage imageNamed:@"clicknum1"];
+                UIImageView *clicknumber1view=[[UIImageView alloc] initWithImage:clicknumber1];
+                clicknumber1view.frame=CGRectMake(5, 5, 12, 12);
+                [clicknumber2view addSubview:clicknumber1view];
+                
+                UILabel *click=[[UILabel alloc]initWithFrame:CGRectMake(19, 2, 30, 20)];
+                click.text=root.ClickNum;
+                click.textAlignment=NSTextAlignmentCenter;
+                click.font=[UIFont fontWithName:@"Helvetica" size:11];
+                click.textColor=[UIColor whiteColor];
+                [clicknumber2view addSubview:click];
+                
                 //添加宣言
-                UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(5, bakview.frame.origin.y+80, 100, 30)];
+                UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(0, bakview.frame.origin.y+110, 100, 30)];
                 mylable.text=root.Motto;
                 mylable.textAlignment=NSTextAlignmentCenter;
-                mylable.font=[UIFont fontWithName:@"Helvetica" size:12];
+                mylable.font=[UIFont fontWithName:@"Helvetica" size:14];
+                mylable.textColor=[UIColor whiteColor];
                 [bakview addSubview:mylable];
-                
-                
                 
             }
         }
@@ -250,32 +276,6 @@ static DDUser   *uuser;
     AWSDynamoDBPaginatedOutput *paginatedOutput = bftask.result;
     _datasouce=paginatedOutput.items;
     
-//    return [[[dynamoDBObjectMapper scan:[CHATROOM2 class]
-//                             expression:scanExpression]
-//             continueWithExecutor:[BFExecutor mainThreadExecutor] withSuccessBlock:^id(BFTask *task) {
-//                 
-//                 AWSDynamoDBPaginatedOutput *paginatedOutput = task.result;
-//                                      for (CHATROOM2 *item in paginatedOutput.items) {
-////                                          [self.tableRows addObject:item];
-//                                      }
-//                 //
-//                 //                     self.lastEvaluatedKey = paginatedOutput.lastEvaluatedKey;
-//                 //                     if (!paginatedOutput.lastEvaluatedKey) {
-//                 //                         self.doneLoading = YES;
-//                 //                     }
-//                 
-//                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-//                 //                     [self.tableView reloadData];
-//                 
-//                 return nil;
-//             }] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
-//                 if (task.error) {
-//                     NSLog(@"Error: [%@]", task.error);
-//                 }
-//
-//                 return nil;
-//             }];
-//    
 }
 
 
@@ -303,20 +303,17 @@ static DDUser   *uuser;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row == 1) {
-        PushNotificationViewController *pushController = [[PushNotificationViewController alloc] initWithStyle:UITableViewStylePlain];
-        [self.navigationController pushViewController:pushController animated:YES];
+
+    if (indexPath.section == 0) {
+        for (NSUInteger i = 0; i < _datasouce.count; i++) {
+            if (indexPath.row == i) {
+                CHATROOM2 *room=[[_datasouce objectAtIndex:i] copy];
+                ChatRoomDetail *chatroom=[[ChatRoomDetail alloc]initChatRoom:room.UID1 uuser2:room.UID2 motto:room.Motto];
+                [self.navigationController pushViewController:chatroom animated:YES];
+            }
+        }
     }
-    else if (indexPath.row == 2)
-    {
-        DDPersonalUpdateController *blackController = [[DDPersonalUpdateController alloc] initWithNibName:nil bundle:nil];
-        [self.navigationController pushViewController:blackController animated:YES];
-    }
-    else if (indexPath.row == 3)
-    {
-        SettingsViewController *debugController = [[SettingsViewController alloc] initWithStyle:UITableViewStylePlain];
-        [self.navigationController pushViewController:debugController animated:YES];
-    }
+
 }
 
 #pragma mark - getter

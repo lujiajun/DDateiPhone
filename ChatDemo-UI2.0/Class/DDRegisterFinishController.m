@@ -54,6 +54,12 @@ static DDUser   *dduser;
     return self;
 }
 
+- (id)init:(NSString *)nickname gender:(NSString *)gender grade:(NSString *)grade university:(NSString *)university city:(NSString *)city{
+    _nickname.text=nickname;
+    _gendervalue.text=gender;
+    return self;
+}
+
 - (void)viewDidLoad
 {
     
@@ -63,18 +69,16 @@ static DDUser   *dduser;
     _nickname=[[UILabel alloc]initWithFrame:CGRectMake(10, 30, 60, 30)];
     _nickname.text=@"昵称:";
     _nickname.textAlignment=NSTextAlignmentLeft;
-    _nickname.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:_nickname];
     
-     _nicknamevalue=[[UITextField alloc]initWithFrame:CGRectMake(_nickname.frame.size.width+4, 30, 180, 30)];
+    _nicknamevalue=[[UITextField alloc]initWithFrame:CGRectMake(_nickname.frame.size.width+4, 30, 180, 30)];
     _nicknamevalue.placeholder=@"nicknamevalue";
     _nicknamevalue.textAlignment=NSTextAlignmentLeft;
-    _nicknamevalue.font=[UIFont fontWithName:@"Helvetica" size:12];
     [_nicknamevalue setBorderStyle:UITextBorderStyleRoundedRect];
     [self.view addSubview:_nicknamevalue];
     //头像
     UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.image = [UIImage imageNamed:@"Logo_new.png"];
+    imageView.image = [UIImage imageNamed:@"80.png"];
     imageView.frame = CGRectMake(_nickname.frame.size.width+ _nicknamevalue.frame.size.width+10,10,50,50);
     [self.view addSubview:imageView];
     [imageView setUserInteractionEnabled:YES];
@@ -84,24 +88,20 @@ static DDUser   *dduser;
     UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*2+10, 60, 30)];
     gender.text=@"性别:";
     gender.textAlignment=NSTextAlignmentLeft;
-    gender.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:gender];
     _gendervalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*2+10, 120, 30)];
     _gendervalue.placeholder=@"性别";
     [_gendervalue setBorderStyle:UITextBorderStyleRoundedRect];
-    _gendervalue.font=[UIFont fontWithName:@"Helvetica" size:12];
     _gendervalue.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:_gendervalue];
-
+    
     //学校
     UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*3+10, 60, 30)];
     university.text=@"学校:";
     university.textAlignment=NSTextAlignmentLeft;
-    university.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:university];
     UILabel *universityvalue=[[UILabel alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*3+10, 180, 30)];
     universityvalue.text=_university;
-    universityvalue.font=[UIFont fontWithName:@"Helvetica" size:12];
     universityvalue.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:universityvalue];
     
@@ -109,41 +109,35 @@ static DDUser   *dduser;
     UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*4+10, 60, 30)];
     city.text=@"城市:";
     city.textAlignment=NSTextAlignmentLeft;
-    city.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:city];
     UILabel *cityvalue=[[UILabel alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*4+10, 180, 30)];
     cityvalue.text=_city;
-    cityvalue.font=[UIFont fontWithName:@"Helvetica" size:12];
     cityvalue.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:cityvalue];
-
+    
     //年级
     UILabel *grade=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*5+10, 60, 30)];
     grade.text=@"年级:";
     grade.textAlignment=NSTextAlignmentLeft;
-    grade.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:grade];
-     _gradevalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*5+10, 180, 30)];
+    _gradevalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*5+10, 180, 30)];
     [_gradevalue setBorderStyle:UITextBorderStyleRoundedRect];
     _gradevalue.placeholder=@"gradevalue";
     _gradevalue.textAlignment=NSTextAlignmentLeft;
-    _gradevalue.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:_gradevalue];
     
     //出生日期
-    UITextField *birdate=[[UITextField alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*6+15, 60, 30)];
+    UITextField *birdate=[[UITextField alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*6+10, 60, 30)];
     birdate.text=@"出生日期:";
     birdate.textAlignment=NSTextAlignmentLeft;
-    birdate.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:birdate];
-     _birdatevalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*6+15, 180, 30)];
+    _birdatevalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*6+10, 180, 30)];
     _birdatevalue.placeholder=@"gradevalue";
     _birdatevalue.textAlignment=NSTextAlignmentLeft;
-    _birdatevalue.font=[UIFont fontWithName:@"Helvetica" size:12];
     [_birdatevalue setBorderStyle:UITextBorderStyleRoundedRect];
     [self.view addSubview:_birdatevalue];
     
-    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, _nickname.frame.size.height*7+30, self.view.frame.size.width, 30)];
+    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, _nickname.frame.size.height*7+30, 300, 30)];
     registerButton.backgroundColor=[UIColor redColor];
     [registerButton setTitle:@"注册" forState:UIControlStateNormal];
     [self.view addSubview:registerButton];
@@ -166,57 +160,58 @@ static DDUser   *dduser;
 - (void)doRegister{
     //注册
     
-            if (![self isEmpty]) {
-                //隐藏键盘
-                [self.view endEditing:YES];
-                //判断是否是中文，但不支持中英文混编
-          
-                [self showHudInView:self.view hint:NSLocalizedString(@"register.ongoing", @"Is to register...")];
-                //异步注册账号
-                [[EaseMob sharedInstance].chatManager asyncRegisterNewAccount:_username
-                                                                     password:_password
-                                                               withCompletion:
-                 ^(NSString *username, NSString *password, EMError *error) {
-                     [self hideHud];
-    
-                     if (!error) {
-                         TTAlertNoTitle(NSLocalizedString(@"register.success", @"Registered successfully, please log in"));
-    
-                     }else{
-                         switch (error.errorCode) {
-                             case EMErrorServerNotReachable:
-                                 TTAlertNoTitle(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
-                                 break;
-                             case EMErrorServerDuplicatedAccount:
-                                 TTAlertNoTitle(NSLocalizedString(@"register.repeat", @"You registered user already exists!"));
-                                 break;
-                             case EMErrorServerTimeout:
-                                 TTAlertNoTitle(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
-                                 break;
-                             default:
-                                 TTAlertNoTitle(NSLocalizedString(@"register.fail", @"Registration failed"));
-                                 break;
-                         }
-                     }
-                 } onQueue:nil];
-                DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
-                DDUser  *user=[DDUser new];
-                user.nickName=_nicknamevalue.text;
-                user.UID=_username;
-                user.gender=_gendervalue.text;
-                user.grade=_gradevalue.text;
-                user.password=_password;
-                user.university=_university;
-                user.isDoublerID=0;
-                user.isPic=0;
-                user.picPath=_picpath;
-                [ddbDynamoDB insertTableRow:user];
-                
-                DDLoginController *personsign=[DDLoginController alloc];
-                [self.navigationController pushViewController:personsign animated:YES];
-                
-           
-            }
+    if (![self isEmpty]) {
+        //隐藏键盘
+        [self.view endEditing:YES];
+        //判断是否是中文，但不支持中英文混编
+        
+        [self showHudInView:self.view hint:NSLocalizedString(@"register.ongoing", @"Is to register...")];
+        //异步注册账号
+        [[EaseMob sharedInstance].chatManager asyncRegisterNewAccount:_username
+                                                             password:_password
+                                                       withCompletion:
+         ^(NSString *username, NSString *password, EMError *error) {
+             [self hideHud];
+             
+             if (!error) {
+                 TTAlertNoTitle(NSLocalizedString(@"register.success", @"Registered successfully, please log in"));
+                 
+             }else{
+                 switch (error.errorCode) {
+                     case EMErrorServerNotReachable:
+                         TTAlertNoTitle(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
+                         break;
+                     case EMErrorServerDuplicatedAccount:
+                         TTAlertNoTitle(NSLocalizedString(@"register.repeat", @"You registered user already exists!"));
+                         break;
+                     case EMErrorServerTimeout:
+                         TTAlertNoTitle(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
+                         break;
+                     default:
+                         TTAlertNoTitle(NSLocalizedString(@"register.fail", @"Registration failed"));
+                         break;
+                 }
+             }
+         } onQueue:nil];
+        DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
+        DDUser  *user=[DDUser new];
+        user.nickName=_nicknamevalue.text;
+        user.UID=_username;
+        user.gender=_gendervalue.text;
+        user.grade=_gradevalue.text;
+        user.password=_password;
+        user.university=_university;
+        //                NSNumber *isName=NSNUmber num;
+        user.isDoublerID=[NSNumber numberWithInt:1];
+        user.isPic=[NSNumber numberWithInt:1];
+        user.picPath=_picpath;
+        [ddbDynamoDB insertTableRow:user];
+        
+        DDLoginController *personsign=[DDLoginController alloc];
+        [self.navigationController pushViewController:personsign animated:YES];
+        
+        
+    }
     
 }
 //判断账号和密码是否为空
