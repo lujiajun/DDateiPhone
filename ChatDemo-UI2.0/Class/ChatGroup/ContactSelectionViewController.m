@@ -21,6 +21,7 @@
 
 @property (strong, nonatomic) NSMutableArray *contactsSource;
 @property (strong, nonatomic) NSMutableArray *selectedContacts;
+@property (strong, nonatomic) NSIndexPath *currentSelectIndexpath;
 @property (strong, nonatomic) NSMutableArray *blockSelectedUsernames;
 
 @property (strong, nonatomic) EMSearchBar *searchBar;
@@ -263,13 +264,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id object = [[_dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    if (![self.selectedContacts containsObject:object])
-    {
-        [self.selectedContacts addObject:object];
-        
-        [self reloadFooterView];
-    }
+	id object = [[_dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+	if (![self.selectedContacts containsObject:object]) {
+        [self.tableView deselectRowAtIndexPath:self.currentSelectIndexpath animated:YES];
+		[self.selectedContacts removeLastObject];
+		[self.selectedContacts addObject:object];
+        self.currentSelectIndexpath = indexPath;
+		[self reloadFooterView];
+	}
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -277,7 +279,7 @@
     EMBuddy *buddy = [[_dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     if ([self.selectedContacts containsObject:buddy]) {
         [self.selectedContacts removeObject:buddy];
-        
+        self.currentSelectIndexpath = nil;
         [self reloadFooterView];
     }
 }
@@ -401,23 +403,21 @@
 
 - (void)doneAction:(id)sender
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(viewController:didFinishSelectedSources:)]) {
-        if ([_blockSelectedUsernames count] == 0) {
-            [_delegate viewController:self didFinishSelectedSources:self.selectedContacts];
-            [self.navigationController popViewControllerAnimated:NO];
-        }
-        else{
-            NSMutableArray *resultArray = [NSMutableArray array];
-            for (EMBuddy *buddy in self.selectedContacts) {
-                if(![self isBlockUsername:buddy.username])
-                {
-                    [resultArray addObject:buddy];
-                }
-            }
-            [_delegate viewController:self didFinishSelectedSources:resultArray];
-            [self.navigationController popViewControllerAnimated:NO];
-        }
-    }
+	if (_delegate && [_delegate respondsToSelector:@selector(viewController:didFinishSelectedSources:)]) {
+		if ([_blockSelectedUsernames count] == 0) {
+			[_delegate viewController:self didFinishSelectedSources:self.selectedContacts];
+			[self.navigationController popViewControllerAnimated:NO];
+		} else {
+			NSMutableArray *resultArray = [NSMutableArray array];
+			for (EMBuddy *buddy in self.selectedContacts) {
+				if (![self isBlockUsername:buddy.username]) {
+					[resultArray addObject:buddy];
+				}
+			}
+			[_delegate viewController:self didFinishSelectedSources:resultArray];
+			[self.navigationController popViewControllerAnimated:NO];
+		}
+	}
 }
 
 @end

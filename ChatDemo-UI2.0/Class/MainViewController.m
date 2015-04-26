@@ -19,6 +19,7 @@
 #import "ApplyViewController.h"
 #import "CallSessionViewController.h"
 #import "IndexViewController.h"
+#import "CreateGroupViewController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -31,9 +32,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     NewSettingViewController *_settingsVC;
     CallSessionViewController *_callController;
     
-    UIBarButtonItem *_addFriendItem;
     UIBarButtonItem *_inviteFriendItem;
-    
+    UIBarButtonItem *_createGroupItem;
+    UIBarButtonItem *_addFriendItem;
 }
 @property (strong, nonatomic) UISwitch *autoLoginSwitch;
 
@@ -78,17 +79,23 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self setupSubviews];
     self.selectedIndex = 0;
     
-    //好友邀请页面button
-    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [addButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
-    [addButton addTarget:_contactsVC action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
-    _addFriendItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
-    
     //首页button
     UIButton *inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
     [inviteButton setImage:[UIImage imageNamed:@"inviteFriend.png"] forState:UIControlStateNormal];
     [inviteButton addTarget:_contactsVC action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
     _inviteFriendItem = [[UIBarButtonItem alloc] initWithCustomView:inviteButton];
+    
+	//创建四人聊天button
+	UIButton *createGroupButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+	[createGroupButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+	[createGroupButton addTarget:self action:@selector(createGroup) forControlEvents:UIControlEventTouchUpInside];
+	_createGroupItem = [[UIBarButtonItem alloc] initWithCustomView:createGroupButton];
+    
+    //好友邀请页面button
+    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [addButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+    [addButton addTarget:_contactsVC action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
+    _addFriendItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
     
     self.navigationItem.rightBarButtonItem = _inviteFriendItem;
     [self setupUnreadMessageCount];
@@ -116,22 +123,21 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 #pragma mark - UITabBarDelegate
 
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
-{
-    if (item.tag == 0) {
-        self.title = NSLocalizedString(@"title.index", @"Index");
-        self.navigationItem.rightBarButtonItem = _inviteFriendItem;
-    }else if (item.tag == 1){
-        self.title = NSLocalizedString(@"title.conversation", @"Conversations");
-        self.navigationItem.rightBarButtonItem = _addFriendItem;
-    }else if (item.tag == 2){
-        self.title = NSLocalizedString(@"title.addressbook", @"AddressBook");
-        self.navigationItem.rightBarButtonItem = _addFriendItem;
-    }else if (item.tag == 3){
-        self.title = NSLocalizedString(@"title.setting", @"Setting");
-        self.navigationItem.rightBarButtonItem = nil;
-        [_settingsVC refreshConfig];
-    }
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+	if (item.tag == 0) {
+		self.title = NSLocalizedString(@"title.index", @"Index");
+		self.navigationItem.rightBarButtonItem = _inviteFriendItem;
+	} else if (item.tag == 1) {
+		self.title = NSLocalizedString(@"title.conversation", @"Conversations");
+		self.navigationItem.rightBarButtonItem = _createGroupItem;
+	} else if (item.tag == 2) {
+		self.title = NSLocalizedString(@"title.addressbook", @"AddressBook");
+		self.navigationItem.rightBarButtonItem = _addFriendItem;
+	} else if (item.tag == 3) {
+		self.title = NSLocalizedString(@"title.setting", @"Setting");
+		self.navigationItem.rightBarButtonItem = nil;
+		[_settingsVC refreshConfig];
+	}
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -307,6 +313,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 {
     [[EMSDKFull sharedInstance].callManager addDelegate:self delegateQueue:nil];
     _callController = nil;
+}
+
+- (void)createGroup {
+	CreateGroupViewController *createChatroom = [[CreateGroupViewController alloc] init];
+	[self.navigationController pushViewController:createChatroom animated:YES];
 }
 
 #pragma mark - IChatManagerDelegate 消息变化

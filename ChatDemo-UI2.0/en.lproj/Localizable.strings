@@ -110,7 +110,7 @@
 //Create Group
 "group.create.addOccupant" = "add members";
 "group.create.inputName" = "please enter the group name";
-"group.create.inputDescribe" = "please enter a group description";
+"group.create.declaration" = "please enter the Double Date declaration: ";
 "group.create.groupPermission" = "group permission";
 "group.create.private" = "private group";
 "group.create.occupantPermissions" = "members invite permissions";

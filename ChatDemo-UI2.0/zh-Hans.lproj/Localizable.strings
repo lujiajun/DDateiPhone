@@ -112,7 +112,8 @@
 //Create Group
 "group.create.addOccupant" = "添加成员";
 "group.create.inputName" = "请输入群组名称";
-"group.create.inputDescribe" = "请输入群组简介";
+"group.create.declaration" = "Double Date 宣言：";
+"group.create.declaration.tip" = "请输入Double Date宣言";
 "group.create.groupPermission" = "群组权限";
 "group.create.private" = "私有群";
 "group.create.occupantPermissions" = "成员邀请权限";
@@ -203,7 +204,7 @@
 "title.chooseContact" = "选择联系人";
 "title.debug" = "诊断";
 "title.groupBlackList" = "群组黑名单";
-"title.createGroup" = "创建群组";
+"title.createGroup" = "创建聊天室";
 "title.publicGroup" = "公有群组";
 "title.groupSetting" = "群设置";
 "title.apnsSetting" = "消息推送设置";

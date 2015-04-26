@@ -114,7 +114,7 @@
         _textView.layer.cornerRadius = 3;
         _textView.font = [UIFont systemFontOfSize:14.0];
         _textView.backgroundColor = [UIColor whiteColor];
-        _textView.placeholder = NSLocalizedString(@"group.create.inputDescribe", @"please enter a group description");
+        _textView.placeholder = NSLocalizedString(@"group.create.declaration", @"please enter the Double Date declaration");
         _textView.returnKeyType = UIReturnKeyDone;
         _textView.delegate = self;
     }
@@ -221,21 +221,20 @@
         }
     }
     
-//    setting.groupMaxUsersCount = 4;
+    setting.groupMaxUsersCount = 4;
     __weak CreateGroupViewController *weakSelf = self;
-    NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
-    NSString *username = [loginInfo objectForKey:kSDKUsername];
-    NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), username, self.textField.text];
-    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:self.textField.text description:self.textView.text invitees:source initialWelcomeMessage:messageStr styleSetting:setting completion:^(EMGroup *group, EMError *error) {
-        [weakSelf hideHud];
-        if (group && !error) {
-            [weakSelf showHint:NSLocalizedString(@"group.create.success", @"create group success")];
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-        }
-        else{
-            [weakSelf showHint:NSLocalizedString(@"group.create.fail", @"Failed to create a group, please operate again")];
-        }
-    } onQueue:nil];
+	NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
+	NSString *username = [loginInfo objectForKey:kSDKUsername];
+	NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), username, self.textField.text];
+	[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:self.textView.text description:self.textView.text invitees:source initialWelcomeMessage:messageStr styleSetting:setting completion: ^(EMGroup *group, EMError *error) {
+	    [weakSelf hideHud];
+	    if (group && !error) {
+	        [weakSelf showHint:NSLocalizedString(@"group.create.success", @"create group success")];
+	        [weakSelf.navigationController popViewControllerAnimated:YES];
+		} else {
+	        [weakSelf showHint:NSLocalizedString(@"group.create.fail", @"Failed to create a group, please operate again")];
+		}
+	} onQueue:nil];
 }
 
 #pragma mark - action
@@ -283,8 +282,8 @@
 
 - (void)addContacts:(id)sender
 {
-    if (self.textField.text.length == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"group.create.inputName", @"please enter the group name") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    if (self.textView.text.length == 0) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"group.create.declaration.tip", @"请输入Double Date宣言") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
         [alertView show];
         return;
     }
