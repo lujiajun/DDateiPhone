@@ -15,13 +15,15 @@
 #import "ContactSelectionViewController.h"
 #import "EMTextView.h"
 #import "DDBDynamoDB.h"
+#import "AliCloudController.h"
 
-@interface CreateGroupViewController ()<UITextFieldDelegate, UITextViewDelegate, EMChooseViewDelegate>
+@interface CreateGroupViewController ()<UITextFieldDelegate, UITextViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, EMChooseViewDelegate>
 
 @property (strong, nonatomic) UIView *switchView;
 @property (strong, nonatomic) UIBarButtonItem *rightItem;
 @property (strong, nonatomic) UIImageView *chatRoomCover;
 @property (strong, nonatomic) EMTextView *mottoTextView;
+@property (strong, nonatomic) NSString *coverImagePath;
 
 @property (nonatomic) BOOL isPublic;
 @property (strong, nonatomic) UILabel *groupTypeLabel;//群组类型
@@ -93,8 +95,9 @@
 		_chatRoomCover.layer.borderWidth = 0.5;
 		_chatRoomCover.layer.cornerRadius = 3;
 		_chatRoomCover.backgroundColor = [UIColor whiteColor];
+        _chatRoomCover.userInteractionEnabled = YES;
 
-		UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
+		UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 40)];
         button.titleLabel.font = [UIFont systemFontOfSize:14.0];
         [button setTitle:@"设置封面" forState:UIControlStateNormal];
         [button setTitleColor:[UIColor colorWithRed:32 / 255.0 green:134 / 255.0 blue:158 / 255.0 alpha:1.0] forState:UIControlStateNormal];
@@ -243,7 +246,7 @@
 	        chatRoom2.Gender = [dao getTableUser:username].gender;
 	        chatRoom2.GradeFrom = @"无限制";
 	        chatRoom2.Motto = self.mottoTextView.text;
-	        chatRoom2.PicturePath = @"http://t12.baidu.com/it/u=4095575894,102452705&fm=32&s=A98AA55F526172A6F6A058E50300A060&w=623&h=799&img.JPEG";
+	        chatRoom2.PicturePath = self.coverImagePath;
             chatRoom2.SchoolRestrict = @"无限制";
 	        chatRoom2.UID1 = username;
 	        chatRoom2.UID2 = username2;
@@ -328,33 +331,57 @@
 #pragma mark - ActionSheet
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (buttonIndex) {
-        case 0://照相机
-        {
-            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+	switch (buttonIndex) {
+		case 0://照相机
+		{
+			UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+			imagePicker.allowsEditing = YES;
             imagePicker.delegate = self;
-            imagePicker.allowsEditing = YES;
-            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            //            imagePicker.mediaTypes =  [[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil];
-            [self presentModalViewController:imagePicker animated:YES];
-            //            [imagePicker release];
-        }
-            break;
-        case 1://本地相簿
-        {
-            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+			imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+			[self presentViewController:imagePicker animated:YES completion:nil];
+		}
+		break;
+
+		case 1://本地相簿
+		{
+			UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+			imagePicker.allowsEditing = YES;
             imagePicker.delegate = self;
-            imagePicker.allowsEditing = YES;
-            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            //            imagePicker.mediaTypes =  [[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil];
-            [self presentModalViewController:imagePicker animated:YES];
-            //            [imagePicker release];
-        }
-            break;
-            
-        default:
-            break;
-    }
+			imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+			[self presentViewController:imagePicker animated:YES completion:nil];
+		}
+		break;
+
+		default:
+			break;
+	}
 }
+
+#pragma mark - UIImagePickerControllerDelegate
+-(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+	NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+
+	//当选择的类型是图片
+	if ([type isEqualToString:@"public.image"]) {
+		//先把图片转成NSData
+		UIImage *image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+
+		NSData *data;
+		if (UIImagePNGRepresentation(image) == nil) {
+			data = UIImageJPEGRepresentation(image, 1.0);
+		} else {
+			data = UIImagePNGRepresentation(image);
+		}
+        
+		//关闭相册界面
+        [picker dismissViewControllerAnimated:YES completion:nil];
+        self.chatRoomCover.image = image;
+
+		AliCloudController *aliCloud = [AliCloudController alloc];
+		self.coverImagePath = [aliCloud uploadPic:data];
+	}
+}
+
 
 @end
