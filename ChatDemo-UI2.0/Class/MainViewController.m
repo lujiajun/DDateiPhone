@@ -185,7 +185,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     //index
     _indexVC = [[IndexViewController alloc] init];
-    [_indexVC networkChanged:_connectionState];
+//    [_indexVC networkChanged:_connectionState];
     _indexVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.index", @"Index")
                                                         image:nil
                                                           tag:0];

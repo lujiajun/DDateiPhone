@@ -363,7 +363,7 @@ static DDUser   *uuser;
     }else if(indexPath.row==1){
         return 100;
     }else if(indexPath.row==2){
-        return 150;
+        return 160;
     }
     return 40;
 }

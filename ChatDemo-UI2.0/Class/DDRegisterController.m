@@ -43,31 +43,42 @@ static DDUser   *dduser;
     
     [super viewDidLoad];
     self.title = @"注册";
+    //背景
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    imageView.image = [UIImage imageNamed:@"registerbak.png"];
+   //    imageView.frame = CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height);
+    imageView.userInteractionEnabled=YES;
+    [self.view addSubview:imageView];
+   
+   
     _usernameTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 10, 250, 30)];
     [_usernameTextField setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
     _usernameTextField.placeholder = @"请输入11位手机号"; //默认显示的字
-    [self.view addSubview:_usernameTextField];
+    _usernameTextField.userInteractionEnabled=YES;
+
+    [imageView addSubview:_usernameTextField];
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(260, 10, 44, 30)];
     [button setImage:[UIImage imageNamed:@"getCode.png"] forState:UIControlStateNormal];
-    [self.view addSubview:button];
+    [imageView addSubview:button];
 //    [button addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
 
     UITextField  *code = [[UITextField alloc] initWithFrame:CGRectMake(0, 45, 250, 30)];
     [code setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
     code.placeholder = @"请输入验证码"; //默认显示的字
-    [self.view addSubview:code];
+    [imageView addSubview:code];
     
     _passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 80, 250, 30)];
     [_passwordTextField setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
     _passwordTextField.placeholder = @"请输入不少于6位密码"; //默认显示的字
     
-    [self.view addSubview:_passwordTextField];
+    [imageView addSubview:_passwordTextField];
     
-    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 120, 300, 30)];
+    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 120, self.view.frame.size.width, 30)];
     registerButton.backgroundColor=[UIColor redColor];
     [registerButton setTitle:@"下一步" forState:UIControlStateNormal];
-    [self.view addSubview:registerButton];
+    [imageView addSubview:registerButton];
     [registerButton addTarget:self action:@selector(doRegister) forControlEvents:UIControlEventTouchUpInside];
     
 ////    UIButton *saveButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];

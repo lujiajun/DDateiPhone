@@ -1,4 +1,3 @@
-
 /************************************************************
  *  * EaseMob CONFIDENTIAL
  * __________________
@@ -11,56 +10,75 @@
  * from EaseMob Technologies.
  */
 
+#import "NewSettingViewController.h"
+#import "SettingsViewController.h"
+
+#import "ApplyViewController.h"
+#import "PushNotificationViewController.h"
+#import "BlackListViewController.h"
+#import "DebugViewController.h"
+#import "WCAlertView.h"
+#import "AliCloudController.h"
+#import "DDBDynamoDB.h"
+#import "Constants.h"
+#import "DDRegisterFinishController.h"
+#import "DDPersonalUpdateController.h"
 #import "IndexViewController.h"
-#import "SRRefreshView.h"
-#import "ChatListCell.h"
-//#import "EMInviteBar.h"
-#import "NSDate+Category.h"
-#import "RealtimeSearchUtil.h"
-#import "ChatViewController.h"
-#import "EMSearchDisplayController.h"
-#import "ConvertToCommonEmoticonsHelper.h"
+#import "DDBDynamoDB.h"
 
-@interface IndexViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchDisplayDelegate,SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
+@interface IndexViewController ()
 
-@property (strong, nonatomic) NSMutableArray        *dataSource;
+@property (strong, nonatomic) UIView *footerView;
 
-@property (strong, nonatomic) UITableView           *tableView;
-@property (nonatomic, strong) SRRefreshView         *slimeView;
-@property (nonatomic, strong) UIView                *networkStateView;
-@property(nonatomic,strong) UITextField             *inviteInfo;
-@property(nonatomic,strong) UIButton                *inviteButton;
-@property(nonatomic,strong) UIImageView                 *logo;
-@property(nonatomic,strong) UITextView        *indexShow;
+@property (strong, nonatomic) UISwitch *autoLoginSwitch;
+@property (strong, nonatomic) UISwitch *ipSwitch;
 
-@property (strong, nonatomic) EMSearchDisplayController *searchController;
+@property (strong, nonatomic) UISwitch *beInvitedSwitch;
+@property (strong, nonatomic) UILabel *beInvitedLabel;
+@property(strong,nonatomic) UIScrollView *scrollView;
+@property(strong,nonatomic) UIImagePickerController  *imagePicker;
+@property(strong,nonatomic) NSMutableArray *datasouce;
+@property(strong,nonatomic) DDBDynamoDB *ddbDynamoDB;
+@property(strong,nonatomic) AWSDynamoDBObjectMapper *dynamoDBObjectMapper;
 
 @end
-
+static DDUser   *uuser;
 @implementation IndexViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        _dataSource = [NSMutableArray array];
-    }
-    return self;
-}
+@synthesize autoLoginSwitch = _autoLoginSwitch;
+@synthesize ipSwitch = _ipSwitch;
+
+#define kIMGCOUNT 5
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self removeEmptyConversationsFromDB];
-    //搜索
-    [self.view addSubview:self.inviteBar];
-    //聊天列表
-    //[self.view addSubview:self.tableView];
-    //聊天窗口
-    [self.tableView addSubview:self.slimeView];
-    [self networkStateView];
+    self.title =@"个人主页";
+    self.view.backgroundColor = [UIColor redColor];
     
-    //    [self searchController];
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.tableFooterView = self.footerView;
+    //chaxun
+    self.refreshList;
+    [self initdduser];
+    
+    
+    
+}
+
+-(void)initdduser{
+    if(uuser==nil){
+        NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
+        NSString *username = [loginInfo objectForKey:kSDKUsername];
+        
+        //同步方法
+        _dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+        BFTask *bftask= [_dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil];
+        bftask.waitUntilFinished;
+        uuser= bftask.result;
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,491 +86,299 @@
     [super didReceiveMemoryWarning];
 }
 
--(void)viewWillAppear:(BOOL)animated
+#pragma mark - getter
+
+- (UISwitch *)beInvitedSwitch
 {
-    [super viewWillAppear:animated];
+    //    if (_beInvitedSwitch == nil) {
+    //        _beInvitedSwitch = [[UISwitch alloc] init];
+    //        [_beInvitedSwitch addTarget:self action:@selector(beInvitedChanged:) forControlEvents:UIControlEventValueChanged];
+    //        BOOL autoAccept = [[EaseMob sharedInstance].chatManager autoAcceptGroupInvitation];
+    //        [_beInvitedSwitch setOn:!autoAccept animated:YES];
+    //    }
     
-    [self refreshDataSource];
-    [self registerNotifications];
+    return _beInvitedSwitch;
 }
 
--(void)viewWillDisappear:(BOOL)animated
+- (UILabel *)beInvitedLabel
 {
-    [super viewWillDisappear:animated];
-    [self unregisterNotifications];
-}
-
-- (void)removeEmptyConversationsFromDB
-{
-    NSArray *conversations = [[EaseMob sharedInstance].chatManager conversations];
-    NSMutableArray *needRemoveConversations;
-    for (EMConversation *conversation in conversations) {
-        if (!conversation.latestMessage) {
-            if (!needRemoveConversations) {
-                needRemoveConversations = [[NSMutableArray alloc] initWithCapacity:0];
-            }
-            
-            [needRemoveConversations addObject:conversation.chatter];
-        }
+    if (_beInvitedLabel == nil) {
+        _beInvitedLabel = [[UILabel alloc] init];
+        _beInvitedLabel.backgroundColor = [UIColor clearColor];
+        _beInvitedLabel.font = [UIFont systemFontOfSize:12.0];
+        _beInvitedLabel.textColor = [UIColor grayColor];
     }
     
-    if (needRemoveConversations && needRemoveConversations.count > 0) {
-        [[EaseMob sharedInstance].chatManager removeConversationsByChatters:needRemoveConversations
-                                                             deleteMessages:YES
-                                                                append2Chat:NO];
+    return _beInvitedLabel;
+}
+
+#pragma mark - Table view datasource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _datasouce.count;
+}
+
+//每行缩进
+-(NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row ==0) {
+        return 10;
+    }
+    return 0;
+}
+
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    [self initdduser];
+    
+    if (indexPath.section == 0) {
+        for (NSUInteger i = 0; i < _datasouce.count; i++) {
+            if (indexPath.row == i) {
+                CHATROOM2 *root=[[_datasouce objectAtIndex:i] copy];
+                UIImage *bak;
+                if(root!=nil&&root.PicturePath!=nil){
+                    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:root.PicturePath]]];
+                    bak = [UIImage imageWithData:data];
+                }else{
+                    bak=[UIImage imageNamed:@"Logo_new"];
+                }
+               
+                UIImageView *bakview=[[UIImageView alloc] initWithImage:bak];
+                bakview.frame=CGRectMake(5, 5, cell.frame.size.width-10, 150);
+                bakview.layer.masksToBounds =YES;
+                bakview.layer.cornerRadius =25;
+                [cell.contentView addSubview:bakview];
+                //渐变
+                UIImage *background=[UIImage imageNamed:@"jianbian"];
+                UIImageView *bakgroundview=[[UIImageView alloc] initWithImage:background];
+                bakgroundview.frame=CGRectMake(5, 5, cell.frame.size.width-10, 150);
+                [cell.contentView addSubview:bakgroundview];
+                //查询用户
+                BFTask *bftask1= [_dynamoDBObjectMapper load:[DDUser class] hashKey:root.UID1 rangeKey:nil];
+                bftask1.waitUntilFinished;
+                DDUser *uuser1= bftask1.result;
+                //显示用户1
+                UIImage *user1head;
+                if(uuser1!=nil&&uuser1.picPath!=nil){
+                    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:uuser1.picPath]]];
+                    user1head = [UIImage imageWithData:data];
+                }else{
+                    user1head=[UIImage imageNamed:@"Logo_new"];
+                }
+                
+                UIImageView *user1=[[UIImageView alloc] initWithImage:user1head];
+                user1.frame=CGRectMake(10, bakview.frame.origin.y+5, 50, 50);
+                user1.layer.masksToBounds =YES;
+                user1.layer.cornerRadius =25;
+                [bakview addSubview:user1];
+                //显示用户2
+                
+                BFTask *bftask2= [_dynamoDBObjectMapper load:[DDUser class] hashKey:root.UID2 rangeKey:nil];
+                bftask2.waitUntilFinished;
+                DDUser *uuser2= bftask2.result;
+                //显示用户1
+                UIImage *user2head;
+                if(uuser1!=nil&&uuser2.picPath!=nil){
+                    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:uuser2.picPath]]];
+                    user2head = [UIImage imageWithData:data];
+                }else{
+                    user2head=[UIImage imageNamed:@"Logo_new"];
+                }
+                UIImageView *user2=[[UIImageView alloc] initWithImage:user2head];
+                user2.frame=CGRectMake(bakview.frame.size.width-60, bakview.frame.origin.y+5, 50, 50);
+                user2.layer.masksToBounds =YES;
+                user2.layer.cornerRadius =25;
+                [bakview addSubview:user2];
+                
+                //性别
+                BOOL *isboy=NO;
+                if(user1!=nil){
+                    if(uuser1.gender==@"Male" || uuser1.gender==@"男"){
+                        isboy=YES;
+                    }
+                }
+                UIImage *isboyimg;
+                if(isboy){
+                    isboyimg=[UIImage imageNamed:@"sexboy"];
+                }else{
+                    isboyimg=[UIImage imageNamed:@"sexgirl"];
+                }
+                UIImageView *isboyview=[[UIImageView alloc] initWithImage:isboyimg];
+                isboyview.frame=CGRectMake(bakview.frame.size.width-50, bakview.frame.origin.y+100, 20, 20);
+                [bakview addSubview:isboyview];
+                //添加宣言
+                UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(5, bakview.frame.origin.y+80, 100, 30)];
+                mylable.text=root.Motto;
+                mylable.textAlignment=NSTextAlignmentCenter;
+                mylable.font=[UIFont fontWithName:@"Helvetica" size:12];
+                [bakview addSubview:mylable];
+                
+                
+                
+            }
+        }
+        
+        
+    }
+    
+    return cell;
+}
+
+
+- (void)refreshList {
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    _dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+    AWSDynamoDBScanExpression *scanExpression = [AWSDynamoDBScanExpression new];
+    scanExpression.limit = @10;
+    BFTask *bftask= [_dynamoDBObjectMapper scan:[CHATROOM2 class] expression:scanExpression];
+    bftask.waitUntilFinished;
+    AWSDynamoDBPaginatedOutput *paginatedOutput = bftask.result;
+    _datasouce=paginatedOutput.items;
+    
+//    return [[[dynamoDBObjectMapper scan:[CHATROOM2 class]
+//                             expression:scanExpression]
+//             continueWithExecutor:[BFExecutor mainThreadExecutor] withSuccessBlock:^id(BFTask *task) {
+//                 
+//                 AWSDynamoDBPaginatedOutput *paginatedOutput = task.result;
+//                                      for (CHATROOM2 *item in paginatedOutput.items) {
+////                                          [self.tableRows addObject:item];
+//                                      }
+//                 //
+//                 //                     self.lastEvaluatedKey = paginatedOutput.lastEvaluatedKey;
+//                 //                     if (!paginatedOutput.lastEvaluatedKey) {
+//                 //                         self.doneLoading = YES;
+//                 //                     }
+//                 
+//                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+//                 //                     [self.tableView reloadData];
+//                 
+//                 return nil;
+//             }] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
+//                 if (task.error) {
+//                     NSLog(@"Error: [%@]", task.error);
+//                 }
+//
+//                 return nil;
+//             }];
+//    
+}
+
+
+- (void)insertTableRow:(DDUser *)tableRow {
+    AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+    [dynamoDBObjectMapper save: tableRow];
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    return 160;
+}
+
+
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissModalViewControllerAnimated:YES];
+}
+
+
+#pragma mark - Table view delegate
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row == 1) {
+        PushNotificationViewController *pushController = [[PushNotificationViewController alloc] initWithStyle:UITableViewStylePlain];
+        [self.navigationController pushViewController:pushController animated:YES];
+    }
+    else if (indexPath.row == 2)
+    {
+        DDPersonalUpdateController *blackController = [[DDPersonalUpdateController alloc] initWithNibName:nil bundle:nil];
+        [self.navigationController pushViewController:blackController animated:YES];
+    }
+    else if (indexPath.row == 3)
+    {
+        SettingsViewController *debugController = [[SettingsViewController alloc] initWithStyle:UITableViewStylePlain];
+        [self.navigationController pushViewController:debugController animated:YES];
     }
 }
 
 #pragma mark - getter
 
-- (SRRefreshView *)slimeView
+- (UIView *)footerView
 {
-    if (!_slimeView) {
-        _slimeView = [[SRRefreshView alloc] init];
-        _slimeView.delegate = self;
-        _slimeView.upInset = 0;
-        _slimeView.slimeMissWhenGoingBack = YES;
-        _slimeView.slime.bodyColor = [UIColor grayColor];
-        _slimeView.slime.skinColor = [UIColor grayColor];
-        _slimeView.slime.lineWith = 1;
-        _slimeView.slime.shadowBlur = 4;
-        _slimeView.slime.shadowColor = [UIColor grayColor];
-        _slimeView.backgroundColor = [UIColor whiteColor];
-    }
+    if (_footerView == nil) {
+        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
+        _footerView.backgroundColor = [UIColor clearColor];
+        
+        }
     
-    return _slimeView;
+    return _footerView;
 }
 
-- (UITextField *)inviteBar
+#pragma mark - action
+
+- (void)autoLoginChanged:(UISwitch *)autoSwitch
 {
-    // 创建一个UILabel对象
-    UILabel *show = [[UILabel alloc] initWithFrame
-                     :CGRectMake(20 , 0 , 240 , 30)];
-    // 将UILabel添加到rootView控件中
-    [self.view addSubview:show];
-    // 设置UILabel默认显示的文本
-    show.text = @"点击右上方的“邀请”按钮，拉上好友Double Date";
-    show.adjustsFontSizeToFitWidth=YES;
-    //    show.backgroundColor = [UIColor grayColor];
-    
-    //输入框
-    CGRect inviteInfoRect=CGRectMake(20, 30, 240, 30);
-    _inviteInfo=[[UITextField alloc] initWithFrame:inviteInfoRect];
-    _inviteInfo.borderStyle=UITextBorderStyleRoundedRect;
-    [self.view addSubview:_inviteInfo];
-    
-    //按钮
-    CGRect inviteButtonRect=CGRectMake(270, 30, 45, 30);
-    _inviteButton=[UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _inviteButton.frame=inviteButtonRect;
-    [_inviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_inviteButton setTitle:@"邀请" forState:UIControlStateNormal];
-    [_inviteButton setBackgroundColor:[UIColor redColor]];
-    
-    //  [_inviteButton addTarget:<#(id)#> action:<#(SEL)#> forControlEvents:<#(UIControlEvents)#>]; 按钮事件
-    [self.view addSubview:_inviteButton];
-    
-    //添加图片
-//    UIImageView *imageView = [[UIImageView alloc] init];
-//    imageView.image = [UIImage imageNamed:@"80.png"];
-//    imageView.frame = CGRectMake(0,0,0,self.tableView.frame.size.width);
-//    [self.view addSubview:imageView];
-//    
-    return _inviteInfo;
-    //    if (!_inviteBar) {
-    //        _inviteBar = [[UITextField alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 44)];
-    //        _inviteBar.delegate = self.inputView;
-    //        _inviteBar.placeholder = NSLocalizedString(@"invite", @"invite");
-    //        _inviteBar.backgroundColor = [UIColor colorWithRed:0.747 green:0.756 blue:0.751 alpha:1.000];
+    [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:autoSwitch.isOn];
+}
+
+- (void)useIpChanged:(UISwitch *)ipSwitch
+{
+    [[EaseMob sharedInstance].chatManager setIsUseIp:ipSwitch.isOn];
+}
+
+- (void)beInvitedChanged:(UISwitch *)beInvitedSwitch
+{
+    //    if (beInvitedSwitch.isOn) {
+    //        self.beInvitedLabel.text = @"允许选择";
     //    }
-    
-    //    return _inviteBar;
+    //    else{
+    //        self.beInvitedLabel.text = @"自动加入";
+    //    }
+    //
+    //    [[EaseMob sharedInstance].chatManager setAutoAcceptGroupInvitation:!(beInvitedSwitch.isOn)];
 }
 
-- (UITableView *)tableView
+
+- (void)refreshConfig
 {
-    if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(20, 60, self.view.frame.size.width, self.view.frame.size.height - self.inviteBar.frame.size.height) style:UITableViewStylePlain];
-        _tableView.backgroundColor = [UIColor whiteColor];
-        _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-        _tableView.delegate = self;
-        //显示聊天信息
-        //        _tableView.dataSource = self;
-        _tableView.tableFooterView = [[UIView alloc] init];
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [_tableView registerClass:[ChatListCell class] forCellReuseIdentifier:@"chatListCell"];
-    }
+    [self.autoLoginSwitch setOn:[[EaseMob sharedInstance].chatManager isAutoLoginEnabled] animated:YES];
+    [self.ipSwitch setOn:[[EaseMob sharedInstance].chatManager isUseIp] animated:YES];
     
-    return _tableView;
+    [self.tableView reloadData];
 }
 
-//- (EMSearchDisplayController *)searchController
-//{
-//    if (_searchController == nil) {
-//        _searchController = [[EMSearchDisplayController alloc] initWithSearchBar:self.inviteBar contentsController:self];
-//        _searchController.delegate = self;
-//        _searchController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//
-//        __weak IndexViewController *weakSelf = self;
-//        [_searchController setCellForRowAtIndexPathCompletion:^UITableViewCell *(UITableView *tableView, NSIndexPath *indexPath) {
-//            static NSString *CellIdentifier = @"ChatListCell";
-//            ChatListCell *cell = (ChatListCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//
-//            // Configure the cell...
-//            if (cell == nil) {
-//                cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//            }
-//
-//            EMConversation *conversation = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-//            cell.name = conversation.chatter;
-//            if (!conversation.isGroup) {
-//                cell.placeholderImage = [UIImage imageNamed:@"chatListCellHead.png"];
-//            }
-//            else{
-//                NSString *imageName = @"groupPublicHeader";
-//                NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
-//                for (EMGroup *group in groupArray) {
-//                    if ([group.groupId isEqualToString:conversation.chatter]) {
-//                        cell.name = group.groupSubject;
-//                        imageName = group.isPublic ? @"groupPublicHeader" : @"groupPrivateHeader";
-//                        break;
-//                    }
-//                }
-//                cell.placeholderImage = [UIImage imageNamed:imageName];
-//            }
-//            cell.detailMsg = [weakSelf subTitleMessageByConversation:conversation];
-//            cell.time = [weakSelf lastMessageTimeByConversation:conversation];
-//            cell.unreadCount = [weakSelf unreadMessageCountByConversation:conversation];
-//            if (indexPath.row % 2 == 1) {
-//                cell.contentView.backgroundColor = RGBACOLOR(246, 246, 246, 1);
-//            }else{
-//                cell.contentView.backgroundColor = [UIColor whiteColor];
-//            }
-//            return cell;
-//        }];
-//
-//        [_searchController setHeightForRowAtIndexPathCompletion:^CGFloat(UITableView *tableView, NSIndexPath *indexPath) {
-//            return [ChatListCell tableView:tableView heightForRowAtIndexPath:indexPath];
-//        }];
-//
-//        [_searchController setDidSelectRowAtIndexPathCompletion:^(UITableView *tableView, NSIndexPath *indexPath) {
-//            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//            [weakSelf.searchController.searchBar endEditing:YES];
-//
-//            EMConversation *conversation = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-//            ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:conversation.chatter isGroup:conversation.isGroup];
-//            chatVC.title = conversation.chatter;
-//            [weakSelf.navigationController pushViewController:chatVC animated:YES];
-//        }];
-//    }
-//
-//    return _searchController;
-//}
-
-- (UIView *)networkStateView
+- (void)logoutAction
 {
-    if (_networkStateView == nil) {
-        _networkStateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
-        _networkStateView.backgroundColor = [UIColor colorWithRed:255 / 255.0 green:199 / 255.0 blue:199 / 255.0 alpha:0.5];
-        
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, (_networkStateView.frame.size.height - 20) / 2, 20, 20)];
-        imageView.image = [UIImage imageNamed:@"messageSendFail"];
-        [_networkStateView addSubview:imageView];
-        
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 5, 0, _networkStateView.frame.size.width - (CGRectGetMaxX(imageView.frame) + 15), _networkStateView.frame.size.height)];
-        label.font = [UIFont systemFontOfSize:15.0];
-        label.textColor = [UIColor grayColor];
-        label.backgroundColor = [UIColor clearColor];
-        label.text = NSLocalizedString(@"network.disconnection", @"Network disconnection");
-        [_networkStateView addSubview:label];
-    }
-    
-    return _networkStateView;
-}
-
-#pragma mark - private
-
-- (NSMutableArray *)loadDataSource
-{
-    NSMutableArray *ret = nil;
-    NSArray *conversations = [[EaseMob sharedInstance].chatManager conversations];
-    
-    NSArray* sorte = [conversations sortedArrayUsingComparator:
-                      ^(EMConversation *obj1, EMConversation* obj2){
-                          EMMessage *message1 = [obj1 latestMessage];
-                          EMMessage *message2 = [obj2 latestMessage];
-                          if(message1.timestamp > message2.timestamp) {
-                              return(NSComparisonResult)NSOrderedAscending;
-                          }else {
-                              return(NSComparisonResult)NSOrderedDescending;
-                          }
-                      }];
-    
-    ret = [[NSMutableArray alloc] initWithArray:sorte];
-    return ret;
-}
-
-// 得到最后消息时间
--(NSString *)lastMessageTimeByConversation:(EMConversation *)conversation
-{
-    NSString *ret = @"";
-    EMMessage *lastMessage = [conversation latestMessage];;
-    if (lastMessage) {
-        ret = [NSDate formattedTimeFromTimeInterval:lastMessage.timestamp];
-    }
-    
-    return ret;
-}
-
-// 得到未读消息条数
-- (NSInteger)unreadMessageCountByConversation:(EMConversation *)conversation
-{
-    NSInteger ret = 0;
-    ret = conversation.unreadMessagesCount;
-    
-    return  ret;
-}
-
-// 得到最后消息文字或者类型
--(NSString *)subTitleMessageByConversation:(EMConversation *)conversation
-{
-    NSString *ret = @"";
-    EMMessage *lastMessage = [conversation latestMessage];
-    if (lastMessage) {
-        id<IEMMessageBody> messageBody = lastMessage.messageBodies.lastObject;
-        switch (messageBody.messageBodyType) {
-            case eMessageBodyType_Image:{
-                ret = NSLocalizedString(@"message.image1", @"[image]");
-            } break;
-            case eMessageBodyType_Text:{
-                // 表情映射。
-                NSString *didReceiveText = [ConvertToCommonEmoticonsHelper
-                                            convertToSystemEmoticons:((EMTextMessageBody *)messageBody).text];
-                ret = didReceiveText;
-            } break;
-            case eMessageBodyType_Voice:{
-                ret = NSLocalizedString(@"message.voice1", @"[voice]");
-            } break;
-            case eMessageBodyType_Location: {
-                ret = NSLocalizedString(@"message.location1", @"[location]");
-            } break;
-            case eMessageBodyType_Video: {
-                ret = NSLocalizedString(@"message.vidio1", @"[vidio]");
-            } break;
-            default: {
-            } break;
+    __weak NewSettingViewController *weakSelf = self;
+    [self showHudInView:self.view hint:NSLocalizedString(@"setting.logoutOngoing", @"loging out...")];
+    [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:YES completion:^(NSDictionary *info, EMError *error) {
+        [weakSelf hideHud];
+        if (error && error.errorCode != EMErrorServerNotLogin) {
+            [weakSelf showHint:error.description];
         }
-    }
-    
-    return ret;
-}
-
-#pragma mark - TableViewDelegate & TableViewDatasource
-
--(UITableViewCell *)tableView:(UITableView *)tableView
-        cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    static NSString *identify = @"chatListCell";
-    ChatListCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
-    
-    if (!cell) {
-        cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identify];
-    }
-    EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
-    cell.name = conversation.chatter;
-    if (!conversation.isGroup) {
-        cell.placeholderImage = [UIImage imageNamed:@"chatListCellHead.png"];
-    }
-    else{
-        NSString *imageName = @"groupPublicHeader";
-        NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
-        for (EMGroup *group in groupArray) {
-            if ([group.groupId isEqualToString:conversation.chatter]) {
-                cell.name = group.groupSubject;
-                imageName = group.isPublic ? @"groupPublicHeader" : @"groupPrivateHeader";
-                break;
-            }
+        else{
+            [[ApplyViewController shareController] clear];
+            [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
         }
-        cell.placeholderImage = [UIImage imageNamed:imageName];
-    }
-    cell.detailMsg = [self subTitleMessageByConversation:conversation];
-    cell.time = [self lastMessageTimeByConversation:conversation];
-    cell.unreadCount = [self unreadMessageCountByConversation:conversation];
-    if (indexPath.row % 2 == 1) {
-        cell.contentView.backgroundColor = RGBACOLOR(246, 246, 246, 1);
-    }else{
-        cell.contentView.backgroundColor = [UIColor whiteColor];
-    }
-    return cell;
-}
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return  self.dataSource.count;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [ChatListCell tableView:tableView heightForRowAtIndexPath:indexPath];
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
-    
-    ChatViewController *chatController;
-    NSString *title = conversation.chatter;
-    if (conversation.isGroup) {
-        NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
-        for (EMGroup *group in groupArray) {
-            if ([group.groupId isEqualToString:conversation.chatter]) {
-                title = group.groupSubject;
-                break;
-            }
-        }
-    }
-    
-    NSString *chatter = conversation.chatter;
-    chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup];
-    chatController.title = title;
-    [self.navigationController pushViewController:chatController animated:YES];
-}
-
--(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        EMConversation *converation = [self.dataSource objectAtIndex:indexPath.row];
-        [[EaseMob sharedInstance].chatManager removeConversationByChatter:converation.chatter deleteMessages:YES append2Chat:YES];
-        [self.dataSource removeObjectAtIndex:indexPath.row];
-        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }
-}
-
-
-#pragma mark - UISearchBarDelegate
-
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
-    [searchBar setShowsCancelButton:YES animated:YES];
-    
-    return YES;
-}
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    [[RealtimeSearchUtil currentUtil] realtimeSearchWithSource:self.dataSource searchText:(NSString *)searchText collationStringSelector:@selector(chatter) resultBlock:^(NSArray *results) {
-        if (results) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.searchController.resultsSource removeAllObjects];
-                [self.searchController.resultsSource addObjectsFromArray:results];
-                [self.searchController.searchResultsTableView reloadData];
-            });
-        }
-    }];
-}
-
-- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
-{
-    return YES;
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    [searchBar resignFirstResponder];
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
-    searchBar.text = @"";
-    [[RealtimeSearchUtil currentUtil] realtimeSearchStop];
-    [searchBar resignFirstResponder];
-    [searchBar setShowsCancelButton:NO animated:YES];
-}
-
-#pragma mark - scrollView delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [_slimeView scrollViewDidScroll];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [_slimeView scrollViewDidEndDraging];
-}
-
-#pragma mark - slimeRefresh delegate
-//刷新消息列表
-- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
-{
-    [self refreshDataSource];
-    [_slimeView endRefresh];
-}
-
-#pragma mark - IChatMangerDelegate
-
--(void)didUnreadMessagesCountChanged
-{
-    [self refreshDataSource];
-}
-
-- (void)didUpdateGroupList:(NSArray *)allGroups error:(EMError *)error
-{
-    [self refreshDataSource];
-}
-
-#pragma mark - registerNotifications
--(void)registerNotifications{
-    [self unregisterNotifications];
-    [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
-}
-
--(void)unregisterNotifications{
-    [[EaseMob sharedInstance].chatManager removeDelegate:self];
-}
-
-- (void)dealloc{
-    [self unregisterNotifications];
-}
-
-#pragma mark - public
-
--(void)refreshDataSource
-{
-    self.dataSource = [self loadDataSource];
-    [_tableView reloadData];
-    [self hideHud];
-}
-
-- (void)isConnect:(BOOL)isConnect{
-    if (!isConnect) {
-        _tableView.tableHeaderView = _networkStateView;
-    }
-    else{
-        _tableView.tableHeaderView = nil;
-    }
-    
-}
-
-- (void)networkChanged:(EMConnectionState)connectionState
-{
-    if (connectionState == eEMConnectionDisconnected) {
-        _tableView.tableHeaderView = _networkStateView;
-    }
-    else{
-        _tableView.tableHeaderView = nil;
-    }
-}
-
-- (void)willReceiveOfflineMessages{
-    NSLog(NSLocalizedString(@"message.beginReceiveOffine", @"Begin to receive offline messages"));
-}
-
-- (void)didFinishedReceiveOfflineMessages:(NSArray *)offlineMessages{
-    NSLog(NSLocalizedString(@"message.endReceiveOffine", @"End to receive offline messages"));
-    [self refreshDataSource];
+    } onQueue:nil];
 }
 
 @end

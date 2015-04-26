@@ -52,7 +52,7 @@ static DDUser   *dduser;
     
     UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(5, imageView.frame.size.height+5, 50, 20)];
     city.text=@"所在城市";
-   
+    city.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:city];
 //    NSMutableDictionary *mulDic = [NSMutableDictionary dictionary];
 //    [mulDic setObject:[NSArray arrayWithObjects:@"15000000", @"/MHz"    , nil] forKey:@"蜂窝公众通信（全国网）"];
@@ -67,7 +67,7 @@ static DDUser   *dduser;
     
     
     NSArray   *arrayData =[[NSArray alloc]initWithObjects:@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",nil];
-
+    
     _commbox = [[Commbox alloc] initWithFrame:CGRectMake(70, imageView.frame.size.height+5, 140, 100)];
     _commbox.textField.placeholder = @"点击请选择";
     
@@ -88,6 +88,7 @@ static DDUser   *dduser;
     
     UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(5, imageView.frame.size.height+city.frame.size.height+20, 50, 20)];
     university.text=@"学校";
+    university.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:university];
 
     //学校
@@ -98,7 +99,7 @@ static DDUser   *dduser;
     
     [self.view addSubview:_universitycommbox];
     
-    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(5, imageView.frame.size.height+city.frame.size.height*2+40, 300, 30)];
+    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, imageView.frame.size.height+city.frame.size.height*2+40, self.view.frame.size.width, 30)];
     registerButton.backgroundColor=[UIColor redColor];
     [registerButton setTitle:@"下一步" forState:UIControlStateNormal];
     [self.view addSubview:registerButton];

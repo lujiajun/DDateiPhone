@@ -22,6 +22,8 @@
 
 @interface AppDelegate ()
 
+@property (nonatomic, readonly) NSMutableArray *tableRows;
+
 @end
 
 
@@ -57,7 +59,7 @@
         AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionAPNortheast1
                                                                              credentialsProvider:credentialsProvider];
         AWSServiceManager.defaultServiceManager.defaultServiceConfiguration = configuration;
-//    [[DynamoDBManagerUser alloc] addUser];
+
     
     //init alicloud
     AliCloudController *alicloud=[AliCloudController alloc];
