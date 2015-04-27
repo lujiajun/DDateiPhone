@@ -96,6 +96,11 @@
 		8A7DBEF91AECCAE300D7941F /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEF11AECCAE300D7941F /* setting.png */; };
 		8A7DBEFA1AECCAE300D7941F /* sexbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEF21AECCAE300D7941F /* sexbox.png */; };
 		8A7DBEFB1AECCAE300D7941F /* sexgirl.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEF31AECCAE300D7941F /* sexgirl.png */; };
+		8A814A2D1AEE7B7000B26BA4 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A814A211AEE7B7000B26BA4 /* EGOCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8A814A2E1AEE7B7000B26BA4 /* EGOImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A814A241AEE7B7000B26BA4 /* EGOImageButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8A814A2F1AEE7B7000B26BA4 /* EGOImageLoadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A814A271AEE7B7000B26BA4 /* EGOImageLoadConnection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8A814A301AEE7B7000B26BA4 /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A814A291AEE7B7000B26BA4 /* EGOImageLoader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8A814A311AEE7B7000B26BA4 /* EGOImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A814A2C1AEE7B7000B26BA4 /* EGOImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8ADB384E1AE286BD00FCC6FC /* PersonalController.h in Resources */ = {isa = PBXBuildFile; fileRef = 8ADB384D1AE286BD00FCC6FC /* PersonalController.h */; };
 		8ADB38501AE286F000FCC6FC /* PersonalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB384F1AE286F000FCC6FC /* PersonalController.m */; };
 		8ADB388C1AE2A17100FCC6FC /* UsernickController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB388B1AE2A17100FCC6FC /* UsernickController.m */; };
@@ -545,6 +550,16 @@
 		8A7DBEF11AECCAE300D7941F /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setting.png; path = dd/setting.png; sourceTree = "<group>"; };
 		8A7DBEF21AECCAE300D7941F /* sexbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sexbox.png; path = dd/sexbox.png; sourceTree = "<group>"; };
 		8A7DBEF31AECCAE300D7941F /* sexgirl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sexgirl.png; path = dd/sexgirl.png; sourceTree = "<group>"; };
+		8A814A201AEE7B7000B26BA4 /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOCache.h; sourceTree = "<group>"; };
+		8A814A211AEE7B7000B26BA4 /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOCache.m; sourceTree = "<group>"; };
+		8A814A231AEE7B7000B26BA4 /* EGOImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageButton.h; sourceTree = "<group>"; };
+		8A814A241AEE7B7000B26BA4 /* EGOImageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageButton.m; sourceTree = "<group>"; };
+		8A814A261AEE7B7000B26BA4 /* EGOImageLoadConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageLoadConnection.h; sourceTree = "<group>"; };
+		8A814A271AEE7B7000B26BA4 /* EGOImageLoadConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageLoadConnection.m; sourceTree = "<group>"; };
+		8A814A281AEE7B7000B26BA4 /* EGOImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageLoader.h; sourceTree = "<group>"; };
+		8A814A291AEE7B7000B26BA4 /* EGOImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageLoader.m; sourceTree = "<group>"; };
+		8A814A2B1AEE7B7000B26BA4 /* EGOImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageView.h; sourceTree = "<group>"; };
+		8A814A2C1AEE7B7000B26BA4 /* EGOImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageView.m; sourceTree = "<group>"; };
 		8ADB384D1AE286BD00FCC6FC /* PersonalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalController.h; sourceTree = "<group>"; };
 		8ADB384F1AE286F000FCC6FC /* PersonalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalController.m; sourceTree = "<group>"; };
 		8ADB388A1AE2A15900FCC6FC /* UsernickController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsernickController.h; sourceTree = "<group>"; };
@@ -1051,6 +1066,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C1CEF7F196EA37600DBA56B /* ImageIO.framework in Frameworks */,
 				1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */,
 				EBC0CE571AD6652800E90053 /* libEaseMobClientSDK.a in Frameworks */,
 				1873D80D1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a in Frameworks */,
@@ -1059,7 +1075,6 @@
 				3CBB931C1A14B227007FED9E /* libsqlite3.dylib in Frameworks */,
 				EBD2ACC51A7CECBC00D16528 /* libMobClickLibrary.a in Frameworks */,
 				3CE6293319A1B13700829632 /* CoreText.framework in Frameworks */,
-				3C1CEF7F196EA37600DBA56B /* ImageIO.framework in Frameworks */,
 				3C06AB0319405D330076FF0B /* MapKit.framework in Frameworks */,
 				3C06AAFF194050A00076FF0B /* CoreLocation.framework in Frameworks */,
 				902DEC551931D934006CA75E /* libresolv.dylib in Frameworks */,
@@ -1202,6 +1217,55 @@
 				8A6C0E131AED3459009D5208 /* ChatRoomDetail.m */,
 			);
 			name = Index;
+			sourceTree = "<group>";
+		};
+		8A814A0B1AEE765A00B26BA4 /* EGOImageView */ = {
+			isa = PBXGroup;
+			children = (
+				8A814A1F1AEE7B7000B26BA4 /* EGOCache */,
+				8A814A221AEE7B7000B26BA4 /* EGOImageButton */,
+				8A814A251AEE7B7000B26BA4 /* EGOImageLoader */,
+				8A814A2A1AEE7B7000B26BA4 /* EGOImageView */,
+			);
+			path = EGOImageView;
+			sourceTree = "<group>";
+		};
+		8A814A1F1AEE7B7000B26BA4 /* EGOCache */ = {
+			isa = PBXGroup;
+			children = (
+				8A814A201AEE7B7000B26BA4 /* EGOCache.h */,
+				8A814A211AEE7B7000B26BA4 /* EGOCache.m */,
+			);
+			path = EGOCache;
+			sourceTree = "<group>";
+		};
+		8A814A221AEE7B7000B26BA4 /* EGOImageButton */ = {
+			isa = PBXGroup;
+			children = (
+				8A814A231AEE7B7000B26BA4 /* EGOImageButton.h */,
+				8A814A241AEE7B7000B26BA4 /* EGOImageButton.m */,
+			);
+			path = EGOImageButton;
+			sourceTree = "<group>";
+		};
+		8A814A251AEE7B7000B26BA4 /* EGOImageLoader */ = {
+			isa = PBXGroup;
+			children = (
+				8A814A261AEE7B7000B26BA4 /* EGOImageLoadConnection.h */,
+				8A814A271AEE7B7000B26BA4 /* EGOImageLoadConnection.m */,
+				8A814A281AEE7B7000B26BA4 /* EGOImageLoader.h */,
+				8A814A291AEE7B7000B26BA4 /* EGOImageLoader.m */,
+			);
+			path = EGOImageLoader;
+			sourceTree = "<group>";
+		};
+		8A814A2A1AEE7B7000B26BA4 /* EGOImageView */ = {
+			isa = PBXGroup;
+			children = (
+				8A814A2B1AEE7B7000B26BA4 /* EGOImageView.h */,
+				8A814A2C1AEE7B7000B26BA4 /* EGOImageView.m */,
+			);
+			path = EGOImageView;
 			sourceTree = "<group>";
 		};
 		8ADB38511AE28F3400FCC6FC /* dd */ = {
@@ -1512,6 +1576,7 @@
 		90911056192EEAED008A48AA /* 3rdparty */ = {
 			isa = PBXGroup;
 			children = (
+				8A814A0B1AEE765A00B26BA4 /* EGOImageView */,
 				90A705A11A8B63B200376154 /* MWPhotoBrowser */,
 				909308B919604821005013BD /* Emoji */,
 				9003D9191939D9C300DC38A4 /* UMeng */,
@@ -2758,6 +2823,7 @@
 				90A706051A8B63B200376154 /* EMSDWebImageDecoder.m in Sources */,
 				8A4020B01AE3571600806014 /* IndexViewController.m in Sources */,
 				90EF2CEF192F2B4E00BDC549 /* SRSlimeView.m in Sources */,
+				8A814A2D1AEE7B7000B26BA4 /* EGOCache.m in Sources */,
 				8A46EDE51AEA93F00062F518 /* DDRegisterController.m in Sources */,
 				8A4F27121AEB5BDD0050D86E /* DDRegisterFinishController.m in Sources */,
 				9003D9131939D8D000DC38A4 /* AddFriendCell.m in Sources */,
@@ -2778,6 +2844,7 @@
 				90F3ED471A75F3A4005A0135 /* ChatViewController+Category.m in Sources */,
 				8A4020C51AE357DD00806014 /* NewSettingViewController.m in Sources */,
 				8A7DBEE31AECC48400D7941F /* DDPersonalUpdateController.m in Sources */,
+				8A814A301AEE7B7000B26BA4 /* EGOImageLoader.m in Sources */,
 				90A706081A8B63B200376154 /* EMSDWebImageManager.m in Sources */,
 				90911117192EEAED008A48AA /* THProgressView.m in Sources */,
 				3C5EB36319407CAF005C7704 /* EMChooseViewController.m in Sources */,
@@ -2794,9 +2861,11 @@
 				90A7061E1A8B63B200376154 /* PSTGridLayoutRow.m in Sources */,
 				9003D89F1939D8D000DC38A4 /* EMChatAudioBubbleView.m in Sources */,
 				8A4F270F1AEB53410050D86E /* Commbox.m in Sources */,
+				8A814A2F1AEE7B7000B26BA4 /* EGOImageLoadConnection.m in Sources */,
 				90A7061A1A8B63B200376154 /* PSTCollectionViewLayout.m in Sources */,
 				9003D8A01939D8D000DC38A4 /* EMChatBaseBubbleView.m in Sources */,
 				8A4020B41AE3574800806014 /* AliCloudController.m in Sources */,
+				8A814A311AEE7B7000B26BA4 /* EGOImageView.m in Sources */,
 				3C9DDAB4193871D8007C765A /* EMSearchDisplayController.m in Sources */,
 				90A706031A8B63B200376154 /* EMSDImageCache.m in Sources */,
 				90133EC11972DFF400C49B56 /* UIViewController+DismissKeyboard.m in Sources */,
@@ -2822,6 +2891,7 @@
 				90A706181A8B63B200376154 /* PSTCollectionViewFlowLayout.m in Sources */,
 				9091111A192EEAED008A48AA /* NSDateFormatter+Category.m in Sources */,
 				90A706151A8B63B200376154 /* PSTCollectionViewCell.m in Sources */,
+				8A814A2E1AEE7B7000B26BA4 /* EGOImageButton.m in Sources */,
 				3C117122197D243B00E2DBEC /* PushNotificationViewController.m in Sources */,
 				9003D90A1939D8D000DC38A4 /* LocationViewController.m in Sources */,
 				9026F6621961856500653E79 /* ConvertToCommonEmoticonsHelper.m in Sources */,

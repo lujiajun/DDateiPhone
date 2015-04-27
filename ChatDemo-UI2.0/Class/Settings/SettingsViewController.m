@@ -133,48 +133,29 @@
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            
-            UIImageView *imageView = [[UIImageView alloc] init];
-            imageView.image = [UIImage imageNamed:@"80.png"];
-            imageView.frame = CGRectMake(10, 10, 50, 50);
-            [cell.contentView addSubview:imageView];
-            
-            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(70, 10, 200, 50)];
-            mylable.text=@"刘飞";
-            mylable.textAlignment=NSTextAlignmentLeft;
-            [cell.contentView addSubview:mylable];
-            
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
-            
-        }else if(indexPath.row==1){
+         
             cell.textLabel.text = NSLocalizedString(@"setting.autoLogin", @"automatic login");
             cell.accessoryType = UITableViewCellAccessoryNone;
             self.autoLoginSwitch.frame = CGRectMake(self.tableView.frame.size.width - (self.autoLoginSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - self.autoLoginSwitch.frame.size.height) / 2, self.autoLoginSwitch.frame.size.width, self.autoLoginSwitch.frame.size.height);
             [cell.contentView addSubview:self.autoLoginSwitch];
 
         }
-        else if (indexPath.row == 2)
+        else if (indexPath.row == 1)
         {
             cell.textLabel.text = NSLocalizedString(@"title.apnsSetting", @"Apns Settings");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        else if (indexPath.row == 3)
+        else if (indexPath.row == 2)
         {
             cell.textLabel.text = NSLocalizedString(@"title.buddyBlock", @"Black List");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        else if (indexPath.row == 4)
+        else if (indexPath.row == 3)
         {
             cell.textLabel.text = NSLocalizedString(@"title.debug", @"Debug");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        else if (indexPath.row == 5){
-            cell.textLabel.text = @"使用IP";
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            self.ipSwitch.frame = CGRectMake(self.tableView.frame.size.width - (self.ipSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - self.ipSwitch.frame.size.height) / 2, self.ipSwitch.frame.size.width, self.ipSwitch.frame.size.height);
-            [cell.contentView addSubview:self.ipSwitch];
-        }
+
 
     }
     
@@ -199,16 +180,16 @@
         [self.navigationController pushViewController:pushController animated:YES];
         
     }
-    else if (indexPath.row == 2) {
+    else if (indexPath.row == 1) {
         PushNotificationViewController *pushController = [[PushNotificationViewController alloc] initWithStyle:UITableViewStylePlain];
         [self.navigationController pushViewController:pushController animated:YES];
     }
-    else if (indexPath.row == 3)
+    else if (indexPath.row == 2)
     {
         BlackListViewController *blackController = [[BlackListViewController alloc] initWithNibName:nil bundle:nil];
         [self.navigationController pushViewController:blackController animated:YES];
     }
-    else if (indexPath.row == 4)
+    else if (indexPath.row == 3)
     {
         DebugViewController *debugController = [[DebugViewController alloc] initWithStyle:UITableViewStylePlain];
         [self.navigationController pushViewController:debugController animated:YES];
