@@ -28,6 +28,7 @@
 #import "ChatRoomDetail.h"
 #import "EGOImageView.h"
 #import <sqlite3.h>
+#import "LocalDbService.h"
 
 
 @interface IndexViewController ()
@@ -41,20 +42,21 @@
 @property (strong, nonatomic) UILabel *beInvitedLabel;
 @property(strong,nonatomic) UIScrollView *scrollView;
 @property(strong,nonatomic) UIImagePickerController  *imagePicker;
-@property(strong,nonatomic) NSMutableArray *datasouce;
 @property(strong,nonatomic) DDBDynamoDB *ddbDynamoDB;
 @property(strong,nonatomic) AWSDynamoDBObjectMapper *dynamoDBObjectMapper;
-@property(nonatomic) sqlite3 *db;
+
 @property(strong,nonatomic) NSString *database_path;
 @property(strong,nonatomic) NSArray *path;
-@property (nonatomic) sqlite3 *_database;
+@property(nonatomic) LocalDbService *localDbService;
+
 
 @end
 static DDUser   *uuser;
 
 
+
 @implementation IndexViewController
-@synthesize _database;
+
 
 @synthesize autoLoginSwitch = _autoLoginSwitch;
 @synthesize ipSwitch = _ipSwitch;
@@ -75,8 +77,11 @@ static DDUser   *uuser;
     
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableFooterView = self.footerView;
+    _localDbService=[LocalDbService alloc];
+    [_localDbService openDB];
+    
     //chaxun
-    self.refreshList;
+    _localDbService.refreshList;
     [self initdduser];
     
     
@@ -93,101 +98,9 @@ static DDUser   *uuser;
         BFTask *bftask= [_dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil];
         bftask.waitUntilFinished;
         uuser= bftask.result;
-        [self openDB];
+        
         
     }
-}
-//获取document目录并返回数据库目录
-- (NSString *)dataFilePath{
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSLog(@"=======%@",documentsDirectory);
-    return [documentsDirectory stringByAppendingPathComponent:@"DoubleDate.db"];//这里很神奇，可以定义成任何类型的文件，也可以不定义成.db文件，任何格式都行，定义成.sb文件都行，达到了很好的数据隐秘性
-    
-}
-
-//创建，打开数据库
-- (BOOL)openDB {
-    
-    //获取数据库路径
-    NSString *path = [self dataFilePath];
-    //文件管理器
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    //判断数据库是否存在
-    BOOL find = [fileManager fileExistsAtPath:path];
-    
-    //如果数据库存在，则用sqlite3_open直接打开（不要担心，如果数据库不存在sqlite3_open会自动创建）
-    if (find) {
-        NSLog(@"Database file have already existed.");
-        
-        //打开数据库，这里的[path UTF8String]是将NSString转换为C字符串，因为SQLite3是采用可移植的C(而不是
-        //Objective-C)编写的，它不知道什么是NSString.
-        if(sqlite3_open([path UTF8String], &_database) != SQLITE_OK) {
-            
-            //如果打开数据库失败则关闭数据库
-            sqlite3_close(self._database);
-            NSLog(@"Error: open database file.");
-            return NO;
-        }
-        //创建一个新表
-        [self createTestList:self._database];
-        
-        return YES;
-    }
-    //如果发现数据库不存在则利用sqlite3_open创建数据库（上面已经提到过），与上面相同，路径要转换为C字符串
-    if(sqlite3_open([path UTF8String], &_database) == SQLITE_OK) {
-        
-        //创建一个新表
-         char *ddusersql = "create table if not exists DDUser(UID text, nickName text,isPic int,picPath text,gender text,university text,grade text)";
-        [self createTestList:ddusersql];
-        char *chatroom2sql = "create table if not exists CHATROOM2(RID text, ClickNum text,Gender text,GradeFrom text,Motto text,PicturePath text,SchoolRestrict text,UID1 text,UID2 text)";
-        [self createTestList:chatroom2sql];
-        
-        return YES;
-    } else {
-        //如果创建并打开数据库失败则关闭数据库
-        sqlite3_close(self._database);
-        NSLog(@"Error: open database file.");
-        return NO;
-    }
-    return NO;
-}
-
-//创建表
-- (BOOL) createTestList:(char *)sql {
-    
-    //这句是大家熟悉的SQL语句
-//    char *sql = "create table if not exists DDUser(UID text, nickName text,isPic int,picPath text,gender text,university text,grade text)";// testID是列名，int 是数据类型，testValue是列名，text是数据类型，是字符串类型
-    
-    sqlite3_stmt *statement;
-    //sqlite3_prepare_v2 接口把一条SQL语句解析到statement结构里去. 使用该接口访问数据库是当前比较好的的一种方法
-    NSInteger sqlReturn = sqlite3_prepare_v2(_db, sql, -1, &statement, nil);
-    //第一个参数跟前面一样，是个sqlite3 * 类型变量，
-    //第二个参数是一个 sql 语句。
-    //第三个参数我写的是-1，这个参数含义是前面 sql 语句的长度。如果小于0，sqlite会自动计算它的长度（把sql语句当成以\0结尾的字符串）。
-    //第四个参数是sqlite3_stmt 的指针的指针。解析以后的sql语句就放在这个结构里。
-    //第五个参数是错误信息提示，一般不用,为nil就可以了。
-    //如果这个函数执行成功（返回值是 SQLITE_OK 且 statement 不为NULL ），那么下面就可以开始插入二进制数据。
-    
-    //如果SQL语句解析出错的话程序返回
-    if(sqlReturn != SQLITE_OK) {
-        NSLog(@"Error: failed to prepare statement:create test table");
-        return NO;
-    }
-    
-    //执行SQL语句
-    int success = sqlite3_step(statement);
-    //释放sqlite3_stmt
-    sqlite3_finalize(statement);
-    
-    //执行SQL语句失败
-    if ( success != SQLITE_DONE) {
-        NSLog(@"Error: failed to dehydrate:create table test");
-        return NO;
-    }
-    NSLog(@"Create table 'testTable' successed.");
-    return YES;
 }
 
 
@@ -231,7 +144,7 @@ static DDUser   *uuser;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _datasouce.count;
+    return LocalDbService.getChatRoom.count;
 }
 
 //每行缩进
@@ -254,9 +167,9 @@ static DDUser   *uuser;
     }
     
     if (indexPath.section == 0) {
-        for (NSUInteger i = 0; i < _datasouce.count; i++) {
+        for (NSUInteger i = 0; i < LocalDbService.getChatRoom.count; i++) {
             if (indexPath.row == i) {
-                CHATROOM2 *root=[[_datasouce objectAtIndex:i] copy];
+                CHATROOM2 *root=[[LocalDbService.getChatRoom objectAtIndex:i] copy];
             
                 
                 EGOImageView *bakview = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
@@ -277,7 +190,7 @@ static DDUser   *uuser;
                 [cell.contentView addSubview:bakgroundview];
                 //查询用户
                 
-                DDUser *uuser1= [self selectDDuserByUid:root.UID1];
+                DDUser *uuser1= [_localDbService selectDDuserByUid:root.UID1];
                 //显示用户1
                 EGOImageView *user1 = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
                 if(uuser1!=nil && uuser1.picPath !=nil){
@@ -289,7 +202,7 @@ static DDUser   *uuser;
                 [bakview addSubview:user1];
                 //显示用户2
           
-                DDUser *uuser2= [self selectDDuserByUid:root.UID2];;
+                DDUser *uuser2= [_localDbService selectDDuserByUid:root.UID2];;
                 //显示用户1
                
                 EGOImageView *user2 = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
@@ -354,96 +267,6 @@ static DDUser   *uuser;
 }
 
 
-- (void)refreshList {
-    
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    _dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    AWSDynamoDBScanExpression *scanExpression = [AWSDynamoDBScanExpression new];
-    scanExpression.limit = @10;
-    BFTask *bftask= [_dynamoDBObjectMapper scan:[CHATROOM2 class] expression:scanExpression];
-    bftask.waitUntilFinished;
-    AWSDynamoDBPaginatedOutput *paginatedOutput = bftask.result;
-    _datasouce=paginatedOutput.items;
-    for (CHATROOM2 *item in paginatedOutput.items) {
-        
-        NSString *sql=[[[@"INSERT INTO" stringByAppendingString:@"DDUser "] stringByAppendingString:  @"( RID,ClickNum,Gender,GradeFrom,Motto,PicturePath,SchoolRestrict,UID1,UID2)"]stringByAppendingString:[NSString stringWithFormat:@"VALUES ('%@',%d);",item.RID,item.ClickNum,item.Gender,item.GradeFrom,item.Motto,item.PicturePath,item.SchoolRestrict,item.UID1,item.UID2]];
-        //插入本地数据 item
-        [self insertTable:sql];
-        //异步插入DDUser
-        [self getTableRowAndInsertLocal:item.UID1];
-        [self getTableRowAndInsertLocal:item.UID2];
-        
-    }
-    
-    
-}
-
-- (void)getTableRowAndInsertLocal:(NSString *) uid{
-    [[_dynamoDBObjectMapper load:[DDUser class]
-                        hashKey:uid
-                       rangeKey:nil] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
-        if (!task.error) {
-            DDUser *dduser = task.result;
-            NSString *sql=[[[@"INSERT INTO" stringByAppendingString:@"DDUser "] stringByAppendingString:  @"( UID,nickName,isPic,picPath,gender,university,grade,isDoublerID)"]stringByAppendingString:[NSString stringWithFormat:@"VALUES ('%@',%d);",dduser.UID,dduser.nickName,dduser.isPic,dduser.picPath,dduser.gender,dduser.university,dduser.grade,dduser.isDoublerID]];
-            [self insertTable:sql];
-            
-        } else {
-            NSLog(@"Error: [%@]", task.error);
-            
-        }
-        return nil;
-    }];
-}
-
-
-//插入数据
--(void) insertTable:(NSString *) sql{
-    
-    //先判断数据库是否打开
-    if ([self openDB]) {
-        //1.拼接SQL语句
-       
-        //2.执行SQL语句
-            char *errmsg=NULL;
-            sqlite3_exec(self.db, sql.UTF8String, NULL, NULL, &errmsg);
-            if (errmsg) {//如果有错误信息
-                NSLog(@"插入数据失败--%s",errmsg);
-            }else{
-                NSLog(@"插入数据成功");
-            }
-        
-    }
-}
-
-- (DDUser *)selectDDuserByUid:(NSString *) uid {
-    NSString  *sql=[[@"SELECT UID,nickName,isPic,picPath,gender,university,grade,isDoublerID FROM DDUser WHERE UID=" stringByAppendingString:uid] stringByAppendingString:@";"];
-         sqlite3_stmt *stmt=NULL;
-    DDUser *dduser=nil;
-    printf(sql.UTF8String);
-         //进行查询前的准备工作
-//         if (sqlite3_prepare_v2(self.db, sql.UTF8String, -1, &stmt, NULL)==SQLITE_OK) {//SQL语句没有问题
-//                NSLog(@"查询语句没有问题");
-    
-                 //每调用一次sqlite3_step函数，stmt就会指向下一条记录
-                 while (sqlite3_step(stmt)==SQLITE_ROW) {//找到一条记录
-                    
-                        dduser.UID=[[NSString alloc] initWithCString:(const char*)sqlite3_column_text(stmt, 0) encoding:NSASCIIStringEncoding];
-                        dduser.nickName=[[NSString alloc] initWithCString:(const char*)sqlite3_column_text(stmt, 1) encoding:NSASCIIStringEncoding];
-                        dduser.isPic= [NSNumber numberWithInt:sqlite3_column_int(stmt, 2)];
-                     dduser.picPath=[[NSString alloc] initWithCString:(const char*)sqlite3_column_text(stmt, 3) encoding:NSASCIIStringEncoding];
-                     dduser.gender=[[NSString alloc] initWithCString:(const char*)sqlite3_column_text(stmt, 4) encoding:NSASCIIStringEncoding];
-                     dduser.university= [[NSString alloc] initWithCString:(const char*)sqlite3_column_text(stmt, 5) encoding:NSASCIIStringEncoding];
-                     dduser.grade=[[NSString alloc] initWithCString:(const char*)sqlite3_column_text(stmt, 6) encoding:NSASCIIStringEncoding];
-                     dduser.isDoublerID=[NSNumber numberWithInt:sqlite3_column_int(stmt, 7)];
-                     return dduser;
-                }
-//        }else {
-//            NSLog(@"查询语句有问题");
-//        }
-    return nil;
-}
-
 
 - (void)insertTableRow:(DDUser *)tableRow {
     AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
@@ -471,10 +294,11 @@ static DDUser   *uuser;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     if (indexPath.section == 0) {
-        for (NSUInteger i = 0; i < _datasouce.count; i++) {
+        for (NSUInteger i = 0; i < LocalDbService.getChatRoom.count; i++) {
             if (indexPath.row == i) {
-                CHATROOM2 *room=[[_datasouce objectAtIndex:i] copy];
-                ChatRoomDetail *chatroom=[[ChatRoomDetail alloc]initChatRoom:room.UID1 uuser2:room.UID2 motto:room.Motto];
+                CHATROOM2 *room=[[LocalDbService.getChatRoom objectAtIndex:i] copy];
+                
+                ChatRoomDetail *chatroom=[[ChatRoomDetail alloc]initChatRoom:[_localDbService selectDDuserByUid:room.UID1] uuser2:[_localDbService selectDDuserByUid:room.UID2] motto:room.Motto];
                 [self.navigationController pushViewController:chatroom animated:YES];
             }
         }
