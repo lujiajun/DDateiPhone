@@ -231,24 +231,30 @@
 
 #pragma mark - private
 
-- (NSMutableArray *)loadDataSource
-{
-    NSMutableArray *ret = nil;
-    NSArray *conversations = [[EaseMob sharedInstance].chatManager conversations];
+- (NSMutableArray *)loadDataSource {
+	NSMutableArray *ret = nil;
+	NSMutableArray *conversations = [[NSMutableArray alloc] initWithArray:[[EaseMob sharedInstance].chatManager conversations]];
 
-    NSArray* sorte = [conversations sortedArrayUsingComparator:
-           ^(EMConversation *obj1, EMConversation* obj2){
-               EMMessage *message1 = [obj1 latestMessage];
-               EMMessage *message2 = [obj2 latestMessage];
-               if(message1.timestamp > message2.timestamp) {
-                   return(NSComparisonResult)NSOrderedAscending;
-               }else {
-                   return(NSComparisonResult)NSOrderedDescending;
-               }
-           }];
-    
-    ret = [[NSMutableArray alloc] initWithArray:sorte];
-    return ret;
+	//剔除群聊
+	for (EMConversation *conversation in conversations) {
+		if ([conversation isGroup]) {
+			[conversations removeObject:conversation];
+		}
+	}
+
+	NSArray *sorte = [conversations sortedArrayUsingComparator:
+	                  ^(EMConversation *obj1, EMConversation *obj2) {
+	    EMMessage *message1 = [obj1 latestMessage];
+	    EMMessage *message2 = [obj2 latestMessage];
+	    if (message1.timestamp > message2.timestamp) {
+	        return (NSComparisonResult)NSOrderedAscending;
+		} else {
+	        return (NSComparisonResult)NSOrderedDescending;
+		}
+	}];
+
+	ret = [[NSMutableArray alloc] initWithArray:sorte];
+	return ret;
 }
 
 // 得到最后消息时间

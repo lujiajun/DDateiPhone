@@ -13,13 +13,13 @@
 #import "MainViewController.h"
 
 #import "UIViewController+HUD.h"
-#import "ChatListViewController.h"
 #import "ContactsViewController.h"
 #import "NewSettingViewController.h"
 #import "ApplyViewController.h"
 #import "CallSessionViewController.h"
 #import "IndexViewController.h"
 #import "CreateGroupViewController.h"
+#import "MainChatListViewController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -27,7 +27,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 @interface MainViewController () <UIAlertViewDelegate, IChatManagerDelegate, IChatManagerDelegate>
 {
     IndexViewController *_indexVC;
-    ChatListViewController *_chatListVC;
+    MainChatListViewController *_chatListVC;
     ContactsViewController *_contactsVC;
     NewSettingViewController *_settingsVC;
     CallSessionViewController *_callController;
@@ -196,7 +196,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self selectedTapTabBarItems:_indexVC.tabBarItem];
     
     //conversations
-    _chatListVC = [[ChatListViewController alloc] init];
+    _chatListVC = [[MainChatListViewController alloc] init];
     [_chatListVC networkChanged:_connectionState];
     _chatListVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.conversation", @"Conversations")
                                                            image:nil

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		180E1A441AEF2C5A007EC1C3 /* MainChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */; };
 		1873D80D1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */; };
 		1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */; };
 		283403091A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 283403081A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m */; };
@@ -411,6 +412,8 @@
 
 /* Begin PBXFileReference section */
 		0FD9CE0AAE4744D1F3A7838B /* Pods-ChatDemo-UI2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatDemo-UI2.0.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatDemo-UI2.0/Pods-ChatDemo-UI2.0.debug.xcconfig"; sourceTree = "<group>"; };
+		180E1A421AEF2C59007EC1C3 /* MainChatListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainChatListViewController.h; sourceTree = "<group>"; };
+		180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainChatListViewController.m; sourceTree = "<group>"; };
 		1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libALBB_OSS_IOS_SDK.a; sourceTree = "<group>"; };
 		1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		283403071A9EBB8200B7DE9B /* GroupSubjectChangingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupSubjectChangingViewController.h; sourceTree = "<group>"; };
@@ -1331,6 +1334,8 @@
 				9003D7791939D8D000DC38A4 /* ChatListCell.m */,
 				9003D77A1939D8D000DC38A4 /* ChatListViewController.h */,
 				9003D77B1939D8D000DC38A4 /* ChatListViewController.m */,
+				180E1A421AEF2C59007EC1C3 /* MainChatListViewController.h */,
+				180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */,
 			);
 			path = ChatList;
 			sourceTree = "<group>";
@@ -2931,6 +2936,7 @@
 				3C914D8619514BBD0002DAD3 /* CreateGroupViewController.m in Sources */,
 				9003D9181939D8D000DC38A4 /* RealtimeSearchUtil.m in Sources */,
 				9003D8751939D8D000DC38A4 /* DXChatBarMoreView.m in Sources */,
+				180E1A441AEF2C5A007EC1C3 /* MainChatListViewController.m in Sources */,
 				90A706061A8B63B200376154 /* EMSDWebImageDownloader.m in Sources */,
 				EB3CC3A31ACD343D00FB8662 /* CallSessionViewController.m in Sources */,
 				8A4F270C1AEB36D60050D86E /* DDSchoolRegisterController.m in Sources */,
