@@ -29,52 +29,44 @@
 @interface ChatRoomDetail ()
 
 @property (strong, nonatomic) UIView *footerView;
-
-@property (strong, nonatomic) UISwitch *autoLoginSwitch;
-@property (strong, nonatomic) UISwitch *ipSwitch;
-
-@property (strong, nonatomic) UISwitch *beInvitedSwitch;
-@property (strong, nonatomic) UILabel *beInvitedLabel;
-@property(strong,nonatomic) UIScrollView *scrollView;
-@property(strong,nonatomic) UIImagePickerController  *imagePicker;
-@property(strong,nonatomic) NSMutableArray *datasouce;
-@property(strong,nonatomic) DDBDynamoDB *ddbDynamoDB;
-@property(strong,nonatomic) AWSDynamoDBObjectMapper *dynamoDBObjectMapper;
-@property(strong,nonatomic) DDUser *uuser1;
-@property(strong,nonatomic) DDUser *uuser2;
-@property(strong,nonatomic) NSString *motto;
+@property (strong, nonatomic) UIButton *joinChatRoomButton;
+@property (strong, nonatomic) NSMutableArray *datasouce;
+@property (strong, nonatomic) DDBDynamoDB *ddbDynamoDB;
+@property (strong, nonatomic) AWSDynamoDBObjectMapper *dynamoDBObjectMapper;
+@property (strong, nonatomic) DDUser *uuser1;
+@property (strong, nonatomic) DDUser *uuser2;
+@property (strong, nonatomic) NSString *motto;
 @end
 
 @implementation ChatRoomDetail
 
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.title =_motto;
-    self.view.backgroundColor = [UIColor redColor];
-    
-    self.tableView.backgroundColor = [UIColor whiteColor];
+- (void)viewDidLoad {
+	[super viewDidLoad];
+	self.title = _motto;
+	self.view.backgroundColor = [UIColor redColor];
+
+	self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableFooterView = self.footerView;
-    //chaxun
-    self.refreshList;
     
+	//chaxun
+	[self refreshList];
 }
 
--(id) initChatRoom:(NSString *) uuser1 uuser2:(NSString *) uuser2 motto:(NSString *) motto{
-    _motto=motto;
-    //查询
-    _dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    BFTask *bftask1= [_dynamoDBObjectMapper load:[DDUser class] hashKey:uuser1 rangeKey:nil];
-    bftask1.waitUntilFinished;
-    _uuser1= bftask1.result;
-    
-    BFTask *bftask2= [_dynamoDBObjectMapper load:[DDUser class] hashKey:uuser2 rangeKey:nil];
-    bftask2.waitUntilFinished;
-    _uuser2= bftask2.result;
+- (id)initChatRoom:(NSString *)uuser1 uuser2:(NSString *)uuser2 motto:(NSString *)motto {
+	_motto = motto;
+	//查询
+	_dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+	BFTask *bftask1 = [_dynamoDBObjectMapper load:[DDUser class] hashKey:uuser1 rangeKey:nil];
+	bftask1.waitUntilFinished;
+	_uuser1 = bftask1.result;
+
+	BFTask *bftask2 = [_dynamoDBObjectMapper load:[DDUser class] hashKey:uuser2 rangeKey:nil];
+	bftask2.waitUntilFinished;
+	_uuser2 = bftask2.result;
 //    _uuser1=uuser1;
 //    _uuser2=uuser2;
-    return self;
+	return self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,25 +75,17 @@
 }
 
 
-#pragma mark - Table view datasource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 3;
+#pragma mark - UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return 2;
 }
 
 //每行缩进
--(NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row ==0) {
-        return 10;
-    }
-    return 0;
+- (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (indexPath.row == 0) {
+		return 10;
+	}
+	return 0;
 }
 
 
@@ -266,120 +250,68 @@
 
 
 - (void)refreshList {
-    
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    _dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    AWSDynamoDBScanExpression *scanExpression = [AWSDynamoDBScanExpression new];
-    scanExpression.limit = @10;
-    BFTask *bftask= [_dynamoDBObjectMapper scan:[CHATROOM2 class] expression:scanExpression];
-    bftask.waitUntilFinished;
-    AWSDynamoDBPaginatedOutput *paginatedOutput = bftask.result;
-    _datasouce=paginatedOutput.items;
-    
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+	_dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+	AWSDynamoDBScanExpression *scanExpression = [AWSDynamoDBScanExpression new];
+	scanExpression.limit = @10;
+	BFTask *bftask = [_dynamoDBObjectMapper scan:[CHATROOM2 class] expression:scanExpression];
+	bftask.waitUntilFinished;
+	AWSDynamoDBPaginatedOutput *paginatedOutput = bftask.result;
+	_datasouce = paginatedOutput.items;
 }
 
 
 - (void)insertTableRow:(DDUser *)tableRow {
-    AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    [dynamoDBObjectMapper save: tableRow];
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    return 160;
+	AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+	[dynamoDBObjectMapper save:tableRow];
 }
 
+#pragma mark - UITableViewDelegate
 
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [picker dismissModalViewControllerAnimated:YES];
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return 160;
 }
 
-
-#pragma mark - Table view delegate
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row == 1) {
-        PushNotificationViewController *pushController = [[PushNotificationViewController alloc] initWithStyle:UITableViewStylePlain];
-        [self.navigationController pushViewController:pushController animated:YES];
-    }
-    else if (indexPath.row == 2)
-    {
-        DDPersonalUpdateController *blackController = [[DDPersonalUpdateController alloc] initWithNibName:nil bundle:nil];
-        [self.navigationController pushViewController:blackController animated:YES];
-    }
-    else if (indexPath.row == 3)
-    {
-        SettingsViewController *debugController = [[SettingsViewController alloc] initWithStyle:UITableViewStylePlain];
-        [self.navigationController pushViewController:debugController animated:YES];
-    }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	if (indexPath.row == 0) {
+		PushNotificationViewController *pushController = [[PushNotificationViewController alloc] initWithStyle:UITableViewStylePlain];
+		[self.navigationController pushViewController:pushController animated:YES];
+	} else if (indexPath.row == 1)   {
+		DDPersonalUpdateController *blackController = [[DDPersonalUpdateController alloc] initWithNibName:nil bundle:nil];
+		[self.navigationController pushViewController:blackController animated:YES];
+	}
 }
 
-#pragma mark - getter
-
-- (UIView *)footerView
-{
-    if (_footerView == nil) {
-        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
-        _footerView.backgroundColor = [UIColor clearColor];
-        
-    }
-    
-    return _footerView;
-}
-
-#pragma mark - action
-
-- (void)autoLoginChanged:(UISwitch *)autoSwitch
-{
-    [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:autoSwitch.isOn];
-}
-
-- (void)useIpChanged:(UISwitch *)ipSwitch
-{
-    [[EaseMob sharedInstance].chatManager setIsUseIp:ipSwitch.isOn];
-}
-
-- (void)beInvitedChanged:(UISwitch *)beInvitedSwitch
-{
-    //    if (beInvitedSwitch.isOn) {
-    //        self.beInvitedLabel.text = @"允许选择";
-    //    }
-    //    else{
-    //        self.beInvitedLabel.text = @"自动加入";
-    //    }
-    //
-    //    [[EaseMob sharedInstance].chatManager setAutoAcceptGroupInvitation:!(beInvitedSwitch.isOn)];
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 20;
 }
 
 
-- (void)refreshConfig
-{
-    [self.autoLoginSwitch setOn:[[EaseMob sharedInstance].chatManager isAutoLoginEnabled] animated:YES];
-    [self.ipSwitch setOn:[[EaseMob sharedInstance].chatManager isUseIp] animated:YES];
-    
-    [self.tableView reloadData];
+
+#pragma mark - Private Method
+- (void)joinChatRoom {
 }
 
-- (void)logoutAction
-{
-    __weak NewSettingViewController *weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"setting.logoutOngoing", @"loging out...")];
-    [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:YES completion:^(NSDictionary *info, EMError *error) {
-        [weakSelf hideHud];
-        if (error && error.errorCode != EMErrorServerNotLogin) {
-            [weakSelf showHint:error.description];
-        }
-        else{
-            [[ApplyViewController shareController] clear];
-            [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
-        }
-    } onQueue:nil];
+#pragma mark - Getter
+
+- (UIView *)footerView {
+	if (_footerView == nil) {
+		_footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+		_footerView.backgroundColor = [UIColor clearColor];
+		UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(20, 0, self.view.frame.size.width - 40, 40)];
+		button.backgroundColor = [UIColor redColor];
+		button.layer.masksToBounds = YES;
+		button.layer.cornerRadius = 4;
+		button.titleLabel.font =  [UIFont boldSystemFontOfSize:20.0f];
+		[button setTitle:@"加入聊天室" forState:UIControlStateNormal];
+		[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+		[button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+		[button addTarget:self action:@selector(joinChatRoom) forControlEvents:UIControlEventTouchUpInside];
+		[_footerView addSubview:button];
+	}
+	return _footerView;
 }
+
 
 @end
