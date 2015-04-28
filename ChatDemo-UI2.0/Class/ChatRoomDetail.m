@@ -10,31 +10,22 @@
  * from EaseMob Technologies.
  */
 
-#import "NewSettingViewController.h"
-#import "SettingsViewController.h"
-
 #import "ApplyViewController.h"
-#import "PushNotificationViewController.h"
-#import "BlackListViewController.h"
 #import "DebugViewController.h"
 #import "WCAlertView.h"
 #import "AliCloudController.h"
 #import "DDBDynamoDB.h"
 #import "Constants.h"
-#import "DDRegisterFinishController.h"
-#import "DDPersonalUpdateController.h"
+
 #import "ChatRoomDetail.h"
 #import "DDBDynamoDB.h"
+#import "LocalDbService.h"
+#import "EGOImageView.h"
 
 @interface ChatRoomDetail ()
 
 @property (strong, nonatomic) UIView *footerView;
 
-@property (strong, nonatomic) UISwitch *autoLoginSwitch;
-@property (strong, nonatomic) UISwitch *ipSwitch;
-
-@property (strong, nonatomic) UISwitch *beInvitedSwitch;
-@property (strong, nonatomic) UILabel *beInvitedLabel;
 @property(strong,nonatomic) UIScrollView *scrollView;
 @property(strong,nonatomic) UIImagePickerController  *imagePicker;
 @property(strong,nonatomic) NSMutableArray *datasouce;
@@ -43,6 +34,8 @@
 @property(strong,nonatomic) DDUser *uuser1;
 @property(strong,nonatomic) DDUser *uuser2;
 @property(strong,nonatomic) NSString *motto;
+@property(nonatomic) LocalDbService *localDbService;
+
 @end
 
 @implementation ChatRoomDetail
@@ -56,24 +49,16 @@
     
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableFooterView = self.footerView;
-    //chaxun
-    self.refreshList;
     
 }
 
--(id) initChatRoom:(NSString *) uuser1 uuser2:(NSString *) uuser2 motto:(NSString *) motto{
+-(id) initChatRoom:(DDUser *) uuser1 uuser2:(DDUser *) uuser2 motto:(NSString *) motto{
     _motto=motto;
     //查询
-    _dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    BFTask *bftask1= [_dynamoDBObjectMapper load:[DDUser class] hashKey:uuser1 rangeKey:nil];
-    bftask1.waitUntilFinished;
-    _uuser1= bftask1.result;
+    _uuser1=uuser1;
     
-    BFTask *bftask2= [_dynamoDBObjectMapper load:[DDUser class] hashKey:uuser2 rangeKey:nil];
-    bftask2.waitUntilFinished;
-    _uuser2= bftask2.result;
-//    _uuser1=uuser1;
-//    _uuser2=uuser2;
+    _uuser2=uuser2;
+
     return self;
 }
 
@@ -116,16 +101,11 @@
     
     if (indexPath.section == 0) {
             if (indexPath.row == 0) {
-                
-                UIImage *user1;
-                if(_uuser1!=nil&&_uuser1.picPath!=nil){
-                    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:_uuser1.picPath]]];
-                    user1 = [UIImage imageWithData:data];
-                }else{
-                    user1=[UIImage imageNamed:@"Logo_new"];
+
+                EGOImageView *headview = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
+                if(_uuser1!=nil && _uuser1.picPath !=nil){
+                    headview.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:_uuser1.picPath]];
                 }
-                
-                UIImageView *headview=[[UIImageView alloc] initWithImage:user1];
                 headview.frame=CGRectMake(50, 10, 80, 80);
                 headview.layer.masksToBounds =YES;
                 headview.layer.cornerRadius =40;
@@ -265,21 +245,6 @@
 }
 
 
-- (void)refreshList {
-    
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    _dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    AWSDynamoDBScanExpression *scanExpression = [AWSDynamoDBScanExpression new];
-    scanExpression.limit = @10;
-    BFTask *bftask= [_dynamoDBObjectMapper scan:[CHATROOM2 class] expression:scanExpression];
-    bftask.waitUntilFinished;
-    AWSDynamoDBPaginatedOutput *paginatedOutput = bftask.result;
-    _datasouce=paginatedOutput.items;
-    
-}
-
-
 - (void)insertTableRow:(DDUser *)tableRow {
     AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
     [dynamoDBObjectMapper save: tableRow];
@@ -301,24 +266,7 @@
 #pragma mark - Table view delegate
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row == 1) {
-        PushNotificationViewController *pushController = [[PushNotificationViewController alloc] initWithStyle:UITableViewStylePlain];
-        [self.navigationController pushViewController:pushController animated:YES];
-    }
-    else if (indexPath.row == 2)
-    {
-        DDPersonalUpdateController *blackController = [[DDPersonalUpdateController alloc] initWithNibName:nil bundle:nil];
-        [self.navigationController pushViewController:blackController animated:YES];
-    }
-    else if (indexPath.row == 3)
-    {
-        SettingsViewController *debugController = [[SettingsViewController alloc] initWithStyle:UITableViewStylePlain];
-        [self.navigationController pushViewController:debugController animated:YES];
-    }
-}
+
 
 #pragma mark - getter
 
@@ -358,28 +306,5 @@
 }
 
 
-- (void)refreshConfig
-{
-    [self.autoLoginSwitch setOn:[[EaseMob sharedInstance].chatManager isAutoLoginEnabled] animated:YES];
-    [self.ipSwitch setOn:[[EaseMob sharedInstance].chatManager isUseIp] animated:YES];
-    
-    [self.tableView reloadData];
-}
-
-- (void)logoutAction
-{
-    __weak NewSettingViewController *weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"setting.logoutOngoing", @"loging out...")];
-    [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:YES completion:^(NSDictionary *info, EMError *error) {
-        [weakSelf hideHud];
-        if (error && error.errorCode != EMErrorServerNotLogin) {
-            [weakSelf showHint:error.description];
-        }
-        else{
-            [[ApplyViewController shareController] clear];
-            [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
-        }
-    } onQueue:nil];
-}
 
 @end

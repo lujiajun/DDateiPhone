@@ -83,6 +83,7 @@
 		8A4F27121AEB5BDD0050D86E /* DDRegisterFinishController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F27111AEB5BDD0050D86E /* DDRegisterFinishController.m */; };
 		8A6C0E141AED3459009D5208 /* ChatRoomDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6C0E131AED3459009D5208 /* ChatRoomDetail.m */; };
 		8A6C0E161AED4352009D5208 /* infoline.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A6C0E151AED4352009D5208 /* infoline.png */; };
+		8A7788631AEFD003005F8C5E /* LocalDbService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7788621AEFD003005F8C5E /* LocalDbService.m */; };
 		8A7DBEE31AECC48400D7941F /* DDPersonalUpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7DBEE21AECC48400D7941F /* DDPersonalUpdateController.m */; };
 		8A7DBEE81AECC6CD00D7941F /* login.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEE41AECC6CD00D7941F /* login.png */; };
 		8A7DBEE91AECC6CD00D7941F /* register.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEE51AECC6CD00D7941F /* register.png */; };
@@ -536,6 +537,8 @@
 		8A6C0E121AED3350009D5208 /* ChatRoomDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomDetail.h; sourceTree = "<group>"; };
 		8A6C0E131AED3459009D5208 /* ChatRoomDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomDetail.m; sourceTree = "<group>"; };
 		8A6C0E151AED4352009D5208 /* infoline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = infoline.png; path = dd/infoline.png; sourceTree = "<group>"; };
+		8A7788611AEFCFE0005F8C5E /* LocalDbService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDbService.h; sourceTree = "<group>"; };
+		8A7788621AEFD003005F8C5E /* LocalDbService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDbService.m; sourceTree = "<group>"; };
 		8A7DBEE11AECC48400D7941F /* DDPersonalUpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPersonalUpdateController.h; sourceTree = "<group>"; };
 		8A7DBEE21AECC48400D7941F /* DDPersonalUpdateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPersonalUpdateController.m; sourceTree = "<group>"; };
 		8A7DBEE41AECC6CD00D7941F /* login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login.png; sourceTree = "<group>"; };
@@ -1194,6 +1197,8 @@
 				8A4020AB1AE34F1200806014 /* DDBDynamoDB.h */,
 				8A4020B11AE3572C00806014 /* AliCloudController.h */,
 				8A4020B31AE3574800806014 /* AliCloudController.m */,
+				8A7788611AEFCFE0005F8C5E /* LocalDbService.h */,
+				8A7788621AEFD003005F8C5E /* LocalDbService.m */,
 			);
 			name = otherservice;
 			sourceTree = "<group>";
@@ -2951,6 +2956,7 @@
 				90A706011A8B63B200376154 /* MWZoomingScrollView.m in Sources */,
 				3C6BBA0C1941A7CF00A64684 /* EMTextView.m in Sources */,
 				9091111B192EEAED008A48AA /* UIResponder+Router.m in Sources */,
+				8A7788631AEFD003005F8C5E /* LocalDbService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
