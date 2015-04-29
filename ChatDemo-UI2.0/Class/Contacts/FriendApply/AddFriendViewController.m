@@ -17,6 +17,9 @@
 #import "AddFriendCell.h"
 #import "InvitationManager.h"
 #import "WCAlertView.h"
+#import "LocalDbService.h"
+#import "AWSDynamoDBObjectMapper.h"
+#import "IndexViewController.h"
 
 @interface AddFriendViewController ()<UITextFieldDelegate, UIAlertViewDelegate>
 
@@ -25,6 +28,7 @@
 @property (strong, nonatomic) UIView *headerView;
 @property (strong, nonatomic) UITextField *textField;
 @property (strong, nonatomic) NSIndexPath *selectedIndexPath;
+@property(strong,nonatomic) DDUser *toadduser;
 
 @end
 
@@ -137,6 +141,7 @@
     if (cell == nil) {
         cell = [[AddFriendCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    //按照用户名搜索头像
     
     cell.imageView.image = [UIImage imageNamed:@"chatListCellHead.png"];
     cell.textLabel.text = [self.dataSource objectAtIndex:indexPath.row];
@@ -154,6 +159,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    //好友性别验证
+    NSLog([IndexViewController instanceDDuser].gender);
+    if(_toadduser && [_toadduser.gender isEqualToString:[IndexViewController instanceDDuser].gender]){
+        [self showHint:NSLocalizedString(@"friend.checkApplyFail", @"check friend  fails, please operate again")];
+        return;
+    }
     self.selectedIndexPath = indexPath;
     NSString *buddyName = [self.dataSource objectAtIndex:indexPath.row];
     if ([self didBuddyExist:buddyName]) {
@@ -206,27 +217,64 @@
             
             return;
         }
+        [self getHeadPicByUid:_textField.text];
         
-        //判断是否已发来申请
-        NSArray *applyArray = [[ApplyViewController shareController] dataSource];
-        if (applyArray && [applyArray count] > 0) {
-            for (ApplyEntity *entity in applyArray) {
-                ApplyStyle style = [entity.style intValue];
-                BOOL isGroup = style == ApplyStyleFriend ? NO : YES;
-                if (!isGroup && [entity.applicantUsername isEqualToString:_textField.text]) {
-                    NSString *str = [NSString stringWithFormat:NSLocalizedString(@"friend.repeatInvite", @"%@ have sent the application to you"), _textField.text];
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:str delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
-                    [alertView show];
-                    
-                    return;
+        if(_toadduser!=nil&&_toadduser.UID!=nil){
+            
+            //判断是否已发来申请
+            NSArray *applyArray = [[ApplyViewController shareController] dataSource];
+            if (applyArray && [applyArray count] > 0) {
+                for (ApplyEntity *entity in applyArray) {
+                    ApplyStyle style = [entity.style intValue];
+                    BOOL isGroup = style == ApplyStyleFriend ? NO : YES;
+                    if (!isGroup && [entity.applicantUsername isEqualToString:_textField.text]) {
+                        NSString *str = [NSString stringWithFormat:NSLocalizedString(@"friend.repeatInvite", @"%@ have sent the application to you"), _textField.text];
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:str delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+                        [alertView show];
+                        
+                        return;
+                    }
                 }
             }
+            
+            [self.dataSource removeAllObjects];
+            [self.dataSource addObject:_textField.text];
+            [self.tableView reloadData];
+
+        
+        }else{
+            
+            [self showHint:NSLocalizedString(@"friend.checkFriendFail", @"check friend  fails, please operate again")];
+            
         }
         
-        [self.dataSource removeAllObjects];
-        [self.dataSource addObject:_textField.text];
-        [self.tableView reloadData];
     }
+}
+
+-(void) getHeadPicByUid:(NSString *) uid{
+    AWSDynamoDBObjectMapper *dynamoDBObjectMapper=[AWSDynamoDBObjectMapper alloc];
+    dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+    BFTask *bftask= [dynamoDBObjectMapper load:[DDUser class] hashKey:uid rangeKey:nil];
+    bftask.waitUntilFinished;
+    
+    _toadduser= bftask.result;
+    
+
+    
+  //
+//    [[dynamoDBObjectMapper load:[DDUser class]
+//                         hashKey:uid
+//                        rangeKey:nil] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
+//        if (!task.error) {
+//            
+//            
+//        } else {
+//            NSLog(@"Error: [%@]", task.error);
+//            
+//        }
+//        return nil;
+//    }];
+
 }
 
 - (BOOL)hasSendBuddyRequest:(NSString *)buddyName
@@ -282,6 +330,7 @@
 - (void)sendFriendApplyAtIndexPath:(NSIndexPath *)indexPath
                            message:(NSString *)message
 {
+
     NSString *buddyName = [self.dataSource objectAtIndex:indexPath.row];
     if (buddyName && buddyName.length > 0) {
         [self showHudInView:self.view hint:NSLocalizedString(@"friend.sendApply", @"sending application...")];

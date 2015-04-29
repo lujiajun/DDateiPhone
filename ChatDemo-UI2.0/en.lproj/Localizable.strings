@@ -86,6 +86,8 @@
 "friend.somebodyInvite" = "%@ invite you as a friend";
 "friend.sendApply" = "sending application...";
 "friend.sendApplyFail" = "send application fails, please operate again";
+"friend.checkApplyFail" = "can not add the same gender friend，please operate again";
+"friend.checkFriendFail" = "Double id is wrong，please operate again";
 "friend.sendApplySuccess" = "send successfully";
 "friend.black" = "Black List";
 "friend.notChatSelf" = "can't talk to yourself";

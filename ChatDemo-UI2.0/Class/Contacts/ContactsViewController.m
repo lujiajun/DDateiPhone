@@ -22,6 +22,7 @@
 #import "ApplyViewController.h"
 #import "GroupListViewController.h"
 #import "ChatViewController.h"
+#import "InviteFriendByDoubleIdController.h"
 
 @interface ContactsViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, BaseTableCellDelegate, SRRefreshDelegate>
 {
@@ -592,6 +593,9 @@
 
 - (void)addFriendAction
 {
+//    InviteFriendByDoubleIdController *addController = [InviteFriendByDoubleIdController alloc];
+//        [self.navigationController pushViewController:addController animated:YES];
+    
     AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
     [self.navigationController pushViewController:addController animated:YES];
 }
