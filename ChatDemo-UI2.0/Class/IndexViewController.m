@@ -178,7 +178,7 @@ static DDUser   *uuser;
                 }
                 bakview.frame = CGRectMake(5, 5, cell.frame.size.width-10, 150);
                 bakview.layer.masksToBounds =YES;
-                bakview.layer.cornerRadius =25;
+                bakview.layer.cornerRadius =5;
                 [cell.contentView addSubview:bakview];
 
                 //渐变
@@ -186,7 +186,7 @@ static DDUser   *uuser;
                 UIImageView *bakgroundview=[[UIImageView alloc] initWithImage:background];
                 bakgroundview.frame=CGRectMake(5, 5, cell.frame.size.width-10, 150);
                 bakgroundview.layer.masksToBounds =YES;
-                bakgroundview.layer.cornerRadius =25;
+                bakgroundview.layer.cornerRadius =5;
                 [cell.contentView addSubview:bakgroundview];
                 //查询用户
                 

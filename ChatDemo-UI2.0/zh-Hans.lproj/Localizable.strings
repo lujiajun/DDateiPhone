@@ -86,6 +86,8 @@
 "friend.somebodyInvite" = "%@ 邀请你为好友";
 "friend.sendApply" = "正在发送申请...";
 "friend.sendApplyFail" = "发送申请失败，请重新操作";
+"friend.checkApplyFail" = "不能添加同性别好友，请重新输入";
+"friend.checkFriendFail" = "Double信息不存在，请重新输入";
 "friend.sendApplySuccess" = "发送申请成功";
 "friend.black" = "黑名单";
 "friend.notChatSelf" = "不能跟自己聊天";

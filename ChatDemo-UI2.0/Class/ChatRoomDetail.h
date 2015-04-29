@@ -2,6 +2,6 @@
 #import "DDBDynamoDB.h"
 
 
-@interface ChatRoomDetail : UITableViewController
+@interface ChatRoomDetail : UIViewController
 -(id) initChatRoom:(DDUser *) uuser1 uuser2:(DDUser *) uuser2  motto:(NSString *) motto;
 @end
