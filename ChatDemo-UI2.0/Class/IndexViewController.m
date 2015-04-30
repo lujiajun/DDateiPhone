@@ -287,19 +287,17 @@ static DDUser *uuser;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    if (indexPath.section == 0) {
-        for (NSUInteger i = 0; i < self.chatroom2Dao.chatroom2s.count; i++) {
-            if (indexPath.row == i) {
-                CHATROOM2 *room=[[self.chatroom2Dao.chatroom2s objectAtIndex:i] copy];
-                
-                ChatRoomDetail *chatroom=[[ChatRoomDetail alloc]initChatRoom:[self.userDao selectDDuserByUid:room.UID1] uuser2:[self.userDao selectDDuserByUid:room.UID2] motto:room.Motto];
-                [self.navigationController pushViewController:chatroom animated:YES];
-            }
-        }
-    }
-
+	if (indexPath.section == 0) {
+		for (NSUInteger i = 0; i < self.chatroom2Dao.chatroom2s.count; i++) {
+			if (indexPath.row == i) {
+				CHATROOM2 *room = [[self.chatroom2Dao.chatroom2s objectAtIndex:i] copy];
+				ChatRoomDetail *chatroom = [[ChatRoomDetail alloc]initChatRoom:room uuser1:[self.userDao selectDDuserByUid:room.UID1] uuser2:[self.userDao selectDDuserByUid:room.UID2]];
+				[self.navigationController pushViewController:chatroom animated:YES];
+			}
+		}
+	}
 }
 
 #pragma mark - getter
