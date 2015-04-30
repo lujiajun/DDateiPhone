@@ -127,6 +127,7 @@
 "group.create.occupantJoinPermissions" = "members join permissions";
 "group.create.open" = "random join";
 "group.create.needApply" = "you need administrator agreed to join the group";
+"please choose your friend"="please choose your friend";
 
 //Group Bans
 "group.ban.removing" = "members are removing from the blacklist...";
