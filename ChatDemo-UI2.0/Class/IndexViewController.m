@@ -217,7 +217,7 @@ static DDUser   *uuser;
                 //性别
                 BOOL *isboy=NO;
                 if(user1!=nil){
-                    if(uuser1.gender==@"Male" || uuser1.gender==@"男"){
+                    if([uuser1.gender isEqualToString: @"Male"] || [uuser1.gender isEqualToString:@"男"]){
                         isboy=YES;
                     }
                 }
@@ -298,7 +298,7 @@ static DDUser   *uuser;
             if (indexPath.row == i) {
                 CHATROOM2 *room=[[LocalDbService.getChatRoom objectAtIndex:i] copy];
                 
-                ChatRoomDetail *chatroom=[[ChatRoomDetail alloc]initChatRoom:[_localDbService selectDDuserByUid:room.UID1] uuser2:[_localDbService selectDDuserByUid:room.UID2] motto:room.Motto];
+                ChatRoomDetail *chatroom=[[ChatRoomDetail alloc]initChatRoom:room uuser1:[_localDbService selectDDuserByUid:room.UID1] uuser2: [_localDbService selectDDuserByUid:room.UID2]];
                 [self.navigationController pushViewController:chatroom animated:YES];
             }
         }

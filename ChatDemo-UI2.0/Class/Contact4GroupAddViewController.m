@@ -1,23 +1,27 @@
 /************************************************************
-  *  * EaseMob CONFIDENTIAL 
-  * __________________ 
-  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved. 
-  *  
-  * NOTICE: All information contained herein is, and remains 
-  * the property of EaseMob Technologies.
-  * Dissemination of this information or reproduction of this material 
-  * is strictly forbidden unless prior written permission is obtained
-  * from EaseMob Technologies.
-  */
+ *  * EaseMob CONFIDENTIAL
+ * __________________
+ * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of EaseMob Technologies.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from EaseMob Technologies.
+ */
 
-#import "ContactSelectionViewController.h"
+#import "Contact4GroupAddViewController.h"
 
 #import "EMSearchBar.h"
 #import "EMRemarkImageView.h"
 #import "EMSearchDisplayController.h"
 #import "RealtimeSearchUtil.h"
+#import "ChatViewController.h"
+#import "ChatRoom4DB.h"
+#import "DDBDynamoDB.h"
 
-@interface ContactSelectionViewController ()<UISearchBarDelegate, UISearchDisplayDelegate>
+
+@interface Contact4GroupAddViewController ()<UISearchBarDelegate, UISearchDisplayDelegate>
 
 @property (strong, nonatomic) NSMutableArray *contactsSource;
 @property (strong, nonatomic) NSMutableArray *selectedContacts;
@@ -30,10 +34,11 @@
 @property (strong, nonatomic) UIView *footerView;
 @property (strong, nonatomic) UIScrollView *footerScrollView;
 @property (strong, nonatomic) UIButton *doneButton;
+@property(strong,nonatomic) CHATROOM2 *room2;
 
 @end
 
-@implementation ContactSelectionViewController
+@implementation Contact4GroupAddViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -55,6 +60,11 @@
             return [buddy1.username caseInsensitiveCompare: buddy2.username];
         }];
     }
+    return self;
+}
+
+-(id) initGroupInfo:(CHATROOM2 *) room2{
+    _room2=room2;
     return self;
 }
 
@@ -139,7 +149,7 @@
         _searchController.delegate = self;
         _searchController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
-        __weak ContactSelectionViewController *weakSelf = self;
+        __weak Contact4GroupAddViewController *weakSelf = self;
         [_searchController setCellForRowAtIndexPathCompletion:^UITableViewCell *(UITableView *tableView, NSIndexPath *indexPath) {
             static NSString *CellIdentifier = @"ContactListCell";
             BaseTableViewCell *cell = (BaseTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -264,14 +274,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	id object = [[_dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-	if (![self.selectedContacts containsObject:object]) {
+    id object = [[_dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    if (![self.selectedContacts containsObject:object]) {
         [self.tableView deselectRowAtIndexPath:self.currentSelectIndexpath animated:YES];
-		[self.selectedContacts removeLastObject];
-		[self.selectedContacts addObject:object];
+        [self.selectedContacts removeLastObject];
+        [self.selectedContacts addObject:object];
         self.currentSelectIndexpath = indexPath;
-		[self reloadFooterView];
-	}
+        [self reloadFooterView];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -403,23 +413,52 @@
 
 - (void)doneAction:(id)sender
 {
-    NSLog(_blockSelectedUsernames);
-	if (_delegate && [_delegate respondsToSelector:@selector(viewController:didFinishSelectedSources:)]) {
-        NSLog(_blockSelectedUsernames);
-		if ([_blockSelectedUsernames count] == 0) {
-			[_delegate viewController:self didFinishSelectedSources:self.selectedContacts];
-			[self.navigationController popViewControllerAnimated:NO];
-		} else {
-			NSMutableArray *resultArray = [NSMutableArray array];
-			for (EMBuddy *buddy in self.selectedContacts) {
-				if (![self isBlockUsername:buddy.username]) {
-					[resultArray addObject:buddy];
-				}
-			}
-			[_delegate viewController:self didFinishSelectedSources:resultArray];
-			[self.navigationController popViewControllerAnimated:NO];
-		}
-	}
+    
+        NSString *toAddFriend;
+    
+        for (EMBuddy *buddy in _selectedContacts) {
+            toAddFriend=buddy.username;
+        }
+        NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
+        NSString *username = [loginInfo objectForKey:kSDKUsername];
+        NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), username, toAddFriend];
+        
+        //新建四人聊天室
+        //1判断是否已经存在
+        //2 加入环信
+        //3加入AWS
+        //4 加入本地
+    CHATROOM4 *chatroom4=[CHATROOM4 new];
+    
+    EMError *error = nil;
+    EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
+    groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
+    EMGroup *group = [[EaseMob sharedInstance].chatManager createGroupWithSubject:_room2.RID description:_room2.Motto invitees:@[username,toAddFriend,_room2.UID1,_room2.UID2] initialWelcomeMessage:@"邀请您加入群组" styleSetting:groupStyleSetting error:&error];
+    if(!error){
+        NSLog(@"创建成功 -- %@",group);
+    }
+    chatroom4.GID=group.groupId;
+    chatroom4.CTIMER=@"20150430_131203";
+    chatroom4.CTIMEH=@"Time";
+    chatroom4.RID=_room2.RID;
+    chatroom4.UID1=_room2.UID1;
+    chatroom4.UID2=_room2.UID2;
+    chatroom4.UID3=username;
+    chatroom4.UID4=toAddFriend;
+    chatroom4.isLikeUID1=[NSNumber numberWithInt:0];
+    chatroom4.isLikeUID2=[NSNumber numberWithInt:0];
+    chatroom4.isLikeUID3=[NSNumber numberWithInt:0];
+    chatroom4.isLikeUID4=[NSNumber numberWithInt:0];
+    chatroom4.roomStatus=@"New";
+    chatroom4.systemTimeNumber=[NSNumber numberWithInt:1430275146375];
+    ChatRoom4DB *chatroom4DB=[ChatRoom4DB alloc];
+    [chatroom4DB insertChatroom4:chatroom4];
+
+    ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES];
+    chatController.title = _room2.Motto;
+    [self.navigationController pushViewController:chatController animated:YES];
+
+  
 }
 
 @end

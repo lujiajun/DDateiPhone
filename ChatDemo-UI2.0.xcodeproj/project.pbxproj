@@ -104,6 +104,9 @@
 		8A814A2F1AEE7B7000B26BA4 /* EGOImageLoadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A814A271AEE7B7000B26BA4 /* EGOImageLoadConnection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A814A301AEE7B7000B26BA4 /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A814A291AEE7B7000B26BA4 /* EGOImageLoader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A814A311AEE7B7000B26BA4 /* EGOImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A814A2C1AEE7B7000B26BA4 /* EGOImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8AA68D251AF1FFA7007924AD /* Contact4GroupAddViewController.h in Resources */ = {isa = PBXBuildFile; fileRef = 8AA68D241AF1FFA7007924AD /* Contact4GroupAddViewController.h */; };
+		8AA68D271AF20006007924AD /* Contact4GroupAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA68D261AF20006007924AD /* Contact4GroupAddViewController.m */; };
+		8AA76F301AF2811000427730 /* ChatRoom4DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA76F2F1AF2811000427730 /* ChatRoom4DB.m */; };
 		8ADB384E1AE286BD00FCC6FC /* PersonalController.h in Resources */ = {isa = PBXBuildFile; fileRef = 8ADB384D1AE286BD00FCC6FC /* PersonalController.h */; };
 		8ADB38501AE286F000FCC6FC /* PersonalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB384F1AE286F000FCC6FC /* PersonalController.m */; };
 		8ADB388C1AE2A17100FCC6FC /* UsernickController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB388B1AE2A17100FCC6FC /* UsernickController.m */; };
@@ -569,6 +572,10 @@
 		8A814A291AEE7B7000B26BA4 /* EGOImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageLoader.m; sourceTree = "<group>"; };
 		8A814A2B1AEE7B7000B26BA4 /* EGOImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageView.h; sourceTree = "<group>"; };
 		8A814A2C1AEE7B7000B26BA4 /* EGOImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageView.m; sourceTree = "<group>"; };
+		8AA68D241AF1FFA7007924AD /* Contact4GroupAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact4GroupAddViewController.h; sourceTree = "<group>"; };
+		8AA68D261AF20006007924AD /* Contact4GroupAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact4GroupAddViewController.m; sourceTree = "<group>"; };
+		8AA76F2E1AF27FC200427730 /* ChatRoom4DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoom4DB.h; sourceTree = "<group>"; };
+		8AA76F2F1AF2811000427730 /* ChatRoom4DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoom4DB.m; sourceTree = "<group>"; };
 		8ADB384D1AE286BD00FCC6FC /* PersonalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalController.h; sourceTree = "<group>"; };
 		8ADB384F1AE286F000FCC6FC /* PersonalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalController.m; sourceTree = "<group>"; };
 		8ADB388A1AE2A15900FCC6FC /* UsernickController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsernickController.h; sourceTree = "<group>"; };
@@ -1205,6 +1212,8 @@
 				8A4020B31AE3574800806014 /* AliCloudController.m */,
 				8A7788611AEFCFE0005F8C5E /* LocalDbService.h */,
 				8A7788621AEFD003005F8C5E /* LocalDbService.m */,
+				8AA76F2E1AF27FC200427730 /* ChatRoom4DB.h */,
+				8AA76F2F1AF2811000427730 /* ChatRoom4DB.m */,
 			);
 			name = otherservice;
 			sourceTree = "<group>";
@@ -1226,6 +1235,8 @@
 				8A4F27111AEB5BDD0050D86E /* DDRegisterFinishController.m */,
 				8A6C0E121AED3350009D5208 /* ChatRoomDetail.h */,
 				8A6C0E131AED3459009D5208 /* ChatRoomDetail.m */,
+				8AA68D241AF1FFA7007924AD /* Contact4GroupAddViewController.h */,
+				8AA68D261AF20006007924AD /* Contact4GroupAddViewController.m */,
 			);
 			name = Index;
 			sourceTree = "<group>";
@@ -2687,6 +2698,7 @@
 				8A4021171AE3597900806014 /* friendoff.png in Resources */,
 				EBD2AB8A1A7CDAC000D16528 /* chat_receiver_audio_playing003.png in Resources */,
 				EBD2ABB41A7CDAC000D16528 /* tabbar_contactsHL@2x.png in Resources */,
+				8AA68D251AF1FFA7007924AD /* Contact4GroupAddViewController.h in Resources */,
 				EBD2AB0B1A7CDAC000D16528 /* chatFire_audioPlaying1.png in Resources */,
 				3C372B5F19FE60DC005925B6 /* (null) in Resources */,
 				EBD2AB8F1A7CDAC000D16528 /* chat_receiver_bg@2x.png in Resources */,
@@ -2874,6 +2886,7 @@
 				3C3EB2FC19545FFD00E1AE9E /* PublicGroupListViewController.m in Sources */,
 				90A706141A8B63B200376154 /* PSTCollectionView.m in Sources */,
 				90A7061E1A8B63B200376154 /* PSTGridLayoutRow.m in Sources */,
+				8AA76F301AF2811000427730 /* ChatRoom4DB.m in Sources */,
 				9003D89F1939D8D000DC38A4 /* EMChatAudioBubbleView.m in Sources */,
 				8A4F270F1AEB53410050D86E /* Commbox.m in Sources */,
 				8A814A2F1AEE7B7000B26BA4 /* EGOImageLoadConnection.m in Sources */,
@@ -2962,6 +2975,7 @@
 				90A706131A8B63B200376154 /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				90A706121A8B63B200376154 /* UIView+EMWebCacheOperation.m in Sources */,
 				9003D8A31939D8D000DC38A4 /* EMChatTextBubbleView.m in Sources */,
+				8AA68D271AF20006007924AD /* Contact4GroupAddViewController.m in Sources */,
 				90911145192EEE6E008A48AA /* MainViewController.m in Sources */,
 				9003D8691939D8D000DC38A4 /* ChatListViewController.m in Sources */,
 				90A7060B1A8B63B200376154 /* NSData+EMImageContentType.m in Sources */,
