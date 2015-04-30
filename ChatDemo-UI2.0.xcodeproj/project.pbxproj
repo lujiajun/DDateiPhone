@@ -10,6 +10,9 @@
 		180E1A441AEF2C5A007EC1C3 /* MainChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */; };
 		1873D80D1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */; };
 		1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */; };
+		18F9B56F1AF2645B00669C49 /* BaseDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F9B56E1AF2645B00669C49 /* BaseDAO.m */; };
+		18F9B5721AF2717C00669C49 /* DDUserDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F9B5711AF2717C00669C49 /* DDUserDAO.m */; };
+		18F9B5751AF27F7800669C49 /* ChatRoom2DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F9B5741AF27F7800669C49 /* ChatRoom2DAO.m */; };
 		283403091A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 283403081A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m */; };
 		333DE476F1C23907F6749D9F /* libPods-ChatDemo-UI2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A7D49E66EDE566E813A0B2 /* libPods-ChatDemo-UI2.0.a */; };
 		3C06AAFF194050A00076FF0B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C06AAFE194050A00076FF0B /* CoreLocation.framework */; };
@@ -418,6 +421,12 @@
 		180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainChatListViewController.m; sourceTree = "<group>"; };
 		1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libALBB_OSS_IOS_SDK.a; sourceTree = "<group>"; };
 		1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
+		18F9B56D1AF2645B00669C49 /* BaseDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseDAO.h; path = Dao/BaseDAO.h; sourceTree = "<group>"; };
+		18F9B56E1AF2645B00669C49 /* BaseDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseDAO.m; path = Dao/BaseDAO.m; sourceTree = "<group>"; };
+		18F9B5701AF2717C00669C49 /* DDUserDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDUserDAO.h; path = Dao/DDUserDAO.h; sourceTree = "<group>"; };
+		18F9B5711AF2717C00669C49 /* DDUserDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDUserDAO.m; path = Dao/DDUserDAO.m; sourceTree = "<group>"; };
+		18F9B5731AF27F7800669C49 /* ChatRoom2DAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatRoom2DAO.h; path = Dao/ChatRoom2DAO.h; sourceTree = "<group>"; };
+		18F9B5741AF27F7800669C49 /* ChatRoom2DAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatRoom2DAO.m; path = Dao/ChatRoom2DAO.m; sourceTree = "<group>"; };
 		283403071A9EBB8200B7DE9B /* GroupSubjectChangingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupSubjectChangingViewController.h; sourceTree = "<group>"; };
 		283403081A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupSubjectChangingViewController.m; sourceTree = "<group>"; };
 		3C06AAFE194050A00076FF0B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -1101,6 +1110,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18F9B56C1AF2639800669C49 /* Dao */ = {
+			isa = PBXGroup;
+			children = (
+				18F9B56D1AF2645B00669C49 /* BaseDAO.h */,
+				18F9B56E1AF2645B00669C49 /* BaseDAO.m */,
+				18F9B5701AF2717C00669C49 /* DDUserDAO.h */,
+				18F9B5711AF2717C00669C49 /* DDUserDAO.m */,
+				18F9B5731AF27F7800669C49 /* ChatRoom2DAO.h */,
+				18F9B5741AF27F7800669C49 /* ChatRoom2DAO.m */,
+			);
+			name = Dao;
+			sourceTree = "<group>";
+		};
 		3C16149C1973D1A600564BF5 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -1199,6 +1221,7 @@
 		8A4BD07A1AE1F8EB00FFDFF1 /* otherservice */ = {
 			isa = PBXGroup;
 			children = (
+				18F9B56C1AF2639800669C49 /* Dao */,
 				8A4020AC1AE34F2D00806014 /* DDBDynamoDB.m */,
 				8A4020AB1AE34F1200806014 /* DDBDynamoDB.h */,
 				8A4020B11AE3572C00806014 /* AliCloudController.h */,
@@ -2920,6 +2943,8 @@
 				909308BF19604821005013BD /* EmojiEmoticons.m in Sources */,
 				90A706041A8B63B200376154 /* EMSDWebImageCompat.m in Sources */,
 				9091111C192EEAED008A48AA /* UIViewController+HUD.m in Sources */,
+				18F9B5751AF27F7800669C49 /* ChatRoom2DAO.m in Sources */,
+				18F9B5721AF2717C00669C49 /* DDUserDAO.m in Sources */,
 				9003D9081939D8D000DC38A4 /* MessageModel.m in Sources */,
 				90517D6A1A5C3DB0008F1315 /* AppDelegate+UMeng.m in Sources */,
 				90A7061C1A8B63B200376154 /* PSTGridLayoutInfo.m in Sources */,
@@ -2943,6 +2968,7 @@
 				3C6FFA2419A2F5560003EB25 /* DebugViewController.m in Sources */,
 				9003D9071939D8D000DC38A4 /* MessageReadManager.m in Sources */,
 				3C35365C19A22164003EF79E /* GroupSettingViewController.m in Sources */,
+				18F9B56F1AF2645B00669C49 /* BaseDAO.m in Sources */,
 				905325CF1932ED8B00F064D7 /* EMSearchBar.m in Sources */,
 				3C914D8619514BBD0002DAD3 /* CreateGroupViewController.m in Sources */,
 				9003D9181939D8D000DC38A4 /* RealtimeSearchUtil.m in Sources */,

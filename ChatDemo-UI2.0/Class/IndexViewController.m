@@ -27,8 +27,8 @@
 #import "DDBDynamoDB.h"
 #import "ChatRoomDetail.h"
 #import "EGOImageView.h"
-#import <sqlite3.h>
-#import "LocalDbService.h"
+#import "ChatRoom2DAO.h"
+#import "DDUserDAO.h"
 
 
 @interface IndexViewController ()
@@ -47,11 +47,14 @@
 
 @property(strong,nonatomic) NSString *database_path;
 @property(strong,nonatomic) NSArray *path;
-@property(nonatomic) LocalDbService *localDbService;
+
+@property(strong, nonatomic) ChatRoom2DAO *chatroom2Dao;
+@property(strong, nonatomic) DDUserDAO *userDao;
 
 
 @end
-static DDUser   *uuser;
+
+static DDUser *uuser;
 
 
 
@@ -77,30 +80,23 @@ static DDUser   *uuser;
     
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableFooterView = self.footerView;
-    _localDbService=[LocalDbService alloc];
-    [_localDbService openDB];
     
     //chaxun
-    _localDbService.refreshList;
+    [self.chatroom2Dao refreshList];
     [self initdduser];
-    
-    
-    
 }
 
--(void)initdduser{
-    if(uuser==nil){
-        NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
-        NSString *username = [loginInfo objectForKey:kSDKUsername];
-        
-        //同步方法
-        _dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-        BFTask *bftask= [_dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil];
-        bftask.waitUntilFinished;
-        uuser= bftask.result;
-        
-        
-    }
+- (void)initdduser {
+	if (uuser == nil) {
+		NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
+		NSString *username = [loginInfo objectForKey:kSDKUsername];
+
+		//同步方法
+		_dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+		BFTask *bftask = [_dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil];
+		[bftask waitUntilFinished];
+		uuser = bftask.result;
+	}
 }
 
 
@@ -144,7 +140,7 @@ static DDUser   *uuser;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return LocalDbService.getChatRoom.count;
+    return self.chatroom2Dao.chatroom2s.count;
 }
 
 //每行缩进
@@ -167,9 +163,9 @@ static DDUser   *uuser;
     }
     
     if (indexPath.section == 0) {
-        for (NSUInteger i = 0; i < LocalDbService.getChatRoom.count; i++) {
+        for (NSUInteger i = 0; i < self.chatroom2Dao.chatroom2s.count; i++) {
             if (indexPath.row == i) {
-                CHATROOM2 *root=[[LocalDbService.getChatRoom objectAtIndex:i] copy];
+                CHATROOM2 *root=[[self.chatroom2Dao.chatroom2s objectAtIndex:i] copy];
             
                 
                 EGOImageView *bakview = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
@@ -190,7 +186,7 @@ static DDUser   *uuser;
                 [cell.contentView addSubview:bakgroundview];
                 //查询用户
                 
-                DDUser *uuser1= [_localDbService selectDDuserByUid:root.UID1];
+                DDUser *uuser1= [self.userDao selectDDuserByUid:root.UID1];
                 //显示用户1
                 EGOImageView *user1 = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
                 if(uuser1!=nil && uuser1.picPath !=nil){
@@ -202,7 +198,7 @@ static DDUser   *uuser;
                 [bakview addSubview:user1];
                 //显示用户2
           
-                DDUser *uuser2= [_localDbService selectDDuserByUid:root.UID2];;
+                DDUser *uuser2= [self.userDao selectDDuserByUid:root.UID2];;
                 //显示用户1
                
                 EGOImageView *user2 = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
@@ -282,7 +278,7 @@ static DDUser   *uuser;
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [picker dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -294,11 +290,11 @@ static DDUser   *uuser;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     if (indexPath.section == 0) {
-        for (NSUInteger i = 0; i < LocalDbService.getChatRoom.count; i++) {
+        for (NSUInteger i = 0; i < self.chatroom2Dao.chatroom2s.count; i++) {
             if (indexPath.row == i) {
-                CHATROOM2 *room=[[LocalDbService.getChatRoom objectAtIndex:i] copy];
+                CHATROOM2 *room=[[self.chatroom2Dao.chatroom2s objectAtIndex:i] copy];
                 
-                ChatRoomDetail *chatroom=[[ChatRoomDetail alloc]initChatRoom:[_localDbService selectDDuserByUid:room.UID1] uuser2:[_localDbService selectDDuserByUid:room.UID2] motto:room.Motto];
+                ChatRoomDetail *chatroom=[[ChatRoomDetail alloc]initChatRoom:[self.userDao selectDDuserByUid:room.UID1] uuser2:[self.userDao selectDDuserByUid:room.UID2] motto:room.Motto];
                 [self.navigationController pushViewController:chatroom animated:YES];
             }
         }
@@ -368,4 +364,17 @@ static DDUser   *uuser;
     } onQueue:nil];
 }
 
+- (ChatRoom2DAO *)chatroom2Dao {
+	if (_chatroom2Dao == nil) {
+		_chatroom2Dao = [[ChatRoom2DAO alloc] init];
+	}
+	return _chatroom2Dao;
+}
+
+- (DDUserDAO *)userDao {
+    if (_userDao == nil) {
+        _userDao = [[DDUserDAO alloc] init];
+    }
+    return _userDao;
+}
 @end
