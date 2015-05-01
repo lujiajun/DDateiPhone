@@ -438,7 +438,9 @@
         NSLog(@"创建成功 -- %@",group);
     }
     chatroom4.GID=group.groupId;
-    chatroom4.CTIMER=@"20150430_131203";
+    NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyyMMdd_HHmmss"];
+    chatroom4.CTIMER=[formatter stringFromDate:[NSDate date]];
     chatroom4.CTIMEH=@"Time";
     chatroom4.RID=_room2.RID;
     chatroom4.UID1=_room2.UID1;
@@ -450,10 +452,10 @@
     chatroom4.isLikeUID3=[NSNumber numberWithInt:0];
     chatroom4.isLikeUID4=[NSNumber numberWithInt:0];
     chatroom4.roomStatus=@"New";
-    chatroom4.systemTimeNumber=[NSNumber numberWithInt:1430275146375];
+    chatroom4.systemTimeNumber=[NSNumber numberWithInt:[[NSDate date] timeIntervalSince1970]*1000];
     ChatRoom4DB *chatroom4DB=[ChatRoom4DB alloc];
     [chatroom4DB insertChatroom4:chatroom4];
-
+    
     ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES];
     chatController.title = _room2.Motto;
     [self.navigationController pushViewController:chatController animated:YES];

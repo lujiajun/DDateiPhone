@@ -8,14 +8,9 @@
 
 
 #import "DDPersonalUpdateController.h"
-#import "DDRegisterFinishController.h"
-#import "AppDelegate+EaseMob.h"
-#import "AppDelegate+UMeng.h"
-#import "EMError.h"
-#import "DDLoginController.h"
+#import "IndexViewController.h"
+#import "DDBDynamoDB.h"
 #import "AliCloudController.h"
-#import "Constants.h"
-#import "NewSettingViewController.h"
 
 
 
@@ -76,7 +71,7 @@
     [self.view addSubview:university];
     _universityvalue=[[UITextField alloc]initWithFrame:CGRectMake(university.frame.origin.x+50, self.view.frame.origin.y+80, 180, 30)];
     [_universityvalue setBorderStyle:UITextBorderStyleRoundedRect];
-    _universityvalue.text=[NewSettingViewController instanceDDuser].university;
+    _universityvalue.text=[IndexViewController instanceDDuser].university;
     _universityvalue.textAlignment=NSTextAlignmentLeft;
     _universityvalue.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:_universityvalue];
@@ -102,7 +97,7 @@
     [self.view addSubview:grade];
     _gradevalue=[[UITextField alloc]initWithFrame:CGRectMake(grade.frame.origin.x+50, city.frame.origin.y+40, 180, 30)];
     [_gradevalue setBorderStyle:UITextBorderStyleRoundedRect];
-    _gradevalue.placeholder=[NewSettingViewController instanceDDuser].grade;
+    _gradevalue.placeholder=[IndexViewController instanceDDuser].grade;
     _gradevalue.textAlignment=NSTextAlignmentLeft;
     _gradevalue.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:_gradevalue];
@@ -114,7 +109,7 @@
     gender.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:gender];
     _gendervalue=[[UITextField alloc]initWithFrame:CGRectMake(grade.frame.origin.x+50, grade.frame.origin.y+40, 180, 30)];
-    _gendervalue.placeholder=[NewSettingViewController instanceDDuser].gender;
+    _gendervalue.placeholder=[IndexViewController instanceDDuser].gender;
     [_gendervalue setBorderStyle:UITextBorderStyleRoundedRect];
     _gendervalue.textAlignment=NSTextAlignmentLeft;
     _gendervalue.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -148,12 +143,12 @@
 - (void)updateDDUser{
     DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
     DDUser *user=[DDUser new];
-    user=NewSettingViewController.instanceDDuser;
+    user=IndexViewController.instanceDDuser;
     user.university=_universityvalue.text;
     user.gender=_gendervalue.text;
     user.grade=_gradevalue.text;
     
-    NewSettingViewController *newSetting=[NewSettingViewController alloc];
+    IndexViewController *newSetting=[IndexViewController alloc];
     [newSetting setDDUser:user];
     
     [ddbDynamoDB updateTable:user];

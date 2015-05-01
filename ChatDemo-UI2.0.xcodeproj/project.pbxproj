@@ -113,6 +113,8 @@
 		8ADB384E1AE286BD00FCC6FC /* PersonalController.h in Resources */ = {isa = PBXBuildFile; fileRef = 8ADB384D1AE286BD00FCC6FC /* PersonalController.h */; };
 		8ADB38501AE286F000FCC6FC /* PersonalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB384F1AE286F000FCC6FC /* PersonalController.m */; };
 		8ADB388C1AE2A17100FCC6FC /* UsernickController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB388B1AE2A17100FCC6FC /* UsernickController.m */; };
+		8AEF0ECE1AF31C8900DE2484 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AEF0ECD1AF31C8900DE2484 /* HelpViewController.m */; };
+		8AEF0ED01AF31E4B00DE2484 /* help.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AEF0ECF1AF31E4B00DE2484 /* help.png */; };
 		8AFE465A1AECE3A700B57368 /* settingback.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE46591AECE3A700B57368 /* settingback.png */; };
 		8AFE465C1AECFFAF00B57368 /* jianbian.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE465B1AECFFAF00B57368 /* jianbian.png */; };
 		8AFE465F1AED034A00B57368 /* clicknum1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE465D1AED034A00B57368 /* clicknum1.png */; };
@@ -589,6 +591,9 @@
 		8ADB384F1AE286F000FCC6FC /* PersonalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalController.m; sourceTree = "<group>"; };
 		8ADB388A1AE2A15900FCC6FC /* UsernickController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsernickController.h; sourceTree = "<group>"; };
 		8ADB388B1AE2A17100FCC6FC /* UsernickController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsernickController.m; sourceTree = "<group>"; };
+		8AEF0ECC1AF31C2E00DE2484 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
+		8AEF0ECD1AF31C8900DE2484 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
+		8AEF0ECF1AF31E4B00DE2484 /* help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help.png; path = dd/help.png; sourceTree = "<group>"; };
 		8AFE46591AECE3A700B57368 /* settingback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settingback.png; path = dd/settingback.png; sourceTree = "<group>"; };
 		8AFE465B1AECFFAF00B57368 /* jianbian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jianbian.png; path = dd/jianbian.png; sourceTree = "<group>"; };
 		8AFE465D1AED034A00B57368 /* clicknum1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clicknum1.png; path = dd/clicknum1.png; sourceTree = "<group>"; };
@@ -1316,6 +1321,7 @@
 		8ADB38511AE28F3400FCC6FC /* dd */ = {
 			isa = PBXGroup;
 			children = (
+				8AEF0ECF1AF31E4B00DE2484 /* help.png */,
 				8A6C0E151AED4352009D5208 /* infoline.png */,
 				8AFE465D1AED034A00B57368 /* clicknum1.png */,
 				8AFE465E1AED034A00B57368 /* clicknum2.png */,
@@ -1740,6 +1746,8 @@
 				8A46EDBE1AE9F3FC0062F518 /* PersonalSignController.m */,
 				8AFE46611AED087900B57368 /* DDHeadPicUpdate.h */,
 				8AFE46621AED08B100B57368 /* DDHeadPicUpdate.m */,
+				8AEF0ECC1AF31C2E00DE2484 /* HelpViewController.h */,
+				8AEF0ECD1AF31C8900DE2484 /* HelpViewController.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -2663,6 +2671,7 @@
 				EBD2AB701A7CDAC000D16528 /* chatBar_colorMore_cameraSelected@2x.png in Resources */,
 				8A4021291AE3597900806014 /* weixin.png in Resources */,
 				EBD2AB2D1A7CDAC000D16528 /* VoiceSearchFeedback015.png in Resources */,
+				8AEF0ED01AF31E4B00DE2484 /* help.png in Resources */,
 				8A40211C1AE3597900806014 /* indexon.png in Resources */,
 				EBD2AB8D1A7CDAC000D16528 /* chat_receiver_audio_playing_full@2x.png in Resources */,
 				EBD2AB331A7CDAC000D16528 /* VoiceSearchFeedback018.png in Resources */,
@@ -2930,6 +2939,7 @@
 				3C914D8519514BBD0002DAD3 /* ContactSelectionViewController.m in Sources */,
 				283403091A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m in Sources */,
 				9003D9151939D8D000DC38A4 /* ApplyFriendCell.m in Sources */,
+				8AEF0ECE1AF31C8900DE2484 /* HelpViewController.m in Sources */,
 				3C6BBA091941A58C00A64684 /* XHMessageTextView.m in Sources */,
 				90911118192EEAED008A48AA /* WCAlertView.m in Sources */,
 				90133E611972D11000C49B56 /* NSString+Valid.m in Sources */,
