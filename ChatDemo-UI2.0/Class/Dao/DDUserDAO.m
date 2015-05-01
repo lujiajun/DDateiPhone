@@ -23,16 +23,17 @@ NSString * const DDUserTable=@"DDUser";
             gender varchar(10), \
             university varchar(10), \
             grade varchar(10), \
-            isDoublerID INTEGER);", DDUserTable];
+            isDoublerID INTEGER, \
+            UNIQUE(UID));", DDUserTable];
 }
 
 - (DDUser *)selectDDuserByUid:(NSString *)uid {
     DDUser *dduser = nil;
     if ([self.db open]) {
         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE UID='%@'", DDUserTable, uid];
-        dduser = [DDUser new];
         FMResultSet *rs = [self.db executeQuery:query];
         while ([rs next]) {
+            dduser = [DDUser new];
             dduser.UID = [rs stringForColumn:@"UID"];
             dduser.nickName = [rs stringForColumn:@"nickName"];
             dduser.isPic = [NSNumber numberWithInt:[rs intForColumn:@"isPic"]];
@@ -54,28 +55,43 @@ NSString * const DDUserTable=@"DDUser";
 	AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
 	[[dynamoDBObjectMapper load:[DDUser class]
 	                    hashKey:uid
-	                   rangeKey:nil] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
-	    if (!task.error) {
+	                   rangeKey:nil]
+	 continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
+	    if (task.error) {
+	        NSLog(@"The request failed. Error: [%@]", task.error);
+		}
+	    if (task.exception) {
+	        NSLog(@"The request failed. Exception: [%@]", task.exception);
+		}
+	    if (task.result) {
 	        DDUser *dduser = task.result;
 	        [self insertDDUser:dduser];
-		} else {
-	        NSLog(@"Error: [%@]", task.error);
 		}
 	    return nil;
 	}];
 }
 
 - (void)insertDDUser:(DDUser *)dduser {
-	NSString *sql = [NSString stringWithFormat:@"INSERT INTO %@ (%@, %@, %@, %@, %@, %@, %@)", DDUserTable,
-	                 dduser.UID,
-	                 dduser.nickName,
-	                 dduser.isPic,
-	                 dduser.gender,
-	                 dduser.university,
-	                 dduser.grade,
-	                 dduser.isDoublerID];
+    NSString *sql = [NSString stringWithFormat:@"Insert or ignore into %@ ( \
+                     UID, \
+                     nickName, \
+                     isPic, \
+                     picPath, \
+                     gender, \
+                     university, \
+                     grade, \
+                     isDoublerID) \
+                     values(?, ?, ?, ?, ?, ?, ?, ?)", DDUserTable];
 	if ([self.db open]) {
-		BOOL res = [self.db executeUpdate:sql];
+		BOOL res = [self.db executeUpdate:sql,
+                    dduser.UID,
+                    dduser.nickName,
+                    dduser.isPic,
+                    dduser.picPath,
+                    dduser.gender,
+                    dduser.university,
+                    dduser.grade,
+                    dduser.isDoublerID];
 		if (res) {
 			NSLog(@"DDUser: success to insert db");
 		} else {

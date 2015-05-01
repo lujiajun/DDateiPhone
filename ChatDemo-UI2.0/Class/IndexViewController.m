@@ -29,47 +29,33 @@
 #import "EGOImageView.h"
 #import "ChatRoom2DAO.h"
 #import "DDUserDAO.h"
+#import "SRRefreshView.h"
 
 
-@interface IndexViewController ()
+@interface IndexViewController ()<SRRefreshDelegate>
 
-@property (strong, nonatomic) UIView *footerView;
+@property (strong, nonatomic) SRRefreshView *slimeView;
 
-@property (strong, nonatomic) UISwitch *autoLoginSwitch;
-@property (strong, nonatomic) UISwitch *ipSwitch;
-
-@property (strong, nonatomic) UISwitch *beInvitedSwitch;
-@property (strong, nonatomic) UILabel *beInvitedLabel;
-@property(strong,nonatomic) UIScrollView *scrollView;
-@property(strong,nonatomic) UIImagePickerController  *imagePicker;
 @property(strong,nonatomic) DDBDynamoDB *ddbDynamoDB;
 @property(strong,nonatomic) AWSDynamoDBObjectMapper *dynamoDBObjectMapper;
 
-@property(strong,nonatomic) NSString *database_path;
-@property(strong,nonatomic) NSArray *path;
-
 @property(strong, nonatomic) ChatRoom2DAO *chatroom2Dao;
 @property(strong, nonatomic) DDUserDAO *userDao;
-
 
 @end
 
 static DDUser *uuser;
 
-
-
 @implementation IndexViewController
 
-
-@synthesize autoLoginSwitch = _autoLoginSwitch;
-@synthesize ipSwitch = _ipSwitch;
-
 #define kIMGCOUNT 5
-+(DDUser *) instanceDDuser{
-    return uuser;
+
++ (DDUser *)instanceDDuser {
+	return uuser;
 }
--(void) setDDUser:(DDUser *) user{
-    uuser=user;
+
+- (void)setDDUser:(DDUser *)user {
+	uuser = user;
 }
 
 - (void)viewDidLoad
@@ -79,7 +65,7 @@ static DDUser *uuser;
     self.view.backgroundColor = [UIColor redColor];
     
     self.tableView.backgroundColor = [UIColor whiteColor];
-    self.tableView.tableFooterView = self.footerView;
+    [self.tableView addSubview:self.slimeView];
     
     //chaxun
     [self.chatroom2Dao refreshList];
@@ -93,9 +79,11 @@ static DDUser *uuser;
 
 		//同步方法
 		_dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-		BFTask *bftask = [_dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil];
-		[bftask waitUntilFinished];
-		uuser = bftask.result;
+		[[_dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil]
+		 continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
+		    uuser = task.result;
+		    return nil;
+		}];
 	}
 }
 
@@ -105,38 +93,7 @@ static DDUser *uuser;
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - getter
-
-- (UISwitch *)beInvitedSwitch
-{
-    //    if (_beInvitedSwitch == nil) {
-    //        _beInvitedSwitch = [[UISwitch alloc] init];
-    //        [_beInvitedSwitch addTarget:self action:@selector(beInvitedChanged:) forControlEvents:UIControlEventValueChanged];
-    //        BOOL autoAccept = [[EaseMob sharedInstance].chatManager autoAcceptGroupInvitation];
-    //        [_beInvitedSwitch setOn:!autoAccept animated:YES];
-    //    }
-    
-    return _beInvitedSwitch;
-}
-
-- (UILabel *)beInvitedLabel
-{
-    if (_beInvitedLabel == nil) {
-        _beInvitedLabel = [[UILabel alloc] init];
-        _beInvitedLabel.backgroundColor = [UIColor clearColor];
-        _beInvitedLabel.font = [UIFont systemFontOfSize:12.0];
-        _beInvitedLabel.textColor = [UIColor grayColor];
-    }
-    
-    return _beInvitedLabel;
-}
-
-#pragma mark - Table view datasource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -151,8 +108,6 @@ static DDUser *uuser;
     }
     return 0;
 }
-
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -211,12 +166,12 @@ static DDUser *uuser;
                 [bakview addSubview:user2];
                 
                 //性别
-                BOOL *isboy=NO;
-                if(user1!=nil){
-                    if(uuser1.gender==@"Male" || uuser1.gender==@"男"){
-                        isboy=YES;
-                    }
-                }
+				BOOL isboy = NO;
+				if (user1 != nil) {
+					if ([uuser1.gender isEqualToString:@"Male"] || [uuser1.gender isEqualToString:@"男"]) {
+						isboy = YES;
+					}
+				}
                 UIImage *isboyimg;
                 if(isboy){
                     isboyimg=[UIImage imageNamed:@"sexboy"];
@@ -262,28 +217,11 @@ static DDUser *uuser;
     return cell;
 }
 
-
-
-- (void)insertTableRow:(DDUser *)tableRow {
-    AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    [dynamoDBObjectMapper save: tableRow];
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-
-    return 160;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return 160;
 }
 
-
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [picker dismissViewControllerAnimated:YES completion:nil];
-}
-
-
-#pragma mark - Table view delegate
-
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -300,66 +238,41 @@ static DDUser *uuser;
 	}
 }
 
+
+#pragma mark - SRRefreshDelegate
+
+- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView {
+	__weak IndexViewController *weakSelf = self;
+    [self.chatroom2Dao refreshList];
+	[weakSelf.slimeView endRefresh];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+	[_slimeView scrollViewDidScroll];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+	[_slimeView scrollViewDidEndDraging];
+}
+
 #pragma mark - getter
 
-- (UIView *)footerView
-{
-    if (_footerView == nil) {
-        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
-        _footerView.backgroundColor = [UIColor clearColor];
-        
-        }
+- (SRRefreshView *)slimeView {
+    if (_slimeView == nil) {
+        _slimeView = [[SRRefreshView alloc] init];
+        _slimeView.delegate = self;
+        _slimeView.upInset = 0;
+        _slimeView.slimeMissWhenGoingBack = YES;
+        _slimeView.slime.bodyColor = [UIColor grayColor];
+        _slimeView.slime.skinColor = [UIColor grayColor];
+        _slimeView.slime.lineWith = 1;
+        _slimeView.slime.shadowBlur = 4;
+        _slimeView.slime.shadowColor = [UIColor grayColor];
+    }
     
-    return _footerView;
-}
-
-#pragma mark - action
-
-- (void)autoLoginChanged:(UISwitch *)autoSwitch
-{
-    [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:autoSwitch.isOn];
-}
-
-- (void)useIpChanged:(UISwitch *)ipSwitch
-{
-    [[EaseMob sharedInstance].chatManager setIsUseIp:ipSwitch.isOn];
-}
-
-- (void)beInvitedChanged:(UISwitch *)beInvitedSwitch
-{
-    //    if (beInvitedSwitch.isOn) {
-    //        self.beInvitedLabel.text = @"允许选择";
-    //    }
-    //    else{
-    //        self.beInvitedLabel.text = @"自动加入";
-    //    }
-    //
-    //    [[EaseMob sharedInstance].chatManager setAutoAcceptGroupInvitation:!(beInvitedSwitch.isOn)];
-}
-
-
-- (void)refreshConfig
-{
-    [self.autoLoginSwitch setOn:[[EaseMob sharedInstance].chatManager isAutoLoginEnabled] animated:YES];
-    [self.ipSwitch setOn:[[EaseMob sharedInstance].chatManager isUseIp] animated:YES];
-    
-    [self.tableView reloadData];
-}
-
-- (void)logoutAction
-{
-    __weak NewSettingViewController *weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"setting.logoutOngoing", @"loging out...")];
-    [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:YES completion:^(NSDictionary *info, EMError *error) {
-        [weakSelf hideHud];
-        if (error && error.errorCode != EMErrorServerNotLogin) {
-            [weakSelf showHint:error.description];
-        }
-        else{
-            [[ApplyViewController shareController] clear];
-            [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
-        }
-    } onQueue:nil];
+    return _slimeView;
 }
 
 - (ChatRoom2DAO *)chatroom2Dao {
