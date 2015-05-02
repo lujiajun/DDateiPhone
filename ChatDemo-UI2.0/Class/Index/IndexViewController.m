@@ -26,11 +26,11 @@
 #import "IndexViewController.h"
 #import "DDBDynamoDB.h"
 #import "ChatRoomDetail.h"
-#import "EGOImageView.h"
 #import "ChatRoom2DAO.h"
 #import "DDUserDAO.h"
 #import "SRRefreshView.h"
 #import "HomePageListCell.h"
+#import "UIImageView+WebCache.h"
 
 
 @interface IndexViewController ()<SRRefreshDelegate>
@@ -123,19 +123,22 @@ static DDUser *uuser;
 	CHATROOM2 *chatRoom2 = [self.chatroom2Dao.chatroom2s objectAtIndex:indexPath.row];
 
 	if (chatRoom2 != nil && chatRoom2.PicturePath != nil) {
-		cell.bakview.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:chatRoom2.PicturePath]];
+		[cell.bakview sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:chatRoom2.PicturePath]]
+		                placeholderImage:[UIImage imageNamed:@"Logo_new"]];
 	}
 
 	//查询用户1
 	DDUser *uuser1 = [self.userDao selectDDuserByUid:chatRoom2.UID1];
 	if (uuser1 != nil && uuser1.picPath != nil) {
-		cell.user1Avatar.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:uuser1.picPath]];
+		[cell.user1Avatar sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:uuser1.picPath]]
+		                    placeholderImage:[UIImage imageNamed:@"Logo_new"]];
 	}
 
 	//查询用户2
 	DDUser *uuser2 = [self.userDao selectDDuserByUid:chatRoom2.UID2];
 	if (uuser2 != nil && uuser2.picPath != nil) {
-		cell.user2Avatar.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:uuser2.picPath]];
+		[cell.user2Avatar sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:uuser2.picPath]]
+		                    placeholderImage:[UIImage imageNamed:@"Logo_new"]];
 	}
 
 	//性别

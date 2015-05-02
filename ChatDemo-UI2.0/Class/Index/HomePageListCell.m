@@ -14,7 +14,7 @@
 	self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
 	if (self) {
 		//Background
-		_bakview = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
+		_bakview = [[UIImageView alloc] init];
 		_bakview.frame = CGRectMake(5, 5, self.frame.size.width - 10, 150);
 		_bakview.layer.masksToBounds = YES;
 		_bakview.layer.cornerRadius = 5;
@@ -29,14 +29,14 @@
         [self.contentView addSubview:bakgroundview];
 
 		//User1 Avatar
-		_user1Avatar = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
+		_user1Avatar = [[UIImageView alloc] init];
 		_user1Avatar.frame = CGRectMake(10, _bakview.frame.origin.y + 5, 50, 50);
 		_user1Avatar.layer.masksToBounds = YES;
 		_user1Avatar.layer.cornerRadius = 25;
 		[_bakview addSubview:_user1Avatar];
 
 		//User2 Avatar
-		_user2Avatar = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
+		_user2Avatar = [[UIImageView alloc] init];
 		_user2Avatar.frame = CGRectMake(_bakview.frame.size.width - 60, _bakview.frame.origin.y + 5, 50, 50);
 		_user2Avatar.layer.masksToBounds = YES;
 		_user2Avatar.layer.cornerRadius = 25;

@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EGOImageView.h"
 
 @interface HomePageListCell : UITableViewCell
 
-@property(strong, nonatomic) EGOImageView *bakview;
-@property(strong, nonatomic) EGOImageView *user1Avatar;
-@property(strong, nonatomic) EGOImageView *user2Avatar;
+@property(strong, nonatomic) UIImageView *bakview;
+@property(strong, nonatomic) UIImageView *user1Avatar;
+@property(strong, nonatomic) UIImageView *user2Avatar;
 @property(strong, nonatomic) UIImageView *genderView;
 @property(strong, nonatomic) UILabel *clicknumber;
 @property(strong, nonatomic) UILabel *motto;

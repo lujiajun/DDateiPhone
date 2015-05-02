@@ -20,5 +20,6 @@ pod 'AWSSNS'
 pod 'AWSSQS'
 pod 'AWSCognito'
 
+pod 'SDWebImage', '~>3.7'
 end
 
