@@ -128,6 +128,8 @@
 "group.create.open" = "random join";
 "group.create.needApply" = "you need administrator agreed to join the group";
 "please choose your friend"="please choose your friend";
+"group is over time"="group is dimissed because of over time";
+
 
 //Group Bans
 "group.ban.removing" = "members are removing from the blacklist...";

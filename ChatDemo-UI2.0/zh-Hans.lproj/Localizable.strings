@@ -129,6 +129,7 @@
 "group.create.open" = "随便加入";
 "group.create.needApply" = "加入群组需要管理员同意";
 "please choose your friend"="请选择被邀请的朋友";
+"group is over time"="房间超时，自动解散";
 
 //Group Bans
 "group.ban.removing" = "正在将成员移出黑名单...";

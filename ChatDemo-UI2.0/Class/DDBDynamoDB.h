@@ -22,7 +22,6 @@
 
 @interface DDBDynamoDB : NSObject
 
-- (void)addUser;
 
 - (void)insertTableRow:(DDUser *)tableRow;
 
@@ -31,6 +30,8 @@
 - (void)updateTable:(DDUser *)tableRow;
 
 - (DDUser *)addNewUser:(NSString *)name;
+
+-(DDUser *)getUserByUid:(NSString*) uid;
 
 
 #pragma mark - ChatRoom2

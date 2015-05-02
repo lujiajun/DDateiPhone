@@ -32,6 +32,11 @@
 #import "DXMessageToolBar.h"
 #import "DXChatBarMoreView.h"
 #import "ChatViewController+Category.h"
+#import "ChatRoom4DB.h"
+#import "IndexViewController.h"
+#import "DDBDynamoDB.h"
+#import "EGOImageView.h"
+#import "Constants.h"
 #define KPageCount 20
 
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, IDeviceManagerDelegate>
@@ -65,12 +70,26 @@
 
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (nonatomic) BOOL isScrollToBottom;
+@property(strong,nonatomic) UILabel *lab;
 @property (nonatomic) BOOL isPlayingAudio;
+@property(strong,nonatomic) NSTimer *countDownTimer;
+@property(nonatomic) CHATROOM4 *chatroom4;
+@property(nonatomic) NSString *friendname;
+@property(nonatomic) NSString *friendHead;
 
 @end
 
 @implementation ChatViewController
+int secondsCountDown = 30;
 
+NSDateFormatter *dateformatter;
+
+-(id) initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend friendHead:(NSString *) friendHead{
+    _friendname=friend;
+    _friendHead=friendHead;
+    _chatroom4=room4;
+    return self;
+}
 - (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup
 {
     self = [super initWithNibName:nil bundle:nil];
@@ -88,16 +107,66 @@
     return self;
 }
 
+-(void)timeFireMethod{
+    //60秒倒计时
+    secondsCountDown--;
+    int hour=secondsCountDown/3600;
+    int minte=secondsCountDown%3600/60;
+    int seconds=secondsCountDown-hour*3600-minte*60;
+    self.lab.text = [NSString stringWithFormat:@"%d时%d分%d秒", hour,minte, seconds];
+    
+    if(secondsCountDown==0){
+        [_countDownTimer invalidate];
+        //删除数据库记录
+        ChatRoom4DB *db=[ChatRoom4DB alloc];
+        [db deleteRoom4:_chatroom4.GID];
+        //删除环信数据
+        [self dissolvegRroup];
+        
+    }
+}
+
+
+//解散群组
+- (void)dissolvegRroup
+{
+    __weak typeof(self) weakSelf = self;
+    [self showHudInView:self.view hint:NSLocalizedString(@"group.destroy", @"dissolution of the group")];
+    [[EaseMob sharedInstance].chatManager asyncDestroyGroup:_chatroom4.GID completion:^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
+        [weakSelf hideHud];
+        if (error) {
+            [weakSelf showHint:NSLocalizedString(@"group.destroyFail", @"dissolution of group failure")];
+        }
+        else{
+            [weakSelf showHint:NSLocalizedString(@"group is over time", @"dissolution of group failure")];
+            IndexViewController *selectionController = [[IndexViewController alloc] init];
+            [self.navigationController pushViewController:selectionController animated:YES];
+
+          
+        }
+    } onQueue:nil];
+    
+    //    [[EaseMob sharedInstance].chatManager asyncLeaveGroup:_chatGroup.groupId];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    dateformatter = [[NSDateFormatter alloc]init] ;//定义NSDateFormatter用来显示格式
+    [dateformatter setDateFormat:@"hh mm ss"];//设定格式
+    
+    self.lab=[[UILabel alloc]initWithFrame:CGRectMake(100, 100, 200, 100)];
+    self.lab.text=@"";
+//    [self.tableView addSubview:self.lab];
+//    _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
+    //使用timer定时，每秒触发一次，然后就是写selector了。
     [self registerBecomeActive];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor lightGrayColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
         self.edgesForExtendedLayout =  UIRectEdgeNone;
     }
-    
+
     #warning 以下三行代码必须写，注册为SDK的ChatManager的delegate
     [[[EaseMob sharedInstance] deviceManager] addDelegate:self onQueue:nil];
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
@@ -112,11 +181,18 @@
     _messageQueue = dispatch_queue_create("easemob.com", NULL);
     _isScrollToBottom = YES;
     
+   
     [self setupBarButtonItem];
     [self.view addSubview:self.tableView];
     [self.tableView addSubview:self.slimeView];
+//    [self.tableView.setUserInteractive:yes];
+    if(_isChatGroup){
+        [self.view addSubview:[self getFriendFrame]];
+    }
+    
     [self.view addSubview:self.chatToolBar];
     
+ 
     //将self注册为chatToolBar的moreView的代理
     if ([self.chatToolBar.moreView isKindOfClass:[DXChatBarMoreView class]]) {
         [(DXChatBarMoreView *)self.chatToolBar.moreView setDelegate:self];
@@ -129,6 +205,56 @@
     [self loadMoreMessages];
 }
 
+-(UIButton *) getFriendFrame{
+    UIButton *bak=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+    [bak setImage:[UIImage imageNamed:@"chatbak"] forState:UIControlStateNormal];
+    [bak setImage:[UIImage imageNamed:@"chatjianbian"] forState:UIControlStateSelected];
+    [bak addTarget:self action:@selector(dragInside) forControlEvents:UIControlEventTouchUpInside];
+    bak.userInteractionEnabled = YES;
+    
+    EGOImageView *head = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
+    if( _friendHead !=nil){
+        head.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:_friendHead]];
+    }
+    
+    head.frame=CGRectMake(5,bak.frame.origin.y+5, 30, 30);
+    
+    [bak addSubview:head];
+    
+    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(head.frame.origin.x+head.frame.size.width+10, bak.frame.origin.y+5,200, 10)];
+    label.text=@"你当前的Double好友是";
+    label.font= [UIFont fontWithName:@"Helvetica" size:11];
+    [bak addSubview:label];
+    UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(label.frame.origin.x, label.frame.origin.y+15,200, 10)];
+    name.text=_friendname;
+    name.font= [UIFont fontWithName:@"Helvetica" size:11];
+    [bak addSubview:name];
+    
+    return bak;
+    
+}
+
+-(void)dragInside{
+    //查找EMBuddy
+//    [EaseMob sharedInstance].chatManager 
+////    EMBuddy *buddy = [[self.dataSource objectAtIndex:(indexPath.section - 1)] objectAtIndex:indexPath.row];
+//    NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
+//    NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
+//    if (loginUsername && loginUsername.length > 0) {
+//        if ([loginUsername isEqualToString:buddy.username]) {
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"friend.notChatSelf", @"can't talk to yourself") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+//            [alertView show];
+//            
+//            return;
+//        }
+//    }
+    //好友的name
+    
+    ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:_friendname isGroup:NO];
+    chatVC.title = _friendname;
+    [self.navigationController pushViewController:chatVC animated:YES];
+}
+//顶部bar
 - (void)setupBarButtonItem
 {
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
@@ -138,6 +264,8 @@
     [self.navigationItem setLeftBarButtonItem:backItem];
     
     if (_isChatGroup) {
+        //跳转到详情页面，需要修改
+        
         UIButton *detailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
         [detailButton setImage:[UIImage imageNamed:@"group_detail"] forState:UIControlStateNormal];
         [detailButton addTarget:self action:@selector(showRoomContact:) forControlEvents:UIControlEventTouchUpInside];
@@ -292,7 +420,7 @@
         _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.backgroundColor = [UIColor lightGrayColor];
+        _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.tableFooterView = [[UIView alloc] init];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
@@ -1247,7 +1375,7 @@
 {
     [self.view endEditing:YES];
     if (_isChatGroup) {
-        ChatGroupDetailViewController *detailController = [[ChatGroupDetailViewController alloc] initWithGroupId:_chatter];
+        ChatGroupDetailViewController *detailController = [[ChatGroupDetailViewController alloc] initWithGroupId:_chatter chatroom4:_chatroom4];
         [self.navigationController pushViewController:detailController animated:YES];
     }
 }

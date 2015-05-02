@@ -115,6 +115,8 @@
 		8ADB388C1AE2A17100FCC6FC /* UsernickController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB388B1AE2A17100FCC6FC /* UsernickController.m */; };
 		8AEF0ECE1AF31C8900DE2484 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AEF0ECD1AF31C8900DE2484 /* HelpViewController.m */; };
 		8AEF0ED01AF31E4B00DE2484 /* help.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AEF0ECF1AF31E4B00DE2484 /* help.png */; };
+		8AEF0ED21AF38D4700DE2484 /* chatbak.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AEF0ED11AF38D4700DE2484 /* chatbak.png */; };
+		8AEF0ED41AF38FA800DE2484 /* chatjianbian.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AEF0ED31AF38FA800DE2484 /* chatjianbian.png */; };
 		8AFE465A1AECE3A700B57368 /* settingback.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE46591AECE3A700B57368 /* settingback.png */; };
 		8AFE465C1AECFFAF00B57368 /* jianbian.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE465B1AECFFAF00B57368 /* jianbian.png */; };
 		8AFE465F1AED034A00B57368 /* clicknum1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE465D1AED034A00B57368 /* clicknum1.png */; };
@@ -594,6 +596,8 @@
 		8AEF0ECC1AF31C2E00DE2484 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		8AEF0ECD1AF31C8900DE2484 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 		8AEF0ECF1AF31E4B00DE2484 /* help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help.png; path = dd/help.png; sourceTree = "<group>"; };
+		8AEF0ED11AF38D4700DE2484 /* chatbak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatbak.png; sourceTree = "<group>"; };
+		8AEF0ED31AF38FA800DE2484 /* chatjianbian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatjianbian.png; sourceTree = "<group>"; };
 		8AFE46591AECE3A700B57368 /* settingback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settingback.png; path = dd/settingback.png; sourceTree = "<group>"; };
 		8AFE465B1AECFFAF00B57368 /* jianbian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = jianbian.png; path = dd/jianbian.png; sourceTree = "<group>"; };
 		8AFE465D1AED034A00B57368 /* clicknum1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clicknum1.png; path = dd/clicknum1.png; sourceTree = "<group>"; };
@@ -2233,6 +2237,8 @@
 		EBD2AA3F1A7CDABF00D16528 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
+				8AEF0ED31AF38FA800DE2484 /* chatjianbian.png */,
+				8AEF0ED11AF38D4700DE2484 /* chatbak.png */,
 				EBD2AA401A7CDABF00D16528 /* audio */,
 				EBD2AA711A7CDABF00D16528 /* call_out.png */,
 				EBD2AA721A7CDABF00D16528 /* call_out@2x.png */,
@@ -2624,6 +2630,7 @@
 				8A4021101AE3597900806014 /* 聊天—编组方式.png in Resources */,
 				EBD2AB3E1A7CDAC000D16528 /* call_silence@2x.png in Resources */,
 				EBD2AB5A1A7CDAC000D16528 /* chatBar_face@2x.png in Resources */,
+				8AEF0ED41AF38FA800DE2484 /* chatjianbian.png in Resources */,
 				8A40211A1AE3597900806014 /* indexall2.png in Resources */,
 				EBD2AB6F1A7CDAC000D16528 /* chatBar_colorMore_camera@2x.png in Resources */,
 				EBD2AB1B1A7CDAC000D16528 /* VoiceSearchFeedback006.png in Resources */,
@@ -2710,6 +2717,7 @@
 				EBD2AB141A7CDAC000D16528 /* VoiceSearchFeedback002@2x.png in Resources */,
 				8A7DBEF61AECCAE300D7941F /* confirm.png in Resources */,
 				EBD2AB151A7CDAC000D16528 /* VoiceSearchFeedback003.png in Resources */,
+				8AEF0ED21AF38D4700DE2484 /* chatbak.png in Resources */,
 				EBD2AB351A7CDAC000D16528 /* VoiceSearchFeedback019.png in Resources */,
 				8A40211F1AE3597900806014 /* like图标1.png in Resources */,
 				EBD2AB671A7CDAC000D16528 /* chatBar_recordBg.png in Resources */,

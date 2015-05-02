@@ -23,6 +23,9 @@
 #import "GroupListViewController.h"
 #import "ChatViewController.h"
 #import "InviteFriendByDoubleIdController.h"
+#import "DDBDynamoDB.h"
+#import "EGOImageView.h"
+#import "Constants.h"
 
 @interface ContactsViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, BaseTableCellDelegate, SRRefreshDelegate>
 {
@@ -212,8 +215,9 @@
         return 2;
 //        return 1;
     }
+    NSMutableArray *sou=[self.dataSource objectAtIndex:(section - 1) ];
     
-    return [[self.dataSource objectAtIndex:(section - 1)] count];
+    return sou.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -240,13 +244,44 @@
         }
         
         cell.indexPath = indexPath;
+        DDBDynamoDB *dynamo=[DDBDynamoDB alloc];
         if (indexPath.section == 0 && indexPath.row == 1) {
             cell.imageView.image = [UIImage imageNamed:@"groupPrivateHeader"];
             cell.textLabel.text = NSLocalizedString(@"title.group", @"Group");
         }
         else{
             EMBuddy *buddy = [[self.dataSource objectAtIndex:(indexPath.section - 1)] objectAtIndex:indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@"chatListCellHead.png"];
+            
+            EGOImageView *bakview = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"chatListCellHead.png"]];
+            bakview.frame=CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40);
+            [cell.contentView addSubview:bakview];
+            
+//            AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+//            
+//            [[dynamoDBObjectMapper load:[DDUser class] hashKey:buddy.username rangeKey:nil]
+//             continueWithBlock:^id(BFTask *task) {
+//                 if (task.error) {
+//                     NSLog(@"The request failed. Error: [%@]", task.error);
+//                 }
+//                 if (task.exception) {
+//                     NSLog(@"The request failed. Exception: [%@]", task.exception);
+//                 }
+//                 if (task.result) {
+//                     //头像缓存
+//                     DDUser *user=task.result;
+//                     
+//                     bakview.frame=CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40);
+//
+//                     if(user!=nil && user.picPath !=nil){
+//                         bakview.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]];
+//                     }
+//                   
+//                     //Do something with the result.
+//                 }
+//                 return nil;
+//             }];
+
+           //            cell.imageView.image = [UIImage imageNamed:@"chatListCellHead.png"];
             cell.textLabel.text = buddy.username;
         }
     }
@@ -306,7 +341,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 0 || [[self.dataSource objectAtIndex:(section - 1)] count] == 0)
+    if(section==0){
+        return 0;
+    }
+     NSMutableArray *sou=[self.dataSource objectAtIndex:(section - 1) ];
+    if (section == 0 || [sou count] == 0)
     {
         return 0;
     }
@@ -317,7 +356,8 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if (section == 0 || [[self.dataSource objectAtIndex:(section - 1)] count] == 0)
+     NSMutableArray *sou=[self.dataSource objectAtIndex:(section - 1) ];
+    if (section == 0 || [sou count] == 0)
     {
         return nil;
     }
@@ -336,7 +376,8 @@
     NSMutableArray * existTitles = [NSMutableArray array];
     //section数组为空的title过滤掉，不显示
     for (int i = 0; i < [self.sectionTitles count]; i++) {
-        if ([[self.dataSource objectAtIndex:i] count] > 0) {
+         NSMutableArray *sou=[self.dataSource objectAtIndex:i];
+        if ([sou count] > 0) {
             [existTitles addObject:[self.sectionTitles objectAtIndex:i]];
         }
     }

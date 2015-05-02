@@ -11,11 +11,13 @@
   */
 
 #import <UIKit/UIKit.h>
-
+#import "ChatRoom4DB.h"
 @interface ChatViewController : UIViewController
 
 - (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup;
 
 - (void)reloadData;
 
+
+-(id)initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend friendHead:(NSString *) friendHead;
 @end

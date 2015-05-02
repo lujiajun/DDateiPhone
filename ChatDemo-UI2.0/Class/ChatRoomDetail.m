@@ -24,6 +24,8 @@
 #import "ContactsViewController.h"
 #import "Contact4GroupAddViewController.h"
 #import "ContactSelectionViewController.h";
+#import "IndexViewController.h"
+#import "ChatRoom2DAO.h"
 
 @interface ChatRoomDetail ()
 
@@ -38,6 +40,7 @@
 @property(strong,nonatomic) DDUser *uuser2;
 @property(strong,nonatomic) CHATROOM2 *chatroom2;
 @property(nonatomic) LocalDbService *localDbService;
+
 
 @end
 
@@ -72,7 +75,9 @@
     [self.view addSubview:registerButton];
     [registerButton addTarget:self action:@selector(addUser) forControlEvents:UIControlEventTouchUpInside];
     
-    
+    //更新点击数
+    [self updateClickNumber];
+  
 }
 
 -(void) addUser{
@@ -88,6 +93,18 @@
     _uuser2=uuser2;
 
     return self;
+}
+
+-(void) updateClickNumber{
+     _chatroom2.ClickNum=[NSString stringWithFormat:@"%d",_chatroom2.ClickNum.intValue +  arc4random() % 100];
+   
+    DDBDynamoDB *ddb=[DDBDynamoDB alloc];
+    [ddb insertChatroom2:_chatroom2];
+   //更新首页内容
+    ChatRoom2DAO *room2dao=[ChatRoom2DAO alloc];
+
+    [room2dao refreshList];
+
 }
 
 - (void)didReceiveMemoryWarning

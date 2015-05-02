@@ -18,6 +18,10 @@
 #import "ContactView.h"
 #import "GroupBansViewController.h"
 #import "GroupSubjectChangingViewController.h"
+#import "DDBDynamoDB.h"
+#import "ChatRoom4DB.h"
+#import "EGOImageView.h"
+#import "Constants.h"
 
 #pragma mark - ChatGroupDetailViewController
 
@@ -43,6 +47,13 @@
 @property (strong, nonatomic) UIButton *configureButton;
 @property (strong, nonatomic) UILongPressGestureRecognizer *longPress;
 @property (strong, nonatomic) ContactView *selectedContact;
+
+@property(strong,nonatomic) DDUser *uuser1;
+@property(strong,nonatomic) DDUser *uuser2;
+@property(strong,nonatomic) DDUser *uuser3;
+@property(strong,nonatomic) DDUser *uuser4;
+@property(strong,nonatomic) CHATROOM4  *chatroom4;
+
 
 - (void)dissolveAction;
 - (void)clearAction;
@@ -79,8 +90,13 @@
     return self;
 }
 
-- (instancetype)initWithGroupId:(NSString *)chatGroupId
+- (instancetype)initWithGroupId:(NSString *)chatGroupId chatroom4:(CHATROOM4 *) chatroom4
 {
+    //查询
+    if(_chatroom4==nil){
+        _chatroom4=chatroom4;
+        [self getDDusers];
+    }
     EMGroup *chatGroup = nil;
     NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
     for (EMGroup *group in groupArray) {
@@ -102,6 +118,17 @@
     return self;
 }
 
+-(void) getDDusers{
+    //查询数据库
+    DDBDynamoDB *dynamo=[DDBDynamoDB alloc];
+    _uuser1=[dynamo getTableUser:_chatroom4.UID1];
+    _uuser2=[dynamo getTableUser:_chatroom4.UID2];
+    _uuser3=[dynamo getTableUser:_chatroom4.UID3];
+    _uuser4=[dynamo getTableUser:_chatroom4.UID4];
+    
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -121,12 +148,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupBansChanged) name:@"GroupBansChanged" object:nil];
     
-//    [[EaseMob sharedInstance].chatManager asyncChangeGroupSubject:@"xieyajie test345678" forGroup:@"1409903855656" completion:^(EMGroup *group, EMError *error) {
-//        NSLog(@"%@", group.groupSubject);
-//        if (!error) {
-//            [self fetchGroupInfo];
-//        }
-//    } onQueue:nil];
     
     [self fetchGroupInfo];
 }
@@ -231,11 +252,11 @@
     // Return the number of rows in the section.
     if (self.occupantType == GroupOccupantTypeOwner)
     {
-        return 6;
+        return 7;
     }
     else
     {
-        return 5;
+        return 6;
     }
 }
 
@@ -249,47 +270,107 @@
     }
     
     if (indexPath.row == 0) {
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell.contentView addSubview:self.scrollView];
+        [self showUser1:cell.contentView];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        [cell.contentView addSubview:self.scrollView];
     }
     else if (indexPath.row == 1)
     {
-        cell.textLabel.text = NSLocalizedString(@"group.id", @"group ID");
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.detailTextLabel.text = _chatGroup.groupId;
+      [self showUser1:cell.contentView];
+//        cell.textLabel.text = NSLocalizedString(@"group.id", @"group ID");
+//        cell.accessoryType = UITableViewCellAccessoryNone;
+//        cell.detailTextLabel.text = _chatGroup.groupId;
     }
     else if (indexPath.row == 2)
     {
-        cell.textLabel.text = NSLocalizedString(@"group.occupantCount", @"members count");
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%i / %i", (int)[_chatGroup.occupants count], (int)_chatGroup.groupSetting.groupMaxUsersCount];
+     [self showUser1:cell.contentView];
+        //        cell.textLabel.text = NSLocalizedString(@"group.occupantCount", @"members count");
+//        cell.accessoryType = UITableViewCellAccessoryNone;
+//        cell.detailTextLabel.text = [NSString stringWithFormat:@"%i / %i", (int)[_chatGroup.occupants count], (int)_chatGroup.groupSetting.groupMaxUsersCount];
     }
     else if (indexPath.row == 3)
     {
-        cell.textLabel.text = NSLocalizedString(@"title.groupSetting", @"Group Setting");
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+       [self showUser1:cell.contentView];
     }
     else if (indexPath.row == 4)
     {
-        cell.textLabel.text = NSLocalizedString(@"title.groupSubjectChanging", @"Change group name");
+        cell.textLabel.text = NSLocalizedString(@"title.groupSetting", @"Group Setting");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
+            }
     else if (indexPath.row == 5)
     {
-        cell.textLabel.text = NSLocalizedString(@"title.groupBlackList", @"Group black list");
+        cell.textLabel.text = NSLocalizedString(@"title.groupSubjectChanging", @"Change group name");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+//        cell.textLabel.text = NSLocalizedString(@"title.groupBlackList", @"Group black list");
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     return cell;
 }
+-(void)showUser1:(UIView *) bakview{
+    
+    EGOImageView *headview = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
+    if(_uuser1!=nil && _uuser1.picPath !=nil){
+        headview.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:_uuser1.picPath]];
+    }
+    headview.frame=CGRectMake(bakview.frame.origin.x+5, bakview.frame.origin.y+10, 80, 80);
+    headview.layer.masksToBounds =YES;
+    headview.layer.cornerRadius =40;
+    [bakview addSubview:headview];
+    
+    //姓名
+    UILabel *nickname=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, headview.frame.origin.y+10, 50, 12)];
+    nickname.text=_uuser1.nickName;
+    nickname.textAlignment=NSTextAlignmentLeft;
+    nickname.font=[UIFont fontWithName:@"Helvetica" size:12];
+    [bakview addSubview:nickname];
+    //性别
+    BOOL *isboy=NO;
+    if(_uuser1!=nil){
+        if([_uuser1.gender isEqual:@"Male"] || [_uuser1.gender isEqual:@"男"]){
+            isboy=YES;
+        }
+    }
+    UIImage *isboyimg;
+    if(isboy){
+        isboyimg=[UIImage imageNamed:@"sexboy"];
+    }else{
+        isboyimg=[UIImage imageNamed:@"sexgirl"];
+    }
+    UIImageView *isboyview=[[UIImageView alloc] initWithImage:isboyimg];
+    isboyview.frame=CGRectMake(headview.frame.origin.x+headview.frame.size.width+nickname.frame.size.width+15, headview.frame.origin.y+8, 10, 10);
+    [bakview addSubview:isboyview];
+    //学校
+    UILabel *university=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, nickname.frame.origin.y+nickname.frame.size.height+2, 50, 12)];
+    university.text=_uuser1.university;
+    university.textAlignment=NSTextAlignmentLeft;
+    university.font=[UIFont fontWithName:@"Helvetica" size:12];
+    [bakview addSubview:university];
+    //学校图片
+    UIImage *schoolimg=[UIImage imageNamed:@"confirm"];
+    UIImageView *schoolview=[[UIImageView alloc] initWithImage:schoolimg];
+    schoolview.frame=CGRectMake(university.frame.origin.x+university.frame.size.width+15, university.frame.origin.y, 20, 10);
+    [bakview addSubview:schoolview];
+    //年级
+    UILabel *gender=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, university.frame.origin.y+university.frame.size.height+2, 50, 12)];
+    gender.text=_uuser1.grade;
+    gender.textAlignment=NSTextAlignmentLeft;
+    gender.font=[UIFont fontWithName:@"Helvetica" size:12];
+    [bakview addSubview:gender];
+
+    
+    
+}
+
 
 #pragma mark - Table view delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = (int)indexPath.row;
-    if (row == 0) {
-        return self.scrollView.frame.size.height + 40;
+    if (row == 0 ||row == 1||row==2||row==3) {
+        return 130;
     }
     else {
         return 50;
@@ -300,19 +381,19 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row == 3) {
+    if (indexPath.row == 4) {
         GroupSettingViewController *settingController = [[GroupSettingViewController alloc] initWithGroup:_chatGroup];
         [self.navigationController pushViewController:settingController animated:YES];
     }
-    else if (indexPath.row == 4)
+    else if (indexPath.row == 5)
     {
         GroupSubjectChangingViewController *changingController = [[GroupSubjectChangingViewController alloc] initWithGroup:_chatGroup];
         [self.navigationController pushViewController:changingController animated:YES];
     }
-    else if (indexPath.row == 5) {
-        GroupBansViewController *bansController = [[GroupBansViewController alloc] initWithGroup:_chatGroup];
-        [self.navigationController pushViewController:bansController animated:YES];
-    }
+//    else if (indexPath.row == 5) {
+//        GroupBansViewController *bansController = [[GroupBansViewController alloc] initWithGroup:_chatGroup];
+//        [self.navigationController pushViewController:bansController animated:YES];
+//    }
 }
 
 #pragma mark - EMChooseViewDelegate
@@ -416,8 +497,8 @@
     [self.dataSource addObjectsFromArray:self.chatGroup.occupants];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self refreshScrollView];
-        [self refreshFooterView];
+//        [self refreshScrollView];
+//        [self refreshFooterView];
         [self hideHud];
     });
 }
@@ -481,19 +562,6 @@
                             [weakSelf showHint:error.description];
                         }
                     } onQueue:nil];
-//                    [weakSelf showHudInView:weakSelf.view hint:@"正在将成员加入黑名单..."];
-//                    NSArray *occupants = [NSArray arrayWithObject:[weakSelf.dataSource objectAtIndex:index]];
-//                    [[EaseMob sharedInstance].chatManager asyncBlockOccupants:occupants fromGroup:weakSelf.chatGroup.groupId completion:^(EMGroup *group, EMError *error) {
-//                        [weakSelf hideHud];
-//                        if (!error) {
-//                            weakSelf.chatGroup = group;
-//                            [weakSelf.dataSource removeObjectAtIndex:index];
-//                            [weakSelf refreshScrollView];
-//                        }
-//                        else{
-//                            [weakSelf showHint:error.description];
-//                        }
-//                    } onQueue:nil];
                 }];
                 
                 [self.scrollView addSubview:contactView];

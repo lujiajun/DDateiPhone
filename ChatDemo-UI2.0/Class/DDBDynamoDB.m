@@ -20,21 +20,6 @@
 
 @implementation DDBDynamoDB
 
--(void) addUser{
-    DDUser *user=[DDUser new];
-    
-    user.UID=@"liufei";
-    user.nickName=@"dafei";
-    user.gender=@"男";
-    user.grade=@"大二";
-//    user.isDoublerID=YES;
-//    user.isPic=YES;
-    user.password=@"ere";
-    user.university=@"北京大学";
-    user.picPath=@"xxx";
-//    user.waitingID=@"uu";
-    [self insertTableRow:user];
-}
 
 - (void)insertTableRow:(DDUser *)tableRow {
     AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
@@ -83,12 +68,24 @@
              NSLog(@"The request failed. Exception: [%@]", task.exception);
          }
          if (task.result) {
-              DDUser *user = task.result;
-             return  user;
+             DDUser *user=task.result;
+              return  user;
+          
              //Do something with the result.
          }
          return nil;
      }];
+    return nil;
+}
+
+-(DDUser *)getUserByUid:(NSString*) uid{
+    AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+   BFTask *task= [dynamoDBObjectMapper load:[DDUser class] hashKey:uid rangeKey:nil];
+    if (task.result) {
+        DDUser *user=task.result;
+        return  user;
+      
+    }
     return nil;
 }
 
@@ -136,22 +133,8 @@
 - (void)insertChatroom2:(CHATROOM2 *)chatRoom2 {
 	AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
 	[[dynamoDBObjectMapper save:chatRoom2] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
-	    if (!task.error) {
-	        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Succeeded"
-	                                                        message:@"Successfully inserted the data into the table."
-	                                                       delegate:nil
-	                                              cancelButtonTitle:@"OK"
-	                                              otherButtonTitles:nil];
-	        [alert show];
-		} else {
-	        NSLog(@"Error: [%@]", task.error);
-
-	        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-	                                                        message:@"Failed to insert the data into the table."
-	                                                       delegate:nil
-	                                              cancelButtonTitle:@"OK"
-	                                              otherButtonTitles:nil];
-	        [alert show];
+	    if (task.error) {
+	      	NSLog(@"Error: [%@]", task.error);
 		}
 	    return nil;
 	}];

@@ -11,6 +11,7 @@
   */
 
 #import <UIKit/UIKit.h>
+#import "ChatRoom4DB.h"
 
 /**
  *  群组成员类型
@@ -24,6 +25,6 @@ typedef enum{
 
 - (instancetype)initWithGroup:(EMGroup *)chatGroup;
 
-- (instancetype)initWithGroupId:(NSString *)chatGroupId;
+- (instancetype)initWithGroupId:(NSString *)chatGroupId chatroom4:(CHATROOM4 *) chatroom4;
 
 @end

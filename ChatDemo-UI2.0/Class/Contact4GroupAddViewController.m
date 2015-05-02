@@ -19,6 +19,7 @@
 #import "ChatViewController.h"
 #import "ChatRoom4DB.h"
 #import "DDBDynamoDB.h"
+#import "DDUserDAO.h"
 
 
 @interface Contact4GroupAddViewController ()<UISearchBarDelegate, UISearchDisplayDelegate>
@@ -102,10 +103,12 @@
             NSInteger section = [self sectionForString:username];
             NSMutableArray *tmpArray = [_dataSource objectAtIndex:section];
             if (tmpArray && [tmpArray count] > 0) {
+          
                 for (int i = 0; i < [tmpArray count]; i++) {
                     EMBuddy *buddy = [tmpArray objectAtIndex:i];
                     if ([buddy.username isEqualToString:username]) {
                         [self.selectedContacts addObject:buddy];
+                      
                         [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:section] animated:NO scrollPosition:UITableViewScrollPositionNone];
                         
                         break;
@@ -377,7 +380,7 @@
     for (int i = 0; i < count; i++) {
         EMBuddy *buddy = [self.selectedContacts objectAtIndex:i];
         EMRemarkImageView *remarkView = [[EMRemarkImageView alloc] initWithFrame:CGRectMake(i * imageSize, 0, imageSize, imageSize)];
-        remarkView.image = [UIImage imageNamed:@"chatListCellHead.png"];
+        remarkView.image = [UIImage imageNamed:@"Logo_new"];
         remarkView.remark = buddy.username;
         [self.footerScrollView addSubview:remarkView];
     }
@@ -433,7 +436,7 @@
     EMError *error = nil;
     EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
     groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
-    EMGroup *group = [[EaseMob sharedInstance].chatManager createGroupWithSubject:_room2.RID description:_room2.Motto invitees:@[username,toAddFriend,_room2.UID1,_room2.UID2] initialWelcomeMessage:@"邀请您加入群组" styleSetting:groupStyleSetting error:&error];
+    EMGroup *group = [[EaseMob sharedInstance].chatManager createGroupWithSubject:_room2.RID description:_room2.Motto invitees:@[username,toAddFriend,_room2.UID1,_room2.UID2] initialWelcomeMessage:messageStr styleSetting:groupStyleSetting error:&error];
     if(!error){
         NSLog(@"创建成功 -- %@",group);
     }
@@ -456,7 +459,8 @@
     ChatRoom4DB *chatroom4DB=[ChatRoom4DB alloc];
     [chatroom4DB insertChatroom4:chatroom4];
     
-    ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES];
+    //查询每个用户的数据库信息 toAddFriend必须RID
+    ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES] initRoom4:chatroom4 friend:toAddFriend friendHead:toAddFriend];
     chatController.title = _room2.Motto;
     [self.navigationController pushViewController:chatController animated:YES];
 

@@ -16,6 +16,7 @@
 #import "ChatRoom4DB.h"
 #import "AWSDynamoDB/AWSDynamoDB.h"
 #import "BFExecutor.h"
+#import "IndexViewController.h"
 
 
 @implementation ChatRoom4DB
@@ -33,7 +34,27 @@
     
 }
 
--(CHATROOM4 *)getTableUser:(NSString*) uid{
+-(void) deleteRoom4:(NSString *) gid{
+    CHATROOM4 *room4 = [CHATROOM4 new];
+    room4.GID = gid;
+     AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+    [[dynamoDBObjectMapper remove:room4]
+     continueWithBlock:^id(BFTask *task) {
+         
+         if (task.error) {
+             NSLog(@"The request failed. Error: [%@]", task.error);
+         }
+         if (task.exception) {
+             NSLog(@"The request failed. Exception: [%@]", task.exception);
+         }
+         if (task.result) {
+             //Item deleted.
+         }
+         return nil;
+     }];
+}
+
+-(CHATROOM4 *)getCHATROOM4:(NSString*) uid{
     AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
     
     [[dynamoDBObjectMapper load:[CHATROOM4 class] hashKey:uid rangeKey:nil]
