@@ -133,7 +133,7 @@
     if (_db) {
         return YES;
     }
-    
+
     int err = sqlite3_open([self sqlitePath], &_db );
     if(err != SQLITE_OK) {
         NSLog(@"error opening!: %d", err);

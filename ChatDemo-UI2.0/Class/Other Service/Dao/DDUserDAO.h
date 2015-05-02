@@ -11,7 +11,9 @@
 
 @interface DDUserDAO : BaseDAO
 
-- (DDUser *)selectDDuserByUid:(NSString *)uid;
+- (DDUser *) selectDDuserByUid:(NSString *)uid;
 - (void)getTableRowAndInsertLocal:(NSString *)uid;
+
+- (void)insertDDUser:(DDUser *)dduser ;
 
 @end

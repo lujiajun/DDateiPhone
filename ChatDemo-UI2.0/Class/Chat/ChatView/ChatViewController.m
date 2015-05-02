@@ -35,8 +35,9 @@
 #import "ChatRoom4DB.h"
 #import "IndexViewController.h"
 #import "DDBDynamoDB.h"
-#import "EGOImageView.h"
+#import "UIImageView+EMWebCache.h"
 #import "Constants.h"
+#import "DDUserDAO.h"
 #define KPageCount 20
 
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, IDeviceManagerDelegate>
@@ -75,7 +76,7 @@
 @property(strong,nonatomic) NSTimer *countDownTimer;
 @property(nonatomic) CHATROOM4 *chatroom4;
 @property(nonatomic) NSString *friendname;
-@property(nonatomic) NSString *friendHead;
+@property(nonatomic) DDUser *friend;
 
 @end
 
@@ -84,9 +85,9 @@ int secondsCountDown = 30;
 
 NSDateFormatter *dateformatter;
 
--(id) initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend friendHead:(NSString *) friendHead{
+-(id) initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend{
     _friendname=friend;
-    _friendHead=friendHead;
+    
     _chatroom4=room4;
     return self;
 }
@@ -189,7 +190,7 @@ NSDateFormatter *dateformatter;
     if(_isChatGroup){
         [self.view addSubview:[self getFriendFrame]];
     }
-    
+   
     [self.view addSubview:self.chatToolBar];
     
  
@@ -212,9 +213,17 @@ NSDateFormatter *dateformatter;
     [bak addTarget:self action:@selector(dragInside) forControlEvents:UIControlEventTouchUpInside];
     bak.userInteractionEnabled = YES;
     
-    EGOImageView *head = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
-    if( _friendHead !=nil){
-        head.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:_friendHead]];
+    UIImageView *head=[[UIImageView alloc]initWithFrame:CGRectMake(5,bak.frame.origin.y+5, 30, 30)] ;
+    if(_friend==nil){
+        DDUserDAO *dao=[[DDUserDAO alloc] init];
+        _friend= [dao selectDDuserByUid:_friendname];
+    }
+    
+    if(_friend!=nil){
+        [head sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:_friend.picPath]]
+                placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+    }else {
+        head.image=[UIImage imageNamed:@"Logo_new"];
     }
     
     head.frame=CGRectMake(5,bak.frame.origin.y+5, 30, 30);
@@ -235,19 +244,6 @@ NSDateFormatter *dateformatter;
 }
 
 -(void)dragInside{
-    //查找EMBuddy
-//    [EaseMob sharedInstance].chatManager 
-////    EMBuddy *buddy = [[self.dataSource objectAtIndex:(indexPath.section - 1)] objectAtIndex:indexPath.row];
-//    NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
-//    NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
-//    if (loginUsername && loginUsername.length > 0) {
-//        if ([loginUsername isEqualToString:buddy.username]) {
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"friend.notChatSelf", @"can't talk to yourself") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
-//            [alertView show];
-//            
-//            return;
-//        }
-//    }
     //好友的name
     
     ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:_friendname isGroup:NO];

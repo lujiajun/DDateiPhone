@@ -23,9 +23,9 @@
 #import "GroupListViewController.h"
 #import "ChatViewController.h"
 #import "InviteFriendByDoubleIdController.h"
-#import "DDBDynamoDB.h"
-#import "EGOImageView.h"
+#import "DDUserDAO.h"
 #import "Constants.h"
+#import "UIImageView+WebCache.h"
 
 @interface ContactsViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, BaseTableCellDelegate, SRRefreshDelegate>
 {
@@ -43,6 +43,7 @@
 @property (strong, nonatomic) GroupListViewController *groupController;
 
 @property (strong, nonatomic) EMSearchDisplayController *searchController;
+@property (strong, nonatomic) DDUserDAO *userDao;
 
 @end
 
@@ -70,7 +71,31 @@
     self.tableView.frame = CGRectMake(0, self.searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.searchBar.frame.size.height);
     [self.view addSubview:self.tableView];
     [self.tableView addSubview:self.slimeView];
+    if(_userDao==nil){
+        _userDao=[[DDUserDAO alloc]init];
+    }
+    //更新好友列表 或有列表读取 方式待修改
+//    [self initFriendUser];
 }
+//注意则个方法不能用在Index页面
+//初始化好友列表
+//查询环信列表
+//更新本地库
+//-(void) initFriendUser{
+//    if(_userDao==nil){
+//        _userDao=[DDUserDAO alloc];
+//    }
+//    if(self.dataSource&&self.dataSource.count>0){
+//        for(EMBuddy *buddy in self.dataSource){
+////            if (buddy.followState != eEMBuddyFollowState_NotFollowed) {
+//                [[self userDao] getTableRowAndInsertLocal:buddy.username];
+////            }
+//        }
+//    }
+//    
+//    
+//}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -165,7 +190,14 @@
             }
             
             EMBuddy *buddy = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@"chatListCellHead.png"];
+            //查询用户头像
+            DDUser *user=[[self userDao] selectDDuserByUid:buddy.username];
+            UIImageView *us=[[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40)] ;
+            [us sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
+                  placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+            [cell.contentView addSubview:us];
+
+//            cell.imageView.image = [UIImage imageNamed:@"chatListCellHead.png"];
             cell.textLabel.text = buddy.username;
             
             return cell;
@@ -244,44 +276,20 @@
         }
         
         cell.indexPath = indexPath;
-        DDBDynamoDB *dynamo=[DDBDynamoDB alloc];
+       
         if (indexPath.section == 0 && indexPath.row == 1) {
             cell.imageView.image = [UIImage imageNamed:@"groupPrivateHeader"];
             cell.textLabel.text = NSLocalizedString(@"title.group", @"Group");
         }
         else{
             EMBuddy *buddy = [[self.dataSource objectAtIndex:(indexPath.section - 1)] objectAtIndex:indexPath.row];
-            
-            EGOImageView *bakview = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"chatListCellHead.png"]];
-            bakview.frame=CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40);
-            [cell.contentView addSubview:bakview];
-            
-//            AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-//            
-//            [[dynamoDBObjectMapper load:[DDUser class] hashKey:buddy.username rangeKey:nil]
-//             continueWithBlock:^id(BFTask *task) {
-//                 if (task.error) {
-//                     NSLog(@"The request failed. Error: [%@]", task.error);
-//                 }
-//                 if (task.exception) {
-//                     NSLog(@"The request failed. Exception: [%@]", task.exception);
-//                 }
-//                 if (task.result) {
-//                     //头像缓存
-//                     DDUser *user=task.result;
-//                     
-//                     bakview.frame=CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40);
-//
-//                     if(user!=nil && user.picPath !=nil){
-//                         bakview.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]];
-//                     }
-//                   
-//                     //Do something with the result.
-//                 }
-//                 return nil;
-//             }];
+            [[self userDao] getTableRowAndInsertLocal:buddy.username];
+            DDUser *user=[_userDao selectDDuserByUid:buddy.username];
+            UIImageView *us=[[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40)] ;
+            [us sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
+                                placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+            [cell.contentView addSubview:us];
 
-           //            cell.imageView.image = [UIImage imageNamed:@"chatListCellHead.png"];
             cell.textLabel.text = buddy.username;
         }
     }
@@ -505,6 +513,9 @@
     [[[EaseMob sharedInstance] chatManager] asyncFetchBuddyListWithCompletion:^(NSArray *buddyList, EMError *error) {
         [weakSelf.slimeView endRefresh];
     } onQueue:nil];
+    //更新本地库
+    //更新好友列表
+//    [self initFriendUser];
 }
 
 #pragma mark - BaseTableCellDelegate

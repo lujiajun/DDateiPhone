@@ -50,7 +50,7 @@
 
 - (void)setImage:(UIImage *)image
 {
-    _image = image;
+    _imageV = image;
     _imageView.image = image;
 }
 

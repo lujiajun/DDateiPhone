@@ -20,8 +20,9 @@
 #import "GroupSubjectChangingViewController.h"
 #import "DDBDynamoDB.h"
 #import "ChatRoom4DB.h"
-#import "EGOImageView.h"
 #import "Constants.h"
+#import "UIImageView+WebCache.h"
+#import "DDUserDAO.h"
 
 #pragma mark - ChatGroupDetailViewController
 
@@ -120,11 +121,11 @@
 
 -(void) getDDusers{
     //查询数据库
-    DDBDynamoDB *dynamo=[DDBDynamoDB alloc];
-    _uuser1=[dynamo getTableUser:_chatroom4.UID1];
-    _uuser2=[dynamo getTableUser:_chatroom4.UID2];
-    _uuser3=[dynamo getTableUser:_chatroom4.UID3];
-    _uuser4=[dynamo getTableUser:_chatroom4.UID4];
+    DDUserDAO *dao=[[DDUserDAO alloc] init];
+    _uuser1=[dao selectDDuserByUid:_chatroom4.UID1];
+    _uuser2=[dao selectDDuserByUid:_chatroom4.UID2];
+    _uuser3=[dao selectDDuserByUid:_chatroom4.UID3];
+    _uuser4=[dao selectDDuserByUid:_chatroom4.UID4];
     
     
 }
@@ -133,7 +134,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+//    
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
@@ -270,27 +271,27 @@
     }
     
     if (indexPath.row == 0) {
-        [self showUser1:cell.contentView];
+        [self showUser1:cell.contentView uuser1:_uuser1];
 //        cell.selectionStyle = UITableViewCellSelectionStyleNone;
 //        [cell.contentView addSubview:self.scrollView];
     }
     else if (indexPath.row == 1)
     {
-      [self showUser1:cell.contentView];
+      [self showUser1:cell.contentView uuser1:_uuser2];
 //        cell.textLabel.text = NSLocalizedString(@"group.id", @"group ID");
 //        cell.accessoryType = UITableViewCellAccessoryNone;
 //        cell.detailTextLabel.text = _chatGroup.groupId;
     }
     else if (indexPath.row == 2)
     {
-     [self showUser1:cell.contentView];
+     [self showUser1:cell.contentView uuser1:_uuser3] ;
         //        cell.textLabel.text = NSLocalizedString(@"group.occupantCount", @"members count");
 //        cell.accessoryType = UITableViewCellAccessoryNone;
 //        cell.detailTextLabel.text = [NSString stringWithFormat:@"%i / %i", (int)[_chatGroup.occupants count], (int)_chatGroup.groupSetting.groupMaxUsersCount];
     }
     else if (indexPath.row == 3)
     {
-       [self showUser1:cell.contentView];
+       [self showUser1:cell.contentView uuser1:_uuser4];
     }
     else if (indexPath.row == 4)
     {
@@ -308,12 +309,13 @@
     
     return cell;
 }
--(void)showUser1:(UIView *) bakview{
+-(void)showUser1:(UIView *) bakview uuser1:(DDUser *) user{
     
-    EGOImageView *headview = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
-    if(_uuser1!=nil && _uuser1.picPath !=nil){
-        headview.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:_uuser1.picPath]];
-    }
+    UIImageView *headview=[[UIImageView alloc]initWithFrame:CGRectMake(bakview.frame.origin.x+5, bakview.frame.origin.y+10, 80, 80)];
+    [headview sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
+          placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+
+    
     headview.frame=CGRectMake(bakview.frame.origin.x+5, bakview.frame.origin.y+10, 80, 80);
     headview.layer.masksToBounds =YES;
     headview.layer.cornerRadius =40;
@@ -321,14 +323,14 @@
     
     //姓名
     UILabel *nickname=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, headview.frame.origin.y+10, 50, 12)];
-    nickname.text=_uuser1.nickName;
+    nickname.text=user.nickName;
     nickname.textAlignment=NSTextAlignmentLeft;
     nickname.font=[UIFont fontWithName:@"Helvetica" size:12];
     [bakview addSubview:nickname];
     //性别
     BOOL *isboy=NO;
-    if(_uuser1!=nil){
-        if([_uuser1.gender isEqual:@"Male"] || [_uuser1.gender isEqual:@"男"]){
+    if(user!=nil){
+        if([user.gender isEqual:@"Male"] || [user.gender isEqual:@"男"]){
             isboy=YES;
         }
     }
@@ -343,7 +345,7 @@
     [bakview addSubview:isboyview];
     //学校
     UILabel *university=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, nickname.frame.origin.y+nickname.frame.size.height+2, 50, 12)];
-    university.text=_uuser1.university;
+    university.text=user.university;
     university.textAlignment=NSTextAlignmentLeft;
     university.font=[UIFont fontWithName:@"Helvetica" size:12];
     [bakview addSubview:university];
@@ -354,7 +356,7 @@
     [bakview addSubview:schoolview];
     //年级
     UILabel *gender=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, university.frame.origin.y+university.frame.size.height+2, 50, 12)];
-    gender.text=_uuser1.grade;
+    gender.text=user.grade;
     gender.textAlignment=NSTextAlignmentLeft;
     gender.font=[UIFont fontWithName:@"Helvetica" size:12];
     [bakview addSubview:gender];

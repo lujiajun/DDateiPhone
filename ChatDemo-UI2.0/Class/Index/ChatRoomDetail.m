@@ -20,12 +20,12 @@
 #import "ChatRoomDetail.h"
 #import "DDBDynamoDB.h"
 #import "LocalDbService.h"
-#import "EGOImageView.h"
 #import "ContactsViewController.h"
 #import "Contact4GroupAddViewController.h"
 #import "ContactSelectionViewController.h";
 #import "IndexViewController.h"
 #import "ChatRoom2DAO.h"
+#import "UIImageView+EMWebCache.h"
 
 @interface ChatRoomDetail ()
 
@@ -113,12 +113,10 @@
 }
 
 -(void)showUser1:(UIImageView *) bakview{
-
-    EGOImageView *headview = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
-    if(_uuser1!=nil && _uuser1.picPath !=nil){
-        headview.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:_uuser1.picPath]];
-    }
-    headview.frame=CGRectMake(50, 10, 80, 80);
+    
+    UIImageView *headview=[[UIImageView alloc]initWithFrame:CGRectMake(50, 10, 80, 80)];
+    [headview sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:_uuser1.picPath]]
+                placeholderImage:[UIImage imageNamed:@"Logo_new"]];
     headview.layer.masksToBounds =YES;
     headview.layer.cornerRadius =40;
     [bakview addSubview:headview];
