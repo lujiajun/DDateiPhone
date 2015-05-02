@@ -30,6 +30,7 @@
 #import "ChatRoom2DAO.h"
 #import "DDUserDAO.h"
 #import "SRRefreshView.h"
+#import "HomePageListCell.h"
 
 
 @interface IndexViewController ()<SRRefreshDelegate>
@@ -109,112 +110,43 @@ static DDUser *uuser;
     return 0;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *cellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
-    
-    if (indexPath.section == 0) {
-        for (NSUInteger i = 0; i < self.chatroom2Dao.chatroom2s.count; i++) {
-            if (indexPath.row == i) {
-                CHATROOM2 *root=[[self.chatroom2Dao.chatroom2s objectAtIndex:i] copy];
-            
-                
-                EGOImageView *bakview = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
-                if(root!=nil && root.PicturePath !=nil){
-                    bakview.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:root.PicturePath]];
-                }
-                bakview.frame = CGRectMake(5, 5, cell.frame.size.width-10, 150);
-                bakview.layer.masksToBounds =YES;
-                bakview.layer.cornerRadius =5;
-                [cell.contentView addSubview:bakview];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	static NSString *cellIdentifier = @"HomePageListCell";
+	HomePageListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+	if (cell == nil) {
+		cell = [[HomePageListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+	}
 
-                //渐变
-                UIImage *background=[UIImage imageNamed:@"jianbian"];
-                UIImageView *bakgroundview=[[UIImageView alloc] initWithImage:background];
-                bakgroundview.frame=CGRectMake(5, 5, cell.frame.size.width-10, 150);
-                bakgroundview.layer.masksToBounds =YES;
-                bakgroundview.layer.cornerRadius =5;
-                [cell.contentView addSubview:bakgroundview];
-                //查询用户
-                
-                DDUser *uuser1= [self.userDao selectDDuserByUid:root.UID1];
-                //显示用户1
-                EGOImageView *user1 = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
-                if(uuser1!=nil && uuser1.picPath !=nil){
-                    user1.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:uuser1.picPath]];
-                }
-                user1.frame=CGRectMake(10, bakview.frame.origin.y+5, 50, 50);
-                user1.layer.masksToBounds =YES;
-                user1.layer.cornerRadius =25;
-                [bakview addSubview:user1];
-                //显示用户2
-          
-                DDUser *uuser2= [self.userDao selectDDuserByUid:root.UID2];;
-                //显示用户1
-               
-                EGOImageView *user2 = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
-                if(uuser2!=nil && uuser2.picPath !=nil){
-                    user2.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:uuser2.picPath]];
-                }
-                user2.frame=CGRectMake(bakview.frame.size.width-60, bakview.frame.origin.y+5, 50, 50);
-                user2.layer.masksToBounds =YES;
-                user2.layer.cornerRadius =25;
-                [bakview addSubview:user2];
-                
-                //性别
-				BOOL isboy = NO;
-				if (user1 != nil) {
-					if ([uuser1.gender isEqualToString:@"Male"] || [uuser1.gender isEqualToString:@"男"]) {
-						isboy = YES;
-					}
-				}
-                UIImage *isboyimg;
-                if(isboy){
-                    isboyimg=[UIImage imageNamed:@"sexboy"];
-                }else{
-                    isboyimg=[UIImage imageNamed:@"sexgirl"];
-                }
-                UIImageView *isboyview=[[UIImageView alloc] initWithImage:isboyimg];
-                isboyview.frame=CGRectMake(bakview.frame.size.width-40, bakview.frame.origin.y+80, 20, 20);
-                [bakview addSubview:isboyview];
-                //点击数
-                UIImage *clicknumber2=[UIImage imageNamed:@"clicknum2"];
-                
-                UIImageView *clicknumber2view=[[UIImageView alloc] initWithImage:clicknumber2];
-                clicknumber2view.frame=CGRectMake(bakview.frame.size.width-60, bakview.frame.origin.y+110, 56, 25);
-                [bakview addSubview:clicknumber2view];
-                
-                UIImage *clicknumber1=[UIImage imageNamed:@"clicknum1"];
-                UIImageView *clicknumber1view=[[UIImageView alloc] initWithImage:clicknumber1];
-                clicknumber1view.frame=CGRectMake(5, 5, 12, 12);
-                [clicknumber2view addSubview:clicknumber1view];
-                
-                UILabel *click=[[UILabel alloc]initWithFrame:CGRectMake(19, 2, 30, 20)];
-                click.text=root.ClickNum;
-                click.textAlignment=NSTextAlignmentCenter;
-                click.font=[UIFont fontWithName:@"Helvetica" size:11];
-                click.textColor=[UIColor whiteColor];
-                [clicknumber2view addSubview:click];
-                
-                //添加宣言
-                UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(0, bakview.frame.origin.y+110, 100, 30)];
-                mylable.text=root.Motto;
-                mylable.textAlignment=NSTextAlignmentCenter;
-                mylable.font=[UIFont fontWithName:@"Helvetica" size:14];
-                mylable.textColor=[UIColor whiteColor];
-                [bakview addSubview:mylable];
-                
-            }
-        }
-        
-        
-    }
-    
-    return cell;
+	CHATROOM2 *chatRoom2 = [self.chatroom2Dao.chatroom2s objectAtIndex:indexPath.row];
+
+	if (chatRoom2 != nil && chatRoom2.PicturePath != nil) {
+		cell.bakview.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:chatRoom2.PicturePath]];
+	}
+
+	//查询用户1
+	DDUser *uuser1 = [self.userDao selectDDuserByUid:chatRoom2.UID1];
+	if (uuser1 != nil && uuser1.picPath != nil) {
+		cell.user1Avatar.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:uuser1.picPath]];
+	}
+
+	//查询用户2
+	DDUser *uuser2 = [self.userDao selectDDuserByUid:chatRoom2.UID2];
+	if (uuser2 != nil && uuser2.picPath != nil) {
+		cell.user2Avatar.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:uuser2.picPath]];
+	}
+
+	//性别
+	BOOL isboy = [uuser1.gender isEqualToString:@"Male"] || [uuser1.gender isEqualToString:@"男"];
+	UIImage *genderImage = isboy ? [UIImage imageNamed:@"sexboy"] : [UIImage imageNamed:@"sexgirl"];
+    cell.genderView.image = genderImage;
+
+	//点击数
+	cell.clicknumber.text = chatRoom2.ClickNum;
+
+	//宣言
+	cell.motto.text = chatRoom2.Motto;
+
+	return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

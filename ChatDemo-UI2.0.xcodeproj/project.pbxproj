@@ -10,6 +10,7 @@
 		180E1A441AEF2C5A007EC1C3 /* MainChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */; };
 		1873D80D1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */; };
 		1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */; };
+		18F7F4E31AF4F3A30085EEB8 /* HomePageListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F7F4E21AF4F3A30085EEB8 /* HomePageListCell.m */; };
 		18F9B56F1AF2645B00669C49 /* BaseDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F9B56E1AF2645B00669C49 /* BaseDAO.m */; };
 		18F9B5721AF2717C00669C49 /* DDUserDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F9B5711AF2717C00669C49 /* DDUserDAO.m */; };
 		18F9B5751AF27F7800669C49 /* ChatRoom2DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F9B5741AF27F7800669C49 /* ChatRoom2DAO.m */; };
@@ -100,7 +101,7 @@
 		8A7DBEF71AECCAE300D7941F /* files.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEEF1AECCAE300D7941F /* files.png */; };
 		8A7DBEF81AECCAE300D7941F /* nocheck.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEF01AECCAE300D7941F /* nocheck.png */; };
 		8A7DBEF91AECCAE300D7941F /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEF11AECCAE300D7941F /* setting.png */; };
-		8A7DBEFA1AECCAE300D7941F /* sexbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEF21AECCAE300D7941F /* sexbox.png */; };
+		8A7DBEFA1AECCAE300D7941F /* sexboy.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEF21AECCAE300D7941F /* sexboy.png */; };
 		8A7DBEFB1AECCAE300D7941F /* sexgirl.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEF31AECCAE300D7941F /* sexgirl.png */; };
 		8A814A2D1AEE7B7000B26BA4 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A814A211AEE7B7000B26BA4 /* EGOCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A814A2E1AEE7B7000B26BA4 /* EGOImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A814A241AEE7B7000B26BA4 /* EGOImageButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -428,6 +429,8 @@
 		180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainChatListViewController.m; sourceTree = "<group>"; };
 		1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libALBB_OSS_IOS_SDK.a; sourceTree = "<group>"; };
 		1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
+		18F7F4E11AF4F3A30085EEB8 /* HomePageListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageListCell.h; sourceTree = "<group>"; };
+		18F7F4E21AF4F3A30085EEB8 /* HomePageListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageListCell.m; sourceTree = "<group>"; };
 		18F9B56D1AF2645B00669C49 /* BaseDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseDAO.h; path = Dao/BaseDAO.h; sourceTree = "<group>"; };
 		18F9B56E1AF2645B00669C49 /* BaseDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseDAO.m; path = Dao/BaseDAO.m; sourceTree = "<group>"; };
 		18F9B5701AF2717C00669C49 /* DDUserDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDUserDAO.h; path = Dao/DDUserDAO.h; sourceTree = "<group>"; };
@@ -573,7 +576,7 @@
 		8A7DBEEF1AECCAE300D7941F /* files.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = files.png; path = dd/files.png; sourceTree = "<group>"; };
 		8A7DBEF01AECCAE300D7941F /* nocheck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nocheck.png; path = dd/nocheck.png; sourceTree = "<group>"; };
 		8A7DBEF11AECCAE300D7941F /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setting.png; path = dd/setting.png; sourceTree = "<group>"; };
-		8A7DBEF21AECCAE300D7941F /* sexbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sexbox.png; path = dd/sexbox.png; sourceTree = "<group>"; };
+		8A7DBEF21AECCAE300D7941F /* sexboy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sexboy.png; path = dd/sexboy.png; sourceTree = "<group>"; };
 		8A7DBEF31AECCAE300D7941F /* sexgirl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sexgirl.png; path = dd/sexgirl.png; sourceTree = "<group>"; };
 		8A814A201AEE7B7000B26BA4 /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOCache.h; sourceTree = "<group>"; };
 		8A814A211AEE7B7000B26BA4 /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOCache.m; sourceTree = "<group>"; };
@@ -1269,6 +1272,8 @@
 				8A6C0E131AED3459009D5208 /* ChatRoomDetail.m */,
 				8AA68D241AF1FFA7007924AD /* Contact4GroupAddViewController.h */,
 				8AA68D261AF20006007924AD /* Contact4GroupAddViewController.m */,
+				18F7F4E11AF4F3A30085EEB8 /* HomePageListCell.h */,
+				18F7F4E21AF4F3A30085EEB8 /* HomePageListCell.m */,
 			);
 			name = Index;
 			sourceTree = "<group>";
@@ -1337,7 +1342,7 @@
 				8A7DBEEF1AECCAE300D7941F /* files.png */,
 				8A7DBEF01AECCAE300D7941F /* nocheck.png */,
 				8A7DBEF11AECCAE300D7941F /* setting.png */,
-				8A7DBEF21AECCAE300D7941F /* sexbox.png */,
+				8A7DBEF21AECCAE300D7941F /* sexboy.png */,
 				8A7DBEF31AECCAE300D7941F /* sexgirl.png */,
 				8A46EDE61AEA9DFA0062F518 /* getCode.png */,
 				8A4020F41AE3597900806014 /* 查看两人聊天室信息.png */,
@@ -2640,7 +2645,7 @@
 				8A4021191AE3597900806014 /* indexall.png in Resources */,
 				EBD2AB031A7CDAC000D16528 /* 29.png in Resources */,
 				EBD2AB2F1A7CDAC000D16528 /* VoiceSearchFeedback016.png in Resources */,
-				8A7DBEFA1AECCAE300D7941F /* sexbox.png in Resources */,
+				8A7DBEFA1AECCAE300D7941F /* sexboy.png in Resources */,
 				EBD2AB061A7CDAC000D16528 /* 80.png in Resources */,
 				8A7DBEF91AECCAE300D7941F /* setting.png in Resources */,
 				8A4021131AE3597900806014 /* 邀请和添加朋友弹出框.png in Resources */,
@@ -3000,6 +3005,7 @@
 				9003D9071939D8D000DC38A4 /* MessageReadManager.m in Sources */,
 				3C35365C19A22164003EF79E /* GroupSettingViewController.m in Sources */,
 				18F9B56F1AF2645B00669C49 /* BaseDAO.m in Sources */,
+				18F7F4E31AF4F3A30085EEB8 /* HomePageListCell.m in Sources */,
 				905325CF1932ED8B00F064D7 /* EMSearchBar.m in Sources */,
 				3C914D8619514BBD0002DAD3 /* CreateGroupViewController.m in Sources */,
 				9003D9181939D8D000DC38A4 /* RealtimeSearchUtil.m in Sources */,
