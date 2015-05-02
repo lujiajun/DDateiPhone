@@ -90,6 +90,7 @@
 		8A46EDE71AEA9DFA0062F518 /* getCode.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDE61AEA9DFA0062F518 /* getCode.png */; };
 		8A4BD0B31AE20F2900FFDFF1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90911122192EEBB8008A48AA /* AppDelegate.m */; };
 		8A6C0E161AED4352009D5208 /* infoline.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A6C0E151AED4352009D5208 /* infoline.png */; };
+		8A712CAF1AF550D100D465AC /* ChatRoom4DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A712CAE1AF550D100D465AC /* ChatRoom4DAO.m */; };
 		8A7788661AF10274005F8C5E /* InviteFriendByDoubleIdController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7788651AF10274005F8C5E /* InviteFriendByDoubleIdController.m */; };
 		8A7DBEE31AECC48400D7941F /* DDPersonalUpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7DBEE21AECC48400D7941F /* DDPersonalUpdateController.m */; };
 		8A7DBEE81AECC6CD00D7941F /* login.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEE41AECC6CD00D7941F /* login.png */; };
@@ -559,6 +560,8 @@
 		8A46EDBE1AE9F3FC0062F518 /* PersonalSignController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalSignController.m; sourceTree = "<group>"; };
 		8A46EDE61AEA9DFA0062F518 /* getCode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = getCode.png; path = dd/getCode.png; sourceTree = "<group>"; };
 		8A6C0E151AED4352009D5208 /* infoline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = infoline.png; path = dd/infoline.png; sourceTree = "<group>"; };
+		8A712CAD1AF550B300D465AC /* ChatRoom4DAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoom4DAO.h; sourceTree = "<group>"; };
+		8A712CAE1AF550D100D465AC /* ChatRoom4DAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoom4DAO.m; sourceTree = "<group>"; };
 		8A7788641AF10247005F8C5E /* InviteFriendByDoubleIdController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteFriendByDoubleIdController.h; sourceTree = "<group>"; };
 		8A7788651AF10274005F8C5E /* InviteFriendByDoubleIdController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteFriendByDoubleIdController.m; sourceTree = "<group>"; };
 		8A7DBEE11AECC48400D7941F /* DDPersonalUpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPersonalUpdateController.h; sourceTree = "<group>"; };
@@ -1121,6 +1124,8 @@
 				8A038C3C1AF51A88007A05BE /* ChatRoom2DAO.m */,
 				8A038C3D1AF51A88007A05BE /* DDUserDAO.h */,
 				8A038C3E1AF51A88007A05BE /* DDUserDAO.m */,
+				8A712CAD1AF550B300D465AC /* ChatRoom4DAO.h */,
+				8A712CAE1AF550D100D465AC /* ChatRoom4DAO.m */,
 			);
 			name = Dao;
 			sourceTree = "<group>";
@@ -2838,6 +2843,7 @@
 				8AFE46631AED08B100B57368 /* DDHeadPicUpdate.m in Sources */,
 				8A4021521AE3A63E00806014 /* NickNameController.m in Sources */,
 				3C6BBA0619419EBD00A64684 /* EMRemarkImageView.m in Sources */,
+				8A712CAF1AF550D100D465AC /* ChatRoom4DAO.m in Sources */,
 				9003D8A21939D8D000DC38A4 /* EMChatLocationBubbleView.m in Sources */,
 				90A705FE1A8B63B200376154 /* MWPhotoBrowser.m in Sources */,
 				9003D8711939D8D000DC38A4 /* DXFaceView.m in Sources */,

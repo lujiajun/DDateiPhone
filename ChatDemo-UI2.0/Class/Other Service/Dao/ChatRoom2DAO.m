@@ -72,6 +72,7 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
 		AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
 		AWSDynamoDBScanExpression *scanExpression = [AWSDynamoDBScanExpression new];
 		scanExpression.limit = @20;
+
 		[[dynamoDBObjectMapper scan:[CHATROOM2 class]
 		                 expression:scanExpression]
 		 continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {

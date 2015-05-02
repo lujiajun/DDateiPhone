@@ -17,6 +17,7 @@
 #import "AWSDynamoDB/AWSDynamoDB.h"
 #import "BFExecutor.h"
 #import "IndexViewController.h"
+#import "ChatRoom4DAO.h"
 
 
 @implementation ChatRoom4DB
@@ -66,13 +67,37 @@
              NSLog(@"The request failed. Exception: [%@]", task.exception);
          }
          if (task.result) {
-             CHATROOM4 *user = task.result;
-             return  user;
+             CHATROOM4 *room4 = task.result;
+             return  room4;
              //Do something with the result.
          }
          return nil;
      }];
     return nil;
+}
+
+-(CHATROOM4 *)getChatroom4InsertLocal:(NSString*) uid{
+        AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+        
+        [[dynamoDBObjectMapper load:[CHATROOM4 class] hashKey:uid rangeKey:nil]
+         continueWithBlock:^id(BFTask *task) {
+             if (task.error) {
+                 NSLog(@"The request failed. Error: [%@]", task.error);
+             }
+             if (task.exception) {
+                 NSLog(@"The request failed. Exception: [%@]", task.exception);
+             }
+             if (task.result) {
+                 CHATROOM4 *room4 = task.result;
+                 ChatRoom4DAO *room4Dao=[[ChatRoom4DAO alloc] init];
+                 [room4Dao insertChatroom4:room4];
+                 return  room4;
+                 //Do something with the result.
+             }
+             return nil;
+         }];
+        return nil;
+  
 }
 
 

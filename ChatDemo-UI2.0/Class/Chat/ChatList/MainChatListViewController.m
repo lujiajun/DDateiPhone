@@ -16,6 +16,7 @@
 #import "EMSearchDisplayController.h"
 #import "ConvertToCommonEmoticonsHelper.h"
 #import "ChatListViewController.h"
+#import "ChatRoom4DB.h"
 
 @interface MainChatListViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
 
@@ -25,6 +26,7 @@
 @property (nonatomic, strong) EMSearchBar *searchBar;
 @property (nonatomic, strong) SRRefreshView *slimeView;
 @property (nonatomic, strong) UIView *networkStateView;
+@property(nonatomic,strong)ChatRoom4DB  *chatRoomDBDao;
 
 @property (strong, nonatomic) EMSearchDisplayController *searchController;
 
@@ -50,6 +52,25 @@
 	[self networkStateView];
 
 	[self searchController];
+    //初始化聊天室信息到本地数据库
+    if(_chatRoomDBDao==nil){
+        _chatRoomDBDao=[ChatRoom4DB alloc];
+    }
+    [self initLocalRoom4];
+    
+}
+
+-(void) initLocalRoom4{
+    [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion:^(NSArray *groups, EMError *error) {
+        if (!error) {
+            for (EMGroup  *group in groups) {
+                
+                [[self chatRoomDBDao] getChatroom4InsertLocal:group.groupId];
+            }
+          
+        }
+    } onQueue:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -24,29 +24,6 @@
 - (void)insertTableRow:(DDUser *)tableRow {
     AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
     [dynamoDBObjectMapper save: tableRow];
-//    
-//    [[dynamoDBObjectMapper save:tableRow]
-//     continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
-//         if (!task.error) {
-//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Succeeded"
-//                                                             message:@"Successfully inserted the data into the table."
-//                                                            delegate:nil
-//                                                   cancelButtonTitle:@"OK"
-//                                                   otherButtonTitles:nil];
-//             
-//         } else {
-//             NSLog(@"Error: [%@]", task.error);
-//             
-//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-//                                                             message:@"Failed to insert the data into the table."
-//                                                            delegate:nil
-//                                                   cancelButtonTitle:@"OK"
-//                                                   otherButtonTitles:nil];
-//             [alert show];
-//         }
-//         
-//         return nil;
-//     }];
 }
 
 -(void) updateTable:(DDUser *)tableRow{
