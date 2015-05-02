@@ -74,9 +74,10 @@
 @property(strong,nonatomic) UILabel *lab;
 @property (nonatomic) BOOL isPlayingAudio;
 @property(strong,nonatomic) NSTimer *countDownTimer;
-@property(nonatomic) CHATROOM4 *chatroom4;
-@property(nonatomic) NSString *friendname;
-@property(nonatomic) DDUser *friend;
+@property(strong,nonatomic) CHATROOM4 *chatroom4;
+@property(strong,nonatomic) NSString *friendname;
+@property(strong,nonatomic) DDUser *friend;
+@property(strong,nonatomic) DDUserDAO *userDao;
 
 @end
 
@@ -153,6 +154,8 @@ NSDateFormatter *dateformatter;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _userDao=[[DDUserDAO alloc] init];
+    
     dateformatter = [[NSDateFormatter alloc]init] ;//定义NSDateFormatter用来显示格式
     [dateformatter setDateFormat:@"hh mm ss"];//设定格式
     
@@ -215,8 +218,8 @@ NSDateFormatter *dateformatter;
     
     UIImageView *head=[[UIImageView alloc]initWithFrame:CGRectMake(5,bak.frame.origin.y+5, 30, 30)] ;
     if(_friend==nil){
-        DDUserDAO *dao=[[DDUserDAO alloc] init];
-        _friend= [dao selectDDuserByUid:_friendname];
+        
+        _friend= [_userDao selectDDuserByUid:_friendname];
     }
     
     if(_friend!=nil){
@@ -504,6 +507,9 @@ NSDateFormatter *dateformatter;
         }
         else{
             MessageModel *model = (MessageModel *)obj;
+            //查询用户头像
+            DDUser *user=[[self userDao] selectDDuserByUid:model.username];
+            model.headImageURL=[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]];
             NSString *cellIdentifier = [EMChatViewCell cellIdentifierForMessageModel:model];
             EMChatViewCell *cell = (EMChatViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (cell == nil) {
@@ -511,6 +517,7 @@ NSDateFormatter *dateformatter;
                 cell.backgroundColor = [UIColor clearColor];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
+            
             cell.messageModel = model;
             
             return cell;
