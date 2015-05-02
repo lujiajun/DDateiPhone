@@ -10,10 +10,6 @@
 		180E1A441AEF2C5A007EC1C3 /* MainChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */; };
 		1873D80D1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */; };
 		1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */; };
-		18F7F4E31AF4F3A30085EEB8 /* HomePageListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F7F4E21AF4F3A30085EEB8 /* HomePageListCell.m */; };
-		18F9B56F1AF2645B00669C49 /* BaseDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F9B56E1AF2645B00669C49 /* BaseDAO.m */; };
-		18F9B5721AF2717C00669C49 /* DDUserDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F9B5711AF2717C00669C49 /* DDUserDAO.m */; };
-		18F9B5751AF27F7800669C49 /* ChatRoom2DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F9B5741AF27F7800669C49 /* ChatRoom2DAO.m */; };
 		283403091A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 283403081A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m */; };
 		333DE476F1C23907F6749D9F /* libPods-ChatDemo-UI2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A7D49E66EDE566E813A0B2 /* libPods-ChatDemo-UI2.0.a */; };
 		3C06AAFF194050A00076FF0B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C06AAFE194050A00076FF0B /* CoreLocation.framework */; };
@@ -45,10 +41,22 @@
 		3CBB931C1A14B227007FED9E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBB931B1A14B227007FED9E /* libsqlite3.dylib */; };
 		3CBF90C019302F5000AD68AE /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBF90BF19302F5000AD68AE /* BaseViewController.m */; };
 		3CE6293319A1B13700829632 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE6293219A1B13700829632 /* CoreText.framework */; };
-		8A4020AD1AE34F2D00806014 /* DDBDynamoDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4020AC1AE34F2D00806014 /* DDBDynamoDB.m */; };
-		8A4020B01AE3571600806014 /* IndexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4020AF1AE3571600806014 /* IndexViewController.m */; };
-		8A4020B21AE3572C00806014 /* AliCloudController.h in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020B11AE3572C00806014 /* AliCloudController.h */; };
-		8A4020B41AE3574800806014 /* AliCloudController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4020B31AE3574800806014 /* AliCloudController.m */; };
+		8A038C2F1AF51A54007A05BE /* ChatRoom4DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C1C1AF51A54007A05BE /* ChatRoom4DB.m */; };
+		8A038C301AF51A54007A05BE /* ChatRoomDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C1E1AF51A54007A05BE /* ChatRoomDetail.m */; };
+		8A038C311AF51A54007A05BE /* Commbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C201AF51A54007A05BE /* Commbox.m */; };
+		8A038C321AF51A54007A05BE /* Contact4GroupAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C221AF51A54007A05BE /* Contact4GroupAddViewController.m */; };
+		8A038C331AF51A54007A05BE /* DDLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C241AF51A54007A05BE /* DDLoginController.m */; };
+		8A038C341AF51A54007A05BE /* DDRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C261AF51A54007A05BE /* DDRegisterController.m */; };
+		8A038C351AF51A54007A05BE /* DDRegisterFinishController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C281AF51A54007A05BE /* DDRegisterFinishController.m */; };
+		8A038C361AF51A54007A05BE /* DDSchoolRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C2A1AF51A54007A05BE /* DDSchoolRegisterController.m */; };
+		8A038C371AF51A54007A05BE /* HomePageListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C2C1AF51A54007A05BE /* HomePageListCell.m */; };
+		8A038C381AF51A54007A05BE /* IndexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C2E1AF51A54007A05BE /* IndexViewController.m */; };
+		8A038C3F1AF51A88007A05BE /* BaseDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C3A1AF51A88007A05BE /* BaseDAO.m */; };
+		8A038C401AF51A88007A05BE /* ChatRoom2DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C3C1AF51A88007A05BE /* ChatRoom2DAO.m */; };
+		8A038C411AF51A88007A05BE /* DDUserDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C3E1AF51A88007A05BE /* DDUserDAO.m */; };
+		8A038C481AF51A95007A05BE /* AliCloudController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C431AF51A95007A05BE /* AliCloudController.m */; };
+		8A038C491AF51A95007A05BE /* DDBDynamoDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C451AF51A95007A05BE /* DDBDynamoDB.m */; };
+		8A038C4A1AF51A95007A05BE /* LocalDbService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C471AF51A95007A05BE /* LocalDbService.m */; };
 		8A4020C51AE357DD00806014 /* NewSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4020C41AE357DD00806014 /* NewSettingViewController.m */; };
 		8A40210F1AE3597900806014 /* 查看两人聊天室信息.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020F41AE3597900806014 /* 查看两人聊天室信息.png */; };
 		8A4021101AE3597900806014 /* 聊天—编组方式.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020F51AE3597900806014 /* 聊天—编组方式.png */; };
@@ -79,16 +87,9 @@
 		8A40212C1AE3956B00806014 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A40212B1AE3956B00806014 /* Constants.m */; };
 		8A4021521AE3A63E00806014 /* NickNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4021511AE3A63E00806014 /* NickNameController.m */; };
 		8A46EDBF1AE9F3FC0062F518 /* PersonalSignController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A46EDBE1AE9F3FC0062F518 /* PersonalSignController.m */; };
-		8A46EDE51AEA93F00062F518 /* DDRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A46EDE41AEA93F00062F518 /* DDRegisterController.m */; };
 		8A46EDE71AEA9DFA0062F518 /* getCode.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDE61AEA9DFA0062F518 /* getCode.png */; };
-		8A46EDEA1AEAA5CC0062F518 /* DDLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A46EDE91AEAA5CC0062F518 /* DDLoginController.m */; };
 		8A4BD0B31AE20F2900FFDFF1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90911122192EEBB8008A48AA /* AppDelegate.m */; };
-		8A4F270C1AEB36D60050D86E /* DDSchoolRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F270B1AEB36D60050D86E /* DDSchoolRegisterController.m */; };
-		8A4F270F1AEB53410050D86E /* Commbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F270E1AEB53410050D86E /* Commbox.m */; };
-		8A4F27121AEB5BDD0050D86E /* DDRegisterFinishController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4F27111AEB5BDD0050D86E /* DDRegisterFinishController.m */; };
-		8A6C0E141AED3459009D5208 /* ChatRoomDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6C0E131AED3459009D5208 /* ChatRoomDetail.m */; };
 		8A6C0E161AED4352009D5208 /* infoline.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A6C0E151AED4352009D5208 /* infoline.png */; };
-		8A7788631AEFD003005F8C5E /* LocalDbService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7788621AEFD003005F8C5E /* LocalDbService.m */; };
 		8A7788661AF10274005F8C5E /* InviteFriendByDoubleIdController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7788651AF10274005F8C5E /* InviteFriendByDoubleIdController.m */; };
 		8A7DBEE31AECC48400D7941F /* DDPersonalUpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7DBEE21AECC48400D7941F /* DDPersonalUpdateController.m */; };
 		8A7DBEE81AECC6CD00D7941F /* login.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEE41AECC6CD00D7941F /* login.png */; };
@@ -108,9 +109,6 @@
 		8A814A2F1AEE7B7000B26BA4 /* EGOImageLoadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A814A271AEE7B7000B26BA4 /* EGOImageLoadConnection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A814A301AEE7B7000B26BA4 /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A814A291AEE7B7000B26BA4 /* EGOImageLoader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8A814A311AEE7B7000B26BA4 /* EGOImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A814A2C1AEE7B7000B26BA4 /* EGOImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8AA68D251AF1FFA7007924AD /* Contact4GroupAddViewController.h in Resources */ = {isa = PBXBuildFile; fileRef = 8AA68D241AF1FFA7007924AD /* Contact4GroupAddViewController.h */; };
-		8AA68D271AF20006007924AD /* Contact4GroupAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA68D261AF20006007924AD /* Contact4GroupAddViewController.m */; };
-		8AA76F301AF2811000427730 /* ChatRoom4DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA76F2F1AF2811000427730 /* ChatRoom4DB.m */; };
 		8ADB384E1AE286BD00FCC6FC /* PersonalController.h in Resources */ = {isa = PBXBuildFile; fileRef = 8ADB384D1AE286BD00FCC6FC /* PersonalController.h */; };
 		8ADB38501AE286F000FCC6FC /* PersonalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB384F1AE286F000FCC6FC /* PersonalController.m */; };
 		8ADB388C1AE2A17100FCC6FC /* UsernickController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB388B1AE2A17100FCC6FC /* UsernickController.m */; };
@@ -429,14 +427,6 @@
 		180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainChatListViewController.m; sourceTree = "<group>"; };
 		1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libALBB_OSS_IOS_SDK.a; sourceTree = "<group>"; };
 		1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
-		18F7F4E11AF4F3A30085EEB8 /* HomePageListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageListCell.h; sourceTree = "<group>"; };
-		18F7F4E21AF4F3A30085EEB8 /* HomePageListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageListCell.m; sourceTree = "<group>"; };
-		18F9B56D1AF2645B00669C49 /* BaseDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseDAO.h; path = Dao/BaseDAO.h; sourceTree = "<group>"; };
-		18F9B56E1AF2645B00669C49 /* BaseDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseDAO.m; path = Dao/BaseDAO.m; sourceTree = "<group>"; };
-		18F9B5701AF2717C00669C49 /* DDUserDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDUserDAO.h; path = Dao/DDUserDAO.h; sourceTree = "<group>"; };
-		18F9B5711AF2717C00669C49 /* DDUserDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDUserDAO.m; path = Dao/DDUserDAO.m; sourceTree = "<group>"; };
-		18F9B5731AF27F7800669C49 /* ChatRoom2DAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatRoom2DAO.h; path = Dao/ChatRoom2DAO.h; sourceTree = "<group>"; };
-		18F9B5741AF27F7800669C49 /* ChatRoom2DAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatRoom2DAO.m; path = Dao/ChatRoom2DAO.m; sourceTree = "<group>"; };
 		283403071A9EBB8200B7DE9B /* GroupSubjectChangingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupSubjectChangingViewController.h; sourceTree = "<group>"; };
 		283403081A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupSubjectChangingViewController.m; sourceTree = "<group>"; };
 		3C06AAFE194050A00076FF0B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -495,12 +485,38 @@
 		3CBF90BE19302F5000AD68AE /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		3CBF90BF19302F5000AD68AE /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		3CE6293219A1B13700829632 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		8A4020AB1AE34F1200806014 /* DDBDynamoDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDBDynamoDB.h; sourceTree = "<group>"; };
-		8A4020AC1AE34F2D00806014 /* DDBDynamoDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDBDynamoDB.m; sourceTree = "<group>"; };
-		8A4020AE1AE356ED00806014 /* IndexViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndexViewController.h; sourceTree = "<group>"; };
-		8A4020AF1AE3571600806014 /* IndexViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndexViewController.m; sourceTree = "<group>"; };
-		8A4020B11AE3572C00806014 /* AliCloudController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliCloudController.h; sourceTree = "<group>"; };
-		8A4020B31AE3574800806014 /* AliCloudController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliCloudController.m; sourceTree = "<group>"; };
+		8A038C1B1AF51A54007A05BE /* ChatRoom4DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatRoom4DB.h; path = Index/ChatRoom4DB.h; sourceTree = "<group>"; };
+		8A038C1C1AF51A54007A05BE /* ChatRoom4DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatRoom4DB.m; path = Index/ChatRoom4DB.m; sourceTree = "<group>"; };
+		8A038C1D1AF51A54007A05BE /* ChatRoomDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatRoomDetail.h; path = Index/ChatRoomDetail.h; sourceTree = "<group>"; };
+		8A038C1E1AF51A54007A05BE /* ChatRoomDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatRoomDetail.m; path = Index/ChatRoomDetail.m; sourceTree = "<group>"; };
+		8A038C1F1AF51A54007A05BE /* Commbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Commbox.h; path = Index/Commbox.h; sourceTree = "<group>"; };
+		8A038C201AF51A54007A05BE /* Commbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Commbox.m; path = Index/Commbox.m; sourceTree = "<group>"; };
+		8A038C211AF51A54007A05BE /* Contact4GroupAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Contact4GroupAddViewController.h; path = Index/Contact4GroupAddViewController.h; sourceTree = "<group>"; };
+		8A038C221AF51A54007A05BE /* Contact4GroupAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Contact4GroupAddViewController.m; path = Index/Contact4GroupAddViewController.m; sourceTree = "<group>"; };
+		8A038C231AF51A54007A05BE /* DDLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLoginController.h; path = Index/DDLoginController.h; sourceTree = "<group>"; };
+		8A038C241AF51A54007A05BE /* DDLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDLoginController.m; path = Index/DDLoginController.m; sourceTree = "<group>"; };
+		8A038C251AF51A54007A05BE /* DDRegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDRegisterController.h; path = Index/DDRegisterController.h; sourceTree = "<group>"; };
+		8A038C261AF51A54007A05BE /* DDRegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDRegisterController.m; path = Index/DDRegisterController.m; sourceTree = "<group>"; };
+		8A038C271AF51A54007A05BE /* DDRegisterFinishController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDRegisterFinishController.h; path = Index/DDRegisterFinishController.h; sourceTree = "<group>"; };
+		8A038C281AF51A54007A05BE /* DDRegisterFinishController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDRegisterFinishController.m; path = Index/DDRegisterFinishController.m; sourceTree = "<group>"; };
+		8A038C291AF51A54007A05BE /* DDSchoolRegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDSchoolRegisterController.h; path = Index/DDSchoolRegisterController.h; sourceTree = "<group>"; };
+		8A038C2A1AF51A54007A05BE /* DDSchoolRegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDSchoolRegisterController.m; path = Index/DDSchoolRegisterController.m; sourceTree = "<group>"; };
+		8A038C2B1AF51A54007A05BE /* HomePageListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomePageListCell.h; path = Index/HomePageListCell.h; sourceTree = "<group>"; };
+		8A038C2C1AF51A54007A05BE /* HomePageListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomePageListCell.m; path = Index/HomePageListCell.m; sourceTree = "<group>"; };
+		8A038C2D1AF51A54007A05BE /* IndexViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IndexViewController.h; path = Index/IndexViewController.h; sourceTree = "<group>"; };
+		8A038C2E1AF51A54007A05BE /* IndexViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IndexViewController.m; path = Index/IndexViewController.m; sourceTree = "<group>"; };
+		8A038C391AF51A88007A05BE /* BaseDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseDAO.h; path = "Other Service/Dao/BaseDAO.h"; sourceTree = "<group>"; };
+		8A038C3A1AF51A88007A05BE /* BaseDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseDAO.m; path = "Other Service/Dao/BaseDAO.m"; sourceTree = "<group>"; };
+		8A038C3B1AF51A88007A05BE /* ChatRoom2DAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatRoom2DAO.h; path = "Other Service/Dao/ChatRoom2DAO.h"; sourceTree = "<group>"; };
+		8A038C3C1AF51A88007A05BE /* ChatRoom2DAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatRoom2DAO.m; path = "Other Service/Dao/ChatRoom2DAO.m"; sourceTree = "<group>"; };
+		8A038C3D1AF51A88007A05BE /* DDUserDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDUserDAO.h; path = "Other Service/Dao/DDUserDAO.h"; sourceTree = "<group>"; };
+		8A038C3E1AF51A88007A05BE /* DDUserDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDUserDAO.m; path = "Other Service/Dao/DDUserDAO.m"; sourceTree = "<group>"; };
+		8A038C421AF51A95007A05BE /* AliCloudController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AliCloudController.h; path = "Other Service/AliCloudController.h"; sourceTree = "<group>"; };
+		8A038C431AF51A95007A05BE /* AliCloudController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AliCloudController.m; path = "Other Service/AliCloudController.m"; sourceTree = "<group>"; };
+		8A038C441AF51A95007A05BE /* DDBDynamoDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDBDynamoDB.h; path = "Other Service/DDBDynamoDB.h"; sourceTree = "<group>"; };
+		8A038C451AF51A95007A05BE /* DDBDynamoDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDBDynamoDB.m; path = "Other Service/DDBDynamoDB.m"; sourceTree = "<group>"; };
+		8A038C461AF51A95007A05BE /* LocalDbService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalDbService.h; path = "Other Service/LocalDbService.h"; sourceTree = "<group>"; };
+		8A038C471AF51A95007A05BE /* LocalDbService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalDbService.m; path = "Other Service/LocalDbService.m"; sourceTree = "<group>"; };
 		8A4020B71AE3579F00806014 /* OSSArgs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSArgs.h; sourceTree = "<group>"; };
 		8A4020B81AE3579F00806014 /* OSSBucket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSBucket.h; sourceTree = "<group>"; };
 		8A4020B91AE3579F00806014 /* OSSClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSClient.h; sourceTree = "<group>"; };
@@ -546,22 +562,8 @@
 		8A4021511AE3A63E00806014 /* NickNameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NickNameController.m; sourceTree = "<group>"; };
 		8A46EDBD1AE9F3E30062F518 /* PersonalSignController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalSignController.h; sourceTree = "<group>"; };
 		8A46EDBE1AE9F3FC0062F518 /* PersonalSignController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalSignController.m; sourceTree = "<group>"; };
-		8A46EDE31AEA93D00062F518 /* DDRegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDRegisterController.h; sourceTree = "<group>"; };
-		8A46EDE41AEA93F00062F518 /* DDRegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDRegisterController.m; sourceTree = "<group>"; };
 		8A46EDE61AEA9DFA0062F518 /* getCode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = getCode.png; path = dd/getCode.png; sourceTree = "<group>"; };
-		8A46EDE81AEAA5AB0062F518 /* DDLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLoginController.h; sourceTree = "<group>"; };
-		8A46EDE91AEAA5CC0062F518 /* DDLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLoginController.m; sourceTree = "<group>"; };
-		8A4F270A1AEB36910050D86E /* DDSchoolRegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDSchoolRegisterController.h; sourceTree = "<group>"; };
-		8A4F270B1AEB36D60050D86E /* DDSchoolRegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDSchoolRegisterController.m; sourceTree = "<group>"; };
-		8A4F270D1AEB530E0050D86E /* Commbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Commbox.h; sourceTree = "<group>"; };
-		8A4F270E1AEB53410050D86E /* Commbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Commbox.m; sourceTree = "<group>"; };
-		8A4F27101AEB5B8E0050D86E /* DDRegisterFinishController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDRegisterFinishController.h; sourceTree = "<group>"; };
-		8A4F27111AEB5BDD0050D86E /* DDRegisterFinishController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDRegisterFinishController.m; sourceTree = "<group>"; };
-		8A6C0E121AED3350009D5208 /* ChatRoomDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomDetail.h; sourceTree = "<group>"; };
-		8A6C0E131AED3459009D5208 /* ChatRoomDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomDetail.m; sourceTree = "<group>"; };
 		8A6C0E151AED4352009D5208 /* infoline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = infoline.png; path = dd/infoline.png; sourceTree = "<group>"; };
-		8A7788611AEFCFE0005F8C5E /* LocalDbService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDbService.h; sourceTree = "<group>"; };
-		8A7788621AEFD003005F8C5E /* LocalDbService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDbService.m; sourceTree = "<group>"; };
 		8A7788641AF10247005F8C5E /* InviteFriendByDoubleIdController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteFriendByDoubleIdController.h; sourceTree = "<group>"; };
 		8A7788651AF10274005F8C5E /* InviteFriendByDoubleIdController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteFriendByDoubleIdController.m; sourceTree = "<group>"; };
 		8A7DBEE11AECC48400D7941F /* DDPersonalUpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPersonalUpdateController.h; sourceTree = "<group>"; };
@@ -588,10 +590,6 @@
 		8A814A291AEE7B7000B26BA4 /* EGOImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageLoader.m; sourceTree = "<group>"; };
 		8A814A2B1AEE7B7000B26BA4 /* EGOImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageView.h; sourceTree = "<group>"; };
 		8A814A2C1AEE7B7000B26BA4 /* EGOImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageView.m; sourceTree = "<group>"; };
-		8AA68D241AF1FFA7007924AD /* Contact4GroupAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact4GroupAddViewController.h; sourceTree = "<group>"; };
-		8AA68D261AF20006007924AD /* Contact4GroupAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact4GroupAddViewController.m; sourceTree = "<group>"; };
-		8AA76F2E1AF27FC200427730 /* ChatRoom4DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoom4DB.h; sourceTree = "<group>"; };
-		8AA76F2F1AF2811000427730 /* ChatRoom4DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoom4DB.m; sourceTree = "<group>"; };
 		8ADB384D1AE286BD00FCC6FC /* PersonalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalController.h; sourceTree = "<group>"; };
 		8ADB384F1AE286F000FCC6FC /* PersonalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalController.m; sourceTree = "<group>"; };
 		8ADB388A1AE2A15900FCC6FC /* UsernickController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsernickController.h; sourceTree = "<group>"; };
@@ -1132,12 +1130,12 @@
 		18F9B56C1AF2639800669C49 /* Dao */ = {
 			isa = PBXGroup;
 			children = (
-				18F9B56D1AF2645B00669C49 /* BaseDAO.h */,
-				18F9B56E1AF2645B00669C49 /* BaseDAO.m */,
-				18F9B5701AF2717C00669C49 /* DDUserDAO.h */,
-				18F9B5711AF2717C00669C49 /* DDUserDAO.m */,
-				18F9B5731AF27F7800669C49 /* ChatRoom2DAO.h */,
-				18F9B5741AF27F7800669C49 /* ChatRoom2DAO.m */,
+				8A038C391AF51A88007A05BE /* BaseDAO.h */,
+				8A038C3A1AF51A88007A05BE /* BaseDAO.m */,
+				8A038C3B1AF51A88007A05BE /* ChatRoom2DAO.h */,
+				8A038C3C1AF51A88007A05BE /* ChatRoom2DAO.m */,
+				8A038C3D1AF51A88007A05BE /* DDUserDAO.h */,
+				8A038C3E1AF51A88007A05BE /* DDUserDAO.m */,
 			);
 			name = Dao;
 			sourceTree = "<group>";
@@ -1237,43 +1235,43 @@
 			path = "OSS-Universal";
 			sourceTree = "<group>";
 		};
-		8A4BD07A1AE1F8EB00FFDFF1 /* otherservice */ = {
+		8A4BD07A1AE1F8EB00FFDFF1 /* Other Service */ = {
 			isa = PBXGroup;
 			children = (
+				8A038C421AF51A95007A05BE /* AliCloudController.h */,
+				8A038C431AF51A95007A05BE /* AliCloudController.m */,
+				8A038C441AF51A95007A05BE /* DDBDynamoDB.h */,
+				8A038C451AF51A95007A05BE /* DDBDynamoDB.m */,
+				8A038C461AF51A95007A05BE /* LocalDbService.h */,
+				8A038C471AF51A95007A05BE /* LocalDbService.m */,
 				18F9B56C1AF2639800669C49 /* Dao */,
-				8A4020AC1AE34F2D00806014 /* DDBDynamoDB.m */,
-				8A4020AB1AE34F1200806014 /* DDBDynamoDB.h */,
-				8A4020B11AE3572C00806014 /* AliCloudController.h */,
-				8A4020B31AE3574800806014 /* AliCloudController.m */,
-				8A7788611AEFCFE0005F8C5E /* LocalDbService.h */,
-				8A7788621AEFD003005F8C5E /* LocalDbService.m */,
-				8AA76F2E1AF27FC200427730 /* ChatRoom4DB.h */,
-				8AA76F2F1AF2811000427730 /* ChatRoom4DB.m */,
 			);
-			name = otherservice;
+			name = "Other Service";
 			sourceTree = "<group>";
 		};
 		8A4BD07E1AE1FB5F00FFDFF1 /* Index */ = {
 			isa = PBXGroup;
 			children = (
-				8A4020AE1AE356ED00806014 /* IndexViewController.h */,
-				8A4020AF1AE3571600806014 /* IndexViewController.m */,
-				8A46EDE31AEA93D00062F518 /* DDRegisterController.h */,
-				8A46EDE41AEA93F00062F518 /* DDRegisterController.m */,
-				8A46EDE81AEAA5AB0062F518 /* DDLoginController.h */,
-				8A46EDE91AEAA5CC0062F518 /* DDLoginController.m */,
-				8A4F270A1AEB36910050D86E /* DDSchoolRegisterController.h */,
-				8A4F270B1AEB36D60050D86E /* DDSchoolRegisterController.m */,
-				8A4F270D1AEB530E0050D86E /* Commbox.h */,
-				8A4F270E1AEB53410050D86E /* Commbox.m */,
-				8A4F27101AEB5B8E0050D86E /* DDRegisterFinishController.h */,
-				8A4F27111AEB5BDD0050D86E /* DDRegisterFinishController.m */,
-				8A6C0E121AED3350009D5208 /* ChatRoomDetail.h */,
-				8A6C0E131AED3459009D5208 /* ChatRoomDetail.m */,
-				8AA68D241AF1FFA7007924AD /* Contact4GroupAddViewController.h */,
-				8AA68D261AF20006007924AD /* Contact4GroupAddViewController.m */,
-				18F7F4E11AF4F3A30085EEB8 /* HomePageListCell.h */,
-				18F7F4E21AF4F3A30085EEB8 /* HomePageListCell.m */,
+				8A038C1B1AF51A54007A05BE /* ChatRoom4DB.h */,
+				8A038C1C1AF51A54007A05BE /* ChatRoom4DB.m */,
+				8A038C1D1AF51A54007A05BE /* ChatRoomDetail.h */,
+				8A038C1E1AF51A54007A05BE /* ChatRoomDetail.m */,
+				8A038C1F1AF51A54007A05BE /* Commbox.h */,
+				8A038C201AF51A54007A05BE /* Commbox.m */,
+				8A038C211AF51A54007A05BE /* Contact4GroupAddViewController.h */,
+				8A038C221AF51A54007A05BE /* Contact4GroupAddViewController.m */,
+				8A038C231AF51A54007A05BE /* DDLoginController.h */,
+				8A038C241AF51A54007A05BE /* DDLoginController.m */,
+				8A038C251AF51A54007A05BE /* DDRegisterController.h */,
+				8A038C261AF51A54007A05BE /* DDRegisterController.m */,
+				8A038C271AF51A54007A05BE /* DDRegisterFinishController.h */,
+				8A038C281AF51A54007A05BE /* DDRegisterFinishController.m */,
+				8A038C291AF51A54007A05BE /* DDSchoolRegisterController.h */,
+				8A038C2A1AF51A54007A05BE /* DDSchoolRegisterController.m */,
+				8A038C2B1AF51A54007A05BE /* HomePageListCell.h */,
+				8A038C2C1AF51A54007A05BE /* HomePageListCell.m */,
+				8A038C2D1AF51A54007A05BE /* IndexViewController.h */,
+				8A038C2E1AF51A54007A05BE /* IndexViewController.m */,
 			);
 			name = Index;
 			sourceTree = "<group>";
@@ -1706,7 +1704,7 @@
 			isa = PBXGroup;
 			children = (
 				8A4BD07E1AE1FB5F00FFDFF1 /* Index */,
-				8A4BD07A1AE1F8EB00FFDFF1 /* otherservice */,
+				8A4BD07A1AE1F8EB00FFDFF1 /* Other Service */,
 				EB3CC39E1ACD343D00FB8662 /* Call */,
 				3C16149C1973D1A600564BF5 /* Core Data */,
 				3C914D7019514BBD0002DAD3 /* ChatGroup */,
@@ -2650,7 +2648,6 @@
 				8A7DBEF91AECCAE300D7941F /* setting.png in Resources */,
 				8A4021131AE3597900806014 /* 邀请和添加朋友弹出框.png in Resources */,
 				EBD2ABAD1A7CDAC000D16528 /* tabbar_chats.png in Resources */,
-				8A4020B21AE3572C00806014 /* AliCloudController.h in Resources */,
 				EBD2AB4D1A7CDAC000D16528 /* chat_location_annotation_someone.png in Resources */,
 				EBC0CE591AD6652900E90053 /* EaseMob.bundle in Resources */,
 				EBD2AB2C1A7CDAC000D16528 /* VoiceSearchFeedback014@2x.png in Resources */,
@@ -2743,7 +2740,6 @@
 				8A4021171AE3597900806014 /* friendoff.png in Resources */,
 				EBD2AB8A1A7CDAC000D16528 /* chat_receiver_audio_playing003.png in Resources */,
 				EBD2ABB41A7CDAC000D16528 /* tabbar_contactsHL@2x.png in Resources */,
-				8AA68D251AF1FFA7007924AD /* Contact4GroupAddViewController.h in Resources */,
 				EBD2AB0B1A7CDAC000D16528 /* chatFire_audioPlaying1.png in Resources */,
 				3C372B5F19FE60DC005925B6 /* (null) in Resources */,
 				EBD2AB8F1A7CDAC000D16528 /* chat_receiver_bg@2x.png in Resources */,
@@ -2893,14 +2889,12 @@
 				90A706111A8B63B200376154 /* UIImageView+EMWebCache.m in Sources */,
 				9003D8A11939D8D000DC38A4 /* EMChatImageBubbleView.m in Sources */,
 				90A706051A8B63B200376154 /* EMSDWebImageDecoder.m in Sources */,
-				8A4020B01AE3571600806014 /* IndexViewController.m in Sources */,
 				90EF2CEF192F2B4E00BDC549 /* SRSlimeView.m in Sources */,
 				8A814A2D1AEE7B7000B26BA4 /* EGOCache.m in Sources */,
-				8A46EDE51AEA93F00062F518 /* DDRegisterController.m in Sources */,
-				8A4F27121AEB5BDD0050D86E /* DDRegisterFinishController.m in Sources */,
 				9003D9131939D8D000DC38A4 /* AddFriendCell.m in Sources */,
 				9003D8741939D8D000DC38A4 /* FacialView.m in Sources */,
 				90EF2CEE192F2B4E00BDC549 /* SRRefreshView.m in Sources */,
+				8A038C321AF51A54007A05BE /* Contact4GroupAddViewController.m in Sources */,
 				3C914D8419514BBD0002DAD3 /* GroupListViewController.m in Sources */,
 				9003D8681939D8D000DC38A4 /* ChatListCell.m in Sources */,
 				909308BE19604821005013BD /* Emoji.m in Sources */,
@@ -2923,27 +2917,27 @@
 				3C914D8219514BBD0002DAD3 /* ChatGroupDetailViewController.m in Sources */,
 				90A706171A8B63B200376154 /* PSTCollectionViewData.m in Sources */,
 				90A7061D1A8B63B200376154 /* PSTGridLayoutItem.m in Sources */,
+				8A038C341AF51A54007A05BE /* DDRegisterController.m in Sources */,
 				3C3527361931D1BE00385240 /* BaseTableViewCell.m in Sources */,
 				9003D86E1939D8D000DC38A4 /* ChatViewController.m in Sources */,
 				9003D9111939D8D000DC38A4 /* ChineseToPinyin.m in Sources */,
 				90A706161A8B63B200376154 /* PSTCollectionViewController.m in Sources */,
 				3CBF90C019302F5000AD68AE /* BaseViewController.m in Sources */,
 				3C3EB2FC19545FFD00E1AE9E /* PublicGroupListViewController.m in Sources */,
+				8A038C351AF51A54007A05BE /* DDRegisterFinishController.m in Sources */,
 				90A706141A8B63B200376154 /* PSTCollectionView.m in Sources */,
+				8A038C361AF51A54007A05BE /* DDSchoolRegisterController.m in Sources */,
 				90A7061E1A8B63B200376154 /* PSTGridLayoutRow.m in Sources */,
-				8AA76F301AF2811000427730 /* ChatRoom4DB.m in Sources */,
+				8A038C4A1AF51A95007A05BE /* LocalDbService.m in Sources */,
 				9003D89F1939D8D000DC38A4 /* EMChatAudioBubbleView.m in Sources */,
-				8A4F270F1AEB53410050D86E /* Commbox.m in Sources */,
 				8A814A2F1AEE7B7000B26BA4 /* EGOImageLoadConnection.m in Sources */,
 				90A7061A1A8B63B200376154 /* PSTCollectionViewLayout.m in Sources */,
 				9003D8A01939D8D000DC38A4 /* EMChatBaseBubbleView.m in Sources */,
-				8A4020B41AE3574800806014 /* AliCloudController.m in Sources */,
 				8A814A311AEE7B7000B26BA4 /* EGOImageView.m in Sources */,
 				3C9DDAB4193871D8007C765A /* EMSearchDisplayController.m in Sources */,
 				90A706031A8B63B200376154 /* EMSDImageCache.m in Sources */,
 				90133EC11972DFF400C49B56 /* UIViewController+DismissKeyboard.m in Sources */,
 				90A706101A8B63B200376154 /* UIImageView+EMHighlightedWebCache.m in Sources */,
-				8A46EDEA1AEAA5CC0062F518 /* DDLoginController.m in Sources */,
 				9003D9141939D8D000DC38A4 /* AddFriendViewController.m in Sources */,
 				9003D9121939D8D000DC38A4 /* ContactsViewController.m in Sources */,
 				90A7060A1A8B63B200376154 /* MKAnnotationView+EMWebCache.m in Sources */,
@@ -2957,30 +2951,34 @@
 				90911118192EEAED008A48AA /* WCAlertView.m in Sources */,
 				90133E611972D11000C49B56 /* NSString+Valid.m in Sources */,
 				9003D9161939D8D000DC38A4 /* ApplyViewController.m in Sources */,
-				8A6C0E141AED3459009D5208 /* ChatRoomDetail.m in Sources */,
-				8A4020AD1AE34F2D00806014 /* DDBDynamoDB.m in Sources */,
 				90A706071A8B63B200376154 /* EMSDWebImageDownloaderOperation.m in Sources */,
+				8A038C381AF51A54007A05BE /* IndexViewController.m in Sources */,
 				909110F0192EEAED008A48AA /* MBProgressHUD+Add.m in Sources */,
 				90911034192EEA70008A48AA /* main.m in Sources */,
 				90A706181A8B63B200376154 /* PSTCollectionViewFlowLayout.m in Sources */,
 				9091111A192EEAED008A48AA /* NSDateFormatter+Category.m in Sources */,
+				8A038C411AF51A88007A05BE /* DDUserDAO.m in Sources */,
 				90A706151A8B63B200376154 /* PSTCollectionViewCell.m in Sources */,
 				8A814A2E1AEE7B7000B26BA4 /* EGOImageButton.m in Sources */,
+				8A038C371AF51A54007A05BE /* HomePageListCell.m in Sources */,
 				8A7788661AF10274005F8C5E /* InviteFriendByDoubleIdController.m in Sources */,
 				3C117122197D243B00E2DBEC /* PushNotificationViewController.m in Sources */,
 				9003D90A1939D8D000DC38A4 /* LocationViewController.m in Sources */,
+				8A038C481AF51A95007A05BE /* AliCloudController.m in Sources */,
+				8A038C331AF51A54007A05BE /* DDLoginController.m in Sources */,
 				9026F6621961856500653E79 /* ConvertToCommonEmoticonsHelper.m in Sources */,
 				9003D8701939D8D000DC38A4 /* DXMessageToolBar.m in Sources */,
 				90A706091A8B63B200376154 /* EMSDWebImagePrefetcher.m in Sources */,
 				90A705FB1A8B63B200376154 /* MWGridCell.m in Sources */,
 				90985E481A8A08D400976DD6 /* InvitationManager.m in Sources */,
+				8A038C311AF51A54007A05BE /* Commbox.m in Sources */,
+				8A038C301AF51A54007A05BE /* ChatRoomDetail.m in Sources */,
 				9003D86F1939D8D000DC38A4 /* ChatSendHelper.m in Sources */,
 				8ADB38501AE286F000FCC6FC /* PersonalController.m in Sources */,
 				909308BF19604821005013BD /* EmojiEmoticons.m in Sources */,
+				8A038C401AF51A88007A05BE /* ChatRoom2DAO.m in Sources */,
 				90A706041A8B63B200376154 /* EMSDWebImageCompat.m in Sources */,
 				9091111C192EEAED008A48AA /* UIViewController+HUD.m in Sources */,
-				18F9B5751AF27F7800669C49 /* ChatRoom2DAO.m in Sources */,
-				18F9B5721AF2717C00669C49 /* DDUserDAO.m in Sources */,
 				9003D9081939D8D000DC38A4 /* MessageModel.m in Sources */,
 				90517D6A1A5C3DB0008F1315 /* AppDelegate+UMeng.m in Sources */,
 				90A7061C1A8B63B200376154 /* PSTGridLayoutInfo.m in Sources */,
@@ -2990,6 +2988,7 @@
 				8ADB388C1AE2A17100FCC6FC /* UsernickController.m in Sources */,
 				90A705FA1A8B63B200376154 /* MWCaptionView.m in Sources */,
 				90A706191A8B63B200376154 /* PSTCollectionViewItemKey.m in Sources */,
+				8A038C2F1AF51A54007A05BE /* ChatRoom4DB.m in Sources */,
 				9003D8A51939D8D000DC38A4 /* EMChatTimeCell.m in Sources */,
 				90A7061B1A8B63B200376154 /* PSTCollectionViewUpdateItem.m in Sources */,
 				3C11304E195AFFDD00ED1D0D /* EMChatVideoBubbleView.m in Sources */,
@@ -3003,9 +3002,8 @@
 				90911119192EEAED008A48AA /* NSDate+Category.m in Sources */,
 				3C6FFA2419A2F5560003EB25 /* DebugViewController.m in Sources */,
 				9003D9071939D8D000DC38A4 /* MessageReadManager.m in Sources */,
+				8A038C491AF51A95007A05BE /* DDBDynamoDB.m in Sources */,
 				3C35365C19A22164003EF79E /* GroupSettingViewController.m in Sources */,
-				18F9B56F1AF2645B00669C49 /* BaseDAO.m in Sources */,
-				18F7F4E31AF4F3A30085EEB8 /* HomePageListCell.m in Sources */,
 				905325CF1932ED8B00F064D7 /* EMSearchBar.m in Sources */,
 				3C914D8619514BBD0002DAD3 /* CreateGroupViewController.m in Sources */,
 				9003D9181939D8D000DC38A4 /* RealtimeSearchUtil.m in Sources */,
@@ -3013,11 +3011,11 @@
 				180E1A441AEF2C5A007EC1C3 /* MainChatListViewController.m in Sources */,
 				90A706061A8B63B200376154 /* EMSDWebImageDownloader.m in Sources */,
 				EB3CC3A31ACD343D00FB8662 /* CallSessionViewController.m in Sources */,
-				8A4F270C1AEB36D60050D86E /* DDSchoolRegisterController.m in Sources */,
 				3C13D94B1A12095D00903622 /* GroupBansViewController.m in Sources */,
 				9003D8A61939D8D000DC38A4 /* EMChatViewBaseCell.m in Sources */,
 				90A7060C1A8B63B200376154 /* UIButton+EMWebCache.m in Sources */,
 				90A7060D1A8B63B200376154 /* UIImage+EMGIF.m in Sources */,
+				8A038C3F1AF51A88007A05BE /* BaseDAO.m in Sources */,
 				90517D671A5C3C1F008F1315 /* AppDelegate+EaseMob.m in Sources */,
 				9003D9091939D8D000DC38A4 /* MessageModelManager.m in Sources */,
 				8A46EDBF1AE9F3FC0062F518 /* PersonalSignController.m in Sources */,
@@ -3025,14 +3023,12 @@
 				90A706131A8B63B200376154 /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				90A706121A8B63B200376154 /* UIView+EMWebCacheOperation.m in Sources */,
 				9003D8A31939D8D000DC38A4 /* EMChatTextBubbleView.m in Sources */,
-				8AA68D271AF20006007924AD /* Contact4GroupAddViewController.m in Sources */,
 				90911145192EEE6E008A48AA /* MainViewController.m in Sources */,
 				9003D8691939D8D000DC38A4 /* ChatListViewController.m in Sources */,
 				90A7060B1A8B63B200376154 /* NSData+EMImageContentType.m in Sources */,
 				90A706011A8B63B200376154 /* MWZoomingScrollView.m in Sources */,
 				3C6BBA0C1941A7CF00A64684 /* EMTextView.m in Sources */,
 				9091111B192EEAED008A48AA /* UIResponder+Router.m in Sources */,
-				8A7788631AEFD003005F8C5E /* LocalDbService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

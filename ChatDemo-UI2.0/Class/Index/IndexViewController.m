@@ -87,6 +87,9 @@ static DDUser *uuser;
 		}];
 	}
 }
+-(void) initFriendUser{
+    
+}
 
 
 - (void)didReceiveMemoryWarning
