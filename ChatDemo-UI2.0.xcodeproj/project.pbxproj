@@ -11,6 +11,8 @@
 		1873D80D1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */; };
 		1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */; };
 		18F7F4EC1AF53B9E0085EEB8 /* ChatRoom4ListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F7F4EA1AF53B9E0085EEB8 /* ChatRoom4ListCell.m */; };
+		18F7F4F01AF693100085EEB8 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F7F4EF1AF693100085EEB8 /* Util.m */; };
+		18F7F4F41AF6A60D0085EEB8 /* ChatRoom4DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F7F4F31AF6A60D0085EEB8 /* ChatRoom4DAO.m */; };
 		283403091A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 283403081A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m */; };
 		333DE476F1C23907F6749D9F /* libPods-ChatDemo-UI2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A7D49E66EDE566E813A0B2 /* libPods-ChatDemo-UI2.0.a */; };
 		3C06AAFF194050A00076FF0B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C06AAFE194050A00076FF0B /* CoreLocation.framework */; };
@@ -91,7 +93,6 @@
 		8A46EDE71AEA9DFA0062F518 /* getCode.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDE61AEA9DFA0062F518 /* getCode.png */; };
 		8A4BD0B31AE20F2900FFDFF1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90911122192EEBB8008A48AA /* AppDelegate.m */; };
 		8A6C0E161AED4352009D5208 /* infoline.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A6C0E151AED4352009D5208 /* infoline.png */; };
-		8A712CAF1AF550D100D465AC /* ChatRoom4DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A712CAE1AF550D100D465AC /* ChatRoom4DAO.m */; };
 		8A7788661AF10274005F8C5E /* InviteFriendByDoubleIdController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7788651AF10274005F8C5E /* InviteFriendByDoubleIdController.m */; };
 		8A7DBEE31AECC48400D7941F /* DDPersonalUpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7DBEE21AECC48400D7941F /* DDPersonalUpdateController.m */; };
 		8A7DBEE81AECC6CD00D7941F /* login.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEE41AECC6CD00D7941F /* login.png */; };
@@ -426,6 +427,10 @@
 		1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		18F7F4E91AF53B9E0085EEB8 /* ChatRoom4ListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoom4ListCell.h; sourceTree = "<group>"; };
 		18F7F4EA1AF53B9E0085EEB8 /* ChatRoom4ListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoom4ListCell.m; sourceTree = "<group>"; };
+		18F7F4EE1AF693100085EEB8 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Util.h; path = Utils/Util.h; sourceTree = "<group>"; };
+		18F7F4EF1AF693100085EEB8 /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Util.m; path = Utils/Util.m; sourceTree = "<group>"; };
+		18F7F4F21AF6A60D0085EEB8 /* ChatRoom4DAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatRoom4DAO.h; path = "Other Service/Dao/ChatRoom4DAO.h"; sourceTree = "<group>"; };
+		18F7F4F31AF6A60D0085EEB8 /* ChatRoom4DAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatRoom4DAO.m; path = "Other Service/Dao/ChatRoom4DAO.m"; sourceTree = "<group>"; };
 		283403071A9EBB8200B7DE9B /* GroupSubjectChangingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupSubjectChangingViewController.h; sourceTree = "<group>"; };
 		283403081A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupSubjectChangingViewController.m; sourceTree = "<group>"; };
 		3C06AAFE194050A00076FF0B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -563,8 +568,6 @@
 		8A46EDBE1AE9F3FC0062F518 /* PersonalSignController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalSignController.m; sourceTree = "<group>"; };
 		8A46EDE61AEA9DFA0062F518 /* getCode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = getCode.png; path = dd/getCode.png; sourceTree = "<group>"; };
 		8A6C0E151AED4352009D5208 /* infoline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = infoline.png; path = dd/infoline.png; sourceTree = "<group>"; };
-		8A712CAD1AF550B300D465AC /* ChatRoom4DAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoom4DAO.h; sourceTree = "<group>"; };
-		8A712CAE1AF550D100D465AC /* ChatRoom4DAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoom4DAO.m; sourceTree = "<group>"; };
 		8A7788641AF10247005F8C5E /* InviteFriendByDoubleIdController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteFriendByDoubleIdController.h; sourceTree = "<group>"; };
 		8A7788651AF10274005F8C5E /* InviteFriendByDoubleIdController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteFriendByDoubleIdController.m; sourceTree = "<group>"; };
 		8A7DBEE11AECC48400D7941F /* DDPersonalUpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPersonalUpdateController.h; sourceTree = "<group>"; };
@@ -1118,17 +1121,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18F7F4F11AF693250085EEB8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				18F7F4EE1AF693100085EEB8 /* Util.h */,
+				18F7F4EF1AF693100085EEB8 /* Util.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		18F9B56C1AF2639800669C49 /* Dao */ = {
 			isa = PBXGroup;
 			children = (
+				18F7F4F21AF6A60D0085EEB8 /* ChatRoom4DAO.h */,
+				18F7F4F31AF6A60D0085EEB8 /* ChatRoom4DAO.m */,
 				8A038C391AF51A88007A05BE /* BaseDAO.h */,
 				8A038C3A1AF51A88007A05BE /* BaseDAO.m */,
 				8A038C3B1AF51A88007A05BE /* ChatRoom2DAO.h */,
 				8A038C3C1AF51A88007A05BE /* ChatRoom2DAO.m */,
 				8A038C3D1AF51A88007A05BE /* DDUserDAO.h */,
 				8A038C3E1AF51A88007A05BE /* DDUserDAO.m */,
-				8A712CAD1AF550B300D465AC /* ChatRoom4DAO.h */,
-				8A712CAE1AF550D100D465AC /* ChatRoom4DAO.m */,
 			);
 			name = Dao;
 			sourceTree = "<group>";
@@ -1648,6 +1660,7 @@
 		90911120192EEBB8008A48AA /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				18F7F4F11AF693250085EEB8 /* Utils */,
 				8A4BD07E1AE1FB5F00FFDFF1 /* Index */,
 				8A4BD07A1AE1F8EB00FFDFF1 /* Other Service */,
 				EB3CC39E1ACD343D00FB8662 /* Call */,
@@ -2848,7 +2861,6 @@
 				8AFE46631AED08B100B57368 /* DDHeadPicUpdate.m in Sources */,
 				8A4021521AE3A63E00806014 /* NickNameController.m in Sources */,
 				3C6BBA0619419EBD00A64684 /* EMRemarkImageView.m in Sources */,
-				8A712CAF1AF550D100D465AC /* ChatRoom4DAO.m in Sources */,
 				9003D8A21939D8D000DC38A4 /* EMChatLocationBubbleView.m in Sources */,
 				90A705FE1A8B63B200376154 /* MWPhotoBrowser.m in Sources */,
 				9003D8711939D8D000DC38A4 /* DXFaceView.m in Sources */,
@@ -2971,6 +2983,8 @@
 				90A706011A8B63B200376154 /* MWZoomingScrollView.m in Sources */,
 				3C6BBA0C1941A7CF00A64684 /* EMTextView.m in Sources */,
 				9091111B192EEAED008A48AA /* UIResponder+Router.m in Sources */,
+				18F7F4F41AF6A60D0085EEB8 /* ChatRoom4DAO.m in Sources */,
+				18F7F4F01AF693100085EEB8 /* Util.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

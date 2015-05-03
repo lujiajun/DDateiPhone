@@ -25,8 +25,7 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
 
 - (NSString *)tableCreateSql {
 	return [NSString stringWithFormat:@"Create table if not exists %@( \
-            ID INTEGER PRIMARY KEY AUTOINCREMENT, \
-            GID varchar(50), \
+            GID varchar(50) PRIMARY KEY, \
             CTIMEH varchar(50), \
             CTIMER varchar(50), \
             RID varchar(30), \
@@ -131,7 +130,7 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
 #pragma mark - Private
 
 - (void)insertChatroom4:(CHATROOM4 *)chatRoom4 {
-	NSString *sql = [NSString stringWithFormat:@"Insert into %@ ( \
+	NSString *sql = [NSString stringWithFormat:@"Insert or ignore into %@ ( \
                      GID, \
                      CTIMEH, \
                      CTIMER, \
@@ -170,7 +169,7 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
 
 - (NSMutableArray *)getTenLocalChatRoom4 {
 	NSMutableArray *rooms = [NSMutableArray arrayWithCapacity:10];
-	NSString *sql = [NSString stringWithFormat:@"select * from %@ order by ID limit 10", ChatRoom4Table];
+	NSString *sql = [NSString stringWithFormat:@"select * from %@ order by systemTimeNumber limit 10", ChatRoom4Table];
 	if ([self.db open]) {
 		FMResultSet *rs = [self.db executeQuery:sql];
 		while ([rs next]) {

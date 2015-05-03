@@ -26,6 +26,7 @@
 #import "DDUserDAO.h"
 #import "Constants.h"
 #import "UIImageView+WebCache.h"
+#import "Util.h"
 
 @interface ContactsViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, BaseTableCellDelegate, SRRefreshDelegate>
 {
@@ -254,47 +255,45 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BaseTableViewCell *cell;
-    
-    if (indexPath.section == 0 && indexPath.row == 0) {
-        cell = (BaseTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"FriendCell"];
-        if (cell == nil) {
-            cell = [[BaseTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FriendCell"];
-        }
-        
-        cell.imageView.image = [UIImage imageNamed:@"newFriends"];
-        cell.textLabel.text = NSLocalizedString(@"title.apply", @"Application and notification");
-        [cell addSubview:self.unapplyCountLabel];
-    }
-    else{
-        static NSString *CellIdentifier = @"ContactListCell";
-        cell = (BaseTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        // Configure the cell...
-        if (cell == nil) {
-            cell = [[BaseTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-            cell.delegate = self;
-        }
-        
-        cell.indexPath = indexPath;
-       
-        if (indexPath.section == 0 && indexPath.row == 1) {
-            cell.imageView.image = [UIImage imageNamed:@"groupPrivateHeader"];
-            cell.textLabel.text = NSLocalizedString(@"title.group", @"Group");
-        }
-        else{
-            EMBuddy *buddy = [[self.dataSource objectAtIndex:(indexPath.section - 1)] objectAtIndex:indexPath.row];
-            [[self userDao] getTableRowAndInsertLocal:buddy.username];
-            DDUser *user=[_userDao selectDDuserByUid:buddy.username];
-            UIImageView *us=[[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40)] ;
-            [us sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
-                                placeholderImage:[UIImage imageNamed:@"Logo_new"]];
-            [cell.contentView addSubview:us];
+	BaseTableViewCell *cell;
 
-            cell.textLabel.text = buddy.username;
-        }
-    }
-    
-    return cell;
+	if (indexPath.section == 0 && indexPath.row == 0) {
+		cell = (BaseTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"FriendCell"];
+		if (cell == nil) {
+			cell = [[BaseTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FriendCell"];
+		}
+
+		cell.imageView.image = [UIImage imageNamed:@"newFriends"];
+		cell.textLabel.text = NSLocalizedString(@"title.apply", @"Application and notification");
+		[cell addSubview:self.unapplyCountLabel];
+	} else {
+		static NSString *CellIdentifier = @"ContactListCell";
+		cell = (BaseTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+		// Configure the cell...
+		if (cell == nil) {
+			cell = [[BaseTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+			cell.delegate = self;
+		}
+
+		cell.indexPath = indexPath;
+
+		if (indexPath.section == 0 && indexPath.row == 1) {
+			cell.imageView.image = [UIImage imageNamed:@"groupPrivateHeader"];
+			cell.textLabel.text = NSLocalizedString(@"title.group", @"Group");
+		} else {
+			EMBuddy *buddy = [[self.dataSource objectAtIndex:(indexPath.section - 1)] objectAtIndex:indexPath.row];
+			[[self userDao] getTableRowAndInsertLocal:buddy.username];
+			DDUser *user = [_userDao selectDDuserByUid:buddy.username];
+			UIImageView *us = [[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x + 5, cell.frame.origin.y + 5, 40, 40)];
+			[us sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]]
+			      placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+			[cell.contentView addSubview:us];
+
+			cell.textLabel.text = buddy.username;
+		}
+	}
+
+	return cell;
 }
 
 // Override to support conditional editing of the table view.

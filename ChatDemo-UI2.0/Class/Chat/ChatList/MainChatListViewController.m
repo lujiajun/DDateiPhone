@@ -23,6 +23,7 @@
 #import "Constants.h"
 #import "ChatRoom4DB.h"
 #import "ChatRoom4DAO.h"
+#import "Util.h"
 
 
 @interface MainChatListViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
@@ -326,25 +327,25 @@
         
         //用户1
         DDUser *user1 = [self.ddUserDao selectDDuserByUid:chatRoom4.UID1];
-        [cell.user1Avatar sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user1.picPath]]
+        [cell.user1Avatar sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user1.picPath]]
                             placeholderImage:[UIImage imageNamed:@"Logo_new"]];
         cell.user1Name.text = user1.nickName;
         
         //用户2
         DDUser *user2 = [self.ddUserDao selectDDuserByUid:chatRoom4.UID2];
-        [cell.user2Avatar sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user2.picPath]]
+        [cell.user2Avatar sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user2.picPath]]
                             placeholderImage:[UIImage imageNamed:@"Logo_new"]];
         cell.user2Name.text = user2.nickName;
         
         //用户3
         DDUser *user3 = [self.ddUserDao selectDDuserByUid:chatRoom4.UID3];
-        [cell.user3Avatar sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user3.picPath]]
+        [cell.user3Avatar sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user3.picPath]]
                             placeholderImage:[UIImage imageNamed:@"Logo_new"]];
         cell.user3Name.text = user3.nickName;
         
         //用户4
         DDUser *user4 = [self.ddUserDao selectDDuserByUid:chatRoom4.UID4];
-        [cell.user4Avatar sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user4.picPath]]
+        [cell.user4Avatar sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user4.picPath]]
                             placeholderImage:[UIImage imageNamed:@"Logo_new"]];
         cell.user4Name.text = user4.nickName;
         
