@@ -500,7 +500,6 @@
    
     EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
     groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
-    groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
     [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:_room2.RID
                                                           description:_room2.Motto
                                                              invitees:@[_username,_toAddFriend,_room2.UID1,_room2.UID2]

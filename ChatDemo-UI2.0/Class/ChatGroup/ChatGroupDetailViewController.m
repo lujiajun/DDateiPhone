@@ -328,7 +328,7 @@
     nickname.font=[UIFont fontWithName:@"Helvetica" size:12];
     [bakview addSubview:nickname];
     //性别
-    BOOL *isboy=NO;
+    BOOL isboy=NO;
     if(user!=nil){
         if([user.gender isEqual:@"Male"] || [user.gender isEqual:@"男"]){
             isboy=YES;

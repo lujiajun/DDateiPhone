@@ -302,7 +302,7 @@ static DDUser   *dduser;
             
         }
         //关闭相册界面
-        [picker dismissModalViewControllerAnimated:YES];
+        [picker disablesAutomaticKeyboardDismissal];
         UIImageView *smallimage = [[UIImageView alloc] initWithFrame:
                                    CGRectMake(_nickname.frame.size.width+ _nicknamevalue.frame.size.width+10,10,50,50)];
         
