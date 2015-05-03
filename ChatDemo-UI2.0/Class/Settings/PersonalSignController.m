@@ -77,10 +77,10 @@
 
 - (UISwitch *)pushDisplaySwitch
 {
-    if (_pushDisplaySwitch == nil) {
-        _pushDisplaySwitch = [[UISwitch alloc] init];
-        [_pushDisplaySwitch addTarget:self action:@selector(pushDisplayChanged:) forControlEvents:UIControlEventValueChanged];
-    }
+//    if (_pushDisplaySwitch == nil) {
+//        _pushDisplaySwitch = [[UISwitch alloc] init];
+//        [_pushDisplaySwitch addTarget:self action:@selector(pushDisplayChanged:) forControlEvents:UIControlEventValueChanged];
+//    }
     
     return _pushDisplaySwitch;
 }
@@ -183,7 +183,7 @@
         if (task.result) {
             DDUser *dduser = task.result;
             if(dduser.UID!=nil){
-                dduser.university=_nicktext.text;
+                dduser.university=[self nicktext].text;
                 [ddbDynamoDB updateTable:dduser];
                 
                 

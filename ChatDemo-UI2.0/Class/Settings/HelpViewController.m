@@ -14,7 +14,7 @@
     sets.text= @"如果有任何和Double Date相关的建议及意见，请联系blackmoonmoon.emily@gmail.com";
     sets.font=[UIFont fontWithName:@"Helvetica" size:12];
     [sets setNumberOfLines:0];
-    sets.lineBreakMode = UILineBreakModeWordWrap;
+//    sets.lineBreakMode = UILineBreakModeWordWrap;
     [self.view addSubview:sets];
     
     

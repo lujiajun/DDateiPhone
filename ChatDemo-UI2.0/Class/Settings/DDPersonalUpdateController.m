@@ -187,7 +187,7 @@
 #pragma UIActionSheet Delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"buttonIndex = [%d]",buttonIndex);
+//    NSLog(@"buttonIndex = [%d]",buttonIndex);
     switch (buttonIndex) {
         case 0://照相机
         {
@@ -243,7 +243,7 @@
             
         }
         //关闭相册界面
-        [picker dismissModalViewControllerAnimated:YES];
+        [picker disablesAutomaticKeyboardDismissal];
         UIImageView *smallimage = [[UIImageView alloc] initWithFrame:
                                    CGRectMake(_nickname.frame.size.width+ _nicknamevalue.frame.size.width+10,10,50,50)];
         

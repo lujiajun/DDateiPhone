@@ -78,7 +78,7 @@
 
 -(CHATROOM4 *)getChatroom4InsertLocal:(NSString*) uid{
         AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-        
+    
         [[dynamoDBObjectMapper load:[CHATROOM4 class] hashKey:uid rangeKey:nil]
          continueWithBlock:^id(BFTask *task) {
              if (task.error) {

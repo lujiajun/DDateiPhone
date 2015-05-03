@@ -45,8 +45,6 @@ static DDUser   *dduser;
     
     UIImageView *imageView = [[UIImageView alloc] init];
     imageView.image = [UIImage imageNamed:@"80.png"];
-    CGFloat imgW = imageView.image.size.width; // 图片的宽度
-    CGFloat imgH = imageView.image.size.height; // 图片的高度
     imageView.frame = CGRectMake(50, 0, 200, 250);
     [self.view addSubview:imageView];
     

@@ -22,7 +22,7 @@
 #import "LocalDbService.h"
 #import "ContactsViewController.h"
 #import "Contact4GroupAddViewController.h"
-#import "ContactSelectionViewController.h";
+#import "ContactSelectionViewController.h"
 #import "IndexViewController.h"
 #import "ChatRoom2DAO.h"
 #import "UIImageView+EMWebCache.h"
@@ -114,7 +114,7 @@
 
 -(void)showUser1:(UIImageView *) bakview{
     
-    UIImageView *headview=[[UIImageView alloc]initWithFrame:CGRectMake(50, 10, 80, 80)];
+    UIImageView *headview=[[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 80, 80)];
     [headview sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:_uuser1.picPath]]
                 placeholderImage:[UIImage imageNamed:@"Logo_new"]];
     headview.layer.masksToBounds =YES;
@@ -122,15 +122,15 @@
     [bakview addSubview:headview];
     
     //姓名
-    UILabel *nickname=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, headview.frame.origin.y+10, 50, 12)];
+    UILabel *nickname=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, headview.frame.origin.y+10, 70, 12)];
     nickname.text=_uuser1.nickName;
     nickname.textAlignment=NSTextAlignmentLeft;
     nickname.font=[UIFont fontWithName:@"Helvetica" size:12];
     [bakview addSubview:nickname];
     //性别
-    BOOL *isboy=NO;
+    BOOL isboy=NO;
     if(_uuser1!=nil){
-        if(_uuser1.gender==@"Male" || _uuser1.gender==@"男"){
+        if([_uuser1.gender isEqualToString:@"Male"] || [_uuser1.gender isEqualToString:@"男"]){
             isboy=YES;
         }
     }
@@ -144,7 +144,7 @@
     isboyview.frame=CGRectMake(headview.frame.origin.x+headview.frame.size.width+nickname.frame.size.width+15, headview.frame.origin.y+8, 10, 10);
     [bakview addSubview:isboyview];
     //学校
-    UILabel *university=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, nickname.frame.origin.y+nickname.frame.size.height+2, 50, 12)];
+    UILabel *university=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, nickname.frame.origin.y+nickname.frame.size.height+5, 70, 12)];
     university.text=_uuser1.university;
     university.textAlignment=NSTextAlignmentLeft;
     university.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -155,7 +155,7 @@
     schoolview.frame=CGRectMake(university.frame.origin.x+university.frame.size.width+15, university.frame.origin.y, 20, 10);
     [bakview addSubview:schoolview];
     //年级
-    UILabel *gender=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, university.frame.origin.y+university.frame.size.height+2, 50, 12)];
+    UILabel *gender=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, university.frame.origin.y+university.frame.size.height+5, 50, 12)];
     gender.text=_uuser1.grade;
     gender.textAlignment=NSTextAlignmentLeft;
     gender.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -169,43 +169,35 @@
     signview.frame=CGRectMake(10, headview.frame.origin.y+headview.frame.size.height+20, bakview.frame.size.width-20, 50);
     [bakview addSubview:signview];
     //
-    //                UILabel *sininfo=[[UILabel alloc] initWithFrame:CGRectMake(5, 50, cell.frame.size.width-20, 50)];
-    //                sininfo.text=@"testXXXXXXXXXXXXXXX";
-    //                sininfo.textAlignment=NSTextAlignmentLeft;
-    //                sininfo.lineBreakMode = UILineBreakModeWordWrap;
-    //                sininfo.font=[UIFont fontWithName:@"Helvetica" size:12];
-    //                [signview addSubview:sininfo];
+                    UILabel *sininfo=[[UILabel alloc] initWithFrame:CGRectMake(5, signview.frame.origin.y+2, signview.frame.size.width-20, 50)];
+                    sininfo.text=@"testXXXXXXXXXXXXXXX";
+                    sininfo.textAlignment=NSTextAlignmentLeft;
+//                    sininfo.lineBreakMode = UILineBreakModeWordWrap;
+                    sininfo.font=[UIFont fontWithName:@"Helvetica" size:12];
+                    [signview addSubview:sininfo];
     
 
 }
 
 -(void)showUser2:(UIImageView *) bakview{
    
-    
-    UIImage *user1;
-    if(_uuser2!=nil&&_uuser2.picPath!=nil){
-        NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:_uuser2.picPath]]];
-        user1 = [UIImage imageWithData:data];
-    }else{
-        user1=[UIImage imageNamed:@"Logo_new"];
-    }
-    
-    UIImageView *headview=[[UIImageView alloc] initWithImage:user1];
-    headview.frame=CGRectMake(50, 10, 80, 80);
+    UIImageView *headview=[[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 80, 80)];
+    [headview sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:_uuser2.picPath]]
+                placeholderImage:[UIImage imageNamed:@"Logo_new"]];
     headview.layer.masksToBounds =YES;
     headview.layer.cornerRadius =40;
     [bakview addSubview:headview];
     
     //姓名
-    UILabel *nickname=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, headview.frame.origin.y+10, 50, 12)];
+    UILabel *nickname=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, headview.frame.origin.y+10, 70, 12)];
     nickname.text=_uuser2.nickName;
     nickname.textAlignment=NSTextAlignmentLeft;
     nickname.font=[UIFont fontWithName:@"Helvetica" size:12];
     [bakview addSubview:nickname];
     //性别
-    BOOL *isboy=NO;
+    BOOL isboy=NO;
     if(_uuser1!=nil){
-        if(_uuser1.gender==@"Male" || _uuser1.gender==@"男"){
+        if([_uuser1.gender isEqualToString: @"Male"] || [_uuser1.gender isEqualToString: @"男"]){
             isboy=YES;
         }
     }
@@ -216,10 +208,10 @@
         isboyimg=[UIImage imageNamed:@"sexgirl"];
     }
     UIImageView *isboyview=[[UIImageView alloc] initWithImage:isboyimg];
-    isboyview.frame=CGRectMake(headview.frame.origin.x+headview.frame.size.width+nickname.frame.size.width+15, headview.frame.origin.y+8, 10, 10);
+    isboyview.frame=CGRectMake(headview.frame.origin.x+headview.frame.size.width+nickname.frame.size.width, headview.frame.origin.y+8, 10, 10);
     [bakview addSubview:isboyview];
     //学校
-    UILabel *university=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, nickname.frame.origin.y+nickname.frame.size.height+2, 50, 10)];
+    UILabel *university=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, nickname.frame.origin.y+nickname.frame.size.height+5, 70, 10)];
     university.text=_uuser2.university;
     university.textAlignment=NSTextAlignmentLeft;
     university.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -230,7 +222,7 @@
     schoolview.frame=CGRectMake(university.frame.origin.x+university.frame.size.width+15, university.frame.origin.y, 20, 10);
     [bakview addSubview:schoolview];
     //年级
-    UILabel *gender=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, university.frame.origin.y+university.frame.size.height+2, 50, 12)];
+    UILabel *gender=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, university.frame.origin.y+university.frame.size.height+5, 50, 12)];
     gender.text=_uuser2.grade;
     gender.textAlignment=NSTextAlignmentLeft;
     gender.font=[UIFont fontWithName:@"Helvetica" size:12];
