@@ -565,11 +565,13 @@
             break;
         }
         case 2:{
-            DDPersonalUpdateController *blackController = [[DDPersonalUpdateController alloc] initWithNibName:nil bundle:nil];
+            DDPersonalUpdateController *blackController = [DDPersonalUpdateController alloc];
             [self.navigationController pushViewController:blackController animated:YES];
+            break;
         }
         case 3:{
             if(indexPath.row==0){
+                
                 SettingsViewController *debugController = [[SettingsViewController alloc] initWithStyle:UITableViewStylePlain];
                 [self.navigationController pushViewController:debugController animated:YES];
 

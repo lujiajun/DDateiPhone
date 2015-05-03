@@ -21,8 +21,9 @@ static OSSBucket *bucket;
     _ossclient = [OSSClient sharedInstanceManage];
     NSString *accessKey = @"0Ys9RBjY6FOVGeYd";
     NSString *secretKey = @"DrqT4WbMCkGLJJ5MTvscW7iFuR9yNk";
-    _yourBucket = @"doubledateuser";
-        
+//    _yourBucket = @"doubledateuser";
+    _yourBucket = @"doubledatelujiajun";
+    
     [_ossclient setGenerateToken:^(NSString *method, NSString *md5, NSString *type, NSString *date, NSString *xoss, NSString *resource){
         NSString *signature = nil;
         NSString *content = [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@%@", method, md5, type, date, xoss, resource];
@@ -100,7 +101,7 @@ static OSSBucket *bucket;
     //   …
     //   UInt8 byte15;
     // } CFUUIDBytes;
-    CFUUIDBytes bytes = CFUUIDGetUUIDBytes(uuidObject);
+//    CFUUIDBytes bytes = CFUUIDGetUUIDBytes(uuidObject);
     
     CFRelease(uuidObject);
     

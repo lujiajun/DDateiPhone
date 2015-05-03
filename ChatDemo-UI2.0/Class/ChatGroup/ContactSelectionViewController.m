@@ -403,9 +403,9 @@
 
 - (void)doneAction:(id)sender
 {
-    NSLog(_blockSelectedUsernames);
+//    NSLog(_blockSelectedUsernames);
 	if (_delegate && [_delegate respondsToSelector:@selector(viewController:didFinishSelectedSources:)]) {
-        NSLog(_blockSelectedUsernames);
+//        NSLog(_blockSelectedUsernames);
 		if ([_blockSelectedUsernames count] == 0) {
 			[_delegate viewController:self didFinishSelectedSources:self.selectedContacts];
 			[self.navigationController popViewControllerAnimated:NO];

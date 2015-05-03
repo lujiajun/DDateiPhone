@@ -38,7 +38,9 @@
 @property (strong, nonatomic) UIScrollView *footerScrollView;
 @property (strong, nonatomic) UIButton *doneButton;
 @property(strong,nonatomic) CHATROOM2 *room2;
-@property(strong,nonatomic) DDUserDAO *userDao;
+@property(strong) DDUserDAO *userDao;
+@property(strong,nonatomic) NSString *username;
+@property(strong,nonatomic) NSString *toAddFriend;
 @end
 
 @implementation Contact4GroupAddViewController
@@ -168,7 +170,7 @@
             }
             
             EMBuddy *buddy = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            DDUser *user=[[self userDao] selectDDuserByUid:buddy.username];
+            DDUser *user=[self.userDao selectDDuserByUid:buddy.username];
             UIImageView *us=[[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40)] ;
             [us sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
                   placeholderImage:[UIImage imageNamed:@"Logo_new"]];
@@ -434,55 +436,107 @@
 
 - (void)doneAction:(id)sender
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(creat4Groups)
+                                                 name:@"create4Groups"
+                                               object:nil];
     
-        NSString *toAddFriend;
+
+    
+    
     
         for (EMBuddy *buddy in _selectedContacts) {
-            toAddFriend=buddy.username;
+            _toAddFriend=buddy.username;
         }
         NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
-        NSString *username = [loginInfo objectForKey:kSDKUsername];
-        NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), username, toAddFriend];
-        
+        _username = [loginInfo objectForKey:kSDKUsername];
+//        NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), _username, _toAddFriend];
+    
         //新建四人聊天室
         //1判断是否已经存在
         //2 加入环信
         //3加入AWS
         //4 加入本地
-    CHATROOM4 *chatroom4=[CHATROOM4 new];
+    [self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"create4Groups" object:@NO];
+//    CHATROOM4 *chatroom4=[CHATROOM4 new];
     
-    EMError *error = nil;
-    EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
-    groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
-    EMGroup *group = [[EaseMob sharedInstance].chatManager createGroupWithSubject:_room2.RID description:_room2.Motto invitees:@[username,toAddFriend,_room2.UID1,_room2.UID2] initialWelcomeMessage:messageStr styleSetting:groupStyleSetting error:&error];
-    if(!error){
-        NSLog(@"创建成功 -- %@",group);
-    }
-    chatroom4.GID=group.groupId;
-    NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMMdd_HHmmss"];
-    chatroom4.CTIMER=[formatter stringFromDate:[NSDate date]];
-    chatroom4.CTIMEH=@"Time";
-    chatroom4.RID=_room2.RID;
-    chatroom4.UID1=_room2.UID1;
-    chatroom4.UID2=_room2.UID2;
-    chatroom4.UID3=username;
-    chatroom4.UID4=toAddFriend;
-    chatroom4.isLikeUID1=[NSNumber numberWithInt:0];
-    chatroom4.isLikeUID2=[NSNumber numberWithInt:0];
-    chatroom4.isLikeUID3=[NSNumber numberWithInt:0];
-    chatroom4.isLikeUID4=[NSNumber numberWithInt:0];
-    chatroom4.roomStatus=@"New";
-    chatroom4.systemTimeNumber=[NSNumber numberWithInt:[[NSDate date] timeIntervalSince1970]*1000];
-    ChatRoom4DB *chatroom4DB=[ChatRoom4DB alloc];
-    [chatroom4DB insertChatroom4:chatroom4];
+//    EMError *error = nil;
+    
+//    EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
+//    groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
+//    EMGroup *group = [[EaseMob sharedInstance].chatManager createGroupWithSubject:_room2.RID description:_room2.Motto invitees:@[_username,_toAddFriend,_room2.UID1,_room2.UID2] initialWelcomeMessage:messageStr styleSetting:groupStyleSetting error:&error];
+////
+//    if(!error){
+//        NSLog(@"创建成功 -- %@",group);
+//    }
+//    chatroom4.GID=group.groupId;
+//    NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"yyyyMMdd_HHmmss"];
+//    chatroom4.CTIMER=[formatter stringFromDate:[NSDate date]];
+//    chatroom4.CTIMEH=@"Time";
+//    chatroom4.RID=_room2.RID;
+//    chatroom4.UID1=_room2.UID1;
+//    chatroom4.UID2=_room2.UID2;
+//    chatroom4.UID3=_username;
+//    chatroom4.UID4=_toAddFriend;
+//    chatroom4.isLikeUID1=[NSNumber numberWithInt:0];
+//    chatroom4.isLikeUID2=[NSNumber numberWithInt:0];
+//    chatroom4.isLikeUID3=[NSNumber numberWithInt:0];
+//    chatroom4.isLikeUID4=[NSNumber numberWithInt:0];
+//    chatroom4.roomStatus=@"New";
+//    chatroom4.systemTimeNumber=[NSNumber numberWithInt:[[NSDate date] timeIntervalSince1970]*1000];
+//    ChatRoom4DB *chatroom4DB=[ChatRoom4DB alloc];
+//    [chatroom4DB insertChatroom4:chatroom4];
     
     //查询每个用户的数据库信息 toAddFriend必须RID
-    ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES] initRoom4:chatroom4 friend:toAddFriend ];
-    chatController.title = _room2.Motto;
-    [self.navigationController pushViewController:chatController animated:YES];
+  
 
   
+}
+
+-(void) creat4Groups{
+    CHATROOM4 *chatroom4=[CHATROOM4 new];
+   
+    EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
+    groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
+    groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
+    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:_room2.RID
+                                                          description:_room2.Motto
+                                                             invitees:@[_username,_toAddFriend,_room2.UID1,_room2.UID2]
+                                                initialWelcomeMessage:@"邀请您加入群组"
+                                                         styleSetting:groupStyleSetting
+                                                           completion:^(EMGroup *group, EMError *error) {
+                                                               if(!error){
+                                                                   chatroom4.GID=group.groupId;
+                                                                   NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
+                                                                   [formatter setDateFormat:@"yyyyMMdd_HHmmss"];
+                                                                   chatroom4.CTIMER=[formatter stringFromDate:[NSDate date]];
+                                                                   chatroom4.CTIMEH=@"Time";
+                                                                   chatroom4.RID=self.room2.RID;
+                                                                   chatroom4.UID1=self.room2.UID1;
+                                                                   chatroom4.UID2=self.room2.UID2;
+                                                                   chatroom4.UID3=self.username;
+                                                                   chatroom4.UID4=self.toAddFriend;
+                                                                   chatroom4.isLikeUID1=[NSNumber numberWithInt:0];
+                                                                   chatroom4.isLikeUID2=[NSNumber numberWithInt:0];
+                                                                   chatroom4.isLikeUID3=[NSNumber numberWithInt:0];
+                                                                   chatroom4.isLikeUID4=[NSNumber numberWithInt:0];
+                                                                   chatroom4.roomStatus=@"New";
+                                                                   chatroom4.systemTimeNumber=[NSNumber numberWithInt:[[NSDate date] timeIntervalSince1970]*1000];
+                                                                   ChatRoom4DB *chatroom4DB=[ChatRoom4DB alloc];
+                                                                   [chatroom4DB insertChatroom4:chatroom4];
+                                                                   ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES] initRoom4:chatroom4 friend:self.toAddFriend ];
+                                                                   chatController.title = self.room2.Motto;
+                                                                   [self.navigationController pushViewController:chatController animated:YES];
+                                                                   
+                                                                   NSLog(@"创建成功 -- %@",group);
+                                                               }        
+                                                           } onQueue:nil];
+    
+    
+   
+    
 }
 
 @end

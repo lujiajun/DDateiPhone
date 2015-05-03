@@ -76,11 +76,11 @@
 
 - (UISwitch *)pushDisplaySwitch
 {
-    if (_pushDisplaySwitch == nil) {
-        _pushDisplaySwitch = [[UISwitch alloc] init];
-        [_pushDisplaySwitch addTarget:self action:@selector(pushDisplayChanged:) forControlEvents:UIControlEventValueChanged];
-    }
-    
+//    if (_pushDisplaySwitch == nil) {
+//        _pushDisplaySwitch = [[UISwitch alloc] init];
+//        [_pushDisplaySwitch addTarget:self action:@selector(pushDisplayChanged:) forControlEvents:UIControlEventValueChanged];
+//    }
+//    
     return _pushDisplaySwitch;
 }
 
