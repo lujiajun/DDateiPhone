@@ -20,6 +20,8 @@
 #import "ChatRoom4DB.h"
 #import "DDBDynamoDB.h"
 #import "DDUserDAO.h"
+#import "Constants.h"
+#import "UIImageView+EMWebCache.h"
 
 
 @interface Contact4GroupAddViewController ()<UISearchBarDelegate, UISearchDisplayDelegate>
@@ -36,7 +38,7 @@
 @property (strong, nonatomic) UIScrollView *footerScrollView;
 @property (strong, nonatomic) UIButton *doneButton;
 @property(strong,nonatomic) CHATROOM2 *room2;
-
+@property(strong,nonatomic) DDUserDAO *userDao;
 @end
 
 @implementation Contact4GroupAddViewController
@@ -83,6 +85,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if(_userDao==nil){
+        _userDao=[[DDUserDAO alloc]init];
+    }
     // Do any additional setup after loading the view.
     self.title = NSLocalizedString(@"title.chooseContact", @"select the contact");
     self.navigationItem.rightBarButtonItem = nil;
@@ -163,7 +168,11 @@
             }
             
             EMBuddy *buddy = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@"chatListCellHead.png"];
+            DDUser *user=[[self userDao] selectDDuserByUid:buddy.username];
+            UIImageView *us=[[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40)] ;
+            [us sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
+                  placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+            [cell.contentView addSubview:us];
             cell.textLabel.text = buddy.username;
             
             return cell;
@@ -256,7 +265,12 @@
     }
     
     EMBuddy *buddy = [[_dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    cell.imageView.image = [UIImage imageNamed:@"chatListCellHead.png"];
+    
+    DDUser *user=[_userDao selectDDuserByUid:buddy.username];
+    UIImageView *us=[[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40)] ;
+    [us sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
+          placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+    [cell.contentView addSubview:us];
     cell.textLabel.text = buddy.username;
     
     return cell;
@@ -380,7 +394,11 @@
     for (int i = 0; i < count; i++) {
         EMBuddy *buddy = [self.selectedContacts objectAtIndex:i];
         EMRemarkImageView *remarkView = [[EMRemarkImageView alloc] initWithFrame:CGRectMake(i * imageSize, 0, imageSize, imageSize)];
-        remarkView.image = [UIImage imageNamed:@"Logo_new"];
+        
+        DDUser *user=[_userDao selectDDuserByUid:buddy.username];
+        [remarkView sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
+              placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+     
         remarkView.remark = buddy.username;
         [self.footerScrollView addSubview:remarkView];
     }
@@ -460,7 +478,7 @@
     [chatroom4DB insertChatroom4:chatroom4];
     
     //查询每个用户的数据库信息 toAddFriend必须RID
-    ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES] initRoom4:chatroom4 friend:toAddFriend friendHead:toAddFriend];
+    ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES] initRoom4:chatroom4 friend:toAddFriend ];
     chatController.title = _room2.Motto;
     [self.navigationController pushViewController:chatController animated:YES];
 

@@ -7,4 +7,5 @@
 +(DDUser *) instanceDDuser;
 -(void) setDDUser:(DDUser *) user;
 
+- (void)initdduser;
 @end

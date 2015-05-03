@@ -24,6 +24,7 @@ NSString * const DDUserTable=@"DDUser";
             university varchar(10), \
             grade varchar(10), \
             isDoublerID INTEGER, \
+            photos varchar(100), \
             UNIQUE(UID));", DDUserTable];
 }
 
@@ -42,6 +43,7 @@ NSString * const DDUserTable=@"DDUser";
             dduser.university = [rs stringForColumn:@"university"];
             dduser.grade = [rs stringForColumn:@"grade"];
             dduser.isDoublerID = [NSNumber numberWithInt:[rs intForColumn:@"isDoublerID"]];
+            dduser.photos = [rs stringForColumn:@"photos"];
         }
         [rs close];
         [self.db close];
@@ -80,8 +82,9 @@ NSString * const DDUserTable=@"DDUser";
                      gender, \
                      university, \
                      grade, \
+                     photos,\
                      isDoublerID) \
-                     values(?, ?, ?, ?, ?, ?, ?, ?)", DDUserTable];
+                     values(?, ?, ?, ?, ?, ?, ?, ?,?)", DDUserTable];
 	if ([self.db open]) {
 		BOOL res = [self.db executeUpdate:sql,
                     dduser.UID,
@@ -91,6 +94,7 @@ NSString * const DDUserTable=@"DDUser";
                     dduser.gender,
                     dduser.university,
                     dduser.grade,
+                    dduser.photos,
                     dduser.isDoublerID];
 		if (res) {
 			NSLog(@"DDUser: success to insert db");
@@ -99,5 +103,17 @@ NSString * const DDUserTable=@"DDUser";
 		}
 		[self.db close];
 	}
+}
+- (void)updatePhotosByUID:(NSString *)photos uid:(NSString *) UID {
+   
+    if ([self.db open]) {
+        BOOL res = [self.db executeUpdate:@"UPDATE DDUser SET photos = ? WHERE UID = ?",photos,UID];
+        if (res) {
+            NSLog(@"DDUser: success to insert db");
+        } else {
+            NSLog(@"DDUser: error when insert db");
+        }
+        [self.db close];
+    }
 }
 @end

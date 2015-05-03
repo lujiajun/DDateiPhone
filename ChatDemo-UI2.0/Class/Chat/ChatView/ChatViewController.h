@@ -19,5 +19,5 @@
 - (void)reloadData;
 
 
--(id)initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend friendHead:(NSString *) friendHead;
+-(id)initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend;
 @end

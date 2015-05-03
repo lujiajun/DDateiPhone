@@ -21,6 +21,9 @@
 #import "DDBDynamoDB.h"
 #import "DDUserDAO.h"
 #import "Constants.h"
+#import "ChatRoom4DB.h"
+#import "ChatRoom4DAO.h"
+
 
 @interface MainChatListViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
 
@@ -31,6 +34,7 @@
 @property (nonatomic, strong) EMSearchBar *searchBar;
 @property (nonatomic, strong) SRRefreshView *slimeView;
 @property (nonatomic, strong) UIView *networkStateView;
+@property(nonatomic,strong)ChatRoom4DB  *chatRoomDBDao;
 
 @property (strong, nonatomic) EMSearchDisplayController *searchController;
 
@@ -43,6 +47,7 @@
 	if (self) {
 		_dataSource = [NSMutableArray array];
         _ddUserDao = [[DDUserDAO alloc] init];
+        _chatRoomDBDao = [[ChatRoom4DB alloc] init];
 	}
 	return self;
 }
@@ -57,6 +62,18 @@
 	[self networkStateView];
 
 	[self searchController];
+    //初始化聊天室信息到本地数据库
+    [self initLocalRoom4];
+}
+
+- (void)initLocalRoom4 {
+	[[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion: ^(NSArray *groups, EMError *error) {
+	    if (!error) {
+	        for (EMGroup *group in groups) {
+	            [[self chatRoomDBDao] getChatroom4InsertLocal:group.groupId];
+			}
+		}
+	} onQueue:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -503,39 +520,21 @@
 #pragma mark - public
 
 - (void)refreshDataSource {
-	NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
-	AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-	AWSDynamoDBScanExpression *scanExpression = [AWSDynamoDBScanExpression new];
-	scanExpression.limit = @10;
+	ChatRoom4DAO *room4Dao = [[ChatRoom4DAO alloc] init];
 
-	[[dynamoDBObjectMapper scan:[CHATROOM4 class]
-	                 expression:scanExpression]
-	 continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
-	    if (task.error) {
-	        NSLog(@"The request failed. Error: [%@]", task.error);
+	NSArray *sortedArray = [[room4Dao queryChatRoom4s] sortedArrayUsingComparator:
+	                        ^(CHATROOM4 *obj1, CHATROOM4 *obj2) {
+	    if (obj1.systemTimeNumber < obj2.systemTimeNumber) {
+	        return (NSComparisonResult)NSOrderedAscending;
+		} else {
+	        return (NSComparisonResult)NSOrderedDescending;
 		}
-	    if (task.exception) {
-	        NSLog(@"The request failed. Exception: [%@]", task.exception);
-		}
-
-	    if (task.result) {
-	        AWSDynamoDBPaginatedOutput *paginatedOutput = task.result;
-	        NSArray *sortedArray = [paginatedOutput.items sortedArrayUsingComparator:
-	                                ^(CHATROOM4 *obj1, CHATROOM4 *obj2) {
-	            if (obj1.systemTimeNumber < obj2.systemTimeNumber) {
-	                return (NSComparisonResult)NSOrderedAscending;
-				} else {
-	                return (NSComparisonResult)NSOrderedDescending;
-				}
-			}];
-
-	        [self.dataSource removeAllObjects];
-	        [self.dataSource addObjectsFromArray:sortedArray];
-	        [self.tableView reloadData];
-	        [self hideHud];
-		}
-	    return nil;
 	}];
+
+	[self.dataSource removeAllObjects];
+	[self.dataSource addObjectsFromArray:sortedArray];
+	[self.tableView reloadData];
+	[self hideHud];
 }
 
 - (void)isConnect:(BOOL)isConnect {

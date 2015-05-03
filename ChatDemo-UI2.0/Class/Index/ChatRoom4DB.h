@@ -29,6 +29,8 @@
 -(void) deleteRoom4:(NSString *) gid;
 -(CHATROOM4 *)getCHATROOM4:(NSString*) uid;
 
+-(CHATROOM4 *)getChatroom4InsertLocal:(NSString*) uid;
+
 @end
 @interface CHATROOM4 : AWSDynamoDBObjectModel <AWSDynamoDBModeling>
 

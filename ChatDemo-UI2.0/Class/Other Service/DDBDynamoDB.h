@@ -29,8 +29,6 @@
 
 - (void)updateTable:(DDUser *)tableRow;
 
-- (DDUser *)addNewUser:(NSString *)name;
-
 -(DDUser *)getUserByUid:(NSString*) uid;
 
 
@@ -56,6 +54,7 @@
 //@property(nonatomic,strong)   NSString *phoneNumber;
 //@property(nonatomic,assign)   BOOL     *isDoublerID;
 @property(nonatomic,strong)   NSNumber *isDoublerID;
+@property(nonatomic,strong) NSString *photos;
 //@property(nonatomic,strong)   NSString *waitingID;
 //@property(nonatomic,assign)   BOOL *autoLogin;
 //@property(nonatomic,assign)   BOOL *vibrate;

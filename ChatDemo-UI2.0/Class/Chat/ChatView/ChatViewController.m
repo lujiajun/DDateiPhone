@@ -35,8 +35,9 @@
 #import "ChatRoom4DB.h"
 #import "IndexViewController.h"
 #import "DDBDynamoDB.h"
-#import "EGOImageView.h"
+#import "UIImageView+EMWebCache.h"
 #import "Constants.h"
+#import "DDUserDAO.h"
 #define KPageCount 20
 
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, IDeviceManagerDelegate>
@@ -73,9 +74,10 @@
 @property(strong,nonatomic) UILabel *lab;
 @property (nonatomic) BOOL isPlayingAudio;
 @property(strong,nonatomic) NSTimer *countDownTimer;
-@property(nonatomic) CHATROOM4 *chatroom4;
-@property(nonatomic) NSString *friendname;
-@property(nonatomic) NSString *friendHead;
+@property(strong,nonatomic) CHATROOM4 *chatroom4;
+@property(strong,nonatomic) NSString *friendname;
+@property(strong,nonatomic) DDUser *friend;
+@property(strong,nonatomic) DDUserDAO *userDao;
 
 @end
 
@@ -84,9 +86,9 @@ int secondsCountDown = 30;
 
 NSDateFormatter *dateformatter;
 
--(id) initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend friendHead:(NSString *) friendHead{
+-(id) initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend{
     _friendname=friend;
-    _friendHead=friendHead;
+    
     _chatroom4=room4;
     return self;
 }
@@ -152,6 +154,8 @@ NSDateFormatter *dateformatter;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _userDao=[[DDUserDAO alloc] init];
+    
     dateformatter = [[NSDateFormatter alloc]init] ;//定义NSDateFormatter用来显示格式
     [dateformatter setDateFormat:@"hh mm ss"];//设定格式
     
@@ -189,7 +193,7 @@ NSDateFormatter *dateformatter;
     if(_isChatGroup){
         [self.view addSubview:[self getFriendFrame]];
     }
-    
+   
     [self.view addSubview:self.chatToolBar];
     
  
@@ -212,9 +216,17 @@ NSDateFormatter *dateformatter;
     [bak addTarget:self action:@selector(dragInside) forControlEvents:UIControlEventTouchUpInside];
     bak.userInteractionEnabled = YES;
     
-    EGOImageView *head = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"Logo_new.png"]];
-    if( _friendHead !=nil){
-        head.imageURL = [NSURL URLWithString:[DDPicPath stringByAppendingString:_friendHead]];
+    UIImageView *head=[[UIImageView alloc]initWithFrame:CGRectMake(5,bak.frame.origin.y+5, 30, 30)] ;
+    if(_friend==nil){
+        
+        _friend= [_userDao selectDDuserByUid:_friendname];
+    }
+    
+    if(_friend!=nil){
+        [head sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:_friend.picPath]]
+                placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+    }else {
+        head.image=[UIImage imageNamed:@"Logo_new"];
     }
     
     head.frame=CGRectMake(5,bak.frame.origin.y+5, 30, 30);
@@ -235,19 +247,6 @@ NSDateFormatter *dateformatter;
 }
 
 -(void)dragInside{
-    //查找EMBuddy
-//    [EaseMob sharedInstance].chatManager 
-////    EMBuddy *buddy = [[self.dataSource objectAtIndex:(indexPath.section - 1)] objectAtIndex:indexPath.row];
-//    NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
-//    NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
-//    if (loginUsername && loginUsername.length > 0) {
-//        if ([loginUsername isEqualToString:buddy.username]) {
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"friend.notChatSelf", @"can't talk to yourself") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
-//            [alertView show];
-//            
-//            return;
-//        }
-//    }
     //好友的name
     
     ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:_friendname isGroup:NO];
@@ -508,6 +507,9 @@ NSDateFormatter *dateformatter;
         }
         else{
             MessageModel *model = (MessageModel *)obj;
+            //查询用户头像
+            DDUser *user=[[self userDao] selectDDuserByUid:model.username];
+            model.headImageURL=[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]];
             NSString *cellIdentifier = [EMChatViewCell cellIdentifierForMessageModel:model];
             EMChatViewCell *cell = (EMChatViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (cell == nil) {
@@ -515,6 +517,7 @@ NSDateFormatter *dateformatter;
                 cell.backgroundColor = [UIColor clearColor];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
+            
             cell.messageModel = model;
             
             return cell;

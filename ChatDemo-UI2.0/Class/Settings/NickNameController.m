@@ -61,8 +61,7 @@
     NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
     _username = [loginInfo objectForKey:kSDKUsername];
     //查询
-    DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
-    [ddbDynamoDB addNewUser:_username];
+       
     
     [self.tableView reloadData];
 }

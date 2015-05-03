@@ -12,7 +12,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EMRemarkImageView : UIView
+@interface EMRemarkImageView : UIImageView
 {
     UILabel *_remarkLabel;
     UIImageView *_imageView;
@@ -24,6 +24,6 @@
 @property (nonatomic) NSInteger index;
 @property (nonatomic) BOOL editing;
 @property (strong, nonatomic) NSString *remark;
-@property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) UIImage *imageV;
 
 @end

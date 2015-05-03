@@ -24,29 +24,6 @@
 - (void)insertTableRow:(DDUser *)tableRow {
     AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
     [dynamoDBObjectMapper save: tableRow];
-//    
-//    [[dynamoDBObjectMapper save:tableRow]
-//     continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
-//         if (!task.error) {
-//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Succeeded"
-//                                                             message:@"Successfully inserted the data into the table."
-//                                                            delegate:nil
-//                                                   cancelButtonTitle:@"OK"
-//                                                   otherButtonTitles:nil];
-//             
-//         } else {
-//             NSLog(@"Error: [%@]", task.error);
-//             
-//             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-//                                                             message:@"Failed to insert the data into the table."
-//                                                            delegate:nil
-//                                                   cancelButtonTitle:@"OK"
-//                                                   otherButtonTitles:nil];
-//             [alert show];
-//         }
-//         
-//         return nil;
-//     }];
 }
 
 -(void) updateTable:(DDUser *)tableRow{
@@ -87,45 +64,6 @@
       
     }
     return nil;
-}
-
--(DDUser *) addNewUser:(NSString *) name{
-    
-              DDUser  *user=[DDUser new];
-                user.UID=name;
-                user.nickName=@"defaultname";
-                user.gender=@"男";
-                user.grade=@" ";
-                user.university=@"default";
-                user.password=@"xxx";
-                [self insertTableRow:user];
-    return user;
-//     continueWithBlock:^id(BFTask *task) {
-//         if (task.error) {
-//             NSLog(@"The request failed. Error: [%@]", task.error);
-//         }
-//         if (task.exception) {
-//             NSLog(@"The request failed. Exception: [%@]", task.exception);
-//         }
-//         if (task.result) {
-//             DDUser *user = task.result;
-//             if(user.UID==nil){
-//                 user=[DDUser new];
-//                 user.UID=name;
-//                 user.nickName=@"defaultname";
-//                 user.gender=@"男";
-//                 user.grade=@" ";
-//                 user.university=@"default";
-//                 user.password=@"xxx";
-//                 [self insertTableRow:user];
-//                 return user;
-//             }
-//             return  user;
-//             //Do something with the result.
-//         }
-//         return nil;
-//     }];
-//    return nil;
 }
 
 

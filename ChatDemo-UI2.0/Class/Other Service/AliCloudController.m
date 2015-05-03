@@ -3,6 +3,8 @@
 #import "OSSTool.h"
 #import "OSSData.h"
 #import "OSSLog.h"
+#import "DDBDynamoDB.h"
+#import "DDUserDAO.h"
 
 @interface AliCloudController()
 @property(strong,nonatomic) OSSClient *ossclient;
@@ -32,6 +34,46 @@ static OSSBucket *bucket;
     [_ossclient setGlobalDefaultBucketAcl:PUBLIC_READ_WRITE];
     [_ossclient setGlobalDefaultBucketHostId:@"oss-cn-beijing.aliyuncs.com"];
     bucket = [[OSSBucket alloc] initWithBucket:_yourBucket];
+    
+}
+
+-(void) uploadPic:(NSData *)upData name:(NSString *) name{
+    NSError *error = nil;
+    OSSData *testData = [[OSSData alloc] initWithBucket:bucket withKey:name];
+    [testData setData:upData withType:@"jpg"];
+    [testData upload:&error];
+    
+}
+
+//OSS ,username_1
+//1|2|3|4
+-(void) asynUploadPic:(NSData *) upData name:(NSString *) picname username:(NSString *) username{
+    OSSData *testData = [[OSSData alloc] initWithBucket:bucket withKey:[[username stringByAppendingString:@"_"] stringByAppendingString:picname]];
+    [testData setData:upData withType:@"jpg"];
+    [testData uploadWithUploadCallback:^(BOOL isSuccess, NSError *error) {
+        if (isSuccess) {
+           //成功了，则插入AWS
+            DDBDynamoDB *dynamoDB=[DDBDynamoDB alloc];
+            DDUserDAO *dao=[[DDUserDAO alloc]init];
+            DDUser *dduser= [dao selectDDuserByUid:username];
+            if(dduser!=nil){
+                if(dduser.photos==nil){
+                    dduser.photos=[picname stringByAppendingString:@","];
+                }else{
+                    dduser.photos=[[dduser.photos stringByAppendingString:picname] stringByAppendingString:@","];
+                }
+                
+                [dao updatePhotosByUID:dduser.photos uid:username];
+                //更新AWS
+                [dynamoDB insertTableRow:dduser];
+            }
+            
+            //修改本地
+        } else {
+            NSLog(@"errorInfo_testDataUploadWithProgress:%@", [error userInfo]);
+        }
+    } withProgressCallback:^(float progress) { NSLog(@"current get %f", progress);
+    }];
     
 }
 
