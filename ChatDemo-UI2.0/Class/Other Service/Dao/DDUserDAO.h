@@ -15,5 +15,5 @@
 - (void)getTableRowAndInsertLocal:(NSString *)uid;
 
 - (void)insertDDUser:(DDUser *)dduser ;
-
+- (void)updatePhotosByUID:(NSString *)photos uid:(NSString *) UID;
 @end

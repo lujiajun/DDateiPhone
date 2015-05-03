@@ -68,6 +68,9 @@ static DDUser *uuser;
     self.tableView.backgroundColor = [UIColor whiteColor];
     [self.tableView addSubview:self.slimeView];
     
+    if(_userDao==nil){
+        _userDao=[[DDUserDAO alloc]init];
+    }
     //chaxun
     [self.chatroom2Dao refreshList];
     [self initdduser];
@@ -77,14 +80,20 @@ static DDUser *uuser;
 	if (uuser == nil) {
 		NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
 		NSString *username = [loginInfo objectForKey:kSDKUsername];
-
-		//同步方法
-		_dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-		[[_dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil]
-		 continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
-		    uuser = task.result;
-		    return nil;
-		}];
+        if(_userDao==nil){
+            _userDao=[[DDUserDAO alloc]init];
+        }
+        uuser=[_userDao selectDDuserByUid:username];
+        if(uuser==nil){
+            
+            _dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+            [[_dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil]
+             continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
+                 uuser = task.result;
+                 return nil;
+             }];
+        }
+		
 	}
 }
 -(void) initFriendUser{

@@ -66,45 +66,6 @@
     return nil;
 }
 
--(DDUser *) addNewUser:(NSString *) name{
-    
-              DDUser  *user=[DDUser new];
-                user.UID=name;
-                user.nickName=@"defaultname";
-                user.gender=@"男";
-                user.grade=@" ";
-                user.university=@"default";
-                user.password=@"xxx";
-                [self insertTableRow:user];
-    return user;
-//     continueWithBlock:^id(BFTask *task) {
-//         if (task.error) {
-//             NSLog(@"The request failed. Error: [%@]", task.error);
-//         }
-//         if (task.exception) {
-//             NSLog(@"The request failed. Exception: [%@]", task.exception);
-//         }
-//         if (task.result) {
-//             DDUser *user = task.result;
-//             if(user.UID==nil){
-//                 user=[DDUser new];
-//                 user.UID=name;
-//                 user.nickName=@"defaultname";
-//                 user.gender=@"男";
-//                 user.grade=@" ";
-//                 user.university=@"default";
-//                 user.password=@"xxx";
-//                 [self insertTableRow:user];
-//                 return user;
-//             }
-//             return  user;
-//             //Do something with the result.
-//         }
-//         return nil;
-//     }];
-//    return nil;
-}
-
 
 #pragma mark - ChatRoom2
 - (void)insertChatroom2:(CHATROOM2 *)chatRoom2 {

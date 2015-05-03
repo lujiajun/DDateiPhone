@@ -27,6 +27,9 @@
 #import "PersonalController.h"
 #import "IndexViewController.h"
 #import "HelpViewController.h"
+#import "DDUserDAO.h"
+#import "UIImageView+EMWebCache.h"
+#import "Constants.h"
 @interface NewSettingViewController ()
 
 @property (strong, nonatomic) UIView *footerView;
@@ -38,6 +41,11 @@
 @property (strong, nonatomic) UILabel *beInvitedLabel;
 @property(strong,nonatomic) UIScrollView *scrollView;
 @property(strong,nonatomic) UIImagePickerController  *imagePicker;
+@property(nonatomic)  NSUInteger *picnumber;
+@property(strong,nonatomic) NSMutableArray *addedPicArray;
+@property(strong,nonatomic) AliCloudController *aliCloud;
+@property(strong,nonatomic) NSString *loginname;
+@property(strong,nonatomic) UIImageView *plusImageView;
 
 @end
 
@@ -46,7 +54,11 @@
 @synthesize autoLoginSwitch = _autoLoginSwitch;
 @synthesize ipSwitch = _ipSwitch;
 
-#define kIMGCOUNT 5
+
+#define  PIC_WIDTH 120
+#define  PIC_HEIGHT 120
+
+
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -66,6 +78,38 @@
     
     self.tableView.backgroundColor = [UIColor grayColor];
     self.tableView.tableFooterView = self.footerView;
+    if(_aliCloud==nil){
+        _aliCloud=[AliCloudController alloc];
+        [_aliCloud initSdk];
+
+    }
+    if(_loginname==nil){
+        NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
+        _loginname = [loginInfo objectForKey:kSDKUsername];
+    }
+    if(_addedPicArray==nil){
+        _addedPicArray =[[NSMutableArray alloc]init];
+        DDUser *user= [IndexViewController instanceDDuser];
+        if(user==nil){
+            IndexViewController *index=[IndexViewController alloc];
+            [index initdduser];
+            user=[IndexViewController instanceDDuser];
+        }
+        if(user.photos!=nil){
+            _addedPicArray= [user.photos componentsSeparatedByString:@","];
+        }
+
+    }
+    if(_plusImageView==nil){
+        //添加按钮
+        UIImage *image = [UIImage imageNamed:@"addpic"];
+        //图片显示
+        _plusImageView = [[UIImageView alloc] initWithImage:image];
+        _plusImageView.userInteractionEnabled=YES;
+
+    }
+    //出事scroview
+    [self refreshScrollView];
 
 }
 
@@ -89,13 +133,7 @@
 
 - (UISwitch *)beInvitedSwitch
 {
-    //    if (_beInvitedSwitch == nil) {
-    //        _beInvitedSwitch = [[UISwitch alloc] init];
-    //        [_beInvitedSwitch addTarget:self action:@selector(beInvitedChanged:) forControlEvents:UIControlEventValueChanged];
-    //        BOOL autoAccept = [[EaseMob sharedInstance].chatManager autoAcceptGroupInvitation];
-    //        [_beInvitedSwitch setOn:!autoAccept animated:YES];
-    //    }
-    
+
     return _beInvitedSwitch;
 }
 
@@ -109,6 +147,29 @@
     }
     
     return _beInvitedLabel;
+}
+
+-(void) refreshScrollView{
+   
+    if(_scrollView==nil){
+         _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 400, 130)];
+    }
+    
+    //循环执行，有多少张图片，执行几次
+    _scrollView.scrollEnabled=YES;
+    if(_addedPicArray.count>1){
+    
+    CGSize contentSize=CGSizeMake(PIC_WIDTH*(_addedPicArray.count+1), 130);
+    //shezhi滚动范围
+    _scrollView.contentSize=contentSize;
+
+    }else{
+    
+        CGSize contentSize=CGSizeMake(PIC_WIDTH*(_addedPicArray.count+2), 130);
+        //shezhi滚动范围
+        _scrollView.contentSize=contentSize;
+    }
+    [_scrollView setUserInteractionEnabled:YES];
 }
 
 #pragma mark - Table view datasource
@@ -202,49 +263,50 @@
         case 1:
         {
             // 1.创建UIScrollView
- 
-            UIScrollView *scrollView = [[UIScrollView alloc] init];
-            [scrollView setBackgroundColor:[UIColor whiteColor]];
-            scrollView.frame = CGRectMake(0, 165, cell.frame.size.width, 90); // frame中的size指UIScrollView的可视范围
-            scrollView.backgroundColor = [UIColor whiteColor];
-            [self.view addSubview:scrollView];
             
-            // 2.创建UIImageView（图片）
-            UIImageView *imageView = [[UIImageView alloc] init];
-            imageView.image = [UIImage imageNamed:@"80.png"];
-            CGFloat imgW = imageView.image.size.width; // 图片的宽度
-            CGFloat imgH = imageView.image.size.height; // 图片的高度
-            imageView.frame = CGRectMake(0, scrollView.frame.origin.y, imgW, imgW);
-            [scrollView addSubview:imageView];
+            if(_addedPicArray.count==0){
+                
+                //赋值
+                _plusImageView.frame = CGRectMake(0,_scrollView.frame.origin.y, PIC_WIDTH, PIC_HEIGHT);
+                UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClick)];
+                [_plusImageView addGestureRecognizer:singleTap];//点击图片事件
+
+                [_scrollView addSubview:_plusImageView];
+            }else{
+                int i=0;
+                for (id element in _addedPicArray) {
+                    if(element!=nil&&![element isEqual:@""]){
+                        
+                        //图片显示
+                        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(_scrollView.frame.origin.x+PIC_WIDTH*i,cell.frame.origin.y, PIC_WIDTH, PIC_HEIGHT)];
+                        
+                        [imageView sd_setImageWithURL:[NSURL URLWithString:[[DDPicPath stringByAppendingString:[_loginname stringByAppendingString:@"_"]] stringByAppendingString:element]]placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+                        
+                        //获取图片的框架，得到长、宽
+                        //赋值
+                        imageView.tag = i;
+                        
+                        //ScrollView添加子视图
+                        [_scrollView addSubview:imageView];
+                        i++;
+
+                    }
+                    
+                }
+                if(_addedPicArray.count>1){
+                    _plusImageView.frame = CGRectMake(PIC_WIDTH*(_addedPicArray.count-1),_scrollView.frame.origin.y, PIC_WIDTH, PIC_HEIGHT);
+                    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClick)];
+                    [_plusImageView addGestureRecognizer:singleTap];//点击图片事件
+                    
+                    [_scrollView addSubview:_plusImageView];
+                }
+                
+
+            }
             
-            UIImageView *imageViewTwo = [[UIImageView alloc] init];
-            imageViewTwo.image = [UIImage imageNamed:@"80.png"];
-            CGFloat imgTwoW = imageViewTwo.image.size.width; // 图片的宽度
-            CGFloat imgTwoH = imageViewTwo.image.size.height; // 图片的高度
-            imageViewTwo.frame = CGRectMake(imgW+5, scrollView.frame.origin.y, imgW, imgW);
-            [scrollView addSubview:imageViewTwo];
             
-            UIImageView *imageViewadd = [[UIImageView alloc] init];
-            imageViewTwo.image = [UIImage imageNamed:@"addpic.png"];
-            imageViewTwo.frame = CGRectMake(imgW+5, scrollView.frame.origin.y, imgW, imgW);
-            
-            [imageViewadd setUserInteractionEnabled:YES];
-            [imageViewadd addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addPicClick:)]];
-            [scrollView addSubview:imageViewadd];
-            // 3.设置scrollView的属性
-            
-            // 设置UIScrollView的滚动范围（内容大小）
-            scrollView.contentSize = imageView.image.size;
-            
-            // 隐藏水平滚动条
-            scrollView.showsHorizontalScrollIndicator = NO;
-            scrollView.showsVerticalScrollIndicator = NO;
-            
-            [cell.contentView addSubview:self.scrollView];
-            //设置页数控制器总页数，即按钮数
-            //            self.pageControl.numberOfPages=kIMGCOUNT;
-            //            cell.textLabel.text = NSLocalizedString(@"title.apnsSetting", @"Apns Settings");
-            //            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            [cell.contentView addSubview:_scrollView];
+
             break;
         }
         case 2:{
@@ -362,7 +424,7 @@
 }
 
 
--(void) addPicClick:(UITapGestureRecognizer *)gestureRecognizer{
+-(void) btnClick{
     UIActionSheet* actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:@"请选择文件来源"
                                   delegate:self
@@ -372,6 +434,7 @@
     [actionSheet showInView:self.view];
     //    [actionSheet release];
 }
+
 
 #pragma mark -
 #pragma UIActionSheet Delegate
@@ -430,12 +493,56 @@
         {
             data = UIImagePNGRepresentation(image);
         }
-        AliCloudController *aliCloud=[AliCloudController alloc];
-        aliCloud.initSdk;
-        NSString *name= [aliCloud uploadPic:data];
+        //关闭相册
+         [picker dismissModalViewControllerAnimated:YES];
+        //添加图片
+        UIImageView *aImageView=[[UIImageView alloc]initWithImage:image];
+        [aImageView setFrame:CGRectMake(_plusImageView.frame.origin.x, _plusImageView.frame.origin.y, PIC_WIDTH, PIC_HEIGHT)];
+        [_scrollView addSubview:aImageView];
+        //放置图片到指定位置
+        
+        CABasicAnimation *positionAnim=[CABasicAnimation animationWithKeyPath:@"position"];
+        [positionAnim setFromValue:[NSValue valueWithCGPoint:CGPointMake(_plusImageView.center.x, _plusImageView.center.y)]];
+        [positionAnim setToValue:[NSValue valueWithCGPoint:CGPointMake(_plusImageView.center.x+PIC_WIDTH, _plusImageView.center.y)]];
+        [positionAnim setDelegate:self];
+        [positionAnim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+        [positionAnim setDuration:0.25f];
+        [_plusImageView.layer addAnimation:positionAnim forKey:nil];
+        [_plusImageView setCenter:CGPointMake(_plusImageView.center.x+PIC_WIDTH, _plusImageView.center.y)];
+        
+        //先显示，在上传
+        //获得addPicArry中得最大值
+        NSString *picname=[self getNewPicName];
+        
+        [_addedPicArray addObject:picname];
+        [self refreshScrollView];
+        [[self tableView] reloadData];
+    
+        [_aliCloud asynUploadPic:data name:picname username:_loginname];
     
     }
     
+}
+//最大值加1
+-(NSString *) getNewPicName{
+    if(_addedPicArray==nil ||_addedPicArray.count==0){
+//        [_addedPicArray addObject:1];
+        return @"1";
+    }else{
+        NSComparator cmptr = ^(id obj1, id obj2){
+            if ([obj1 integerValue] > [obj2 integerValue]) {
+                return (NSComparisonResult)NSOrderedDescending;
+            }
+            
+            if ([obj1 integerValue] < [obj2 integerValue]) {
+                return (NSComparisonResult)NSOrderedAscending;
+            }
+            return (NSComparisonResult)NSOrderedSame;  
+        };
+        NSArray *array = [_addedPicArray sortedArrayUsingComparator:cmptr];
+        return   [NSString stringWithFormat: @"%ld",  [array.lastObject integerValue]+1];
+    }
+
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

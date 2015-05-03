@@ -65,10 +65,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     }
     self.title = NSLocalizedString(@"title.index", @"Index");
     _autoLoginSwitch=[[UISwitch alloc] init];
-    
-    //    _autoLoginSwitch.frame = CGRectMake(self.tableView.frame.size.width - (self.autoLoginSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - self.autoLoginSwitch.frame.size.height) / 2, self.autoLoginSwitch.frame.size.width, self.autoLoginSwitch.frame.size.height);
-    //    self navigationItem
-    
+
     //获取未读消息数，此时并没有把self注册为SDK的delegate，读取出的未读数是上次退出程序时的
     [self didUnreadMessagesCountChanged];
 #warning 把self注册为SDK的delegate
@@ -79,8 +76,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     [self setupSubviews];
     self.selectedIndex = 0;
-    
-    //好友邀请页面button
+
+       //好友邀请页面button
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [addButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
     [addButton addTarget:_contactsVC action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
