@@ -10,6 +10,7 @@
 		180E1A441AEF2C5A007EC1C3 /* MainChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */; };
 		1873D80D1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */; };
 		1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */; };
+		18F7F4EC1AF53B9E0085EEB8 /* ChatRoom4ListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F7F4EA1AF53B9E0085EEB8 /* ChatRoom4ListCell.m */; };
 		283403091A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 283403081A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m */; };
 		333DE476F1C23907F6749D9F /* libPods-ChatDemo-UI2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A7D49E66EDE566E813A0B2 /* libPods-ChatDemo-UI2.0.a */; };
 		3C06AAFF194050A00076FF0B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C06AAFE194050A00076FF0B /* CoreLocation.framework */; };
@@ -427,6 +428,8 @@
 		180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainChatListViewController.m; sourceTree = "<group>"; };
 		1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libALBB_OSS_IOS_SDK.a; sourceTree = "<group>"; };
 		1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
+		18F7F4E91AF53B9E0085EEB8 /* ChatRoom4ListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoom4ListCell.h; sourceTree = "<group>"; };
+		18F7F4EA1AF53B9E0085EEB8 /* ChatRoom4ListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoom4ListCell.m; sourceTree = "<group>"; };
 		283403071A9EBB8200B7DE9B /* GroupSubjectChangingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupSubjectChangingViewController.h; sourceTree = "<group>"; };
 		283403081A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupSubjectChangingViewController.m; sourceTree = "<group>"; };
 		3C06AAFE194050A00076FF0B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -1391,6 +1394,8 @@
 				9003D77B1939D8D000DC38A4 /* ChatListViewController.m */,
 				180E1A421AEF2C59007EC1C3 /* MainChatListViewController.h */,
 				180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */,
+				18F7F4E91AF53B9E0085EEB8 /* ChatRoom4ListCell.h */,
+				18F7F4EA1AF53B9E0085EEB8 /* ChatRoom4ListCell.m */,
 			);
 			path = ChatList;
 			sourceTree = "<group>";
@@ -2983,6 +2988,7 @@
 				90517D6A1A5C3DB0008F1315 /* AppDelegate+UMeng.m in Sources */,
 				90A7061C1A8B63B200376154 /* PSTGridLayoutInfo.m in Sources */,
 				3C2923B11988E13300DCCD40 /* BlackListViewController.m in Sources */,
+				18F7F4EC1AF53B9E0085EEB8 /* ChatRoom4ListCell.m in Sources */,
 				90A706001A8B63B200376154 /* MWTapDetectingView.m in Sources */,
 				9003D8A71939D8D000DC38A4 /* EMChatViewCell.m in Sources */,
 				8ADB388C1AE2A17100FCC6FC /* UsernickController.m in Sources */,

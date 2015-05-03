@@ -16,10 +16,16 @@
 #import "EMSearchDisplayController.h"
 #import "ConvertToCommonEmoticonsHelper.h"
 #import "ChatListViewController.h"
+#import "ChatRoom4ListCell.h"
+#import "UIImageView+WebCache.h"
+#import "DDBDynamoDB.h"
+#import "DDUserDAO.h"
+#import "Constants.h"
 
 @interface MainChatListViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
 
 @property (strong, nonatomic) NSMutableArray *dataSource;
+@property (strong, nonatomic) DDUserDAO *ddUserDao;
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (nonatomic, strong) EMSearchBar *searchBar;
@@ -36,6 +42,7 @@
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (self) {
 		_dataSource = [NSMutableArray array];
+        _ddUserDao = [[DDUserDAO alloc] init];
 	}
 	return self;
 }
@@ -216,25 +223,6 @@
 
 #pragma mark - private
 
-- (NSMutableArray *)loadDataSource {
-	NSMutableArray *ret = nil;
-	NSArray *conversations = [[EaseMob sharedInstance].chatManager conversations];
-
-	NSArray *sorte = [conversations sortedArrayUsingComparator:
-	                  ^(EMConversation *obj1, EMConversation *obj2) {
-	    EMMessage *message1 = [obj1 latestMessage];
-	    EMMessage *message2 = [obj2 latestMessage];
-	    if (message1.timestamp > message2.timestamp) {
-	        return (NSComparisonResult)NSOrderedAscending;
-		} else {
-	        return (NSComparisonResult)NSOrderedDescending;
-		}
-	}];
-
-	ret = [[NSMutableArray alloc] initWithArray:sorte];
-	return ret;
-}
-
 // 得到最后消息时间
 - (NSString *)lastMessageTimeByConversation:(EMConversation *)conversation {
 	NSString *ret = @"";
@@ -310,31 +298,41 @@
 	} else if (indexPath.section == 1) {
 		normalCell.textLabel.text = @"四人聊聊聊~liao";
 	} else if (indexPath.section == 2) {
-		static NSString *identify = @"chatListCell";
-		ChatListCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
+		static NSString *identify = @"chatRoom4ListCell";
+		ChatRoom4ListCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
 
 		if (!cell) {
-			cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identify];
+			cell = [[ChatRoom4ListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
 		}
-		EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
-		cell.name = conversation.chatter;
-		if (!conversation.isGroup) {
-			cell.placeholderImage = [UIImage imageNamed:@"chatListCellHead.png"];
-		} else {
-			NSString *imageName = @"groupPublicHeader";
-			NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
-			for (EMGroup *group in groupArray) {
-				if ([group.groupId isEqualToString:conversation.chatter]) {
-					cell.name = group.groupSubject;
-					imageName = group.isPublic ? @"groupPublicHeader" : @"groupPrivateHeader";
-					break;
-				}
-			}
-			cell.placeholderImage = [UIImage imageNamed:imageName];
-		}
-		cell.detailMsg = [self subTitleMessageByConversation:conversation];
-		cell.time = [self lastMessageTimeByConversation:conversation];
-		cell.unreadCount = [self unreadMessageCountByConversation:conversation];
+        
+        CHATROOM4 *chatRoom4 = [self.dataSource objectAtIndex:indexPath.row];
+        
+        //用户1
+        DDUser *user1 = [self.ddUserDao selectDDuserByUid:chatRoom4.UID1];
+        [cell.user1Avatar sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user1.picPath]]
+                            placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+        cell.user1Name.text = user1.nickName;
+        
+        //用户2
+        DDUser *user2 = [self.ddUserDao selectDDuserByUid:chatRoom4.UID2];
+        [cell.user2Avatar sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user2.picPath]]
+                            placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+        cell.user2Name.text = user2.nickName;
+        
+        //用户3
+        DDUser *user3 = [self.ddUserDao selectDDuserByUid:chatRoom4.UID3];
+        [cell.user3Avatar sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user3.picPath]]
+                            placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+        cell.user3Name.text = user3.nickName;
+        
+        //用户4
+        DDUser *user4 = [self.ddUserDao selectDDuserByUid:chatRoom4.UID4];
+        [cell.user4Avatar sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user4.picPath]]
+                            placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+        cell.user4Name.text = user4.nickName;
+        
+        cell.timeLabel.text = [NSDate formattedTimeFromTimeInterval:chatRoom4.systemTimeNumber.longLongValue];
+        
 		if (indexPath.row % 2 == 1) {
 			cell.contentView.backgroundColor = RGBACOLOR(246, 246, 246, 1);
 		} else {
@@ -358,7 +356,7 @@
 	} else if (indexPath.section == 1) {
 		return 40;
 	}
-    return [ChatListCell tableView:tableView heightForRowAtIndexPath:indexPath];
+    return [ChatRoom4ListCell tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -505,9 +503,39 @@
 #pragma mark - public
 
 - (void)refreshDataSource {
-	self.dataSource = [self loadDataSource];
-	[_tableView reloadData];
-	[self hideHud];
+	NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
+	AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+	AWSDynamoDBScanExpression *scanExpression = [AWSDynamoDBScanExpression new];
+	scanExpression.limit = @10;
+
+	[[dynamoDBObjectMapper scan:[CHATROOM4 class]
+	                 expression:scanExpression]
+	 continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
+	    if (task.error) {
+	        NSLog(@"The request failed. Error: [%@]", task.error);
+		}
+	    if (task.exception) {
+	        NSLog(@"The request failed. Exception: [%@]", task.exception);
+		}
+
+	    if (task.result) {
+	        AWSDynamoDBPaginatedOutput *paginatedOutput = task.result;
+	        NSArray *sortedArray = [paginatedOutput.items sortedArrayUsingComparator:
+	                                ^(CHATROOM4 *obj1, CHATROOM4 *obj2) {
+	            if (obj1.systemTimeNumber < obj2.systemTimeNumber) {
+	                return (NSComparisonResult)NSOrderedAscending;
+				} else {
+	                return (NSComparisonResult)NSOrderedDescending;
+				}
+			}];
+
+	        [self.dataSource removeAllObjects];
+	        [self.dataSource addObjectsFromArray:sortedArray];
+	        [self.tableView reloadData];
+	        [self hideHud];
+		}
+	    return nil;
+	}];
 }
 
 - (void)isConnect:(BOOL)isConnect {
