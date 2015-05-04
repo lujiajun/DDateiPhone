@@ -2,7 +2,7 @@
 #import "DDBDynamoDB.h"
 #import "FMDatabase.h"
 
-NSString *const DATABASE_NAME = @"DoubleDate.db";
+NSString *const DATABASE_NAME = @"DoubleDate_%@.db";
 
 @implementation LocalDbService
 
@@ -39,10 +39,12 @@ NSString *const DATABASE_NAME = @"DoubleDate.db";
 
 //获取document目录并返回数据库目录
 - (NSString *)dataFilePath {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSLog(@"Double date database path: %@", documentsDirectory);
-    return [documentsDirectory stringByAppendingPathComponent:DATABASE_NAME];//这里很神奇，可以定义成任何类型的文件，也可以不定义成.db文件，任何格式都行，定义成.sb文件都行，达到了很好的数据隐秘性
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	NSLog(@"Double date database path: %@", documentsDirectory);
+	NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
+	NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
+	return [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:DATABASE_NAME, loginUsername]];//这里很神奇，可以定义成任何类型的文件，也可以不定义成.db文件，任何格式都行，定义成.sb文件都行，达到了很好的数据隐秘性
 }
 
 
