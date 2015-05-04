@@ -25,6 +25,10 @@ NSString * const DDUserTable=@"DDUser";
             grade varchar(10), \
             isDoublerID INTEGER, \
             photos varchar(100), \
+            city varchar(50),\
+            birthday varchar(50),\
+            hobbies varchar(200),\
+            sign varchar(200),\
             UNIQUE(UID));", DDUserTable];
 }
 
@@ -44,6 +48,10 @@ NSString * const DDUserTable=@"DDUser";
             dduser.grade = [rs stringForColumn:@"grade"];
             dduser.isDoublerID = [NSNumber numberWithInt:[rs intForColumn:@"isDoublerID"]];
             dduser.photos = [rs stringForColumn:@"photos"];
+            dduser.birthday = [rs stringForColumn:@"birthday"];
+            dduser.hobbies = [rs stringForColumn:@"hobbies"];
+            dduser.city = [rs stringForColumn:@"city"];
+            dduser.sign = [rs stringForColumn:@"sign"];
         }
         [rs close];
         [self.db close];
@@ -83,6 +91,10 @@ NSString * const DDUserTable=@"DDUser";
                      university, \
                      grade, \
                      photos,\
+                     city,\
+                     birthday,\
+                     hobbies,\
+                     sign,\
                      isDoublerID) \
                      values(?, ?, ?, ?, ?, ?, ?, ?,?)", DDUserTable];
 	if ([self.db open]) {
@@ -95,6 +107,10 @@ NSString * const DDUserTable=@"DDUser";
                     dduser.university,
                     dduser.grade,
                     dduser.photos,
+                    dduser.city,
+                    dduser.birthday,
+                    dduser.hobbies,
+                    dduser.sign,
                     dduser.isDoublerID];
 		if (res) {
 			NSLog(@"DDUser: success to insert db");
@@ -108,6 +124,20 @@ NSString * const DDUserTable=@"DDUser";
    
     if ([self.db open]) {
         BOOL res = [self.db executeUpdate:@"UPDATE DDUser SET photos = ? WHERE UID = ?",photos,UID];
+        if (res) {
+            NSLog(@"DDUser: success to insert db");
+        } else {
+            NSLog(@"DDUser: error when insert db");
+        }
+        [self.db close];
+    }
+}
+
+
+- (void)updateByUID:(DDUser *)user{
+    
+    if ([self.db open]) {
+        BOOL res = [self.db executeUpdate:@"UPDATE DDUser SET nickName= ?,isPic=?,picPath=?,gender=?,university=?,grade=?,photos=?,city=?,birthday=?,hobbies=?,sign=?,isDoublerID=? WHERE UID = ?",user.nickName,user.isPic,user.picPath,user.gender,user.university,user.grade,user.city,user.birthday,user.hobbies,user.sign,user.isDoublerID,user.UID];
         if (res) {
             NSLog(@"DDUser: success to insert db");
         } else {

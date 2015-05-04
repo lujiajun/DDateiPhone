@@ -450,8 +450,6 @@
         }
         NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
         _username = [loginInfo objectForKey:kSDKUsername];
-//        NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), _username, _toAddFriend];
-    
         //新建四人聊天室
         //1判断是否已经存在
         //2 加入环信
@@ -459,37 +457,7 @@
         //4 加入本地
     [self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"create4Groups" object:@NO];
-//    CHATROOM4 *chatroom4=[CHATROOM4 new];
-    
-//    EMError *error = nil;
-    
-//    EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
-//    groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
-//    EMGroup *group = [[EaseMob sharedInstance].chatManager createGroupWithSubject:_room2.RID description:_room2.Motto invitees:@[_username,_toAddFriend,_room2.UID1,_room2.UID2] initialWelcomeMessage:messageStr styleSetting:groupStyleSetting error:&error];
-////
-//    if(!error){
-//        NSLog(@"创建成功 -- %@",group);
-//    }
-//    chatroom4.GID=group.groupId;
-//    NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
-//    [formatter setDateFormat:@"yyyyMMdd_HHmmss"];
-//    chatroom4.CTIMER=[formatter stringFromDate:[NSDate date]];
-//    chatroom4.CTIMEH=@"Time";
-//    chatroom4.RID=_room2.RID;
-//    chatroom4.UID1=_room2.UID1;
-//    chatroom4.UID2=_room2.UID2;
-//    chatroom4.UID3=_username;
-//    chatroom4.UID4=_toAddFriend;
-//    chatroom4.isLikeUID1=[NSNumber numberWithInt:0];
-//    chatroom4.isLikeUID2=[NSNumber numberWithInt:0];
-//    chatroom4.isLikeUID3=[NSNumber numberWithInt:0];
-//    chatroom4.isLikeUID4=[NSNumber numberWithInt:0];
-//    chatroom4.roomStatus=@"New";
-//    chatroom4.systemTimeNumber=[NSNumber numberWithInt:[[NSDate date] timeIntervalSince1970]*1000];
-//    ChatRoom4DB *chatroom4DB=[ChatRoom4DB alloc];
-//    [chatroom4DB insertChatroom4:chatroom4];
-    
-    //查询每个用户的数据库信息 toAddFriend必须RID
+
   
 
   

@@ -87,9 +87,59 @@ int secondsCountDown = 30;
 NSDateFormatter *dateformatter;
 
 -(id) initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend{
-    _friendname=friend;
+    
     
     _chatroom4=room4;
+    if(friend==nil){
+      DDUser *login=  [IndexViewController instanceDDuser];
+        if(_userDao==nil){
+            _userDao=[[DDUserDAO alloc]init];
+        }
+        NSString *gender=nil;
+        if(login!=nil){
+            gender=login.gender;
+        }
+        if(![login.UID isEqualToString:room4.UID1]){
+            DDUser *user1=[_userDao selectDDuserByUid:room4.UID1];
+            if(user1!=nil && [user1.gender isEqualToString:gender]){
+                _friend=user1;
+                _friendname=user1.UID;
+                return self;
+                
+            }
+        }
+        if(![login.UID isEqualToString:room4.UID2]){
+            DDUser *user2=[_userDao selectDDuserByUid:room4.UID2];
+            if(user2!=nil && [user2.gender isEqualToString:gender]){
+                _friend=user2;
+                _friendname=user2.UID;
+                return self;
+                
+            }
+        }
+        if(![login.UID isEqualToString:room4.UID3]){
+            DDUser *user3=[_userDao selectDDuserByUid:room4.UID3];
+            if(user3!=nil && [user3.gender isEqualToString:gender]){
+                _friend=user3;
+                _friendname=user3.UID;
+                return self;
+                
+            }
+        }
+        if(![login.UID isEqualToString:room4.UID4]){
+            DDUser *user4=[_userDao selectDDuserByUid:room4.UID4];
+            if(user4!=nil && [user4.gender isEqualToString:gender]){
+                _friend=user4;
+                _friendname=user4.UID;
+                return self;
+                
+            }
+        }
+        
+        
+    }else{
+        _friendname=friend;
+    }
     return self;
 }
 - (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup
@@ -141,7 +191,7 @@ NSDateFormatter *dateformatter;
         }
         else{
             [weakSelf showHint:NSLocalizedString(@"group is over time", @"dissolution of group failure")];
-            IndexViewController *selectionController = [[IndexViewController alloc] init];
+            IndexViewController *selectionController = [IndexViewController alloc];
             [self.navigationController pushViewController:selectionController animated:YES];
 
           
@@ -159,10 +209,10 @@ NSDateFormatter *dateformatter;
     dateformatter = [[NSDateFormatter alloc]init] ;//定义NSDateFormatter用来显示格式
     [dateformatter setDateFormat:@"hh mm ss"];//设定格式
     
-    self.lab=[[UILabel alloc]initWithFrame:CGRectMake(100, 100, 200, 100)];
+    self.lab=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 100)];
     self.lab.text=@"";
-//    [self.tableView addSubview:self.lab];
-//    _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
+    [self.tableView addSubview:self.lab];
+    _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
     //使用timer定时，每秒触发一次，然后就是写selector了。
     [self registerBecomeActive];
     // Do any additional setup after loading the view.
@@ -256,11 +306,11 @@ NSDateFormatter *dateformatter;
 //顶部bar
 - (void)setupBarButtonItem
 {
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    [self.navigationItem setLeftBarButtonItem:backItem];
+//    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+//    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+//    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+//    [self.navigationItem setLeftBarButtonItem:backItem];
     
     if (_isChatGroup) {
         //跳转到详情页面，需要修改

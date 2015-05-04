@@ -60,6 +60,7 @@
 		8A038C481AF51A95007A05BE /* AliCloudController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C431AF51A95007A05BE /* AliCloudController.m */; };
 		8A038C491AF51A95007A05BE /* DDBDynamoDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C451AF51A95007A05BE /* DDBDynamoDB.m */; };
 		8A038C4A1AF51A95007A05BE /* LocalDbService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C471AF51A95007A05BE /* LocalDbService.m */; };
+		8A19991C1AF7E30000F9A68C /* DDupdatePicAndName.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A19991B1AF7E30000F9A68C /* DDupdatePicAndName.m */; };
 		8A4020C51AE357DD00806014 /* NewSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4020C41AE357DD00806014 /* NewSettingViewController.m */; };
 		8A40210F1AE3597900806014 /* 查看两人聊天室信息.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020F41AE3597900806014 /* 查看两人聊天室信息.png */; };
 		8A4021101AE3597900806014 /* 聊天—编组方式.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020F51AE3597900806014 /* 聊天—编组方式.png */; };
@@ -521,6 +522,8 @@
 		8A038C451AF51A95007A05BE /* DDBDynamoDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDBDynamoDB.m; path = "Other Service/DDBDynamoDB.m"; sourceTree = "<group>"; };
 		8A038C461AF51A95007A05BE /* LocalDbService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalDbService.h; path = "Other Service/LocalDbService.h"; sourceTree = "<group>"; };
 		8A038C471AF51A95007A05BE /* LocalDbService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalDbService.m; path = "Other Service/LocalDbService.m"; sourceTree = "<group>"; };
+		8A19991A1AF7E29800F9A68C /* DDupdatePicAndName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDupdatePicAndName.h; sourceTree = "<group>"; };
+		8A19991B1AF7E30000F9A68C /* DDupdatePicAndName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDupdatePicAndName.m; sourceTree = "<group>"; };
 		8A4020B71AE3579F00806014 /* OSSArgs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSArgs.h; sourceTree = "<group>"; };
 		8A4020B81AE3579F00806014 /* OSSBucket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSBucket.h; sourceTree = "<group>"; };
 		8A4020B91AE3579F00806014 /* OSSClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSClient.h; sourceTree = "<group>"; };
@@ -1713,6 +1716,8 @@
 				8AFE46621AED08B100B57368 /* DDHeadPicUpdate.m */,
 				8AEF0ECC1AF31C2E00DE2484 /* HelpViewController.h */,
 				8AEF0ECD1AF31C8900DE2484 /* HelpViewController.m */,
+				8A19991A1AF7E29800F9A68C /* DDupdatePicAndName.h */,
+				8A19991B1AF7E30000F9A68C /* DDupdatePicAndName.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -2925,6 +2930,7 @@
 				90A705FB1A8B63B200376154 /* MWGridCell.m in Sources */,
 				90985E481A8A08D400976DD6 /* InvitationManager.m in Sources */,
 				8A038C311AF51A54007A05BE /* Commbox.m in Sources */,
+				8A19991C1AF7E30000F9A68C /* DDupdatePicAndName.m in Sources */,
 				8A038C301AF51A54007A05BE /* ChatRoomDetail.m in Sources */,
 				9003D86F1939D8D000DC38A4 /* ChatSendHelper.m in Sources */,
 				8ADB38501AE286F000FCC6FC /* PersonalController.m in Sources */,

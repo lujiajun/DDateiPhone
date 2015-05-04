@@ -322,6 +322,7 @@
 		if (!cell) {
 			cell = [[ChatRoom4ListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
 		}
+       
         
         CHATROOM4 *chatRoom4 = [self.dataSource objectAtIndex:indexPath.row];
         
@@ -383,24 +384,12 @@
         [self.navigationController pushViewController:root2ListVC animated:YES];
 	} else if (indexPath.section == 2) {
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-		EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
-
-		ChatViewController *chatController;
-		NSString *title = conversation.chatter;
-		if (conversation.isGroup) {
-			NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
-			for (EMGroup *group in groupArray) {
-				if ([group.groupId isEqualToString:conversation.chatter]) {
-					title = group.groupSubject;
-					break;
-				}
-			}
-		}
-
-		NSString *chatter = conversation.chatter;
-		chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup];
-		chatController.title = title;
+        
+       
+        CHATROOM4 *chatRoom4 = [self.dataSource objectAtIndex:indexPath.row];
+//        - (EMGroup *)fetchGroupInfo:(NSString *)groupId error:(EMError **)pError;
+		ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:chatRoom4.GID isGroup:YES] initRoom4:chatRoom4 friend:nil];
+//		chatController.title = chatRoom;
 		[self.navigationController pushViewController:chatController animated:YES];
 	}
 }
@@ -531,7 +520,7 @@
 	        return (NSComparisonResult)NSOrderedDescending;
 		}
 	}];
-
+//    _conversationSource=[self loadDataSource];
 	[self.dataSource removeAllObjects];
 	[self.dataSource addObjectsFromArray:sortedArray];
 	[self.tableView reloadData];

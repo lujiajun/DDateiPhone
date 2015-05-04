@@ -240,6 +240,7 @@
 		if ([conversation isGroup]) {
 			[conversations removeObject:conversation];
 		}
+        
 	}
 
 	NSArray *sorte = [conversations sortedArrayUsingComparator:

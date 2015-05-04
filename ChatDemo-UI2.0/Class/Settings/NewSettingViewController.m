@@ -30,6 +30,7 @@
 #import "DDUserDAO.h"
 #import "UIImageView+EMWebCache.h"
 #import "Constants.h"
+#import "DDupdatePicAndName.h"
 @interface NewSettingViewController ()
 
 @property (strong, nonatomic) UIView *footerView;
@@ -46,6 +47,7 @@
 @property(strong,nonatomic) AliCloudController *aliCloud;
 @property(strong,nonatomic) NSString *loginname;
 @property(strong,nonatomic) UIImageView *plusImageView;
+@property(strong,nonatomic) DDUser *user;
 
 @end
 
@@ -78,6 +80,7 @@
     
     self.tableView.backgroundColor = [UIColor grayColor];
     self.tableView.tableFooterView = self.footerView;
+    
     if(_aliCloud==nil){
         _aliCloud=[AliCloudController alloc];
         [_aliCloud initSdk];
@@ -89,14 +92,15 @@
     }
     if(_addedPicArray==nil){
         _addedPicArray =[[NSMutableArray alloc]init];
-        DDUser *user= [IndexViewController instanceDDuser];
-        if(user==nil){
+        _user= [IndexViewController instanceDDuser];
+        if(_user==nil){
             IndexViewController *index=[IndexViewController alloc];
             [index initdduser];
-            user=[IndexViewController instanceDDuser];
+            _user=[IndexViewController instanceDDuser];
         }
-        if(user.photos!=nil){
-            _addedPicArray= [user.photos componentsSeparatedByString:@","];
+        if(_user.photos!=nil){
+            _addedPicArray= [[NSMutableArray alloc] initWithArray:[_user.photos componentsSeparatedByString:@","]];
+            
         }
 
     }
@@ -317,7 +321,11 @@
             [cell.contentView addSubview:bakview];
             
             UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(30, bakview.frame.origin.y+5, 100, 20)];
-            mylable.text=[@"学校：   " stringByAppendingString:[IndexViewController instanceDDuser].university];
+            if(_user!=nil&&_user.city!=nil){
+                mylable.text=[@"城市：   " stringByAppendingString:_user.city];
+            }else{
+                mylable.text=@"城市：   请编辑城市信息";
+            }
             mylable.textAlignment=NSTextAlignmentLeft;
             mylable.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:mylable];
@@ -333,29 +341,54 @@
             bianjiView.frame = CGRectMake(cell.frame.size.width-30, mylable.frame.origin.y, 15, 15);
             [bakview addSubview:bianjiView];
             
-            UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(30, mylable.frame.origin.y+20, 200, 20)];
-            city.text=@"城市：   北京" ;
-            city.font=[UIFont fontWithName:@"Helvetica" size:12];
-            [bakview addSubview:city];
+            UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(30, mylable.frame.origin.y+20, 200, 20)];
+            if(_user!=nil&&_user.university!=nil){
+                university.text=[@"学校：      " stringByAppendingString:_user.university] ;
+            }else{
+                university.text=@"学校：   请编辑学校信息";
+            }
+            university.font=[UIFont fontWithName:@"Helvetica" size:12];
+            [bakview addSubview:university];
             
-            UILabel *school=[[UILabel alloc]initWithFrame:CGRectMake(30, city.frame.origin.y+20, 200, 20)];
-            school.text=[@"年级：   " stringByAppendingString:[IndexViewController instanceDDuser].grade];
-            school.font=[UIFont fontWithName:@"Helvetica" size:12];
-            [bakview addSubview:school];
+//            UILabel *school=[[UILabel alloc]initWithFrame:CGRectMake(30, city.frame.origin.y+20, 200, 20)];
+//            if(_user!=nil&&_user.city!=nil){
+//                school.text=[@"年级：   " stringByAppendingString:[IndexViewController instanceDDuser].grade];
+//            }
+//            
+//            school.font=[UIFont fontWithName:@"Helvetica" size:12];
+//            [bakview addSubview:school];
             
-            UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(30, school.frame.origin.y+20, 200, 20)];
-            gender.text=[@"性别：   " stringByAppendingString:[IndexViewController instanceDDuser].gender];
+            UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(30, university.frame.origin.y+20, 200, 20)];
+            if(_user!=nil&&_user.gender!=nil){
+                gender.text=[@"性别：   " stringByAppendingString:_user.gender];
+   
+            }else{
+                gender.text=@"性别：   请编辑性别信息";
+            }
+           
             gender.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:gender];
             
             UILabel *intre=[[UILabel alloc]initWithFrame:CGRectMake(30, gender.frame.origin.y+20, 200, 20)];
-            intre.text=[@"爱好：   " stringByAppendingString:@"testrttttttttttttttttttttttttt"];
+            if(_user!=nil&&_user.hobbies!=nil){
+                intre.text=[@"爱好：   " stringByAppendingString:_user.hobbies];
+            }else{
+                intre.text=@"爱好：   请编辑你的兴趣爱好";
+            }
+
+            
             intre.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:intre];
             
             UILabel *sign=[[UILabel alloc]initWithFrame:CGRectMake(30, intre.frame.origin.y+20, 200, 20)];
-            sign.text=[@"签名：   " stringByAppendingString:@"testrttttttttttttttttttttttttt"];
-            sign.font=[UIFont fontWithName:@"Helvetica" size:12];
+            if(_user!=nil&&_user.sign!=nil){
+                sign.text=[@"签名：   " stringByAppendingString:_user.sign];
+
+            }else{
+                sign.text=@"签名：   请编辑你得个性签名";
+
+            }
+                        sign.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:sign];
             //            cell.textLabel.text = NSLocalizedString(@"title.buddyBlock", @"Black List");
             //            cell.textLabel.text=@"CESHI";
@@ -559,7 +592,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch (indexPath.section) {
         case 0:{
-            PersonalController *pushController = [PersonalController alloc] ;
+            DDupdatePicAndName *pushController = [DDupdatePicAndName alloc] ;
             [self.navigationController pushViewController:pushController animated:YES];
 
             break;
