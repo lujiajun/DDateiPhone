@@ -71,7 +71,9 @@ static DDUser *uuser;
         _userDao=[[DDUserDAO alloc]init];
     }
     //chaxun
-    [self.chatroom2Dao refreshList];
+    [self.chatroom2Dao refreshListWithBlock:^{
+        [self.tableView reloadData];
+    }];
     [self initdduser];
 }
 
@@ -189,8 +191,10 @@ static DDUser *uuser;
 
 - (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView {
 	__weak IndexViewController *weakSelf = self;
-    [self.chatroom2Dao refreshList];
-	[weakSelf.slimeView endRefresh];
+	[self.chatroom2Dao refreshListWithBlock: ^{
+	    [self.tableView reloadData];
+	    [weakSelf.slimeView endRefresh];
+	}];
 }
 
 #pragma mark - UIScrollViewDelegate

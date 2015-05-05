@@ -14,4 +14,6 @@
 @property (strong, nonatomic) FMDatabase *db;
 
 - (NSString *)tableCreateSql;
+
+- (id)fillModelWithFMResultSet:(FMResultSet *)rs;
 @end

@@ -103,7 +103,9 @@
    //更新首页内容
     ChatRoom2DAO *room2dao=[ChatRoom2DAO alloc];
 
-    [room2dao refreshList];
+    [room2dao refreshListWithBlock:^{
+        //TODO
+    }];
 
 }
 

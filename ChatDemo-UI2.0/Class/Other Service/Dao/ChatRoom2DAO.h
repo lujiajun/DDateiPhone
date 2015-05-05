@@ -8,10 +8,12 @@
 
 #import "BaseDAO.h"
 
+typedef void(^SuccussBlock)();
+
 @interface ChatRoom2DAO : BaseDAO
 
 @property(strong, nonatomic) NSArray *chatroom2s;
 
-- (void)refreshList;
+- (void)refreshListWithBlock:(SuccussBlock)successBlock;
 
 @end

@@ -23,8 +23,7 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
 
 - (NSString *)tableCreateSql {
 	return [NSString stringWithFormat:@"Create table if not exists %@( \
-            ID INTEGER PRIMARY KEY AUTOINCREMENT, \
-            RID varchar(50), \
+            RID varchar(50) PRIMARY KEY, \
             ClickNum varchar(10), \
             Gender varchar(10), \
             GradeFrom varchar(10), \
@@ -61,11 +60,9 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
 
 #pragma mark - Public
 
-- (void)refreshList {
+- (void)refreshListWithBlock:(SuccussBlock)successBlock {
 	//先查询，没有在网络数据库
-    NSLog(@"Begin");
-	self.chatroom2s = [self getTenLocalChatRoom2];
-    NSLog(@"End");
+	self.chatroom2s = [self getLocalChatRoom2ByCount:20];
 	if (self.chatroom2s == nil || [self.chatroom2s count] == 0) {
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
@@ -76,7 +73,7 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
 		[[dynamoDBObjectMapper scan:[CHATROOM2 class]
 		                 expression:scanExpression]
 		 continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+		    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 		    if (task.error) {
 		        NSLog(@"The request failed. Error: [%@]", task.error);
 			}
@@ -87,6 +84,7 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
 
 		    AWSDynamoDBPaginatedOutput *paginatedOutput = task.result;
 		    self.chatroom2s = paginatedOutput.items;
+		    successBlock();
 		    for (CHATROOM2 *chatroom2 in paginatedOutput.items) {
 		        if (chatroom2.RID != nil && chatroom2.UID1 != nil & chatroom2.UID2 != nil) {
 		            //插入本地数据 item
@@ -105,6 +103,8 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
 
 		    return nil;
 		}];
+	} else {
+		successBlock();
 	}
 }
 
@@ -139,27 +139,27 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
 	}
 }
 
-- (NSMutableArray *)getTenLocalChatRoom2 {
+- (NSMutableArray *)getLocalChatRoom2ByCount:(int)count {
 	NSMutableArray *rooms = [NSMutableArray arrayWithCapacity:10];
-    NSString *sql = [NSString stringWithFormat:@"select * from %@ order by ID limit 10", ChatRoom2Table];
-    if ([self.db open]) {
-        FMResultSet *rs = [self.db executeQuery:sql];
-        while ([rs next]) {
-            CHATROOM2 *chatroom2 = [CHATROOM2 new];
-            chatroom2.RID = [rs stringForColumn:@"RID"];
-            chatroom2.ClickNum = [rs stringForColumn:@"ClickNum"];
-            chatroom2.Gender = [rs stringForColumn:@"Gender"];
-            chatroom2.GradeFrom = [rs stringForColumn:@"GradeFrom"];
-            chatroom2.Motto = [rs stringForColumn:@"Motto"];
-            chatroom2.PicturePath = [rs stringForColumn:@"PicturePath"];
-            chatroom2.SchoolRestrict = [rs stringForColumn:@"SchoolRestrict"];
-            chatroom2.UID1 = [rs stringForColumn:@"UID1"];
-            chatroom2.UID2 = [rs stringForColumn:@"UID2"];
-            [rooms addObject:chatroom2];
-        }
-        [rs close];
-        [self.db close];
-    }
+	NSString *sql = [NSString stringWithFormat:@"select * from %@ order by ID limit %d", ChatRoom2Table, count];
+	if ([self.db open]) {
+		FMResultSet *rs = [self.db executeQuery:sql];
+		while ([rs next]) {
+			CHATROOM2 *chatroom2 = [CHATROOM2 new];
+			chatroom2.RID = [rs stringForColumn:@"RID"];
+			chatroom2.ClickNum = [rs stringForColumn:@"ClickNum"];
+			chatroom2.Gender = [rs stringForColumn:@"Gender"];
+			chatroom2.GradeFrom = [rs stringForColumn:@"GradeFrom"];
+			chatroom2.Motto = [rs stringForColumn:@"Motto"];
+			chatroom2.PicturePath = [rs stringForColumn:@"PicturePath"];
+			chatroom2.SchoolRestrict = [rs stringForColumn:@"SchoolRestrict"];
+			chatroom2.UID1 = [rs stringForColumn:@"UID1"];
+			chatroom2.UID2 = [rs stringForColumn:@"UID2"];
+			[rooms addObject:chatroom2];
+		}
+		[rs close];
+		[self.db close];
+	}
 	return rooms;
 }
 

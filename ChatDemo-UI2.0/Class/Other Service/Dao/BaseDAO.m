@@ -29,4 +29,8 @@
     return nil;
 }
 
+- (id)fillModelWithFMResultSet:(FMResultSet *)rs {
+	return nil;
+}
+
 @end
