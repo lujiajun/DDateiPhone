@@ -3135,11 +3135,11 @@
 					"$(PROJECT_DIR)/OSS-Universal",
 					"$(PROJECT_DIR)/EaseMobSDK/lib",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0df0ea90-f71b-47f7-8555-de0ae7ad0786";
-				VALID_ARCHS = "";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3171,11 +3171,11 @@
 					"$(PROJECT_DIR)/OSS-Universal",
 					"$(PROJECT_DIR)/EaseMobSDK/lib",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0df0ea90-f71b-47f7-8555-de0ae7ad0786";
-				VALID_ARCHS = "";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
