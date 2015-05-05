@@ -135,7 +135,7 @@
              _nicktext = [[UITextField alloc] initWithFrame:CGRectMake(0, 10, cell.frame.size.width, 30)];
             [_nicktext setBorderStyle:UITextBorderStyleBezel]; //外框类型
             
-            _nicktext.placeholder = NewSettingViewController.instanceDDuser.nickName; //默认显示的字
+            _nicktext.placeholder = _username; //默认显示的字
             [cell.contentView addSubview:_nicktext];
             
             
@@ -170,10 +170,10 @@
     //        xiugai头像
     DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
     DDUser *user=[DDUser new];
-    user=NewSettingViewController.instanceDDuser;
-    user.nickName=_nicktext.text;
-    NewSettingViewController *newSetting=[NewSettingViewController alloc];
-    [newSetting setDDUser:user];
+//    user=NewSettingViewController.instanceDDuser;
+//    user.nickName=_nicktext.text;
+//    NewSettingViewController *newSetting=[NewSettingViewController alloc];
+//    [newSetting setDDUser:user];
     
     [ddbDynamoDB updateTable:user];
  

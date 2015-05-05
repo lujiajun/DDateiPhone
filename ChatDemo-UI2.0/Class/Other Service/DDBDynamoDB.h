@@ -49,12 +49,15 @@
 //@property(nonatomic,strong)   NSString *lastName;
 @property(nonatomic,strong)   NSString *gender;
 @property(nonatomic,strong)   NSString *university;
-//@property(nonatomic,strong)   NSString *city;
+@property(nonatomic,strong)   NSString *city;
+@property(nonatomic,strong)   NSString *birthday;
 @property(nonatomic,strong)   NSString *grade;
 //@property(nonatomic,strong)   NSString *phoneNumber;
 //@property(nonatomic,assign)   BOOL     *isDoublerID;
 @property(nonatomic,strong)   NSNumber *isDoublerID;
 @property(nonatomic,strong) NSString *photos;
+@property(nonatomic,strong) NSString *sign;
+@property(nonatomic,strong) NSString *hobbies;
 //@property(nonatomic,strong)   NSString *waitingID;
 //@property(nonatomic,assign)   BOOL *autoLogin;
 //@property(nonatomic,assign)   BOOL *vibrate;

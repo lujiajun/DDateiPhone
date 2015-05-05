@@ -22,8 +22,8 @@
 @property (strong,nonatomic)  NSString *password;
 
 
-@property  (strong,nonatomic) Commbox     *commbox;
-@property  (strong,nonatomic) Commbox     *universitycommbox;
+@property  (strong,nonatomic) UITextField  *cityvalue;
+
 
 
 @end
@@ -44,58 +44,21 @@ static DDUser   *dduser;
     self.title = @"注册";
     
     UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.image = [UIImage imageNamed:@"80.png"];
-    imageView.frame = CGRectMake(50, 0, 200, 250);
+    imageView.backgroundColor=[UIColor lightGrayColor];
+    imageView.frame = CGRectMake(0, 0, self.view.frame.size.width, 250);
     [self.view addSubview:imageView];
     
-    UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(5, imageView.frame.size.height+5, 50, 20)];
-    city.text=@"所在城市";
+    UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(5, imageView.frame.size.height+5, 80, 20)];
+    city.text=@"所在城市:";
     city.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:city];
-//    NSMutableDictionary *mulDic = [NSMutableDictionary dictionary];
-//    [mulDic setObject:[NSArray arrayWithObjects:@"15000000", @"/MHz"    , nil] forKey:@"蜂窝公众通信（全国网）"];
-//    [mulDic setObject:[NSArray arrayWithObjects:@"15000000", @"/MHz"    , nil] forKey:@"蜂窝公众通信（非全国网）"];
-//    [mulDic setObject:[NSArray arrayWithObjects:@"50000",    @"每频点"   , nil] forKey:@"集群无线调度系统（全国范围使用）"];
-//    [mulDic setObject:[NSArray arrayWithObjects:@"10000",    @"每频点"   , nil] forKey:@"集群无线调度系统（省、自治区、直辖市范围使用）"];
-//    [mulDic setObject:[NSArray arrayWithObjects:@"2000",     @"每频点"   , nil] forKey:@"集群无线调度系统（地、市范围使用）"];
-//    [mulDic setObject:[NSArray arrayWithObjects:@"2000000",  @"每频点"   , nil] forKey:@"无线寻呼系统（全国范围使用）"];
-//    [mulDic setObject:[NSArray arrayWithObjects:@"2000000",  @"每频点"   , nil] forKey:@"无线寻呼系统（省、自治区、直辖市范围使用"];
-//    [mulDic setObject:[NSArray arrayWithObjects:@"40000",    @"每频点"   , nil] forKey:@"无线寻呼系统（地、市范围使用）"];
-//    [mulDic setObject:[NSArray arrayWithObjects:@"150",      @"每基站"   , nil] forKey:@"无绳电话系统"];
+   
+    _cityvalue = [[UITextField alloc] initWithFrame:CGRectMake(city.frame.origin.x+city.frame.size.width, city.frame.origin.y, 260, 30)];
+    [_cityvalue setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
+    _cityvalue.userInteractionEnabled=YES;
+    _cityvalue.placeholder = @"请输入所在城市"; //默认显示的字
+    [self.view addSubview:_cityvalue];
     
-    
-    NSArray   *arrayData =[[NSArray alloc]initWithObjects:@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",nil];
-    
-    _commbox = [[Commbox alloc] initWithFrame:CGRectMake(70, imageView.frame.size.height+5, 140, 100)];
-    _commbox.textField.placeholder = @"点击请选择";
-    
-//    NSMutableArray* arr = [[NSMutableArray alloc] init];
-//    //*****************************************************************************************************************
-//    NSEnumerator *e = [mulDic keyEnumerator];
-//    for (NSString *key in e) {
-//        //NSLog(@"Key is %@, value is %@", key, [mulDic objectForKey:key]);
-//        [arr addObject:key];
-//        
-//    }
-
-    
-    _commbox.tableArray = arrayData;
-    
-    
-    [self.view addSubview:_commbox];
-    
-    UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(5, imageView.frame.size.height+city.frame.size.height+20, 50, 20)];
-    university.text=@"学校";
-    university.font=[UIFont fontWithName:@"Helvetica" size:12];
-    [self.view addSubview:university];
-
-    //学校
-    NSArray   *universityDate =[[NSArray alloc]initWithObjects:@"清华大学",@"北京大学",@"浙江大学",nil];
-    _universitycommbox = [[Commbox alloc] initWithFrame:CGRectMake(70, imageView.frame.size.height+city.frame.size.height+20, 140, 100)];
-    _universitycommbox.textField.placeholder = @"请选择学校";
-    _universitycommbox.tableArray = universityDate;
-    
-    [self.view addSubview:_universitycommbox];
     
     UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, imageView.frame.size.height+city.frame.size.height*2+40, self.view.frame.size.width, 30)];
     registerButton.backgroundColor=[UIColor redColor];
@@ -109,7 +72,7 @@ static DDUser   *dduser;
 //注册账号
 - (void)next{
     if(!self.isEmpty){
-        DDRegisterFinishController *personsign=[[DDRegisterFinishController alloc] init:_username password:_password city:_commbox.textField.text university:_universitycommbox.textField.text];
+        DDRegisterFinishController *personsign=[[DDRegisterFinishController alloc] init:_username password:_password city:_cityvalue.text];
         [self.navigationController pushViewController:personsign animated:YES];
     }
     
@@ -126,7 +89,7 @@ static DDUser   *dduser;
 //判断账号和密码是否为空
 - (BOOL)isEmpty{
     BOOL ret = NO;
-    if (_commbox.textField.text.length == 0 || _universitycommbox.textField.text.length == 0) {
+    if (_cityvalue.text.length == 0) {
         ret = YES;
         [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
                                 message:NSLocalizedString(@"register.school", @"Please choose your city and university")

@@ -168,8 +168,8 @@
         }
 #if !TARGET_IPHONE_SIMULATOR
         //弹出提示
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"login.inputApnsNickname", @"Please enter nickname for apns") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
-        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"login.inputApnsNickname", @"Please enter nickname for apns") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
+//        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
         UITextField *nameTextField = [alert textFieldAtIndex:0];
         nameTextField.text = self.usernameTextField.text;
         [alert show];

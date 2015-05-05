@@ -16,4 +16,5 @@
 
 - (void)insertDDUser:(DDUser *)dduser ;
 - (void)updatePhotosByUID:(NSString *)photos uid:(NSString *) UID;
+- (void)updateByUID:(DDUser *)user;
 @end
