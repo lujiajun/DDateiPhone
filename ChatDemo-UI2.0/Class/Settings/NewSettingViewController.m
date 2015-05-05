@@ -210,6 +210,11 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
+    if(_user==nil){
+        IndexViewController *index=[IndexViewController alloc];
+        [index initdduser];
+        _user=[IndexViewController instanceDDuser];
+    }
     
     switch (indexPath.section) {
             

@@ -96,7 +96,7 @@ NSString * const DDUserTable=@"DDUser";
                      hobbies,\
                      sign,\
                      isDoublerID) \
-                     values(?, ?, ?, ?, ?, ?, ?, ?,?)", DDUserTable];
+                     values(?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?)", DDUserTable];
 	if ([self.db open]) {
 		BOOL res = [self.db executeUpdate:sql,
                     dduser.UID,

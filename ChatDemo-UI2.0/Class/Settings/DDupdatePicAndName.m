@@ -73,6 +73,24 @@
 
 }
 
+//判断账号和密码是否为空
+- (BOOL)isEmpty{
+    BOOL ret = NO;
+    if (_nickvalue.text.length == 0) {
+        ret = YES;
+        [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
+                                message:NSLocalizedString(@"register.nicknameandgender", @"Please input your nickname and gender")
+                     customizationBlock:nil
+                        completionBlock:nil
+                      cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                      otherButtonTitles: nil];
+    }
+    
+    
+    return ret;
+}
+
+
 //-(void) registerUser{
 //    [[NSNotificationCenter defaultCenter] addObserver:self
 //                                             selector:@selector(doRegister)
@@ -89,23 +107,26 @@
 
 //注册账号
 - (void)updateNick{
-    DDUser *user=[IndexViewController instanceDDuser];
-    user.nickName=_nickvalue.text;
-    IndexViewController *newSetting=[IndexViewController alloc];
-    [newSetting setDDUser:user];
-    
-    //上传图片
-    AliCloudController *aliCloud=[AliCloudController alloc];
-    [aliCloud uploadPic:self.data name:self.picpath];
-    
-    DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
-    [ddbDynamoDB updateTable:user];
-    //XIUGAI BENDI
-    DDUserDAO *dao =[[DDUserDAO alloc]init];
-    [dao updateByUID:user];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    
+    if(![self isEmpty]){
+        DDUser *user=[IndexViewController instanceDDuser];
+        user.nickName=_nickvalue.text;
+        IndexViewController *newSetting=[IndexViewController alloc];
+        [newSetting setDDUser:user];
+        
+        //上传图片
+        AliCloudController *aliCloud=[AliCloudController alloc];
+        [aliCloud uploadPic:self.data name:self.picpath];
+        
+        DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
+        [ddbDynamoDB updateTable:user];
+        //XIUGAI BENDI
+        DDUserDAO *dao =[[DDUserDAO alloc]init];
+        [dao updateByUID:user];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+
+    }
     
 }
 
