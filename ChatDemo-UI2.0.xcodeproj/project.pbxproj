@@ -10,6 +10,7 @@
 		180E1A441AEF2C5A007EC1C3 /* MainChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */; };
 		1873D80D1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */; };
 		1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */; };
+		18990C711AF7CC8400523A29 /* UIColor+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 18990C701AF7CC8400523A29 /* UIColor+Category.m */; };
 		18F7F4EC1AF53B9E0085EEB8 /* ChatRoom4ListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F7F4EA1AF53B9E0085EEB8 /* ChatRoom4ListCell.m */; };
 		18F7F4F01AF693100085EEB8 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F7F4EF1AF693100085EEB8 /* Util.m */; };
 		18F7F4F41AF6A60D0085EEB8 /* ChatRoom4DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F7F4F31AF6A60D0085EEB8 /* ChatRoom4DAO.m */; };
@@ -425,6 +426,8 @@
 		180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainChatListViewController.m; sourceTree = "<group>"; };
 		1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libALBB_OSS_IOS_SDK.a; sourceTree = "<group>"; };
 		1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
+		18990C6F1AF7CC8400523A29 /* UIColor+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Category.h"; sourceTree = "<group>"; };
+		18990C701AF7CC8400523A29 /* UIColor+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Category.m"; sourceTree = "<group>"; };
 		18F7F4E91AF53B9E0085EEB8 /* ChatRoom4ListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoom4ListCell.h; sourceTree = "<group>"; };
 		18F7F4EA1AF53B9E0085EEB8 /* ChatRoom4ListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoom4ListCell.m; sourceTree = "<group>"; };
 		18F7F4EE1AF693100085EEB8 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Util.h; path = Utils/Util.h; sourceTree = "<group>"; };
@@ -1653,6 +1656,8 @@
 				90133E601972D11000C49B56 /* NSString+Valid.m */,
 				90133EBF1972DFF400C49B56 /* UIViewController+DismissKeyboard.h */,
 				90133EC01972DFF400C49B56 /* UIViewController+DismissKeyboard.m */,
+				18990C6F1AF7CC8400523A29 /* UIColor+Category.h */,
+				18990C701AF7CC8400523A29 /* UIColor+Category.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -2865,6 +2870,7 @@
 				90A705FE1A8B63B200376154 /* MWPhotoBrowser.m in Sources */,
 				9003D8711939D8D000DC38A4 /* DXFaceView.m in Sources */,
 				90F3ED471A75F3A4005A0135 /* ChatViewController+Category.m in Sources */,
+				18990C711AF7CC8400523A29 /* UIColor+Category.m in Sources */,
 				8A4020C51AE357DD00806014 /* NewSettingViewController.m in Sources */,
 				8A7DBEE31AECC48400D7941F /* DDPersonalUpdateController.m in Sources */,
 				90A706081A8B63B200376154 /* EMSDWebImageManager.m in Sources */,

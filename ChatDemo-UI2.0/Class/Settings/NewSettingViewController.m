@@ -73,7 +73,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title =@"个人主页";
     self.view.backgroundColor = [UIColor redColor];
     
     self.tableView.backgroundColor = [UIColor grayColor];

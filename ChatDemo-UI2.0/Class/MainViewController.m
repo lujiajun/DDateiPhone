@@ -20,11 +20,12 @@
 #import "IndexViewController.h"
 #import "CreateGroupViewController.h"
 #import "MainChatListViewController.h"
+#import "UIColor+Category.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
-@interface MainViewController () <UIAlertViewDelegate, IChatManagerDelegate, IChatManagerDelegate>
+@interface MainViewController () <UIAlertViewDelegate, IChatManagerDelegate, EMCallManagerDelegate>
 {
     IndexViewController *_indexVC;
     MainChatListViewController *_chatListVC;
@@ -37,10 +38,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     UIBarButtonItem *_createGroupItem;
     
 }
-@property (strong, nonatomic) UISwitch *autoLoginSwitch;
 
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
-//@synthesize autoLoginSwitch = _autoLoginSwitch;
 
 
 @end
@@ -63,8 +62,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     if ([UIDevice currentDevice].systemVersion.floatValue >= 7) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    self.title = NSLocalizedString(@"title.index", @"Index");
-    _autoLoginSwitch=[[UISwitch alloc] init];
+    self.title = NSLocalizedString(@"title.index", @"Double Date");
 
     //获取未读消息数，此时并没有把self注册为SDK的delegate，读取出的未读数是上次退出程序时的
     [self didUnreadMessagesCountChanged];
@@ -98,15 +96,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     self.navigationItem.rightBarButtonItem = _inviteFriendItem;
     [self setupUnreadMessageCount];
     [self setupUntreatedApplyCount];
-}
-- (UISwitch *)autoLoginSwitch
-{
-    if (_autoLoginSwitch == nil) {
-        _autoLoginSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(100,20,100,20)];
-        [_autoLoginSwitch addTarget:self action:@selector(autoLoginChanged:) forControlEvents:UIControlEventValueChanged];
-    }
-    
-    return _autoLoginSwitch;
 }
 
 - (void)didReceiveMemoryWarning
@@ -176,19 +165,17 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)setupSubviews
 {
-    //    self.tabBar.backgroundImage = [[UIImage imageNamed:@"tabbarBackground"] stretchableImageWithLeftCapWidth:25 topCapHeight:25];
-    self.tabBar.backgroundColor=[UIColor grayColor];
-    //    self.tabBar.selectionIndicatorImage = [[UIImage imageNamed:@"tabbarSelectBg"] stretchableImageWithLeftCapWidth:25 topCapHeight:25];
+//    self.tabBar.backgroundImage = [[UIImage imageNamed:@"tabbarBackground"] stretchableImageWithLeftCapWidth:25 topCapHeight:25];
+//    self.tabBar.selectionIndicatorImage = [[UIImage imageNamed:@"tabbarSelectBg"] stretchableImageWithLeftCapWidth:25 topCapHeight:25];
+	self.tabBar.backgroundColor = [UIColor colorWithR:248 G:248 B:248];
+    
    
     //index
     _indexVC = [[IndexViewController alloc] init];
 //    [_indexVC networkChanged:_connectionState];
-    _indexVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.index", @"Index")
-                                                        image:nil
-                                                          tag:0];
-    
-    [_indexVC.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"indexon"] //on
-                      withFinishedUnselectedImage:[UIImage imageNamed:@"indexoff"]];
+    _indexVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.index", @"Double Date")
+                                                        image:[UIImage imageNamed:@"indexoff"]
+                                                selectedImage:[UIImage imageNamed:@"indexon"]];
     [self unSelectedTapTabBarItems:_indexVC.tabBarItem];
     [self selectedTapTabBarItems:_indexVC.tabBarItem];
     
@@ -196,30 +183,24 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     _chatListVC = [[MainChatListViewController alloc] init];
     [_chatListVC networkChanged:_connectionState];
     _chatListVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.conversation", @"Conversations")
-                                                           image:nil
-                                                             tag:1];
-    [_chatListVC.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"chaton"]
-                         withFinishedUnselectedImage:[UIImage imageNamed:@"chatoff"]];
+                                                           image:[UIImage imageNamed:@"chatoff"]
+                                                   selectedImage:[UIImage imageNamed:@"chaton"]];
     [self unSelectedTapTabBarItems:_chatListVC.tabBarItem];
     [self selectedTapTabBarItems:_chatListVC.tabBarItem];
     
     //address book
     _contactsVC = [[ContactsViewController alloc] initWithNibName:nil bundle:nil];
     _contactsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.addressbook", @"AddressBook")
-                                                           image:nil
-                                                             tag:2];
-    [_contactsVC.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"friendon"]
-                         withFinishedUnselectedImage:[UIImage imageNamed:@"friendoff"]];
+                                                           image:[UIImage imageNamed:@"friendoff"]
+                                                   selectedImage:[UIImage imageNamed:@"friendon"]];
     [self unSelectedTapTabBarItems:_contactsVC.tabBarItem];
     [self selectedTapTabBarItems:_contactsVC.tabBarItem];
     
     //Setting
     _settingsVC = [[NewSettingViewController alloc] init];
     _settingsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.setting", @"Setting")
-                                                           image:nil
-                                                             tag:3];
-    [_settingsVC.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"settingon"]
-                         withFinishedUnselectedImage:[UIImage imageNamed:@"settingoff"]];
+                                                           image:[UIImage imageNamed:@"settingoff"]
+                                                   selectedImage:[UIImage imageNamed:@"settingon"]];
     _settingsVC.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     [self unSelectedTapTabBarItems:_settingsVC.tabBarItem];
     [self selectedTapTabBarItems:_settingsVC.tabBarItem];
@@ -228,19 +209,17 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self selectedTapTabBarItems:_indexVC.tabBarItem];
 }
 
--(void)unSelectedTapTabBarItems:(UITabBarItem *)tabBarItem
-{
-    [tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                        [UIFont systemFontOfSize:14], UITextAttributeFont,[UIColor whiteColor],UITextAttributeTextColor,
-                                        nil] forState:UIControlStateNormal];
+- (void)unSelectedTapTabBarItems:(UITabBarItem *)tabBarItem {
+	[tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+	                                    [UIFont systemFontOfSize:14], NSFontAttributeName, [UIColor colorWithR:108 G:108 B:108], NSForegroundColorAttributeName,
+	                                    nil] forState:UIControlStateNormal];
 }
 
--(void)selectedTapTabBarItems:(UITabBarItem *)tabBarItem
-{
-    [tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                        [UIFont systemFontOfSize:14],
-                                        UITextAttributeFont,[UIColor colorWithRed:0.393 green:0.553 blue:1.000 alpha:1.000],UITextAttributeTextColor,
-                                        nil] forState:UIControlStateSelected];
+- (void)selectedTapTabBarItems:(UITabBarItem *)tabBarItem {
+	[tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+	                                    [UIFont systemFontOfSize:14],
+	                                    NSFontAttributeName, [UIColor redColor], NSForegroundColorAttributeName,
+	                                    nil] forState:UIControlStateSelected];
 }
 
 // 统计未读消息数
