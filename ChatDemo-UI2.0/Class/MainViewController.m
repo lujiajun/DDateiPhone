@@ -110,22 +110,21 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 #pragma mark - UITabBarDelegate
 
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
-{
-    if (item.tag == 0) {
-        self.title = NSLocalizedString(@"title.index", @"Index");
-        self.navigationItem.rightBarButtonItem = _inviteFriendItem;
-    }else if (item.tag == 1){
-        self.title = NSLocalizedString(@"title.conversation", @"Conversations");
-        self.navigationItem.rightBarButtonItem = _createGroupItem;
-    }else if (item.tag == 2){
-        self.title = NSLocalizedString(@"title.addressbook", @"AddressBook");
-        self.navigationItem.rightBarButtonItem = _addFriendItem;
-    }else if (item.tag == 3){
-        self.title = NSLocalizedString(@"title.setting", @"Setting");
-        self.navigationItem.rightBarButtonItem = nil;
-        [_settingsVC refreshConfig];
-    }
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+	if (item.tag == 0) {
+		self.title = NSLocalizedString(@"title.index", @"Index");
+		self.navigationItem.rightBarButtonItem = _inviteFriendItem;
+	} else if (item.tag == 1)  {
+		self.title = NSLocalizedString(@"title.conversation", @"Conversations");
+		self.navigationItem.rightBarButtonItem = _createGroupItem;
+	} else if (item.tag == 2)  {
+		self.title = NSLocalizedString(@"title.addressbook", @"AddressBook");
+		self.navigationItem.rightBarButtonItem = _addFriendItem;
+	} else if (item.tag == 3)  {
+		self.title = NSLocalizedString(@"title.setting", @"Setting");
+		self.navigationItem.rightBarButtonItem = nil;
+		[_settingsVC refreshConfig];
+	}
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -176,6 +175,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     _indexVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.index", @"Double Date")
                                                         image:[UIImage imageNamed:@"indexoff"]
                                                 selectedImage:[UIImage imageNamed:@"indexon"]];
+    _indexVC.tabBarItem.tag = 0;
     [self unSelectedTapTabBarItems:_indexVC.tabBarItem];
     [self selectedTapTabBarItems:_indexVC.tabBarItem];
     
@@ -185,6 +185,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     _chatListVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.conversation", @"Conversations")
                                                            image:[UIImage imageNamed:@"chatoff"]
                                                    selectedImage:[UIImage imageNamed:@"chaton"]];
+    _chatListVC.tabBarItem.tag = 1;
     [self unSelectedTapTabBarItems:_chatListVC.tabBarItem];
     [self selectedTapTabBarItems:_chatListVC.tabBarItem];
     
@@ -193,6 +194,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     _contactsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.addressbook", @"AddressBook")
                                                            image:[UIImage imageNamed:@"friendoff"]
                                                    selectedImage:[UIImage imageNamed:@"friendon"]];
+    _contactsVC.tabBarItem.tag = 2;
     [self unSelectedTapTabBarItems:_contactsVC.tabBarItem];
     [self selectedTapTabBarItems:_contactsVC.tabBarItem];
     
@@ -201,6 +203,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     _settingsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.setting", @"Setting")
                                                            image:[UIImage imageNamed:@"settingoff"]
                                                    selectedImage:[UIImage imageNamed:@"settingon"]];
+    _settingsVC.tabBarItem.tag = 3;
     _settingsVC.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     [self unSelectedTapTabBarItems:_settingsVC.tabBarItem];
     [self selectedTapTabBarItems:_settingsVC.tabBarItem];
