@@ -79,6 +79,8 @@
 @property(strong,nonatomic) NSString *friendname;
 @property(strong,nonatomic) DDUser *friend;
 @property(strong,nonatomic) DDUserDAO *userDao;
+@property (strong, nonatomic) UIButton *view1;
+@property (nonatomic) NSNumber *count;
 
 @property (nonatomic) BOOL isNewRoom;
 @end
@@ -144,6 +146,8 @@ NSDateFormatter *dateformatter;
     }
     return self;
 }
+
+
 - (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup
 {
     self = [super initWithNibName:nil bundle:nil];
@@ -172,13 +176,13 @@ NSDateFormatter *dateformatter;
     if(secondsCountDown==0){
         [_countDownTimer invalidate];
         //删除数据库记录
-        ChatRoom4DB *db=[ChatRoom4DB alloc];
-        [db deleteRoom4:_chatroom4.GID];
+//        ChatRoom4DB *db=[ChatRoom4DB alloc];
+//        [db deleteRoom4:_chatroom4.GID];
         //删除环信数据
-        [self dissolvegRroup];
+//        [self dissolvegRroup];
         //删除本地数据
-        ChatRoom4DAO *dao=[[ChatRoom4DAO alloc]init];
-        [dao delChatRoom4ByRid:_chatroom4.GID];
+//        ChatRoom4DAO *dao=[[ChatRoom4DAO alloc]init];
+//        [dao delChatRoom4ByRid:_chatroom4.GID];
         
     }
 }
@@ -238,19 +242,29 @@ NSDateFormatter *dateformatter;
     [self.view addSubview:self.tableView];
     [self.tableView addSubview:self.slimeView];
 //    [self.tableView.setUserInteractive:yes];
-    if(_isChatGroup&&_isNewRoom){
+//    if(_isChatGroup&&_isNewRoom){
+        [self initClickCout];
         [self.view addSubview:[self getFriendFrame]];
-        
-        
+  
         dateformatter = [[NSDateFormatter alloc]init] ;//定义NSDateFormatter用来显示格式
         [dateformatter setDateFormat:@"hh mm ss"];//设定格式
-        
-        self.lab=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 100)];
-        self.lab.text=@"";
-        [self.tableView addSubview:self.lab];
+    
         _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
-    }
-   
+    
+        UIView *bak=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-60, 10, 200, 25)];
+    
+        _view1 = [[UIButton alloc] initWithFrame:CGRectMake(5, 0, 120, 25)];
+        [_view1 setImage:[UIImage imageNamed:@"like0"] forState:UIControlStateNormal];
+        [_view1 addTarget:self action:@selector(clickLike) forControlEvents:UIControlEventTouchUpInside];
+    
+        [bak addSubview:_view1];
+        self.lab=[[UILabel alloc]initWithFrame:CGRectMake(_view1.frame.origin.x+_view1.frame.size.width+3, _view1.frame.origin.y, 80, _view1.frame.size.height)];
+        self.lab.text=@"";
+        self.lab.font=[UIFont fontWithName:@"Helvetica" size:12];
+        [bak addSubview:self.lab];
+    
+        [self.navigationItem setTitleView:bak];
+
     [self.view addSubview:self.chatToolBar];
     
  
@@ -264,6 +278,49 @@ NSDateFormatter *dateformatter;
     
     //通过会话管理者获取已收发消息
     [self loadMoreMessages];
+}
+
+-(void) clickLike{
+   //修改数据库和本地数据记录
+    _count=[NSNumber numberWithInt: _count.intValue+1];
+//    NSLog(  [NSString stringWithFormat: @"%d", _count]);
+    if([_count isEqualToNumber:[NSNumber numberWithInt:1]]){
+        [_view1 setImage:[UIImage imageNamed:@"like1"] forState:UIControlStateNormal];
+    }else if ([_count isEqualToNumber:[NSNumber numberWithInt:2]]){
+        [_view1 setImage:[UIImage imageNamed:@"like2"] forState:UIControlStateNormal];
+    }else if ([_count isEqualToNumber:[NSNumber numberWithInt:3]]){
+        [_view1 setImage:[UIImage imageNamed:@"like3"] forState:UIControlStateNormal];
+
+    }else if ([_count isEqualToNumber:[NSNumber numberWithInt:4]]){
+        [_view1 setImage:[UIImage imageNamed:@"likeGo"] forState:UIControlStateNormal];
+        
+
+    }
+    
+}
+
+-(void) initClickCout{
+    if(_count==0){
+        if(_chatroom4.isLikeUID1!=nil&&[_chatroom4.isLikeUID1 isEqualToNumber:[NSNumber numberWithInt:1]]){
+            _count=[NSNumber numberWithInt: _count.intValue+1];
+
+        }
+        if(_chatroom4.isLikeUID2!=nil&&[_chatroom4.isLikeUID2 isEqualToNumber:[NSNumber numberWithInt:1]]){
+            _count=[NSNumber numberWithInt: _count.intValue+1];
+        }
+         if(_chatroom4.isLikeUID3!=nil&&[_chatroom4.isLikeUID3 isEqualToNumber:[NSNumber numberWithInt:1]]){
+             _count=[NSNumber numberWithInt: _count.intValue+1];
+
+        }
+        if(_chatroom4.isLikeUID4!=nil&&[_chatroom4.isLikeUID4 isEqualToNumber:[NSNumber numberWithInt:1]]){
+            _count=[NSNumber numberWithInt: _count.intValue+1];
+            [_view1 setUserInteractionEnabled:NO];
+            //计时停止
+             [_countDownTimer invalidate];
+            
+        }
+    }
+
 }
 
 -(UIButton *) getFriendFrame{

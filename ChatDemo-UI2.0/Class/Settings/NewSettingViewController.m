@@ -264,6 +264,7 @@
             //添加double 号
             UILabel *doubledate=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width/2-35, 134, 150, 20)];
             doubledate.text=[@"Double号:" stringByAppendingString:[IndexViewController instanceDDuser].UID];
+//            NSLog([IndexViewController instanceDDuser].UID);
             doubledate.textAlignment=NSTextAlignmentLeft;
             doubledate.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:doubledate];

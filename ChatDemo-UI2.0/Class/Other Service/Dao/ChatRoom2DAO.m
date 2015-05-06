@@ -110,6 +110,8 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
 }
 
 
+
+
 #pragma mark - Private
 
 - (void)insertChatroom2:(CHATROOM2 *)chatRoom2 {

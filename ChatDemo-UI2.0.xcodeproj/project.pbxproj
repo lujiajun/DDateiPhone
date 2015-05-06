@@ -67,27 +67,13 @@
 		8A4021101AE3597900806014 /* 聊天—编组方式.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020F51AE3597900806014 /* 聊天—编组方式.png */; };
 		8A4021111AE3597900806014 /* 认证图标.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020F61AE3597900806014 /* 认证图标.png */; };
 		8A4021131AE3597900806014 /* 邀请和添加朋友弹出框.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020F81AE3597900806014 /* 邀请和添加朋友弹出框.png */; };
-		8A4021141AE3597900806014 /* chatoff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020F91AE3597900806014 /* chatoff.png */; };
-		8A4021151AE3597900806014 /* chaton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020FA1AE3597900806014 /* chaton.png */; };
 		8A4021161AE3597900806014 /* email.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020FB1AE3597900806014 /* email.png */; };
-		8A4021171AE3597900806014 /* friendoff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020FC1AE3597900806014 /* friendoff.png */; };
-		8A4021181AE3597900806014 /* friendon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020FD1AE3597900806014 /* friendon.png */; };
-		8A4021191AE3597900806014 /* indexall.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020FE1AE3597900806014 /* indexall.png */; };
-		8A40211A1AE3597900806014 /* indexall2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4020FF1AE3597900806014 /* indexall2.png */; };
-		8A40211B1AE3597900806014 /* indexoff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4021001AE3597900806014 /* indexoff.png */; };
-		8A40211C1AE3597900806014 /* indexon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4021011AE3597900806014 /* indexon.png */; };
 		8A40211D1AE3597900806014 /* inviteFriend.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4021021AE3597900806014 /* inviteFriend.png */; };
-		8A40211E1AE3597900806014 /* like图标0.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4021031AE3597900806014 /* like图标0.png */; };
-		8A40211F1AE3597900806014 /* like图标1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4021041AE3597900806014 /* like图标1.png */; };
-		8A4021201AE3597900806014 /* like图标2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4021051AE3597900806014 /* like图标2.png */; };
-		8A4021211AE3597900806014 /* like图标3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4021061AE3597900806014 /* like图标3.png */; };
 		8A4021221AE3597900806014 /* like图标go.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4021071AE3597900806014 /* like图标go.png */; };
 		8A4021231AE3597900806014 /* Logo_new.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4021081AE3597900806014 /* Logo_new.png */; };
 		8A4021241AE3597900806014 /* luanch.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4021091AE3597900806014 /* luanch.png */; };
 		8A4021251AE3597900806014 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A40210A1AE3597900806014 /* mail.png */; };
 		8A4021261AE3597900806014 /* qq.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A40210B1AE3597900806014 /* qq.png */; };
-		8A4021271AE3597900806014 /* settingoff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A40210C1AE3597900806014 /* settingoff.png */; };
-		8A4021281AE3597900806014 /* settingon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A40210D1AE3597900806014 /* settingon.png */; };
 		8A4021291AE3597900806014 /* weixin.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A40210E1AE3597900806014 /* weixin.png */; };
 		8A40212C1AE3956B00806014 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A40212B1AE3956B00806014 /* Constants.m */; };
 		8A46EDBF1AE9F3FC0062F518 /* PersonalSignController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A46EDBE1AE9F3FC0062F518 /* PersonalSignController.m */; };
@@ -109,6 +95,23 @@
 		8A7DBEFA1AECCAE300D7941F /* sexboy.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEF21AECCAE300D7941F /* sexboy.png */; };
 		8A7DBEFB1AECCAE300D7941F /* sexgirl.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEF31AECCAE300D7941F /* sexgirl.png */; };
 		8AA113221AF9A4DD002DB7F5 /* PasswordUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA113211AF9A4DD002DB7F5 /* PasswordUpdateView.m */; };
+		8AA113331AFA7144002DB7F5 /* chatoff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1132B1AFA7144002DB7F5 /* chatoff.png */; };
+		8AA113341AFA7144002DB7F5 /* chaton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1132C1AFA7144002DB7F5 /* chaton.png */; };
+		8AA113351AFA7144002DB7F5 /* friendoff@4x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1132D1AFA7144002DB7F5 /* friendoff@4x.png */; };
+		8AA113361AFA7144002DB7F5 /* friendon@4x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1132E1AFA7144002DB7F5 /* friendon@4x.png */; };
+		8AA113371AFA7144002DB7F5 /* indexoff@3.8x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1132F1AFA7144002DB7F5 /* indexoff@3.8x.png */; };
+		8AA113381AFA7144002DB7F5 /* indexon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA113301AFA7144002DB7F5 /* indexon.png */; };
+		8AA113391AFA7144002DB7F5 /* settingoff@4x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA113311AFA7144002DB7F5 /* settingoff@4x.png */; };
+		8AA1133A1AFA7144002DB7F5 /* settingon@4x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA113321AFA7144002DB7F5 /* settingon@4x.png */; };
+		8AA1133F1AFA7FB1002DB7F5 /* all_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1133B1AFA7FB1002DB7F5 /* all_off.png */; };
+		8AA113401AFA7FB1002DB7F5 /* all_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1133C1AFA7FB1002DB7F5 /* all_on.png */; };
+		8AA113411AFA7FB1002DB7F5 /* other_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1133D1AFA7FB1002DB7F5 /* other_off.png */; };
+		8AA113421AFA7FB1002DB7F5 /* other_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1133E1AFA7FB1002DB7F5 /* other_on.png */; };
+		8AA113471AFA8134002DB7F5 /* like0.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA113431AFA8134002DB7F5 /* like0.png */; };
+		8AA113481AFA8134002DB7F5 /* like1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA113441AFA8134002DB7F5 /* like1.png */; };
+		8AA113491AFA8134002DB7F5 /* like2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA113451AFA8134002DB7F5 /* like2.png */; };
+		8AA1134A1AFA8134002DB7F5 /* like3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA113461AFA8134002DB7F5 /* like3.png */; };
+		8AA1134C1AFA8166002DB7F5 /* likeGo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1134B1AFA8166002DB7F5 /* likeGo.png */; };
 		8ADB384E1AE286BD00FCC6FC /* PersonalController.h in Resources */ = {isa = PBXBuildFile; fileRef = 8ADB384D1AE286BD00FCC6FC /* PersonalController.h */; };
 		8ADB38501AE286F000FCC6FC /* PersonalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB384F1AE286F000FCC6FC /* PersonalController.m */; };
 		8ADB388C1AE2A17100FCC6FC /* UsernickController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB388B1AE2A17100FCC6FC /* UsernickController.m */; };
@@ -544,27 +547,13 @@
 		8A4020F51AE3597900806014 /* 聊天—编组方式.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "聊天—编组方式.png"; path = "dd/聊天—编组方式.png"; sourceTree = "<group>"; };
 		8A4020F61AE3597900806014 /* 认证图标.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "认证图标.png"; path = "dd/认证图标.png"; sourceTree = "<group>"; };
 		8A4020F81AE3597900806014 /* 邀请和添加朋友弹出框.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "邀请和添加朋友弹出框.png"; path = "dd/邀请和添加朋友弹出框.png"; sourceTree = "<group>"; };
-		8A4020F91AE3597900806014 /* chatoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chatoff.png; path = dd/chatoff.png; sourceTree = "<group>"; };
-		8A4020FA1AE3597900806014 /* chaton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chaton.png; path = dd/chaton.png; sourceTree = "<group>"; };
 		8A4020FB1AE3597900806014 /* email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = email.png; path = dd/email.png; sourceTree = "<group>"; };
-		8A4020FC1AE3597900806014 /* friendoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = friendoff.png; path = dd/friendoff.png; sourceTree = "<group>"; };
-		8A4020FD1AE3597900806014 /* friendon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = friendon.png; path = dd/friendon.png; sourceTree = "<group>"; };
-		8A4020FE1AE3597900806014 /* indexall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = indexall.png; path = dd/indexall.png; sourceTree = "<group>"; };
-		8A4020FF1AE3597900806014 /* indexall2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = indexall2.png; path = dd/indexall2.png; sourceTree = "<group>"; };
-		8A4021001AE3597900806014 /* indexoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = indexoff.png; path = dd/indexoff.png; sourceTree = "<group>"; };
-		8A4021011AE3597900806014 /* indexon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = indexon.png; path = dd/indexon.png; sourceTree = "<group>"; };
 		8A4021021AE3597900806014 /* inviteFriend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = inviteFriend.png; path = dd/inviteFriend.png; sourceTree = "<group>"; };
-		8A4021031AE3597900806014 /* like图标0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "like图标0.png"; path = "dd/like图标0.png"; sourceTree = "<group>"; };
-		8A4021041AE3597900806014 /* like图标1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "like图标1.png"; path = "dd/like图标1.png"; sourceTree = "<group>"; };
-		8A4021051AE3597900806014 /* like图标2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "like图标2.png"; path = "dd/like图标2.png"; sourceTree = "<group>"; };
-		8A4021061AE3597900806014 /* like图标3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "like图标3.png"; path = "dd/like图标3.png"; sourceTree = "<group>"; };
 		8A4021071AE3597900806014 /* like图标go.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "like图标go.png"; path = "dd/like图标go.png"; sourceTree = "<group>"; };
 		8A4021081AE3597900806014 /* Logo_new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Logo_new.png; path = dd/Logo_new.png; sourceTree = "<group>"; };
 		8A4021091AE3597900806014 /* luanch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = luanch.png; path = dd/luanch.png; sourceTree = "<group>"; };
 		8A40210A1AE3597900806014 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mail.png; path = dd/mail.png; sourceTree = "<group>"; };
 		8A40210B1AE3597900806014 /* qq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = qq.png; path = dd/qq.png; sourceTree = "<group>"; };
-		8A40210C1AE3597900806014 /* settingoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settingoff.png; path = dd/settingoff.png; sourceTree = "<group>"; };
-		8A40210D1AE3597900806014 /* settingon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settingon.png; path = dd/settingon.png; sourceTree = "<group>"; };
 		8A40210E1AE3597900806014 /* weixin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = weixin.png; path = dd/weixin.png; sourceTree = "<group>"; };
 		8A40212A1AE3950E00806014 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		8A40212B1AE3956B00806014 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
@@ -590,6 +579,23 @@
 		8A7DBEF31AECCAE300D7941F /* sexgirl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sexgirl.png; path = dd/sexgirl.png; sourceTree = "<group>"; };
 		8AA113201AF9A461002DB7F5 /* PasswordUpdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordUpdateView.h; sourceTree = "<group>"; };
 		8AA113211AF9A4DD002DB7F5 /* PasswordUpdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordUpdateView.m; sourceTree = "<group>"; };
+		8AA1132B1AFA7144002DB7F5 /* chatoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatoff.png; sourceTree = "<group>"; };
+		8AA1132C1AFA7144002DB7F5 /* chaton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chaton.png; sourceTree = "<group>"; };
+		8AA1132D1AFA7144002DB7F5 /* friendoff@4x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friendoff@4x.png"; sourceTree = "<group>"; };
+		8AA1132E1AFA7144002DB7F5 /* friendon@4x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friendon@4x.png"; sourceTree = "<group>"; };
+		8AA1132F1AFA7144002DB7F5 /* indexoff@3.8x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "indexoff@3.8x.png"; sourceTree = "<group>"; };
+		8AA113301AFA7144002DB7F5 /* indexon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = indexon.png; sourceTree = "<group>"; };
+		8AA113311AFA7144002DB7F5 /* settingoff@4x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingoff@4x.png"; sourceTree = "<group>"; };
+		8AA113321AFA7144002DB7F5 /* settingon@4x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingon@4x.png"; sourceTree = "<group>"; };
+		8AA1133B1AFA7FB1002DB7F5 /* all_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = all_off.png; sourceTree = "<group>"; };
+		8AA1133C1AFA7FB1002DB7F5 /* all_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = all_on.png; sourceTree = "<group>"; };
+		8AA1133D1AFA7FB1002DB7F5 /* other_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = other_off.png; sourceTree = "<group>"; };
+		8AA1133E1AFA7FB1002DB7F5 /* other_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = other_on.png; sourceTree = "<group>"; };
+		8AA113431AFA8134002DB7F5 /* like0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like0.png; sourceTree = "<group>"; };
+		8AA113441AFA8134002DB7F5 /* like1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like1.png; sourceTree = "<group>"; };
+		8AA113451AFA8134002DB7F5 /* like2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like2.png; sourceTree = "<group>"; };
+		8AA113461AFA8134002DB7F5 /* like3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like3.png; sourceTree = "<group>"; };
+		8AA1134B1AFA8166002DB7F5 /* likeGo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = likeGo.png; sourceTree = "<group>"; };
 		8ADB384D1AE286BD00FCC6FC /* PersonalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalController.h; sourceTree = "<group>"; };
 		8ADB384F1AE286F000FCC6FC /* PersonalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalController.m; sourceTree = "<group>"; };
 		8ADB388A1AE2A15900FCC6FC /* UsernickController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsernickController.h; sourceTree = "<group>"; };
@@ -1309,27 +1315,13 @@
 				8A4020F51AE3597900806014 /* 聊天—编组方式.png */,
 				8A4020F61AE3597900806014 /* 认证图标.png */,
 				8A4020F81AE3597900806014 /* 邀请和添加朋友弹出框.png */,
-				8A4020F91AE3597900806014 /* chatoff.png */,
-				8A4020FA1AE3597900806014 /* chaton.png */,
 				8A4020FB1AE3597900806014 /* email.png */,
-				8A4020FC1AE3597900806014 /* friendoff.png */,
-				8A4020FD1AE3597900806014 /* friendon.png */,
-				8A4020FE1AE3597900806014 /* indexall.png */,
-				8A4020FF1AE3597900806014 /* indexall2.png */,
-				8A4021001AE3597900806014 /* indexoff.png */,
-				8A4021011AE3597900806014 /* indexon.png */,
 				8A4021021AE3597900806014 /* inviteFriend.png */,
-				8A4021031AE3597900806014 /* like图标0.png */,
-				8A4021041AE3597900806014 /* like图标1.png */,
-				8A4021051AE3597900806014 /* like图标2.png */,
-				8A4021061AE3597900806014 /* like图标3.png */,
 				8A4021071AE3597900806014 /* like图标go.png */,
 				8A4021081AE3597900806014 /* Logo_new.png */,
 				8A4021091AE3597900806014 /* luanch.png */,
 				8A40210A1AE3597900806014 /* mail.png */,
 				8A40210B1AE3597900806014 /* qq.png */,
-				8A40210C1AE3597900806014 /* settingoff.png */,
-				8A40210D1AE3597900806014 /* settingon.png */,
 				8A40210E1AE3597900806014 /* weixin.png */,
 			);
 			name = dd;
@@ -2208,6 +2200,11 @@
 		EBD2AA3F1A7CDABF00D16528 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
+				8AA1134B1AFA8166002DB7F5 /* likeGo.png */,
+				8AA113431AFA8134002DB7F5 /* like0.png */,
+				8AA113441AFA8134002DB7F5 /* like1.png */,
+				8AA113451AFA8134002DB7F5 /* like2.png */,
+				8AA113461AFA8134002DB7F5 /* like3.png */,
 				8AEF0ED31AF38FA800DE2484 /* chatjianbian.png */,
 				8AEF0ED11AF38D4700DE2484 /* chatbak.png */,
 				EBD2AA401A7CDABF00D16528 /* audio */,
@@ -2451,6 +2448,10 @@
 		EBD2AAE11A7CDAC000D16528 /* NavigationBar */ = {
 			isa = PBXGroup;
 			children = (
+				8AA1133B1AFA7FB1002DB7F5 /* all_off.png */,
+				8AA1133C1AFA7FB1002DB7F5 /* all_on.png */,
+				8AA1133D1AFA7FB1002DB7F5 /* other_off.png */,
+				8AA1133E1AFA7FB1002DB7F5 /* other_on.png */,
 				EBD2AAE21A7CDAC000D16528 /* add@2x.png */,
 				EBD2AAE31A7CDAC000D16528 /* back@2x.png */,
 				EBD2AAE41A7CDAC000D16528 /* delete@2x.png */,
@@ -2478,6 +2479,14 @@
 		EBD2AAF01A7CDAC000D16528 /* tabbar */ = {
 			isa = PBXGroup;
 			children = (
+				8AA1132B1AFA7144002DB7F5 /* chatoff.png */,
+				8AA1132C1AFA7144002DB7F5 /* chaton.png */,
+				8AA1132D1AFA7144002DB7F5 /* friendoff@4x.png */,
+				8AA1132E1AFA7144002DB7F5 /* friendon@4x.png */,
+				8AA1132F1AFA7144002DB7F5 /* indexoff@3.8x.png */,
+				8AA113301AFA7144002DB7F5 /* indexon.png */,
+				8AA113311AFA7144002DB7F5 /* settingoff@4x.png */,
+				8AA113321AFA7144002DB7F5 /* settingon@4x.png */,
 				EBD2AAF11A7CDAC000D16528 /* tabbar_chats.png */,
 				EBD2AAF21A7CDAC000D16528 /* tabbar_chats@2x.png */,
 				EBD2AAF31A7CDAC000D16528 /* tabbar_chatsHL.png */,
@@ -2571,7 +2580,6 @@
 				EBD2AB781A7CDAC000D16528 /* chatBar_more_camera@2x.png in Resources */,
 				EBD2AB641A7CDAC000D16528 /* chatBar_moreSelected@2x.png in Resources */,
 				EBD2AB0C1A7CDAC000D16528 /* chatFire_audioPlaying1@2x.png in Resources */,
-				8A4021201AE3597900806014 /* like图标2.png in Resources */,
 				EBD2AB541A7CDAC000D16528 /* chat_location_preview@2x.png in Resources */,
 				8A7DBEFB1AECCAE300D7941F /* sexgirl.png in Resources */,
 				EBD2ABB91A7CDAC000D16528 /* tabbarBackground.png in Resources */,
@@ -2582,10 +2590,12 @@
 				EBD2AB591A7CDAC000D16528 /* chatBar_face.png in Resources */,
 				EBD2AB231A7CDAC000D16528 /* VoiceSearchFeedback010.png in Resources */,
 				EBD2AB081A7CDAC000D16528 /* chatListCellHead@2x.png in Resources */,
+				8AA113351AFA7144002DB7F5 /* friendoff@4x.png in Resources */,
 				EBD2AB7C1A7CDAC000D16528 /* chatBar_more_location@2x.png in Resources */,
 				EBD2ABB51A7CDAC000D16528 /* tabbar_setting.png in Resources */,
 				EBD2AB501A7CDAC000D16528 /* chat_location_detail_disclosure@2x.png in Resources */,
 				8A4021161AE3597900806014 /* email.png in Resources */,
+				8AA1133F1AFA7FB1002DB7F5 /* all_off.png in Resources */,
 				EBD2AB621A7CDAC000D16528 /* chatBar_more@2x.png in Resources */,
 				EBD2AB841A7CDAC000D16528 /* chat_receiver_audio_playing000.png in Resources */,
 				EBD2AB091A7CDAC000D16528 /* chatFire_audioPlaying0.png in Resources */,
@@ -2602,13 +2612,11 @@
 				EBD2AB3E1A7CDAC000D16528 /* call_silence@2x.png in Resources */,
 				EBD2AB5A1A7CDAC000D16528 /* chatBar_face@2x.png in Resources */,
 				8AEF0ED41AF38FA800DE2484 /* chatjianbian.png in Resources */,
-				8A40211A1AE3597900806014 /* indexall2.png in Resources */,
 				EBD2AB6F1A7CDAC000D16528 /* chatBar_colorMore_camera@2x.png in Resources */,
 				EBD2AB1B1A7CDAC000D16528 /* VoiceSearchFeedback006.png in Resources */,
 				EBD2AB221A7CDAC000D16528 /* VoiceSearchFeedback009@2x.png in Resources */,
 				EBD2AB7E1A7CDAC000D16528 /* chatBar_more_locationSelected@2x.png in Resources */,
 				EBD2AB791A7CDAC000D16528 /* chatBar_more_cameraSelected.png in Resources */,
-				8A4021191AE3597900806014 /* indexall.png in Resources */,
 				EBD2AB031A7CDAC000D16528 /* 29.png in Resources */,
 				EBD2AB2F1A7CDAC000D16528 /* VoiceSearchFeedback016.png in Resources */,
 				8A7DBEFA1AECCAE300D7941F /* sexboy.png in Resources */,
@@ -2622,7 +2630,6 @@
 				EBD2AB481A7CDAC000D16528 /* chatBar_more_face@2x.png in Resources */,
 				EBD2AB551A7CDAC000D16528 /* faceDelete.png in Resources */,
 				90EF2CEC192F2B4E00BDC549 /* sr_refresh.png in Resources */,
-				8A4021151AE3597900806014 /* chaton.png in Resources */,
 				EBD2AD481A7CEFE100D16528 /* chatBar_colorMore_audioCallSelected@2x.png in Resources */,
 				EBD2AB581A7CDAC000D16528 /* messageSendFail@2x.png in Resources */,
 				EBD2ABB21A7CDAC000D16528 /* tabbar_contacts@2x.png in Resources */,
@@ -2636,10 +2643,10 @@
 				EBD2AD471A7CEFE100D16528 /* chatBar_colorMore_audioCall@2x.png in Resources */,
 				EBD2AB211A7CDAC000D16528 /* VoiceSearchFeedback009.png in Resources */,
 				EBD2AB801A7CDAC000D16528 /* chatBar_more_photo@2x.png in Resources */,
-				8A4021271AE3597900806014 /* settingoff.png in Resources */,
 				EBD2AB921A7CDAC000D16528 /* chat_sender_audio_playing_001.png in Resources */,
 				8A4021111AE3597900806014 /* 认证图标.png in Resources */,
 				EBD2AB9C1A7CDAC000D16528 /* account.png in Resources */,
+				8AA113411AFA7FB1002DB7F5 /* other_off.png in Resources */,
 				EBD2AB471A7CDAC000D16528 /* chatBar_more_face.png in Resources */,
 				EBD2AB241A7CDAC000D16528 /* VoiceSearchFeedback010@2x.png in Resources */,
 				EBD2AB0E1A7CDAC000D16528 /* chatFire_audioPlaying2@2x.png in Resources */,
@@ -2649,7 +2656,6 @@
 				8A4021291AE3597900806014 /* weixin.png in Resources */,
 				EBD2AB2D1A7CDAC000D16528 /* VoiceSearchFeedback015.png in Resources */,
 				8AEF0ED01AF31E4B00DE2484 /* help.png in Resources */,
-				8A40211C1AE3597900806014 /* indexon.png in Resources */,
 				EBD2AB8D1A7CDAC000D16528 /* chat_receiver_audio_playing_full@2x.png in Resources */,
 				EBD2AB331A7CDAC000D16528 /* VoiceSearchFeedback018.png in Resources */,
 				EBD2AB6A1A7CDAC000D16528 /* chatBar_recordSelected@2x.png in Resources */,
@@ -2663,8 +2669,9 @@
 				EBD2AB5B1A7CDAC000D16528 /* chatBar_faceSelected.png in Resources */,
 				EBD2AB9F1A7CDAC000D16528 /* password@2x.png in Resources */,
 				EBD2AB411A7CDAC000D16528 /* callBg@2x.png in Resources */,
-				8A4021141AE3597900806014 /* chatoff.png in Resources */,
 				EBD2AB731A7CDAC000D16528 /* chatBar_colorMore_photo@2x.png in Resources */,
+				8AA113401AFA7FB1002DB7F5 /* all_on.png in Resources */,
+				8AA1134A1AFA8134002DB7F5 /* like3.png in Resources */,
 				EBD2AB301A7CDAC000D16528 /* VoiceSearchFeedback016@2x.png in Resources */,
 				EBD2AB631A7CDAC000D16528 /* chatBar_moreSelected.png in Resources */,
 				EBD2ABAB1A7CDAC000D16528 /* nav_createGroup@2x.png in Resources */,
@@ -2674,11 +2681,13 @@
 				EBD2AB911A7CDAC000D16528 /* chat_sender_audio_playing_000@2x.png in Resources */,
 				EBD2AB9D1A7CDAC000D16528 /* account@2x.png in Resources */,
 				EBD2AB661A7CDAC000D16528 /* chatBar_record@2x.png in Resources */,
+				8AA113421AFA7FB1002DB7F5 /* other_on.png in Resources */,
 				EBD2AB881A7CDAC000D16528 /* chat_receiver_audio_playing002.png in Resources */,
 				8A4021231AE3597900806014 /* Logo_new.png in Resources */,
 				EBD2AB1C1A7CDAC000D16528 /* VoiceSearchFeedback006@2x.png in Resources */,
 				EBD2AB6B1A7CDAC000D16528 /* chatBar_recordSelectedBg.png in Resources */,
 				EBD2AB3F1A7CDAC000D16528 /* call_silence_h.png in Resources */,
+				8AA1133A1AFA7144002DB7F5 /* settingon@4x.png in Resources */,
 				3C9B15911A6D157E00D09FD6 /* InfoPlist.strings in Resources */,
 				8A4021221AE3597900806014 /* like图标go.png in Resources */,
 				EBD2AB4F1A7CDAC000D16528 /* chat_location_detail_disclosure.png in Resources */,
@@ -2689,10 +2698,8 @@
 				EBD2AB151A7CDAC000D16528 /* VoiceSearchFeedback003.png in Resources */,
 				8AEF0ED21AF38D4700DE2484 /* chatbak.png in Resources */,
 				EBD2AB351A7CDAC000D16528 /* VoiceSearchFeedback019.png in Resources */,
-				8A40211F1AE3597900806014 /* like图标1.png in Resources */,
 				EBD2AB671A7CDAC000D16528 /* chatBar_recordBg.png in Resources */,
 				EBD2AB521A7CDAC000D16528 /* chat_location_detail_disclosureHL@2x.png in Resources */,
-				8A4021281AE3597900806014 /* settingon.png in Resources */,
 				EBD2AB341A7CDAC000D16528 /* VoiceSearchFeedback018@2x.png in Resources */,
 				EBD2AB5D1A7CDAC000D16528 /* chatBar_keyboard.png in Resources */,
 				EBD2AB7A1A7CDAC000D16528 /* chatBar_more_cameraSelected@2x.png in Resources */,
@@ -2704,17 +2711,17 @@
 				EBD2ABA11A7CDAC000D16528 /* back@2x.png in Resources */,
 				8A4021241AE3597900806014 /* luanch.png in Resources */,
 				EBD2AB111A7CDAC000D16528 /* VoiceSearchFeedback001.png in Resources */,
+				8AA113331AFA7144002DB7F5 /* chatoff.png in Resources */,
 				EBD2ABA01A7CDAC000D16528 /* add@2x.png in Resources */,
-				8A4021171AE3597900806014 /* friendoff.png in Resources */,
 				EBD2AB8A1A7CDAC000D16528 /* chat_receiver_audio_playing003.png in Resources */,
 				EBD2ABB41A7CDAC000D16528 /* tabbar_contactsHL@2x.png in Resources */,
 				EBD2AB0B1A7CDAC000D16528 /* chatFire_audioPlaying1.png in Resources */,
 				3C372B5F19FE60DC005925B6 /* (null) in Resources */,
 				EBD2AB8F1A7CDAC000D16528 /* chat_receiver_bg@2x.png in Resources */,
-				8A40211E1AE3597900806014 /* like图标0.png in Resources */,
 				EBD2ABA91A7CDAC000D16528 /* groupPrivateHeader@2x.png in Resources */,
 				EBD2AB8E1A7CDAC000D16528 /* chat_receiver_bg.png in Resources */,
 				EBD2AB681A7CDAC000D16528 /* chatBar_recordBg@2x.png in Resources */,
+				8AA113391AFA7144002DB7F5 /* settingoff@4x.png in Resources */,
 				EBD2ABB31A7CDAC000D16528 /* tabbar_contactsHL.png in Resources */,
 				EBD2ABA31A7CDAC000D16528 /* group_detail@2x.png in Resources */,
 				EBD2ABA21A7CDAC000D16528 /* delete@2x.png in Resources */,
@@ -2726,7 +2733,6 @@
 				EBD2AB611A7CDAC000D16528 /* chatBar_more.png in Resources */,
 				8A7DBEF81AECCAE300D7941F /* nocheck.png in Resources */,
 				EBD2ABB61A7CDAC000D16528 /* tabbar_setting@2x.png in Resources */,
-				8A40211B1AE3597900806014 /* indexoff.png in Resources */,
 				EBD2AB451A7CDAC000D16528 /* chatBar_more_cardSelected.png in Resources */,
 				EBD2AB361A7CDAC000D16528 /* VoiceSearchFeedback019@2x.png in Resources */,
 				EBD2AB3A1A7CDAC000D16528 /* call_out@2x.png in Resources */,
@@ -2738,6 +2744,7 @@
 				EBD2AB991A7CDAC000D16528 /* chat_sender_audio_playing_full@2x.png in Resources */,
 				EBD2AB121A7CDAC000D16528 /* VoiceSearchFeedback001@2x.png in Resources */,
 				EBD2ABA61A7CDAC000D16528 /* group_invitee_delete@2x.png in Resources */,
+				8AA113381AFA7144002DB7F5 /* indexon.png in Resources */,
 				8A40210F1AE3597900806014 /* 查看两人聊天室信息.png in Resources */,
 				EBD2AB971A7CDAC000D16528 /* chat_sender_audio_playing_003@2x.png in Resources */,
 				8A46EDE71AEA9DFA0062F518 /* getCode.png in Resources */,
@@ -2752,6 +2759,7 @@
 				EBD2AB5C1A7CDAC000D16528 /* chatBar_faceSelected@2x.png in Resources */,
 				EBD2AB181A7CDAC000D16528 /* VoiceSearchFeedback004@2x.png in Resources */,
 				EBD2AB051A7CDAC000D16528 /* 58.png in Resources */,
+				8AA113341AFA7144002DB7F5 /* chaton.png in Resources */,
 				EBD2AB271A7CDAC000D16528 /* VoiceSearchFeedback012.png in Resources */,
 				8A7DBEF71AECCAE300D7941F /* files.png in Resources */,
 				EBD2AB131A7CDAC000D16528 /* VoiceSearchFeedback002.png in Resources */,
@@ -2762,8 +2770,8 @@
 				EBD2AB041A7CDAC000D16528 /* 57.png in Resources */,
 				EBD2ABAA1A7CDAC000D16528 /* groupPublicHeader@2x.png in Resources */,
 				EBD2AB601A7CDAC000D16528 /* chatBar_keyboardSelected@2x.png in Resources */,
-				8A4021211AE3597900806014 /* like图标3.png in Resources */,
 				EBD2AB1A1A7CDAC000D16528 /* VoiceSearchFeedback005@2x.png in Resources */,
+				8AA113371AFA7144002DB7F5 /* indexoff@3.8x.png in Resources */,
 				EBD2AB721A7CDAC000D16528 /* chatBar_colorMore_locationSelected@2x.png in Resources */,
 				EBD2AB291A7CDAC000D16528 /* VoiceSearchFeedback013.png in Resources */,
 				8AFE465C1AECFFAF00B57368 /* jianbian.png in Resources */,
@@ -2777,8 +2785,8 @@
 				EBD2AB831A7CDAC000D16528 /* messageToolbarBg@2x.png in Resources */,
 				EBD2AB751A7CDAC000D16528 /* chatBar_colorMore_video@2x.png in Resources */,
 				EBD2AB191A7CDAC000D16528 /* VoiceSearchFeedback005.png in Resources */,
+				8AA113491AFA8134002DB7F5 /* like2.png in Resources */,
 				EBD2AB951A7CDAC000D16528 /* chat_sender_audio_playing_002@2x.png in Resources */,
-				8A4021181AE3597900806014 /* friendon.png in Resources */,
 				EBD2AB981A7CDAC000D16528 /* chat_sender_audio_playing_full.png in Resources */,
 				EBD2ABAC1A7CDAC000D16528 /* newFriends@2x.png in Resources */,
 				EBD2AB561A7CDAC000D16528 /* faceDelete@2x.png in Resources */,
@@ -2786,6 +2794,7 @@
 				EBD2AB3C1A7CDAC000D16528 /* call_out_h@2x.png in Resources */,
 				EBD2ABB11A7CDAC000D16528 /* tabbar_contacts.png in Resources */,
 				EBD2AB491A7CDAC000D16528 /* chatBar_more_faceSelected.png in Resources */,
+				8AA113471AFA8134002DB7F5 /* like0.png in Resources */,
 				8A7DBEF41AECCAE300D7941F /* addpic.png in Resources */,
 				EBD2AB1F1A7CDAC000D16528 /* VoiceSearchFeedback008.png in Resources */,
 				EBD2AB2B1A7CDAC000D16528 /* VoiceSearchFeedback014.png in Resources */,
@@ -2805,6 +2814,9 @@
 				EBD2AB281A7CDAC000D16528 /* VoiceSearchFeedback012@2x.png in Resources */,
 				EBD2AB4E1A7CDAC000D16528 /* chat_location_annotation_someone@2x.png in Resources */,
 				EBD2AB261A7CDAC000D16528 /* VoiceSearchFeedback011@2x.png in Resources */,
+				8AA113361AFA7144002DB7F5 /* friendon@4x.png in Resources */,
+				8AA113481AFA8134002DB7F5 /* like1.png in Resources */,
+				8AA1134C1AFA8166002DB7F5 /* likeGo.png in Resources */,
 				EBD2AB371A7CDAC000D16528 /* VoiceSearchFeedback020.png in Resources */,
 				EBD2AB161A7CDAC000D16528 /* VoiceSearchFeedback003@2x.png in Resources */,
 				EBD2AB741A7CDAC000D16528 /* chatBar_colorMore_photoSelected@2x.png in Resources */,

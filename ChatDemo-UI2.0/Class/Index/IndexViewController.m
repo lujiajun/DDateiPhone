@@ -62,12 +62,13 @@ static DDUser *uuser;
 
 - (void)viewDidLoad
 {
+    
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor redColor];
     
     self.tableView.backgroundColor = [UIColor whiteColor];
     [self.tableView addSubview:self.slimeView];
-    
+  
+                
     if(_userDao==nil){
         _userDao=[[DDUserDAO alloc]init];
     }
@@ -213,6 +214,12 @@ static DDUser *uuser;
 	    [self.tableView reloadData];
 	    [weakSelf.slimeView endRefresh];
 	}];
+}
+//首页刷新
+-(void)refreshAll{
+    [self.chatroom2Dao refreshListWithBlock: ^{
+        [self.tableView reloadData];
+            }];
 }
 
 #pragma mark - UIScrollViewDelegate

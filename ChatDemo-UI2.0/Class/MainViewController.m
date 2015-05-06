@@ -21,6 +21,7 @@
 #import "CreateGroupViewController.h"
 #import "MainChatListViewController.h"
 #import "UIColor+Category.h"
+#import "ChatViewController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -32,6 +33,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     ContactsViewController *_contactsVC;
     NewSettingViewController *_settingsVC;
     CallSessionViewController *_callController;
+    ChatViewController *_chatViewController;
     
     UIBarButtonItem *_addFriendItem;
     UIBarButtonItem *_inviteFriendItem;
@@ -40,9 +42,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 }
 
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
-
-
+@property (strong, nonatomic) UIButton *view1;
+@property (strong, nonatomic) UIButton *view2;
+@property(nonatomic) BOOL state; //YES:显示异性  NO：显示全部
 @end
+
+#define BLUE_GREEN_COLOR @"#00C8D3"
 
 @implementation MainViewController
 
@@ -114,17 +119,50 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 	if (item.tag == 0) {
 		self.title = NSLocalizedString(@"title.index", @"Index");
 		self.navigationItem.rightBarButtonItem = _inviteFriendItem;
+        _state=YES;
+        UIView *bak=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-60, 10, 200, 25)];
+        
+        _view1 = [[UIButton alloc] initWithFrame:CGRectMake(5, 0, 80, 25)];
+        [_view1 setImage:[UIImage imageNamed:@"all_off"] forState:UIControlStateNormal];
+        [_view1 addTarget:self action:@selector(reloadIndexAll) forControlEvents:UIControlEventTouchUpInside];
+
+        [bak addSubview:_view1];
+        _view2= [[UIButton alloc]initWithFrame:CGRectMake(_view1.frame.origin.x+_view1.frame.size.width,_view1.frame.origin.y, 80, 25)];
+        [_view2 setImage:[UIImage imageNamed:@"other_on"] forState:UIControlStateNormal];
+        [_view2 addTarget:self action:@selector(reloadIndexNoAll) forControlEvents:UIControlEventTouchUpInside];
+        
+        [bak addSubview:_view2];
+//
+        [self.navigationItem setTitleView:bak];
+    
 	} else if (item.tag == 1)  {
 		self.title = NSLocalizedString(@"title.conversation", @"Conversations");
 		self.navigationItem.rightBarButtonItem = _createGroupItem;
+        [self.navigationItem setTitleView:nil];
 	} else if (item.tag == 2)  {
 		self.title = NSLocalizedString(@"title.addressbook", @"AddressBook");
 		self.navigationItem.rightBarButtonItem = _addFriendItem;
+        [self.navigationItem setTitleView:nil];
 	} else if (item.tag == 3)  {
 		self.title = NSLocalizedString(@"title.setting", @"Setting");
 		self.navigationItem.rightBarButtonItem = nil;
+        [self.navigationItem setTitleView:nil];
 		[_settingsVC refreshConfig];
-	}
+    }
+}
+
+-(void) reloadIndexAll{
+        [_view1 setImage:[UIImage imageNamed:@"all_on"] forState:UIControlStateNormal];
+        [_view2 setImage:[UIImage imageNamed:@"other_off"] forState:UIControlStateNormal];
+    
+
+}
+
+-(void) reloadIndexNoAll{
+    [_view1 setImage:[UIImage imageNamed:@"all_off"] forState:UIControlStateNormal];
+    [_view2 setImage:[UIImage imageNamed:@"other_on"] forState:UIControlStateNormal];
+    
+    
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -172,10 +210,14 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     //index
     _indexVC = [[IndexViewController alloc] init];
 //    [_indexVC networkChanged:_connectionState];
+    
     _indexVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.index", @"Double Date")
-                                                        image:[UIImage imageNamed:@"indexoff"]
-                                                selectedImage:[UIImage imageNamed:@"indexon"]];
+                                                        image:[UIImage imageNamed:@"indexoff@3.8x"]
+                                                selectedImage:[UIImage imageNamed:@"indexon@2x"]];
+    
     _indexVC.tabBarItem.tag = 0;
+
+    //    _indexVC.tabBarItem.imageInsets = UIEdgeInsetsMake(0, -10, -6, -10);
     [self unSelectedTapTabBarItems:_indexVC.tabBarItem];
     [self selectedTapTabBarItems:_indexVC.tabBarItem];
     
@@ -183,8 +225,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     _chatListVC = [[MainChatListViewController alloc] init];
     [_chatListVC networkChanged:_connectionState];
     _chatListVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.conversation", @"Conversations")
-                                                           image:[UIImage imageNamed:@"chatoff"]
-                                                   selectedImage:[UIImage imageNamed:@"chaton"]];
+                                                           image:[UIImage imageNamed:@"chatoff@2x"]
+                                                   selectedImage:[UIImage imageNamed:@"chaton@2x"]];
     _chatListVC.tabBarItem.tag = 1;
     [self unSelectedTapTabBarItems:_chatListVC.tabBarItem];
     [self selectedTapTabBarItems:_chatListVC.tabBarItem];
@@ -192,8 +234,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     //address book
     _contactsVC = [[ContactsViewController alloc] initWithNibName:nil bundle:nil];
     _contactsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.addressbook", @"AddressBook")
-                                                           image:[UIImage imageNamed:@"friendoff"]
-                                                   selectedImage:[UIImage imageNamed:@"friendon"]];
+                                                           image:[UIImage imageNamed:@"friendoff@4x"]
+                                                   selectedImage:[UIImage imageNamed:@"friendon@4x"]];
     _contactsVC.tabBarItem.tag = 2;
     [self unSelectedTapTabBarItems:_contactsVC.tabBarItem];
     [self selectedTapTabBarItems:_contactsVC.tabBarItem];
@@ -207,6 +249,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     _settingsVC.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     [self unSelectedTapTabBarItems:_settingsVC.tabBarItem];
     [self selectedTapTabBarItems:_settingsVC.tabBarItem];
+    
+    _chatViewController.tabBarItem.tag=4;
     
     self.viewControllers = @[_indexVC,_chatListVC, _contactsVC, _settingsVC];
     [self selectedTapTabBarItems:_indexVC.tabBarItem];
