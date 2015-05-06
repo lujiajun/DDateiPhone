@@ -19,13 +19,14 @@
 
 #import "ChatRoomDetail.h"
 #import "DDBDynamoDB.h"
-#import "LocalDbService.h"
 #import "ContactsViewController.h"
 #import "Contact4GroupAddViewController.h"
 #import "ContactSelectionViewController.h"
 #import "IndexViewController.h"
 #import "ChatRoom2DAO.h"
 #import "UIImageView+EMWebCache.h"
+#import "DDUserDAO.h"
+#import "IndexViewController.h"
 
 @interface ChatRoomDetail ()
 
@@ -39,7 +40,6 @@
 @property(strong,nonatomic) DDUser *uuser1;
 @property(strong,nonatomic) DDUser *uuser2;
 @property(strong,nonatomic) CHATROOM2 *chatroom2;
-@property(nonatomic) LocalDbService *localDbService;
 
 
 @end
@@ -81,6 +81,31 @@
 }
 
 -(void) addUser{
+    //判断性别
+    if(_chatroom2!=nil&&_uuser1!=nil&&_uuser2!=nil){
+        if(_uuser1.gender!=nil){
+            if([_uuser1.gender isEqualToString:[IndexViewController instanceDDuser].gender]){
+                [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
+                                        message:NSLocalizedString(@"group.notSameSex", @"Please join in the other sex room")
+                             customizationBlock:nil
+                                completionBlock:nil
+                              cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                              otherButtonTitles: nil];
+                return;
+//                [self.navigationController popViewControllerAnimated:NO];
+            }
+        }else{
+            [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
+                                    message:@"加入房间异常，请选择其他房间"
+                         customizationBlock:nil
+                            completionBlock:nil
+                          cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                          otherButtonTitles: nil];
+//            [self.navigationController popViewControllerAnimated:NO];
+            return;
+        }
+        
+    }
     Contact4GroupAddViewController *selectionController = [[[Contact4GroupAddViewController alloc] init] initGroupInfo:_chatroom2];
     [self.navigationController pushViewController:selectionController animated:YES];
 }

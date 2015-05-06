@@ -12,7 +12,6 @@
 #import "AliCloudController.h"
 #import "DDBDynamoDB.h"
 #import "Constants.h"
-#import "NickNameController.h"
 #import "PersonalSignController.h"
 
 
@@ -202,8 +201,8 @@
             case 1:
 //                {UsernickController *UsernickController
             {
-                NickNameController *pushController = [NickNameController alloc] ;
-                [self.navigationController pushViewController:pushController animated:YES];
+//                NickNameController *pushController = [NickNameController alloc] ;
+//                [self.navigationController pushViewController:pushController animated:YES];
 
             }
             break;
@@ -349,8 +348,8 @@
         DDUser *user=[DDUser new];
         user=IndexViewController.instanceDDuser;
         user.picPath=name;
-        IndexViewController *newSetting=[IndexViewController alloc];
-        [newSetting setDDUser:user];
+//          IndexViewController *newSetting=[IndexViewController alloc];
+        [IndexViewController setDDUser:user];
        
         [ddbDynamoDB updateTable:user];
     

@@ -12,7 +12,6 @@
 #import "AliCloudController.h"
 #import "DDBDynamoDB.h"
 #import "Constants.h"
-#import "NickNameController.h"
 #import "DDRegisterController.h"
 #import "PersonalController.h"
 #import "DDSchoolRegisterController.h"

@@ -38,6 +38,7 @@
 #import "UIImageView+EMWebCache.h"
 #import "Constants.h"
 #import "DDUserDAO.h"
+#import "ChatRoom4DAO.h"
 #define KPageCount 20
 
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, IDeviceManagerDelegate>
@@ -79,6 +80,7 @@
 @property(strong,nonatomic) DDUser *friend;
 @property(strong,nonatomic) DDUserDAO *userDao;
 
+@property (nonatomic) BOOL isNewRoom;
 @end
 
 @implementation ChatViewController
@@ -86,9 +88,9 @@ int secondsCountDown = 30;
 
 NSDateFormatter *dateformatter;
 
--(id) initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend{
+-(id) initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend isNewRoom:(BOOL) isNewRoom{
     
-    
+    _isNewRoom=isNewRoom;
     _chatroom4=room4;
     if(friend==nil){
       DDUser *login=  [IndexViewController instanceDDuser];
@@ -174,6 +176,9 @@ NSDateFormatter *dateformatter;
         [db deleteRoom4:_chatroom4.GID];
         //删除环信数据
         [self dissolvegRroup];
+        //删除本地数据
+        ChatRoom4DAO *dao=[[ChatRoom4DAO alloc]init];
+        [dao delChatRoom4ByRid:_chatroom4.GID];
         
     }
 }
@@ -206,13 +211,6 @@ NSDateFormatter *dateformatter;
     [super viewDidLoad];
     _userDao=[[DDUserDAO alloc] init];
     
-    dateformatter = [[NSDateFormatter alloc]init] ;//定义NSDateFormatter用来显示格式
-    [dateformatter setDateFormat:@"hh mm ss"];//设定格式
-    
-    self.lab=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 100)];
-    self.lab.text=@"";
-    [self.tableView addSubview:self.lab];
-    _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
     //使用timer定时，每秒触发一次，然后就是写selector了。
     [self registerBecomeActive];
     // Do any additional setup after loading the view.
@@ -240,8 +238,17 @@ NSDateFormatter *dateformatter;
     [self.view addSubview:self.tableView];
     [self.tableView addSubview:self.slimeView];
 //    [self.tableView.setUserInteractive:yes];
-    if(_isChatGroup){
+    if(_isChatGroup&&_isNewRoom){
         [self.view addSubview:[self getFriendFrame]];
+        
+        
+        dateformatter = [[NSDateFormatter alloc]init] ;//定义NSDateFormatter用来显示格式
+        [dateformatter setDateFormat:@"hh mm ss"];//设定格式
+        
+        self.lab=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 100)];
+        self.lab.text=@"";
+        [self.tableView addSubview:self.lab];
+        _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
     }
    
     [self.view addSubview:self.chatToolBar];

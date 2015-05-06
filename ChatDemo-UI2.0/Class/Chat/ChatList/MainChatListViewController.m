@@ -388,7 +388,7 @@
        
         CHATROOM4 *chatRoom4 = [self.dataSource objectAtIndex:indexPath.row];
 //        - (EMGroup *)fetchGroupInfo:(NSString *)groupId error:(EMError **)pError;
-		ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:chatRoom4.GID isGroup:YES] initRoom4:chatRoom4 friend:nil];
+		ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:chatRoom4.GID isGroup:YES] initRoom4:chatRoom4 friend:nil isNewRoom:NO];
 //		chatController.title = chatRoom;
 		[self.navigationController pushViewController:chatController animated:YES];
 	}

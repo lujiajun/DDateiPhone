@@ -42,6 +42,7 @@
 
 @property(strong, nonatomic) ChatRoom2DAO *chatroom2Dao;
 @property(strong, nonatomic) DDUserDAO *userDao;
+@property(nonatomic) BOOL haveFriend;
 
 @end
 
@@ -55,7 +56,7 @@ static DDUser *uuser;
 	return uuser;
 }
 
-- (void)setDDUser:(DDUser *)user {
++ (void)setDDUser:(DDUser *)user {
 	uuser = user;
 }
 
@@ -75,6 +76,13 @@ static DDUser *uuser;
         [self.tableView reloadData];
     }];
     [self initdduser];
+    //判断用户是否有Double好友
+    [self haveDoubleFriend];
+    if(!_haveFriend){
+        UIImageView *invite=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
+        [self.view addSubview:invite];
+        
+    }
 }
 
 - (void)initdduser {
@@ -97,10 +105,13 @@ static DDUser *uuser;
 		
 	}
 }
--(void) initFriendUser{
-    
+-(void) haveDoubleFriend{
+     NSArray *buddyList = [[EaseMob sharedInstance].chatManager buddyList];
+    if(buddyList!=nil&&buddyList.count>0){
+        _haveFriend=YES;
+    }
+    _haveFriend=NO;
 }
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -111,6 +122,10 @@ static DDUser *uuser;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+//    if(!_haveFriend){
+//        return self.chatroom2Dao.chatroom2s.count+1;
+//    }
+//    
     return self.chatroom2Dao.chatroom2s.count;
 }
 
@@ -129,7 +144,10 @@ static DDUser *uuser;
 	if (cell == nil) {
 		cell = [[HomePageListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 	}
-
+    if(self.chatroom2Dao.chatroom2s==nil ||self.chatroom2Dao.chatroom2s.count==0){
+        return cell;
+    }
+   
 	CHATROOM2 *chatRoom2 = [self.chatroom2Dao.chatroom2s objectAtIndex:indexPath.row];
 
 	if (chatRoom2 != nil && chatRoom2.PicturePath != nil) {

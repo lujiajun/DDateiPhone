@@ -31,7 +31,8 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
             PicturePath varchar(50), \
             SchoolRestrict varchar(50), \
             UID1 varchar(50), \
-            UID2 varchar(50));", ChatRoom2Table];
+            UID2 varchar(50),\
+            UNIQUE(RID));", ChatRoom2Table];
 }
 
 - (NSArray *)queryChatRoom2s {

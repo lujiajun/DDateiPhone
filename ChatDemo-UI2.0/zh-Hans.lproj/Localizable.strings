@@ -94,6 +94,9 @@
 "friend.notDeleteSelf" = "不能删除自己";
 "friend.block" = "加入黑名单";
 
+//addGroup
+"group.notSameSex"="请选择异性房间加入";
+
 //group
 "group.somebodyInvite" = "%@ 邀请你加入群组\'%@\'";
 "group.applyJoin" = "%@ 申请加入群组\'%@\'";

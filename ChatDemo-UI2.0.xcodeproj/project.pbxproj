@@ -90,7 +90,6 @@
 		8A4021281AE3597900806014 /* settingon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A40210D1AE3597900806014 /* settingon.png */; };
 		8A4021291AE3597900806014 /* weixin.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A40210E1AE3597900806014 /* weixin.png */; };
 		8A40212C1AE3956B00806014 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A40212B1AE3956B00806014 /* Constants.m */; };
-		8A4021521AE3A63E00806014 /* NickNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4021511AE3A63E00806014 /* NickNameController.m */; };
 		8A46EDBF1AE9F3FC0062F518 /* PersonalSignController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A46EDBE1AE9F3FC0062F518 /* PersonalSignController.m */; };
 		8A46EDE71AEA9DFA0062F518 /* getCode.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A46EDE61AEA9DFA0062F518 /* getCode.png */; };
 		8A4BD0B31AE20F2900FFDFF1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90911122192EEBB8008A48AA /* AppDelegate.m */; };
@@ -109,6 +108,7 @@
 		8A7DBEF91AECCAE300D7941F /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEF11AECCAE300D7941F /* setting.png */; };
 		8A7DBEFA1AECCAE300D7941F /* sexboy.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEF21AECCAE300D7941F /* sexboy.png */; };
 		8A7DBEFB1AECCAE300D7941F /* sexgirl.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7DBEF31AECCAE300D7941F /* sexgirl.png */; };
+		8AA113221AF9A4DD002DB7F5 /* PasswordUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA113211AF9A4DD002DB7F5 /* PasswordUpdateView.m */; };
 		8ADB384E1AE286BD00FCC6FC /* PersonalController.h in Resources */ = {isa = PBXBuildFile; fileRef = 8ADB384D1AE286BD00FCC6FC /* PersonalController.h */; };
 		8ADB38501AE286F000FCC6FC /* PersonalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB384F1AE286F000FCC6FC /* PersonalController.m */; };
 		8ADB388C1AE2A17100FCC6FC /* UsernickController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB388B1AE2A17100FCC6FC /* UsernickController.m */; };
@@ -568,8 +568,6 @@
 		8A40210E1AE3597900806014 /* weixin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = weixin.png; path = dd/weixin.png; sourceTree = "<group>"; };
 		8A40212A1AE3950E00806014 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		8A40212B1AE3956B00806014 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
-		8A4021501AE3A5EC00806014 /* NickNameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NickNameController.h; sourceTree = "<group>"; };
-		8A4021511AE3A63E00806014 /* NickNameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NickNameController.m; sourceTree = "<group>"; };
 		8A46EDBD1AE9F3E30062F518 /* PersonalSignController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalSignController.h; sourceTree = "<group>"; };
 		8A46EDBE1AE9F3FC0062F518 /* PersonalSignController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalSignController.m; sourceTree = "<group>"; };
 		8A46EDE61AEA9DFA0062F518 /* getCode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = getCode.png; path = dd/getCode.png; sourceTree = "<group>"; };
@@ -590,6 +588,8 @@
 		8A7DBEF11AECCAE300D7941F /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setting.png; path = dd/setting.png; sourceTree = "<group>"; };
 		8A7DBEF21AECCAE300D7941F /* sexboy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sexboy.png; path = dd/sexboy.png; sourceTree = "<group>"; };
 		8A7DBEF31AECCAE300D7941F /* sexgirl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sexgirl.png; path = dd/sexgirl.png; sourceTree = "<group>"; };
+		8AA113201AF9A461002DB7F5 /* PasswordUpdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordUpdateView.h; sourceTree = "<group>"; };
+		8AA113211AF9A4DD002DB7F5 /* PasswordUpdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordUpdateView.m; sourceTree = "<group>"; };
 		8ADB384D1AE286BD00FCC6FC /* PersonalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalController.h; sourceTree = "<group>"; };
 		8ADB384F1AE286F000FCC6FC /* PersonalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalController.m; sourceTree = "<group>"; };
 		8ADB388A1AE2A15900FCC6FC /* UsernickController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsernickController.h; sourceTree = "<group>"; };
@@ -1713,8 +1713,6 @@
 				8ADB388B1AE2A17100FCC6FC /* UsernickController.m */,
 				8A4020C31AE357BC00806014 /* NewSettingViewController.h */,
 				8A4020C41AE357DD00806014 /* NewSettingViewController.m */,
-				8A4021501AE3A5EC00806014 /* NickNameController.h */,
-				8A4021511AE3A63E00806014 /* NickNameController.m */,
 				8A46EDBD1AE9F3E30062F518 /* PersonalSignController.h */,
 				8A46EDBE1AE9F3FC0062F518 /* PersonalSignController.m */,
 				8AFE46611AED087900B57368 /* DDHeadPicUpdate.h */,
@@ -1723,6 +1721,8 @@
 				8AEF0ECD1AF31C8900DE2484 /* HelpViewController.m */,
 				8A19991A1AF7E29800F9A68C /* DDupdatePicAndName.h */,
 				8A19991B1AF7E30000F9A68C /* DDupdatePicAndName.m */,
+				8AA113201AF9A461002DB7F5 /* PasswordUpdateView.h */,
+				8AA113211AF9A4DD002DB7F5 /* PasswordUpdateView.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -2866,11 +2866,11 @@
 				3C914D8419514BBD0002DAD3 /* GroupListViewController.m in Sources */,
 				9003D8681939D8D000DC38A4 /* ChatListCell.m in Sources */,
 				909308BE19604821005013BD /* Emoji.m in Sources */,
+				8AA113221AF9A4DD002DB7F5 /* PasswordUpdateView.m in Sources */,
 				905326B519333E8E00F064D7 /* TTGlobalUICommon.m in Sources */,
 				90A705FC1A8B63B200376154 /* MWGridViewController.m in Sources */,
 				90A7060F1A8B63B200376154 /* UIImage+EMWebP.m in Sources */,
 				8AFE46631AED08B100B57368 /* DDHeadPicUpdate.m in Sources */,
-				8A4021521AE3A63E00806014 /* NickNameController.m in Sources */,
 				3C6BBA0619419EBD00A64684 /* EMRemarkImageView.m in Sources */,
 				9003D8A21939D8D000DC38A4 /* EMChatLocationBubbleView.m in Sources */,
 				90A705FE1A8B63B200376154 /* MWPhotoBrowser.m in Sources */,
