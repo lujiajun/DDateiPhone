@@ -22,6 +22,7 @@
 #import "DDUserDAO.h"
 #import "Constants.h"
 #import "UIImageView+EMWebCache.h"
+#import "ChatRoom4DAO.h"
 
 
 @interface Contact4GroupAddViewController ()<UISearchBarDelegate, UISearchDisplayDelegate>
@@ -270,8 +271,13 @@
     
     DDUser *user=[_userDao selectDDuserByUid:buddy.username];
     UIImageView *us=[[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40)] ;
-    [us sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
-          placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+    if(user!=nil&&user.picPath!=nil){
+        [us sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
+              placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+    }else{
+        us.image=[UIImage imageNamed:@"Logo_new"];
+    }
+    
     [cell.contentView addSubview:us];
     cell.textLabel.text = buddy.username;
     
@@ -453,7 +459,7 @@
         //新建四人聊天室
         //1判断是否已经存在
         //2 加入环信
-        //3加入AWS
+        //3 加入AWS
         //4 加入本地
     [self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"create4Groups" object:@NO];
@@ -465,6 +471,17 @@
 
 -(void) creat4Groups{
     CHATROOM4 *chatroom4=[CHATROOM4 new];
+    //判断是否存在同样用户的群组
+    ChatRoom4DAO *dao=[[ChatRoom4DAO alloc]init];
+    chatroom4=[dao isUniqueRoom:_room2.UID1 UID2:_room2.UID2 UID3:_username UID4:_toAddFriend];
+    if(chatroom4!=nil&&chatroom4.GID!=nil){
+        //跳入原来的房间
+        ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:chatroom4.GID isGroup:YES] initRoom4:chatroom4 friend:self.toAddFriend isNewRoom:NO];
+        chatController.title = self.room2.Motto;
+        [self.navigationController pushViewController:chatController animated:YES];
+
+        return;
+    }
    
     EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
     groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
@@ -493,7 +510,9 @@
                                                                    chatroom4.systemTimeNumber=[NSNumber numberWithInt:[[NSDate date] timeIntervalSince1970]*1000];
                                                                    ChatRoom4DB *chatroom4DB=[ChatRoom4DB alloc];
                                                                    [chatroom4DB insertChatroom4:chatroom4];
-                                                                   ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES] initRoom4:chatroom4 friend:self.toAddFriend ];
+                                                                   ChatRoom4DAO *dao=[[ChatRoom4DAO alloc]init];
+                                                                   [dao insertChatroom4:chatroom4];
+                                                                   ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES] initRoom4:chatroom4 friend:self.toAddFriend isNewRoom:YES ];
                                                                    chatController.title = self.room2.Motto;
                                                                    [self.navigationController pushViewController:chatController animated:YES];
                                                                    

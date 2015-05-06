@@ -110,6 +110,8 @@
 "group.join.fail" = "again failed to join the group, please";
 "group.sendingApply" = "send group of application...";
 "group.sendApplyRepeat" = "application has been sent";
+//addGroup
+"group.notSameSex"="please join in the other sex room";
 
 //Create Group
 "group.create.addOccupant" = "add members";

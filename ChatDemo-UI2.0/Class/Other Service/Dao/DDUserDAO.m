@@ -137,11 +137,11 @@ NSString * const DDUserTable=@"DDUser";
 - (void)updateByUID:(DDUser *)user{
     
     if ([self.db open]) {
-        BOOL res = [self.db executeUpdate:@"UPDATE DDUser SET nickName= ?,isPic=?,picPath=?,gender=?,university=?,grade=?,photos=?,city=?,birthday=?,hobbies=?,sign=?,isDoublerID=? WHERE UID = ?",user.nickName,user.isPic,user.picPath,user.gender,user.university,user.grade,user.city,user.birthday,user.hobbies,user.sign,user.isDoublerID,user.UID];
+        BOOL res = [self.db executeUpdate:@"UPDATE DDUser SET nickName= ?,isPic=?,picPath=?,gender=?,university=?,grade=?,photos=?,city=?,birthday=?,hobbies=?,sign=?,isDoublerID=? WHERE UID = ?",user.nickName,user.isPic,user.picPath,user.gender,user.university,user.grade,user.photos,user.city,user.birthday,user.hobbies,user.sign,user.isDoublerID,user.UID];
         if (res) {
-            NSLog(@"DDUser: success to insert db");
+            NSLog(@"DDUser: success to update db");
         } else {
-            NSLog(@"DDUser: error when insert db");
+            NSLog(@"DDUser: error when update db");
         }
         [self.db close];
     }

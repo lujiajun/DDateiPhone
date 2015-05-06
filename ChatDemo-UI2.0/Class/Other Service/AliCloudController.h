@@ -8,4 +8,6 @@
 -(void) uploadPic:(NSData *)upData name:(NSString *) name;
 
 -(void) asynUploadPic:(NSData *) upData name:(NSString *) picname username:(NSString *) username;
+
+-(void) updateHeadPic:(NSData *)upData name:(NSString *) name;
 @end

@@ -25,7 +25,8 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
 
 - (NSString *)tableCreateSql {
 	return [NSString stringWithFormat:@"Create table if not exists %@( \
-            GID varchar(50) PRIMARY KEY, \
+            ID INTEGER PRIMARY KEY AUTOINCREMENT, \
+            GID varchar(50) , \
             CTIMEH varchar(50), \
             CTIMER varchar(50), \
             RID varchar(30), \
@@ -39,7 +40,8 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
             isLikeUID4 INTEGER, \
             subGID1 varchar(50), \
             subGID2 varchar(50), \
-            systemTimeNumber varchar(50));", ChatRoom4Table];
+            systemTimeNumber varchar(50),\
+            UNIQUE(GID));", ChatRoom4Table];
 }
 
 - (NSArray *)queryChatRoom4s {
@@ -130,6 +132,9 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
 #pragma mark - Private
 
 - (void)insertChatroom4:(CHATROOM4 *)chatRoom4 {
+    if(chatRoom4==nil||chatRoom4.GID==nil){
+        return;
+    }
 	NSString *sql = [NSString stringWithFormat:@"Insert or ignore into %@ ( \
                      GID, \
                      CTIMEH, \
@@ -223,6 +228,46 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
 		[self.db close];
 	}
 	return chatroom4;
+}
+-(CHATROOM4 *) isUniqueRoom:(NSString *) UID1 UID2:(NSString *) UID2 UID3:(NSString *) UID3 UID4:(NSString *) UID4{
+    if (UID1!=nil&&UID2!=nil&&UID3!=nil&&UID4!=nil) {
+        NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@ where UID1='%@' and UID2='%@' and UID3='%@' and UID4='%@' ", ChatRoom4Table, UID1,UID2,UID3,UID4];
+        NSLog(sql);
+        if ([self.db open]) {
+            FMResultSet *rs = [self.db executeQuery:sql];
+            while ([rs next]){
+                CHATROOM4 *chatroom4 = [CHATROOM4 new];
+                chatroom4.GID = [rs stringForColumn:@"GID"];
+                chatroom4.CTIMER = [rs stringForColumn:@"CTIMER"];
+                chatroom4.CTIMEH = [rs stringForColumn:@"CTIMEH"];
+                chatroom4.UID1 = [rs stringForColumn:@"UID1"];
+                chatroom4.UID2 = [rs stringForColumn:@"UID2"];
+                chatroom4.UID3 = [rs stringForColumn:@"UID3"];
+                chatroom4.UID4 = [rs stringForColumn:@"UID4"];
+                chatroom4.isLikeUID1 = [NSNumber numberWithInt:[rs intForColumn:@"isLikeUID1"]];
+                chatroom4.isLikeUID2 = [NSNumber numberWithInt:[rs intForColumn:@"isLikeUID2"]];
+                chatroom4.isLikeUID3 = [NSNumber numberWithInt:[rs intForColumn:@"isLikeUID3"]];
+                chatroom4.isLikeUID4 = [NSNumber numberWithInt:[rs intForColumn:@"isLikeUID4"]];
+                chatroom4.subGID1 = [rs stringForColumn:@"subGID1"];
+                chatroom4.subGID2 = [rs stringForColumn:@"subGID2"];
+                chatroom4.systemTimeNumber = [NSNumber numberWithLongLong:[rs longLongIntForColumn:@"systemTimeNumber"]];
+                return chatroom4;
+            }
+        }
+        
+    }
+    return nil;
+}
+
+
+-(void)delChatRoom4ByRid:(NSString *)rid {
+    NSString *sql = [NSString stringWithFormat:@"delete FROM %@ where GID='%@'", ChatRoom4Table, rid];
+    NSLog(sql);
+    if ([self.db open]) {
+        [self.db executeQuery:sql];
+        [self.db close];
+    }
+    
 }
 
 #pragma mark - Getter

@@ -27,6 +27,7 @@
 #import "Constants.h"
 #import "UIImageView+WebCache.h"
 #import "Util.h"
+#import "IndexViewController.h"
 
 @interface ContactsViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, BaseTableCellDelegate, SRRefreshDelegate>
 {
@@ -285,9 +286,16 @@
 			[[self userDao] getTableRowAndInsertLocal:buddy.username];
 			DDUser *user = [_userDao selectDDuserByUid:buddy.username];
 			UIImageView *us = [[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x + 5, cell.frame.origin.y + 5, 40, 40)];
-			[us sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]]
-			      placeholderImage:[UIImage imageNamed:@"Logo_new"]];
-			[cell.contentView addSubview:us];
+            if([user.UID isEqualToString:[IndexViewController instanceDDuser].UID]){
+                [us sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:[IndexViewController instanceDDuser].picPath]]
+                      placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+
+            }else{
+                [us sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]]
+                      placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+
+            }
+            [cell.contentView addSubview:us];
 
 			cell.textLabel.text = buddy.username;
 		}

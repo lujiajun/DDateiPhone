@@ -4,6 +4,8 @@
 #import "AliCloudController.h"
 #import "IndexViewController.h"
 #import "DDUserDAO.h"
+#import "PasswordUpdateView.h"
+#import "NewSettingViewController.h"
 
 @interface DDupdatePicAndName ()
 @property(strong,nonatomic) UIImageView *imgHead;
@@ -47,15 +49,15 @@
     updatepasswordButton.backgroundColor=[UIColor redColor];
     [updatepasswordButton setTitle:@"修改密码" forState:UIControlStateNormal];
     [self.view addSubview:updatepasswordButton];
-//    [registerButton addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [updatepasswordButton addTarget:self action:@selector(passwordclick) forControlEvents:UIControlEventTouchUpInside];
     //nicheng
     UILabel *nick=[[UILabel alloc]initWithFrame:CGRectMake(10, updatepasswordButton.frame.origin.y+updatepasswordButton.frame.size.height+20, 30, 30)];
     nick.text=@"昵称:";
     nick.font=[UIFont fontWithName:@"Helvetica" size:12];
     nick.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:nick];
-    _nickvalue=[[UITextField alloc]initWithFrame:CGRectMake(10,updatepasswordButton.frame.origin.y+updatepasswordButton.frame.size.height+20, self.view.frame.size.width-40, 30)];
-    _nickvalue.placeholder=_username;
+    _nickvalue=[[UITextField alloc]initWithFrame:CGRectMake(40,updatepasswordButton.frame.origin.y+updatepasswordButton.frame.size.height+20, self.view.frame.size.width-40, 30)];
+    _nickvalue.text=_username;
     [_nickvalue setBorderStyle:UITextBorderStyleRoundedRect];
     _nickvalue.textAlignment=NSTextAlignmentLeft;
     _nickvalue.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -73,13 +75,19 @@
 
 }
 
+-(void) passwordclick{
+    PasswordUpdateView *ps=[PasswordUpdateView alloc];
+    [self.navigationController pushViewController:ps animated:YES];
+    
+}
+
 //判断账号和密码是否为空
 - (BOOL)isEmpty{
     BOOL ret = NO;
     if (_nickvalue.text.length == 0) {
         ret = YES;
         [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
-                                message:NSLocalizedString(@"register.nicknameandgender", @"Please input your nickname and gender")
+                                message: @"Please input your nickname"
                      customizationBlock:nil
                         completionBlock:nil
                       cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
@@ -90,40 +98,30 @@
     return ret;
 }
 
-
-//-(void) registerUser{
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(doRegister)
-//                                                 name:@"doRegister"
-//                                               object:nil];
-//    
-//    
-//    [self showHudInView:self.view hint:NSLocalizedString(@"register.ongoing", @"Is to register...")];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"doRegister" object:@NO];
-//    
-//    
-//    
-//}
-
 //注册账号
 - (void)updateNick{
     if(![self isEmpty]){
         DDUser *user=[IndexViewController instanceDDuser];
         user.nickName=_nickvalue.text;
-        IndexViewController *newSetting=[IndexViewController alloc];
-        [newSetting setDDUser:user];
+//        IndexViewController *newSetting=[IndexViewController alloc];
+        [IndexViewController setDDUser:user];
+        
+        //删除原图
         
         //上传图片
-        AliCloudController *aliCloud=[AliCloudController alloc];
-        [aliCloud uploadPic:self.data name:self.picpath];
+        if(self.data!=nil){
+            AliCloudController *aliCloud=[AliCloudController alloc];
+            [aliCloud updateHeadPic:self.data name:self.picpath];
+            
+        }
         
         DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
         [ddbDynamoDB updateTable:user];
         //XIUGAI BENDI
         DDUserDAO *dao =[[DDUserDAO alloc]init];
         [dao updateByUID:user];
-        
-        [self.navigationController popViewControllerAnimated:YES];
+        NewSettingViewController *settings=[NewSettingViewController alloc];
+        [self.navigationController pushViewController:settings animated:YES];
         
 
     }
@@ -209,7 +207,7 @@
         [self.view addSubview:smallimage];
         //上传
         
-        _picpath=[_username stringByAppendingString:@"_head_pic" ];
+        _picpath=[[IndexViewController instanceDDuser].UID stringByAppendingString:@"_head_pic" ];
         
         
     }

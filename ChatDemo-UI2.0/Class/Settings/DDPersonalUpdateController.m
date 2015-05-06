@@ -86,7 +86,7 @@
     city.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:city];
     _cityvalue=[[UITextField alloc]initWithFrame:CGRectMake(city.frame.origin.x+50, university.frame.origin.y+40, 180, 30)];
-    _cityvalue.text=@"城市";
+    _cityvalue.text=[IndexViewController instanceDDuser].city;
     [_cityvalue setBorderStyle:UITextBorderStyleRoundedRect];
     _cityvalue.textAlignment=NSTextAlignmentLeft;
     _cityvalue.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -112,7 +112,7 @@
     gender.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:gender];
     _gendervalue=[[UITextField alloc]initWithFrame:CGRectMake(city.frame.origin.x+50, city.frame.origin.y+40, 180, 30)];
-    _gendervalue.placeholder=[IndexViewController instanceDDuser].gender;
+    _gendervalue.text=[IndexViewController instanceDDuser].gender;
     [_gendervalue setBorderStyle:UITextBorderStyleRoundedRect];
     _gendervalue.textAlignment=NSTextAlignmentLeft;
     _gendervalue.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -126,7 +126,7 @@
     birdate.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:birdate];
     _birdatevalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.origin.x+50, gender.frame.origin.y+40, 180, 30)];
-    _birdatevalue.placeholder=@"birthday";
+    _birdatevalue.text=[IndexViewController instanceDDuser].birthday;
     _birdatevalue.textAlignment=NSTextAlignmentLeft;
     [_birdatevalue setBorderStyle:UITextBorderStyleRoundedRect];
     _birdatevalue.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -139,7 +139,7 @@
     hobbies.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:hobbies];
     _hobbiesvalue=[[UITextField alloc]initWithFrame:CGRectMake(birdate.frame.origin.x+50, birdate.frame.origin.y+40, 180, 30)];
-    _hobbiesvalue.placeholder=@"hobbies";
+    _hobbiesvalue.text=[IndexViewController instanceDDuser].hobbies;
     _hobbiesvalue.textAlignment=NSTextAlignmentLeft;
     [_hobbiesvalue setBorderStyle:UITextBorderStyleRoundedRect];
     _hobbiesvalue.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -152,7 +152,7 @@
     sign.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:sign];
     _signvalue=[[UITextField alloc]initWithFrame:CGRectMake(hobbies.frame.origin.x+50, hobbies.frame.origin.y+40, 180, 30)];
-    _signvalue.placeholder=@"sign";
+    _signvalue.text=[IndexViewController instanceDDuser].sign;
     _signvalue.textAlignment=NSTextAlignmentLeft;
     [_signvalue setBorderStyle:UITextBorderStyleRoundedRect];
     _signvalue.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -171,22 +171,20 @@
 //xiugai账号
 - (void)updateDDUser{
     DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
-    DDUser *user=IndexViewController.instanceDDuser;
-    user.university=_universityvalue.text;
-    user.gender=_gendervalue.text;
+    DDUser *user=[IndexViewController instanceDDuser];
+    user.university=_universityvalue.text==nil?user.university:_universityvalue.text;
+    user.gender=_gendervalue.text==nil?user.gender:_gendervalue.text;
 //    user.grade=_gradevalue.text;
-    user.city=_cityvalue.text;
-    user.hobbies=_hobbiesvalue.text;
-    user.sign=_hobbiesvalue.text;
-    user.birthday=_birdatevalue.text;
-    IndexViewController *newSetting=[IndexViewController alloc];
-    [newSetting setDDUser:user];
+    user.city=_cityvalue.text==nil?user.city:_cityvalue.text;
+    user.hobbies=_hobbiesvalue.text==nil?user.hobbies:_hobbiesvalue.text;
+    user.sign=_signvalue.text==nil?user.sign:_signvalue.text;
+    user.birthday=_birdatevalue.text==nil?user.birthday:_birdatevalue.text;
     
     [ddbDynamoDB updateTable:user];
     //XIUGAI BENDI
     DDUserDAO *dao =[[DDUserDAO alloc]init];
     [dao updateByUID:user];
-    
+    [IndexViewController setDDUser:user];
     [self.navigationController popViewControllerAnimated:YES];
 }
 //判断账号和密码是否为空

@@ -31,6 +31,8 @@
 #import "UIImageView+EMWebCache.h"
 #import "Constants.h"
 #import "DDupdatePicAndName.h"
+#import "Util.h"
+#import "IndexViewController.h"
 @interface NewSettingViewController ()
 
 @property (strong, nonatomic) UIView *footerView;
@@ -243,9 +245,10 @@
             
             [bakview addSubview:imgHead] ;
             //添加nickname
-            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width/2-35, 112, 70, 20)];
+            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width/2-35, 112, 80, 20)];
             mylable.text=[IndexViewController instanceDDuser].nickName;
             mylable.textAlignment=NSTextAlignmentCenter;
+            mylable.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:mylable];
             //添加性别图标
             NSString *sex;
@@ -256,10 +259,10 @@
             }
             UIImage *seximg=[UIImage imageNamed:sex];
             UIImageView *sexview=[[UIImageView alloc] initWithImage:seximg];
-            sexview.frame=CGRectMake(self.tableView.frame.size.width/2+35, 112, 10, 10);
+            sexview.frame=CGRectMake(mylable.frame.origin.x+mylable.frame.size.width, mylable.frame.origin.y, 10, 10);
             [bakview addSubview:sexview];
             //添加double 号
-            UILabel *doubledate=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width/2-35, 134, 70, 20)];
+            UILabel *doubledate=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width/2-35, 134, 150, 20)];
             doubledate.text=[@"Double号:" stringByAppendingString:[IndexViewController instanceDDuser].UID];
             doubledate.textAlignment=NSTextAlignmentLeft;
             doubledate.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -325,11 +328,8 @@
             [cell.contentView addSubview:bakview];
             
             UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(30, bakview.frame.origin.y+5, 100, 20)];
-            if(_user!=nil&&_user.city!=nil){
-                mylable.text=[@"城市：   " stringByAppendingString:_user.city];
-            }else{
-                mylable.text=@"城市：   请编辑城市信息";
-            }
+            
+            mylable.text=[Util str1:@"城市：   " appendStr2:[IndexViewController instanceDDuser].city==nil?@"请编辑城市信息":[IndexViewController instanceDDuser].city];
             mylable.textAlignment=NSTextAlignmentLeft;
             mylable.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:mylable];
@@ -346,11 +346,7 @@
             [bakview addSubview:bianjiView];
             
             UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(30, mylable.frame.origin.y+20, 200, 20)];
-            if(_user!=nil&&_user.university!=nil){
-                university.text=[@"学校：      " stringByAppendingString:_user.university] ;
-            }else{
-                university.text=@"学校：   请编辑学校信息";
-            }
+            university.text=[Util str1:@"学校：   " appendStr2:[IndexViewController instanceDDuser].university==nil?@"请编辑学校信息":[IndexViewController instanceDDuser].university];
             university.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:university];
             
@@ -363,35 +359,26 @@
 //            [bakview addSubview:school];
             
             UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(30, university.frame.origin.y+20, 200, 20)];
-            if(_user!=nil&&_user.gender!=nil){
-                gender.text=[@"性别：   " stringByAppendingString:_user.gender];
-   
-            }else{
-                gender.text=@"性别：   请编辑性别信息";
-            }
-           
+            gender.text=[Util str1:@"性别：   " appendStr2:[IndexViewController instanceDDuser].gender==nil?@"请编辑性别信息":[IndexViewController instanceDDuser].gender];
+
             gender.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:gender];
             
-            UILabel *intre=[[UILabel alloc]initWithFrame:CGRectMake(30, gender.frame.origin.y+20, 200, 20)];
-            if(_user!=nil&&_user.hobbies!=nil){
-                intre.text=[@"爱好：   " stringByAppendingString:_user.hobbies];
-            }else{
-                intre.text=@"爱好：   请编辑你的兴趣爱好";
-            }
-
             
+            UILabel *birth=[[UILabel alloc]initWithFrame:CGRectMake(30, gender.frame.origin.y+20, 200, 20)];
+    
+            birth.text=[Util str1:@"BIRTH：   " appendStr2:[IndexViewController instanceDDuser].birthday==nil?@"请编辑出生日期信息":[IndexViewController instanceDDuser].birthday];
+
+            birth.font=[UIFont fontWithName:@"Helvetica" size:12];
+            [bakview addSubview:birth];
+            
+            UILabel *intre=[[UILabel alloc]initWithFrame:CGRectMake(30, birth.frame.origin.y+20, 200, 20)];
+            intre.text=[Util str1:@"爱好：   " appendStr2:[IndexViewController instanceDDuser].hobbies==nil?@"请编辑爱好信息":[IndexViewController instanceDDuser].hobbies];
             intre.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:intre];
             
             UILabel *sign=[[UILabel alloc]initWithFrame:CGRectMake(30, intre.frame.origin.y+20, 200, 20)];
-            if(_user!=nil&&_user.sign!=nil){
-                sign.text=[@"签名：   " stringByAppendingString:_user.sign];
-
-            }else{
-                sign.text=@"签名：   请编辑你得个性签名";
-
-            }
+            sign.text=[Util str1:@"签名：   " appendStr2:[IndexViewController instanceDDuser].sign==nil?@"请编辑签名信息":[IndexViewController instanceDDuser].sign];
                         sign.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:sign];
             //            cell.textLabel.text = NSLocalizedString(@"title.buddyBlock", @"Black List");
@@ -555,7 +542,7 @@
         [self refreshScrollView];
         [[self tableView] reloadData];
     
-        [_aliCloud asynUploadPic:data name:picname username:_loginname];
+        [_aliCloud asynUploadPic:data name:picname username:[IndexViewController instanceDDuser].UID];
     
     }
     
@@ -577,7 +564,7 @@
             return (NSComparisonResult)NSOrderedSame;  
         };
         NSArray *array = [_addedPicArray sortedArrayUsingComparator:cmptr];
-        return   [NSString stringWithFormat: @"%ld",  [array.lastObject integerValue]+1];
+        return   [NSString stringWithFormat: @"%d",  [array.lastObject integerValue]+1];
     }
 
 }

@@ -78,50 +78,6 @@
     DDRegisterController *personsign=[DDRegisterController alloc];
     [self.navigationController pushViewController:personsign animated:YES];
 
-//    
-//    if (![self isEmpty]) {
-//        //隐藏键盘
-//        [self.view endEditing:YES];
-//        //判断是否是中文，但不支持中英文混编
-//        if ([self.usernameTextField.text isChinese]) {
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"login.nameNotSupportZh", @"Name does not support Chinese")
-//                                  message:nil
-//                                  delegate:nil
-//                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-//                                  otherButtonTitles:nil];
-//            
-//            [alert show];
-//            
-//            return;
-//        }
-//        [self showHudInView:self.view hint:NSLocalizedString(@"register.ongoing", @"Is to register...")];
-//        //异步注册账号
-//        [[EaseMob sharedInstance].chatManager asyncRegisterNewAccount:_usernameTextField.text
-//                                                             password:_passwordTextField.text
-//                                                       withCompletion:
-//         ^(NSString *username, NSString *password, EMError *error) {
-//             [self hideHud];
-//             
-//             if (!error) {
-//                 TTAlertNoTitle(NSLocalizedString(@"register.success", @"Registered successfully, please log in"));
-//             }else{
-//                 switch (error.errorCode) {
-//                     case EMErrorServerNotReachable:
-//                         TTAlertNoTitle(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
-//                         break;
-//                     case EMErrorServerDuplicatedAccount:
-//                         TTAlertNoTitle(NSLocalizedString(@"register.repeat", @"You registered user already exists!"));
-//                         break;
-//                     case EMErrorServerTimeout:
-//                         TTAlertNoTitle(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
-//                         break;
-//                     default:
-//                         TTAlertNoTitle(NSLocalizedString(@"register.fail", @"Registration failed"));
-//                         break;
-//                 }
-//             }
-//         } onQueue:nil];
-//    }
 }
 
 //点击登陆后的操作
@@ -191,32 +147,7 @@
 - (IBAction)doLogin:(id)sender {
     DDLoginController *personsign=[DDLoginController alloc];
     [self.navigationController pushViewController:personsign animated:YES];
-//    if (![self isEmpty]) {
-//        [self.view endEditing:YES];
-//        //支持是否为中文
-//        if ([self.usernameTextField.text isChinese]) {
-//            UIAlertView *alert = [[UIAlertView alloc]
-//                                  initWithTitle:NSLocalizedString(@"login.nameNotSupportZh", @"Name does not support Chinese")
-//                                  message:nil
-//                                  delegate:nil
-//                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-//                                  otherButtonTitles:nil];
-//            
-//            [alert show];
-//            
-//            return;
-//        }
-//#if !TARGET_IPHONE_SIMULATOR
-//        //弹出提示
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"login.inputApnsNickname", @"Please enter nickname for apns") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
-//        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-//        UITextField *nameTextField = [alert textFieldAtIndex:0];
-//        nameTextField.text = self.usernameTextField.text;
-//        [alert show];
-//#elif TARGET_IPHONE_SIMULATOR
-//        [self loginWithUsername:_usernameTextField.text password:_passwordTextField.text];
-//#endif
-//    }
+
 }
 
 //是否使用ip

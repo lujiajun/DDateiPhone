@@ -46,6 +46,16 @@ static OSSBucket *bucket;
     
 }
 
+-(void) updateHeadPic:(NSData *)upData name:(NSString *) name
+{
+    
+    OSSData *testData = [[OSSData alloc] initWithBucket:bucket withKey:name];
+    NSError *error = nil;
+    [testData delete:&error];
+    //插入
+    [self uploadPic:upData name:name];
+}
+
 //OSS ,username_1
 //1|2|3|4
 -(void) asynUploadPic:(NSData *) upData name:(NSString *) picname username:(NSString *) username{

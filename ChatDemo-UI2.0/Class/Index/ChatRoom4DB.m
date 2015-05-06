@@ -24,8 +24,11 @@
 
 
 - (void)insertChatroom4:(CHATROOM4 *)tableRow {
-    AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    [dynamoDBObjectMapper save: tableRow];
+    if(tableRow!=nil &&tableRow.GID!=nil){
+        AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+        [dynamoDBObjectMapper save: tableRow];
+
+    }
 }
 
 -(void) updateTable:(CHATROOM4 *)tableRow{

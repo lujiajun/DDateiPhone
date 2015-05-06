@@ -175,12 +175,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row == 0) {
-        PersonalController *pushController = [[PersonalController alloc] initWithStyle:UITableViewStylePlain];
-        [self.navigationController pushViewController:pushController animated:YES];
-        
-    }
-    else if (indexPath.row == 1) {
+    if (indexPath.row == 1) {
         PushNotificationViewController *pushController = [[PushNotificationViewController alloc] initWithStyle:UITableViewStylePlain];
         [self.navigationController pushViewController:pushController animated:YES];
     }
