@@ -18,7 +18,6 @@
 #import "ChatListViewController.h"
 #import "ChatRoom4ListCell.h"
 #import "UIImageView+WebCache.h"
-#import "DDBDynamoDB.h"
 #import "DDUserDAO.h"
 #import "Constants.h"
 #import "ChatRoom4DB.h"

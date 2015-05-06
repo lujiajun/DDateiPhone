@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
-#import "DDBDynamoDB.h"
+#import "DDUser.h"
+#import "CHATROOM2.h"
 
 
 @interface ChatRoomDetail : UIViewController

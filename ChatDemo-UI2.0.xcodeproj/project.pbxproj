@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		180E1A441AEF2C5A007EC1C3 /* MainChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */; };
+		181782A31AFA6F970007BD3B /* AWSDynamoDB_DDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 181782A21AFA6F970007BD3B /* AWSDynamoDB_DDUser.m */; };
+		181782A71AFA74DB0007BD3B /* DDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 181782A61AFA74DB0007BD3B /* DDUser.m */; };
+		181782AA1AFA80420007BD3B /* CHATROOM2.m in Sources */ = {isa = PBXBuildFile; fileRef = 181782A91AFA80420007BD3B /* CHATROOM2.m */; };
 		1873D80D1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */; };
 		1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */; };
 		18990C711AF7CC8400523A29 /* UIColor+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 18990C701AF7CC8400523A29 /* UIColor+Category.m */; };
@@ -59,7 +62,7 @@
 		8A038C401AF51A88007A05BE /* ChatRoom2DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C3C1AF51A88007A05BE /* ChatRoom2DAO.m */; };
 		8A038C411AF51A88007A05BE /* DDUserDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C3E1AF51A88007A05BE /* DDUserDAO.m */; };
 		8A038C481AF51A95007A05BE /* AliCloudController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C431AF51A95007A05BE /* AliCloudController.m */; };
-		8A038C491AF51A95007A05BE /* DDBDynamoDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C451AF51A95007A05BE /* DDBDynamoDB.m */; };
+		8A038C491AF51A95007A05BE /* AWSDynamoDB_ChatRoom2.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C451AF51A95007A05BE /* AWSDynamoDB_ChatRoom2.m */; };
 		8A038C4A1AF51A95007A05BE /* LocalDbService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C471AF51A95007A05BE /* LocalDbService.m */; };
 		8A19991C1AF7E30000F9A68C /* DDupdatePicAndName.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A19991B1AF7E30000F9A68C /* DDupdatePicAndName.m */; };
 		8A4020C51AE357DD00806014 /* NewSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4020C41AE357DD00806014 /* NewSettingViewController.m */; };
@@ -425,6 +428,12 @@
 		0FD9CE0AAE4744D1F3A7838B /* Pods-ChatDemo-UI2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatDemo-UI2.0.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatDemo-UI2.0/Pods-ChatDemo-UI2.0.debug.xcconfig"; sourceTree = "<group>"; };
 		180E1A421AEF2C59007EC1C3 /* MainChatListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainChatListViewController.h; sourceTree = "<group>"; };
 		180E1A431AEF2C59007EC1C3 /* MainChatListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainChatListViewController.m; sourceTree = "<group>"; };
+		181782A11AFA6F970007BD3B /* AWSDynamoDB_DDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWSDynamoDB_DDUser.h; path = "Other Service/AWSDynamoDB_DDUser.h"; sourceTree = "<group>"; };
+		181782A21AFA6F970007BD3B /* AWSDynamoDB_DDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWSDynamoDB_DDUser.m; path = "Other Service/AWSDynamoDB_DDUser.m"; sourceTree = "<group>"; };
+		181782A51AFA74DB0007BD3B /* DDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDUser.h; path = "Other Service/Model/DDUser.h"; sourceTree = "<group>"; };
+		181782A61AFA74DB0007BD3B /* DDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDUser.m; path = "Other Service/Model/DDUser.m"; sourceTree = "<group>"; };
+		181782A81AFA80420007BD3B /* CHATROOM2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHATROOM2.h; path = "Other Service/Model/CHATROOM2.h"; sourceTree = "<group>"; };
+		181782A91AFA80420007BD3B /* CHATROOM2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHATROOM2.m; path = "Other Service/Model/CHATROOM2.m"; sourceTree = "<group>"; };
 		1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libALBB_OSS_IOS_SDK.a; sourceTree = "<group>"; };
 		1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		18990C6F1AF7CC8400523A29 /* UIColor+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Category.h"; sourceTree = "<group>"; };
@@ -521,8 +530,8 @@
 		8A038C3E1AF51A88007A05BE /* DDUserDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDUserDAO.m; path = "Other Service/Dao/DDUserDAO.m"; sourceTree = "<group>"; };
 		8A038C421AF51A95007A05BE /* AliCloudController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AliCloudController.h; path = "Other Service/AliCloudController.h"; sourceTree = "<group>"; };
 		8A038C431AF51A95007A05BE /* AliCloudController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AliCloudController.m; path = "Other Service/AliCloudController.m"; sourceTree = "<group>"; };
-		8A038C441AF51A95007A05BE /* DDBDynamoDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDBDynamoDB.h; path = "Other Service/DDBDynamoDB.h"; sourceTree = "<group>"; };
-		8A038C451AF51A95007A05BE /* DDBDynamoDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDBDynamoDB.m; path = "Other Service/DDBDynamoDB.m"; sourceTree = "<group>"; };
+		8A038C441AF51A95007A05BE /* AWSDynamoDB_ChatRoom2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWSDynamoDB_ChatRoom2.h; path = "Other Service/AWSDynamoDB_ChatRoom2.h"; sourceTree = "<group>"; };
+		8A038C451AF51A95007A05BE /* AWSDynamoDB_ChatRoom2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWSDynamoDB_ChatRoom2.m; path = "Other Service/AWSDynamoDB_ChatRoom2.m"; sourceTree = "<group>"; };
 		8A038C461AF51A95007A05BE /* LocalDbService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalDbService.h; path = "Other Service/LocalDbService.h"; sourceTree = "<group>"; };
 		8A038C471AF51A95007A05BE /* LocalDbService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalDbService.m; path = "Other Service/LocalDbService.m"; sourceTree = "<group>"; };
 		8A19991A1AF7E29800F9A68C /* DDupdatePicAndName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDupdatePicAndName.h; sourceTree = "<group>"; };
@@ -1127,6 +1136,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		181782A41AFA74720007BD3B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				181782A51AFA74DB0007BD3B /* DDUser.h */,
+				181782A61AFA74DB0007BD3B /* DDUser.m */,
+				181782A81AFA80420007BD3B /* CHATROOM2.h */,
+				181782A91AFA80420007BD3B /* CHATROOM2.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		18F7F4F11AF693250085EEB8 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -1139,12 +1159,12 @@
 		18F9B56C1AF2639800669C49 /* Dao */ = {
 			isa = PBXGroup;
 			children = (
-				18F7F4F21AF6A60D0085EEB8 /* ChatRoom4DAO.h */,
-				18F7F4F31AF6A60D0085EEB8 /* ChatRoom4DAO.m */,
 				8A038C391AF51A88007A05BE /* BaseDAO.h */,
 				8A038C3A1AF51A88007A05BE /* BaseDAO.m */,
 				8A038C3B1AF51A88007A05BE /* ChatRoom2DAO.h */,
 				8A038C3C1AF51A88007A05BE /* ChatRoom2DAO.m */,
+				18F7F4F21AF6A60D0085EEB8 /* ChatRoom4DAO.h */,
+				18F7F4F31AF6A60D0085EEB8 /* ChatRoom4DAO.m */,
 				8A038C3D1AF51A88007A05BE /* DDUserDAO.h */,
 				8A038C3E1AF51A88007A05BE /* DDUserDAO.m */,
 			);
@@ -1251,11 +1271,14 @@
 			children = (
 				8A038C421AF51A95007A05BE /* AliCloudController.h */,
 				8A038C431AF51A95007A05BE /* AliCloudController.m */,
-				8A038C441AF51A95007A05BE /* DDBDynamoDB.h */,
-				8A038C451AF51A95007A05BE /* DDBDynamoDB.m */,
+				181782A11AFA6F970007BD3B /* AWSDynamoDB_DDUser.h */,
+				181782A21AFA6F970007BD3B /* AWSDynamoDB_DDUser.m */,
+				8A038C441AF51A95007A05BE /* AWSDynamoDB_ChatRoom2.h */,
+				8A038C451AF51A95007A05BE /* AWSDynamoDB_ChatRoom2.m */,
 				8A038C461AF51A95007A05BE /* LocalDbService.h */,
 				8A038C471AF51A95007A05BE /* LocalDbService.m */,
 				18F9B56C1AF2639800669C49 /* Dao */,
+				181782A41AFA74720007BD3B /* Model */,
 			);
 			name = "Other Service";
 			sourceTree = "<group>";
@@ -2904,6 +2927,7 @@
 				90A706031A8B63B200376154 /* EMSDImageCache.m in Sources */,
 				90133EC11972DFF400C49B56 /* UIViewController+DismissKeyboard.m in Sources */,
 				90A706101A8B63B200376154 /* UIImageView+EMHighlightedWebCache.m in Sources */,
+				181782A71AFA74DB0007BD3B /* DDUser.m in Sources */,
 				9003D9141939D8D000DC38A4 /* AddFriendViewController.m in Sources */,
 				9003D9121939D8D000DC38A4 /* ContactsViewController.m in Sources */,
 				90A7060A1A8B63B200376154 /* MKAnnotationView+EMWebCache.m in Sources */,
@@ -2934,6 +2958,7 @@
 				9026F6621961856500653E79 /* ConvertToCommonEmoticonsHelper.m in Sources */,
 				9003D8701939D8D000DC38A4 /* DXMessageToolBar.m in Sources */,
 				90A706091A8B63B200376154 /* EMSDWebImagePrefetcher.m in Sources */,
+				181782A31AFA6F970007BD3B /* AWSDynamoDB_DDUser.m in Sources */,
 				90A705FB1A8B63B200376154 /* MWGridCell.m in Sources */,
 				90985E481A8A08D400976DD6 /* InvitationManager.m in Sources */,
 				8A038C311AF51A54007A05BE /* Commbox.m in Sources */,
@@ -2969,13 +2994,14 @@
 				90911119192EEAED008A48AA /* NSDate+Category.m in Sources */,
 				3C6FFA2419A2F5560003EB25 /* DebugViewController.m in Sources */,
 				9003D9071939D8D000DC38A4 /* MessageReadManager.m in Sources */,
-				8A038C491AF51A95007A05BE /* DDBDynamoDB.m in Sources */,
+				8A038C491AF51A95007A05BE /* AWSDynamoDB_ChatRoom2.m in Sources */,
 				3C35365C19A22164003EF79E /* GroupSettingViewController.m in Sources */,
 				905325CF1932ED8B00F064D7 /* EMSearchBar.m in Sources */,
 				3C914D8619514BBD0002DAD3 /* CreateGroupViewController.m in Sources */,
 				9003D9181939D8D000DC38A4 /* RealtimeSearchUtil.m in Sources */,
 				9003D8751939D8D000DC38A4 /* DXChatBarMoreView.m in Sources */,
 				180E1A441AEF2C5A007EC1C3 /* MainChatListViewController.m in Sources */,
+				181782AA1AFA80420007BD3B /* CHATROOM2.m in Sources */,
 				90A706061A8B63B200376154 /* EMSDWebImageDownloader.m in Sources */,
 				EB3CC3A31ACD343D00FB8662 /* CallSessionViewController.m in Sources */,
 				3C13D94B1A12095D00903622 /* GroupBansViewController.m in Sources */,

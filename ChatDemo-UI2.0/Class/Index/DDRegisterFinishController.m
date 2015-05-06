@@ -16,6 +16,7 @@
 #import "AliCloudController.h"
 #import "Constants.h"
 #import "DDUserDAO.h"
+#import "AWSDynamoDB_DDUser.h"
 
 
 
@@ -179,7 +180,7 @@ static DDUser   *dduser;
                  AliCloudController *aliCloud=[AliCloudController alloc];
                  [aliCloud uploadPic:self.data name:self.picpath];
                  
-                 DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
+                 AWSDynamoDB_DDUser *ddbDynamoDB=[AWSDynamoDB_DDUser new];
                  DDUser  *user=[DDUser new];
                  user.nickName=self.nicknamevalue.text;
                  user.UID=self.username;
@@ -193,11 +194,8 @@ static DDUser   *dduser;
                  user.isDoublerID=[NSNumber numberWithInt:1];
                  user.isPic=[NSNumber numberWithInt:1];
                  user.picPath=self.picpath;
-                 [ddbDynamoDB insertTableRow:user];
-                 //插入本地数据库
-                 DDUserDAO *dao=[[DDUserDAO alloc]init];
-                 [dao insertDDUser:user];
-                 
+                 [ddbDynamoDB insertDDUser:user];
+                                  
                  DDLoginController *personsign=[DDLoginController alloc];
                  [self.navigationController pushViewController:personsign animated:YES];
                  

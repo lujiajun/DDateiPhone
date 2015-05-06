@@ -9,9 +9,9 @@
 
 #import "DDPersonalUpdateController.h"
 #import "IndexViewController.h"
-#import "DDBDynamoDB.h"
 #import "AliCloudController.h"
 #import "DDUserDAO.h"
+#import "AWSDynamoDB_DDUser.h"
 
 
 
@@ -169,23 +169,21 @@
 }
 
 //xiugai账号
-- (void)updateDDUser{
-    DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
-    DDUser *user=[IndexViewController instanceDDuser];
-    user.university=_universityvalue.text==nil?user.university:_universityvalue.text;
-    user.gender=_gendervalue.text==nil?user.gender:_gendervalue.text;
-//    user.grade=_gradevalue.text;
-    user.city=_cityvalue.text==nil?user.city:_cityvalue.text;
-    user.hobbies=_hobbiesvalue.text==nil?user.hobbies:_hobbiesvalue.text;
-    user.sign=_signvalue.text==nil?user.sign:_signvalue.text;
-    user.birthday=_birdatevalue.text==nil?user.birthday:_birdatevalue.text;
-    
-    [ddbDynamoDB updateTable:user];
-    //XIUGAI BENDI
-    DDUserDAO *dao =[[DDUserDAO alloc]init];
-    [dao updateByUID:user];
-    [IndexViewController setDDUser:user];
-    [self.navigationController popViewControllerAnimated:YES];
+- (void)updateDDUser {
+	AWSDynamoDB_DDUser *userDynamoDB = [[AWSDynamoDB_DDUser alloc] init];
+	DDUser *user = [IndexViewController instanceDDuser];
+	user.university = _universityvalue.text == nil ? user.university : _universityvalue.text;
+	user.gender = _gendervalue.text == nil ? user.gender : _gendervalue.text;
+	user.city = _cityvalue.text == nil ? user.city : _cityvalue.text;
+	user.hobbies = _hobbiesvalue.text == nil ? user.hobbies : _hobbiesvalue.text;
+	user.sign = _signvalue.text == nil ? user.sign : _signvalue.text;
+	user.birthday = _birdatevalue.text == nil ? user.birthday : _birdatevalue.text;
+
+	[userDynamoDB updateDDUser:user];
+	//XIUGAI BENDI
+	
+	[IndexViewController setDDUser:user];
+	[self.navigationController popViewControllerAnimated:YES];
 }
 //判断账号和密码是否为空
 - (BOOL)isEmpty{

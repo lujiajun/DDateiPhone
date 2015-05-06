@@ -10,9 +10,9 @@
 #include "UsernickController.h"
 #import "IndexViewController.h"
 #import "AliCloudController.h"
-#import "DDBDynamoDB.h"
 #import "Constants.h"
 #import "PersonalSignController.h"
+#import "AWSDynamoDB_DDUser.h"
 
 
 
@@ -343,15 +343,14 @@
         NSString *name= [aliCloud uploadPic:data];
      
         
-//        xiugai头像
-        DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
+        //修改头像
+        AWSDynamoDB_DDUser *userDynamoDB = [[AWSDynamoDB_DDUser alloc] init];
         DDUser *user=[DDUser new];
         user=IndexViewController.instanceDDuser;
         user.picPath=name;
-//          IndexViewController *newSetting=[IndexViewController alloc];
         [IndexViewController setDDUser:user];
        
-        [ddbDynamoDB updateTable:user];
+        [userDynamoDB updateDDUser:user];
     
     }
     

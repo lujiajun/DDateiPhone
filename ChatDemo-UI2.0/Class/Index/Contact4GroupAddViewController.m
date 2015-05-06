@@ -18,7 +18,6 @@
 #import "RealtimeSearchUtil.h"
 #import "ChatViewController.h"
 #import "ChatRoom4DB.h"
-#import "DDBDynamoDB.h"
 #import "DDUserDAO.h"
 #import "Constants.h"
 #import "UIImageView+EMWebCache.h"

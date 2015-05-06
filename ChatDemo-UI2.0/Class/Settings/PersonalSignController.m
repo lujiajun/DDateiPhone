@@ -10,9 +10,10 @@
 #include "UsernickController.h"
 #import "NewSettingViewController.h"
 #import "AliCloudController.h"
-#import "DDBDynamoDB.h"
 #import "Constants.h"
 #import "PersonalSignController.h"
+#import "AWSDynamoDB_DDUser.h"
+#import "BFTask.h"
 
 
 
@@ -168,8 +169,7 @@
 - (void)savePushOptions
 {
     //查询出dduser ,并修改
-    //查询
-    DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
+    AWSDynamoDB_DDUser *userDynamoDB = [[AWSDynamoDB_DDUser alloc] init];
     
     AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
     
@@ -184,7 +184,7 @@
             DDUser *dduser = task.result;
             if(dduser.UID!=nil){
                 dduser.university=[self nicktext].text;
-                [ddbDynamoDB updateTable:dduser];
+                [userDynamoDB updateDDUser:dduser];
                 
                 
             }

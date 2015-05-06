@@ -1,6 +1,6 @@
 
 #import <UIKit/UIKit.h>
-#import "DDBDynamoDB.h"
+#import "AWSDynamoDB_DDUser.h"
 
 @interface IndexViewController : UITableViewController
 

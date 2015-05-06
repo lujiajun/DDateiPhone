@@ -14,8 +14,10 @@
 
 #import "ContactSelectionViewController.h"
 #import "EMTextView.h"
-#import "DDBDynamoDB.h"
 #import "AliCloudController.h"
+#import "AWSDynamoDB_ChatRoom2.h"
+#import "Util.h"
+#import "AWSDynamoDB_DDUser.h"
 
 @interface CreateGroupViewController ()<UITextFieldDelegate, UITextViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, EMChooseViewDelegate>
 
@@ -198,63 +200,29 @@
 
 #pragma mark - EMChooseViewDelegate
 
-- (void)viewController:(EMChooseViewController *)viewController didFinishSelectedSources:(NSArray *)selectedSources
-{
-    [self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
-    
-    NSMutableArray *source = [NSMutableArray array];
-    for (EMBuddy *buddy in selectedSources) {
-        [source addObject:buddy.username];
-    }
-    
-    EMGroupStyleSetting *setting = [[EMGroupStyleSetting alloc] init];
-    if (_isPublic) {
-        if(_isMemberOn)
-        {
-            setting.groupStyle = eGroupStyle_PublicOpenJoin;
-        }
-        else{
-            setting.groupStyle = eGroupStyle_PublicJoinNeedApproval;
-        }
-    }
-    else{
-        if(_isMemberOn)
-        {
-            setting.groupStyle = eGroupStyle_PrivateMemberCanInvite;
-        }
-        else{
-            setting.groupStyle = eGroupStyle_PrivateOnlyOwnerInvite;
-        }
-    }
-    
-    setting.groupMaxUsersCount = 4;
-    __weak CreateGroupViewController *weakSelf = self;
+- (void)viewController:(EMChooseViewController *)viewController didFinishSelectedSources:(NSArray *)selectedSources {
+	[self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
+	__weak CreateGroupViewController *weakSelf = self;
 	NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
 	NSString *username = [loginInfo objectForKey:kSDKUsername];
-	NSString *messageStr = [NSString stringWithFormat:NSLocalizedString(@"group.somebodyInvite", @"%@ invite you to join groups \'%@\'"), username, self.mottoTextView.text];
-	[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:self.mottoTextView.text description:self.mottoTextView.text invitees:source initialWelcomeMessage:messageStr styleSetting:setting completion: ^(EMGroup *group, EMError *error) {
-	    [weakSelf hideHud];
-	    if (group && !error) {
-	        [weakSelf showHint:NSLocalizedString(@"group.create.success", @"create group success")];
-	        [weakSelf.navigationController popViewControllerAnimated:YES];
+	[weakSelf hideHud];
+	[weakSelf showHint:NSLocalizedString(@"group.create.success", @"create group success")];
+	[weakSelf.navigationController popViewControllerAnimated:YES];
 
-	        DDBDynamoDB *dao = [[DDBDynamoDB alloc] init];
-	        CHATROOM2 *chatRoom2 = [CHATROOM2 new];
-	        NSString *username2 = [[selectedSources objectAtIndex:0] username];
-	        chatRoom2.RID = [[username stringByAppendingString:@"__________"] stringByAppendingString:username2];
-	        chatRoom2.ClickNum = 0;
-	        chatRoom2.Gender = [dao getTableUser:username].gender;
-	        chatRoom2.GradeFrom = @"无限制";
-	        chatRoom2.Motto = self.mottoTextView.text;
-	        chatRoom2.PicturePath = self.coverImagePath;
-            chatRoom2.SchoolRestrict = @"无限制";
-	        chatRoom2.UID1 = username;
-	        chatRoom2.UID2 = username2;
-            [dao insertChatroom2:chatRoom2];
-		} else {
-	        [weakSelf showHint:NSLocalizedString(@"group.create.fail", @"Failed to create a group, please operate again")];
-		}
-	} onQueue:nil];
+	AWSDynamoDB_ChatRoom2 *chatRoom2DynamoDB = [[AWSDynamoDB_ChatRoom2 alloc] init];
+    AWSDynamoDB_DDUser *userDynamoDB = [[AWSDynamoDB_DDUser alloc] init];
+	CHATROOM2 *chatRoom2 = [CHATROOM2 new];
+	NSString *username2 = [[selectedSources objectAtIndex:0] username];
+	chatRoom2.RID = [Util str1:username appendStr2:@"_" appendStr3:username2];
+	chatRoom2.ClickNum = 0;
+	chatRoom2.Gender = [userDynamoDB.dduserDao selectDDuserByUid:username].gender;
+	chatRoom2.GradeFrom = @"无限制";
+	chatRoom2.Motto = self.mottoTextView.text;
+	chatRoom2.PicturePath = self.coverImagePath;
+	chatRoom2.SchoolRestrict = @"无限制";
+	chatRoom2.UID1 = username;
+	chatRoom2.UID2 = username2;
+	[chatRoom2DynamoDB insertChatroom2:chatRoom2];
 }
 
 #pragma mark - action
