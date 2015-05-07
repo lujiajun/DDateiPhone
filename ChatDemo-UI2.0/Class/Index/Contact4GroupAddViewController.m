@@ -17,11 +17,11 @@
 #import "EMSearchDisplayController.h"
 #import "RealtimeSearchUtil.h"
 #import "ChatViewController.h"
-#import "ChatRoom4DB.h"
 #import "DDUserDAO.h"
 #import "Constants.h"
 #import "UIImageView+EMWebCache.h"
 #import "ChatRoom4DAO.h"
+#import "AWSDynamoDB_ChatRoom4.h"
 
 
 @interface Contact4GroupAddViewController ()<UISearchBarDelegate, UISearchDisplayDelegate>
@@ -507,10 +507,8 @@
                                                                    chatroom4.isLikeUID4=[NSNumber numberWithInt:0];
                                                                    chatroom4.roomStatus=@"New";
                                                                    chatroom4.systemTimeNumber=[NSNumber numberWithInt:[[NSDate date] timeIntervalSince1970]*1000];
-                                                                   ChatRoom4DB *chatroom4DB=[ChatRoom4DB alloc];
+                                                                   AWSDynamoDB_ChatRoom4 *chatroom4DB=[AWSDynamoDB_ChatRoom4 alloc];
                                                                    [chatroom4DB insertChatroom4:chatroom4];
-                                                                   ChatRoom4DAO *dao=[[ChatRoom4DAO alloc]init];
-                                                                   [dao insertChatroom4:chatroom4];
                                                                    ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES] initRoom4:chatroom4 friend:self.toAddFriend isNewRoom:YES ];
                                                                    chatController.title = self.room2.Motto;
                                                                    [self.navigationController pushViewController:chatController animated:YES];

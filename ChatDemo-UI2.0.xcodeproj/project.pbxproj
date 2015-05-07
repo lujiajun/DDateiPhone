@@ -11,6 +11,7 @@
 		181782A31AFA6F970007BD3B /* AWSDynamoDB_DDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 181782A21AFA6F970007BD3B /* AWSDynamoDB_DDUser.m */; };
 		181782A71AFA74DB0007BD3B /* DDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 181782A61AFA74DB0007BD3B /* DDUser.m */; };
 		181782AA1AFA80420007BD3B /* CHATROOM2.m in Sources */ = {isa = PBXBuildFile; fileRef = 181782A91AFA80420007BD3B /* CHATROOM2.m */; };
+		181782AD1AFB93330007BD3B /* CHATROOM4.m in Sources */ = {isa = PBXBuildFile; fileRef = 181782AC1AFB93330007BD3B /* CHATROOM4.m */; };
 		1873D80D1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */; };
 		1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */; };
 		18990C711AF7CC8400523A29 /* UIColor+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 18990C701AF7CC8400523A29 /* UIColor+Category.m */; };
@@ -48,7 +49,7 @@
 		3CBB931C1A14B227007FED9E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBB931B1A14B227007FED9E /* libsqlite3.dylib */; };
 		3CBF90C019302F5000AD68AE /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBF90BF19302F5000AD68AE /* BaseViewController.m */; };
 		3CE6293319A1B13700829632 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE6293219A1B13700829632 /* CoreText.framework */; };
-		8A038C2F1AF51A54007A05BE /* ChatRoom4DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C1C1AF51A54007A05BE /* ChatRoom4DB.m */; };
+		8A038C2F1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C1C1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m */; };
 		8A038C301AF51A54007A05BE /* ChatRoomDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C1E1AF51A54007A05BE /* ChatRoomDetail.m */; };
 		8A038C311AF51A54007A05BE /* Commbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C201AF51A54007A05BE /* Commbox.m */; };
 		8A038C321AF51A54007A05BE /* Contact4GroupAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C221AF51A54007A05BE /* Contact4GroupAddViewController.m */; };
@@ -437,6 +438,8 @@
 		181782A61AFA74DB0007BD3B /* DDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDUser.m; path = "Other Service/Model/DDUser.m"; sourceTree = "<group>"; };
 		181782A81AFA80420007BD3B /* CHATROOM2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHATROOM2.h; path = "Other Service/Model/CHATROOM2.h"; sourceTree = "<group>"; };
 		181782A91AFA80420007BD3B /* CHATROOM2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHATROOM2.m; path = "Other Service/Model/CHATROOM2.m"; sourceTree = "<group>"; };
+		181782AB1AFB93330007BD3B /* CHATROOM4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHATROOM4.h; path = "Other Service/Model/CHATROOM4.h"; sourceTree = "<group>"; };
+		181782AC1AFB93330007BD3B /* CHATROOM4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHATROOM4.m; path = "Other Service/Model/CHATROOM4.m"; sourceTree = "<group>"; };
 		1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libALBB_OSS_IOS_SDK.a; sourceTree = "<group>"; };
 		1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		18990C6F1AF7CC8400523A29 /* UIColor+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Category.h"; sourceTree = "<group>"; };
@@ -505,8 +508,8 @@
 		3CBF90BE19302F5000AD68AE /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		3CBF90BF19302F5000AD68AE /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		3CE6293219A1B13700829632 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		8A038C1B1AF51A54007A05BE /* ChatRoom4DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatRoom4DB.h; path = Index/ChatRoom4DB.h; sourceTree = "<group>"; };
-		8A038C1C1AF51A54007A05BE /* ChatRoom4DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatRoom4DB.m; path = Index/ChatRoom4DB.m; sourceTree = "<group>"; };
+		8A038C1B1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWSDynamoDB_ChatRoom4.h; path = "Other Service/AWSDynamoDB_ChatRoom4.h"; sourceTree = "<group>"; };
+		8A038C1C1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWSDynamoDB_ChatRoom4.m; path = "Other Service/AWSDynamoDB_ChatRoom4.m"; sourceTree = "<group>"; };
 		8A038C1D1AF51A54007A05BE /* ChatRoomDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatRoomDetail.h; path = Index/ChatRoomDetail.h; sourceTree = "<group>"; };
 		8A038C1E1AF51A54007A05BE /* ChatRoomDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatRoomDetail.m; path = Index/ChatRoomDetail.m; sourceTree = "<group>"; };
 		8A038C1F1AF51A54007A05BE /* Commbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Commbox.h; path = Index/Commbox.h; sourceTree = "<group>"; };
@@ -1149,6 +1152,8 @@
 				181782A61AFA74DB0007BD3B /* DDUser.m */,
 				181782A81AFA80420007BD3B /* CHATROOM2.h */,
 				181782A91AFA80420007BD3B /* CHATROOM2.m */,
+				181782AB1AFB93330007BD3B /* CHATROOM4.h */,
+				181782AC1AFB93330007BD3B /* CHATROOM4.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1281,6 +1286,8 @@
 				181782A21AFA6F970007BD3B /* AWSDynamoDB_DDUser.m */,
 				8A038C441AF51A95007A05BE /* AWSDynamoDB_ChatRoom2.h */,
 				8A038C451AF51A95007A05BE /* AWSDynamoDB_ChatRoom2.m */,
+				8A038C1B1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.h */,
+				8A038C1C1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m */,
 				8A038C461AF51A95007A05BE /* LocalDbService.h */,
 				8A038C471AF51A95007A05BE /* LocalDbService.m */,
 				18F9B56C1AF2639800669C49 /* Dao */,
@@ -1292,8 +1299,6 @@
 		8A4BD07E1AE1FB5F00FFDFF1 /* Index */ = {
 			isa = PBXGroup;
 			children = (
-				8A038C1B1AF51A54007A05BE /* ChatRoom4DB.h */,
-				8A038C1C1AF51A54007A05BE /* ChatRoom4DB.m */,
 				8A038C1D1AF51A54007A05BE /* ChatRoomDetail.h */,
 				8A038C1E1AF51A54007A05BE /* ChatRoomDetail.m */,
 				8A038C1F1AF51A54007A05BE /* Commbox.h */,
@@ -2982,6 +2987,7 @@
 				8A038C401AF51A88007A05BE /* ChatRoom2DAO.m in Sources */,
 				90A706041A8B63B200376154 /* EMSDWebImageCompat.m in Sources */,
 				9091111C192EEAED008A48AA /* UIViewController+HUD.m in Sources */,
+				181782AD1AFB93330007BD3B /* CHATROOM4.m in Sources */,
 				9003D9081939D8D000DC38A4 /* MessageModel.m in Sources */,
 				90517D6A1A5C3DB0008F1315 /* AppDelegate+UMeng.m in Sources */,
 				90A7061C1A8B63B200376154 /* PSTGridLayoutInfo.m in Sources */,
@@ -2992,7 +2998,7 @@
 				8ADB388C1AE2A17100FCC6FC /* UsernickController.m in Sources */,
 				90A705FA1A8B63B200376154 /* MWCaptionView.m in Sources */,
 				90A706191A8B63B200376154 /* PSTCollectionViewItemKey.m in Sources */,
-				8A038C2F1AF51A54007A05BE /* ChatRoom4DB.m in Sources */,
+				8A038C2F1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m in Sources */,
 				9003D8A51939D8D000DC38A4 /* EMChatTimeCell.m in Sources */,
 				90A7061B1A8B63B200376154 /* PSTCollectionViewUpdateItem.m in Sources */,
 				3C11304E195AFFDD00ED1D0D /* EMChatVideoBubbleView.m in Sources */,

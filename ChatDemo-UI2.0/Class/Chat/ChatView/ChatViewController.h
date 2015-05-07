@@ -11,7 +11,7 @@
   */
 
 #import <UIKit/UIKit.h>
-#import "ChatRoom4DB.h"
+#import "CHATROOM4.h"
 @interface ChatViewController : UIViewController
 
 - (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup;

@@ -32,7 +32,6 @@
 #import "DXMessageToolBar.h"
 #import "DXChatBarMoreView.h"
 #import "ChatViewController+Category.h"
-#import "ChatRoom4DB.h"
 #import "IndexViewController.h"
 #import "UIImageView+EMWebCache.h"
 #import "Constants.h"

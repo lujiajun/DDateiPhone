@@ -11,7 +11,7 @@
   */
 
 #import <UIKit/UIKit.h>
-#import "ChatRoom4DB.h"
+#import "CHATROOM4.h"
 
 /**
  *  群组成员类型

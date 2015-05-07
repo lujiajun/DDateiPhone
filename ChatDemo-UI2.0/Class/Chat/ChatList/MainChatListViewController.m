@@ -20,9 +20,9 @@
 #import "UIImageView+WebCache.h"
 #import "DDUserDAO.h"
 #import "Constants.h"
-#import "ChatRoom4DB.h"
 #import "ChatRoom4DAO.h"
 #import "Util.h"
+#import "AWSDynamoDB_ChatRoom4.h"
 
 
 @interface MainChatListViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
@@ -31,10 +31,10 @@
 @property (strong, nonatomic) DDUserDAO *ddUserDao;
 
 @property (strong, nonatomic) UITableView *tableView;
-@property (nonatomic, strong) EMSearchBar *searchBar;
-@property (nonatomic, strong) SRRefreshView *slimeView;
-@property (nonatomic, strong) UIView *networkStateView;
-@property(nonatomic,strong)ChatRoom4DB  *chatRoomDBDao;
+@property (strong, nonatomic) EMSearchBar *searchBar;
+@property (strong, nonatomic) SRRefreshView *slimeView;
+@property (strong, nonatomic) UIView *networkStateView;
+@property (strong, nonatomic) AWSDynamoDB_ChatRoom4 *chatRoom4DynamoDB;
 
 @property (strong, nonatomic) EMSearchDisplayController *searchController;
 
@@ -47,7 +47,7 @@
 	if (self) {
 		_dataSource = [NSMutableArray array];
         _ddUserDao = [[DDUserDAO alloc] init];
-        _chatRoomDBDao = [[ChatRoom4DB alloc] init];
+        _chatRoom4DynamoDB = [[AWSDynamoDB_ChatRoom4 alloc] init];
 	}
 	return self;
 }
@@ -70,7 +70,7 @@
 	[[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion: ^(NSArray *groups, EMError *error) {
 	    if (!error) {
 	        for (EMGroup *group in groups) {
-	            [[self chatRoomDBDao] getChatroom4InsertLocal:group.groupId];
+	            [self.chatRoom4DynamoDB getChatroom4InsertLocal:group.groupId];
 			}
 		}
 	} onQueue:nil];

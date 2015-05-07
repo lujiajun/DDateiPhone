@@ -213,7 +213,7 @@ static DDUser *uuser;
 }
 //首页刷新
 -(void)refreshAll{
-    [self.chatroom2Dao refreshListWithBlock: ^{
+    [self.chatRoom2DynamoDB refreshListWithBlock: ^{
         [self.tableView reloadData];
             }];
 }

@@ -18,7 +18,6 @@
 #import "ContactView.h"
 #import "GroupBansViewController.h"
 #import "GroupSubjectChangingViewController.h"
-#import "ChatRoom4DB.h"
 #import "Constants.h"
 #import "UIImageView+WebCache.h"
 #import "DDUserDAO.h"
