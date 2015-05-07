@@ -20,6 +20,7 @@
 #import "LocalDbService.h"
 #import "AWSDynamoDBObjectMapper.h"
 #import "IndexViewController.h"
+#import "BFTask.h"
 
 @interface AddFriendViewController ()<UITextFieldDelegate, UIAlertViewDelegate>
 
@@ -160,7 +161,6 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //好友性别验证
-    NSLog([IndexViewController instanceDDuser].gender);
     if(_toadduser && [_toadduser.gender isEqualToString:[IndexViewController instanceDDuser].gender]){
         [self showHint:NSLocalizedString(@"friend.checkApplyFail", @"check friend  fails, please operate again")];
         return;
@@ -255,7 +255,7 @@
     AWSDynamoDBObjectMapper *dynamoDBObjectMapper=[AWSDynamoDBObjectMapper alloc];
     dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
     BFTask *bftask= [dynamoDBObjectMapper load:[DDUser class] hashKey:uid rangeKey:nil];
-    bftask.waitUntilFinished;
+    [bftask waitUntilFinished];
     
     _toadduser= bftask.result;
     

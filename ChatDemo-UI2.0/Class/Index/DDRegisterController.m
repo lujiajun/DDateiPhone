@@ -10,11 +10,11 @@
 #include "UsernickController.h"
 #import "NewSettingViewController.h"
 #import "AliCloudController.h"
-#import "DDBDynamoDB.h"
 #import "Constants.h"
 #import "DDRegisterController.h"
 #import "PersonalController.h"
 #import "DDSchoolRegisterController.h"
+#import "DDUser.h"
 
 
 

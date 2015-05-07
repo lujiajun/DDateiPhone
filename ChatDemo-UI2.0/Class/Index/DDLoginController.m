@@ -166,16 +166,16 @@
             
             return;
         }
-#if !TARGET_IPHONE_SIMULATOR
+//#if !TARGET_IPHONE_SIMULATOR
         //弹出提示
 //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"login.inputApnsNickname", @"Please enter nickname for apns") delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"ok", @"OK"), nil];
 //        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        UITextField *nameTextField = [alert textFieldAtIndex:0];
-        nameTextField.text = self.usernameTextField.text;
-        [alert show];
-#elif TARGET_IPHONE_SIMULATOR
+//        UITextField *nameTextField = [alert textFieldAtIndex:0];
+//        nameTextField.text = self.usernameTextField.text;
+//        [alert show];
+//#elif TARGET_IPHONE_SIMULATOR
         [self loginWithUsername:_usernameTextField.text password:_passwordTextField.text];
-#endif
+//#endif
     }
 }
 

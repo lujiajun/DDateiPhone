@@ -38,20 +38,7 @@ NSString * const DDUserTable=@"DDUser";
         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE UID='%@'", DDUserTable, uid];
         FMResultSet *rs = [self.db executeQuery:query];
         while ([rs next]) {
-            dduser = [DDUser new];
-            dduser.UID = [rs stringForColumn:@"UID"];
-            dduser.nickName = [rs stringForColumn:@"nickName"];
-            dduser.isPic = [NSNumber numberWithInt:[rs intForColumn:@"isPic"]];
-            dduser.picPath = [rs stringForColumn:@"picPath"];
-            dduser.gender = [rs stringForColumn:@"gender"];
-            dduser.university = [rs stringForColumn:@"university"];
-            dduser.grade = [rs stringForColumn:@"grade"];
-            dduser.isDoublerID = [NSNumber numberWithInt:[rs intForColumn:@"isDoublerID"]];
-            dduser.photos = [rs stringForColumn:@"photos"];
-            dduser.birthday = [rs stringForColumn:@"birthday"];
-            dduser.hobbies = [rs stringForColumn:@"hobbies"];
-            dduser.city = [rs stringForColumn:@"city"];
-            dduser.sign = [rs stringForColumn:@"sign"];
+            dduser = [self fillModelWithFMResultSet:rs];
         }
         [rs close];
         [self.db close];
@@ -59,27 +46,6 @@ NSString * const DDUserTable=@"DDUser";
     return dduser;
 }
 
-
-
-- (void)getTableRowAndInsertLocal:(NSString *)uid {
-	AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-	[[dynamoDBObjectMapper load:[DDUser class]
-	                    hashKey:uid
-	                   rangeKey:nil]
-	 continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
-	    if (task.error) {
-	        NSLog(@"The request failed. Error: [%@]", task.error);
-		}
-	    if (task.exception) {
-	        NSLog(@"The request failed. Exception: [%@]", task.exception);
-		}
-	    if (task.result) {
-	        DDUser *dduser = task.result;
-	        [self insertDDUser:dduser];
-		}
-	    return nil;
-	}];
-}
 
 - (void)insertDDUser:(DDUser *)dduser {
     NSString *sql = [NSString stringWithFormat:@"Insert or ignore into %@ ( \
@@ -120,6 +86,7 @@ NSString * const DDUserTable=@"DDUser";
 		[self.db close];
 	}
 }
+
 - (void)updatePhotosByUID:(NSString *)photos uid:(NSString *) UID {
    
     if ([self.db open]) {
@@ -134,7 +101,7 @@ NSString * const DDUserTable=@"DDUser";
 }
 
 
-- (void)updateByUID:(DDUser *)user{
+- (void)updateByUID:(DDUser *)user {
     
     if ([self.db open]) {
         BOOL res = [self.db executeUpdate:@"UPDATE DDUser SET nickName= ?,isPic=?,picPath=?,gender=?,university=?,grade=?,photos=?,city=?,birthday=?,hobbies=?,sign=?,isDoublerID=? WHERE UID = ?",user.nickName,user.isPic,user.picPath,user.gender,user.university,user.grade,user.photos,user.city,user.birthday,user.hobbies,user.sign,user.isDoublerID,user.UID];
@@ -145,5 +112,24 @@ NSString * const DDUserTable=@"DDUser";
         }
         [self.db close];
     }
+}
+
+
+- (id)fillModelWithFMResultSet:(FMResultSet *)rs {
+    DDUser * dduser = [DDUser new];
+    dduser.UID = [rs stringForColumn:@"UID"];
+    dduser.nickName = [rs stringForColumn:@"nickName"];
+    dduser.isPic = [NSNumber numberWithInt:[rs intForColumn:@"isPic"]];
+    dduser.picPath = [rs stringForColumn:@"picPath"];
+    dduser.gender = [rs stringForColumn:@"gender"];
+    dduser.university = [rs stringForColumn:@"university"];
+    dduser.grade = [rs stringForColumn:@"grade"];
+    dduser.isDoublerID = [NSNumber numberWithInt:[rs intForColumn:@"isDoublerID"]];
+    dduser.photos = [rs stringForColumn:@"photos"];
+    dduser.birthday = [rs stringForColumn:@"birthday"];
+    dduser.hobbies = [rs stringForColumn:@"hobbies"];
+    dduser.city = [rs stringForColumn:@"city"];
+    dduser.sign = [rs stringForColumn:@"sign"];
+    return dduser;
 }
 @end

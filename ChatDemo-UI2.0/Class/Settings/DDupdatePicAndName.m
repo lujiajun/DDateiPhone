@@ -6,6 +6,7 @@
 #import "DDUserDAO.h"
 #import "PasswordUpdateView.h"
 #import "NewSettingViewController.h"
+#import "AWSDynamoDB_DDUser.h"
 
 @interface DDupdatePicAndName ()
 @property(strong,nonatomic) UIImageView *imgHead;
@@ -115,11 +116,9 @@
             
         }
         
-        DDBDynamoDB *ddbDynamoDB=[DDBDynamoDB new];
-        [ddbDynamoDB updateTable:user];
-        //XIUGAI BENDI
-        DDUserDAO *dao =[[DDUserDAO alloc]init];
-        [dao updateByUID:user];
+        AWSDynamoDB_DDUser *ddbDynamoDB=[AWSDynamoDB_DDUser new];
+        [ddbDynamoDB updateDDUser:user];
+        
         NewSettingViewController *settings=[NewSettingViewController alloc];
         [self.navigationController pushViewController:settings animated:YES];
         

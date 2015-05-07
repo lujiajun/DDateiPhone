@@ -3,8 +3,8 @@
 #import "OSSTool.h"
 #import "OSSData.h"
 #import "OSSLog.h"
-#import "DDBDynamoDB.h"
 #import "DDUserDAO.h"
+#import "AWSDynamoDB_DDUser.h"
 
 @interface AliCloudController()
 @property(strong,nonatomic) OSSClient *ossclient;
@@ -64,7 +64,7 @@ static OSSBucket *bucket;
     [testData uploadWithUploadCallback:^(BOOL isSuccess, NSError *error) {
         if (isSuccess) {
            //成功了，则插入AWS
-            DDBDynamoDB *dynamoDB=[DDBDynamoDB alloc];
+            AWSDynamoDB_DDUser *dynamoDB=[AWSDynamoDB_DDUser alloc];
             DDUserDAO *dao=[[DDUserDAO alloc]init];
             DDUser *dduser= [dao selectDDuserByUid:username];
             if(dduser!=nil){
@@ -76,7 +76,7 @@ static OSSBucket *bucket;
                 
                 [dao updatePhotosByUID:dduser.photos uid:username];
                 //更新AWS
-                [dynamoDB insertTableRow:dduser];
+                [dynamoDB insertDDUser:dduser];
             }
             
             //修改本地

@@ -19,7 +19,6 @@
 #import "DebugViewController.h"
 #import "WCAlertView.h"
 #import "AliCloudController.h"
-#import "DDBDynamoDB.h"
 #import "Constants.h"
 #import "DDRegisterFinishController.h"
 #import "DDPersonalUpdateController.h"

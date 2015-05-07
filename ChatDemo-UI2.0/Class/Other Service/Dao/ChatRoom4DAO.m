@@ -7,17 +7,12 @@
 //
 
 #import "ChatRoom4DAO.h"
-#import "DDBDynamoDB.h"
 #import "ChatRoom4DB.h"
 #import "DDUserDAO.h"
 #import "AWSDynamoDBObjectMapper.h"
+#import "CHATROOM2.h"
+#import "AWSDynamoDB_DDUser.h"
 
-
-@interface ChatRoom4DAO ()
-
-@property (strong, nonatomic) DDUserDAO *userDao;
-
-@end
 
 NSString *const ChatRoom4Table = @"ChatRoom4";
 
@@ -109,17 +104,18 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
 		                [self insertChatroom4:chatroom4];
 					}
 
-		            if ([self.userDao selectDDuserByUid:chatroom4.UID1] == nil) {
-		                [self.userDao getTableRowAndInsertLocal:chatroom4.UID1];
+                    AWSDynamoDB_DDUser *userDynamoDB = [[AWSDynamoDB_DDUser alloc] init];
+		            if ([userDynamoDB.dduserDao selectDDuserByUid:chatroom4.UID1] == nil) {
+		                [userDynamoDB getDDuserAndInsertLocal:chatroom4.UID1];
 					}
-		            if ([self.userDao selectDDuserByUid:chatroom4.UID2] == nil) {
-		                [self.userDao getTableRowAndInsertLocal:chatroom4.UID2];
+		            if ([userDynamoDB.dduserDao selectDDuserByUid:chatroom4.UID2] == nil) {
+		                [userDynamoDB getDDuserAndInsertLocal:chatroom4.UID2];
 					}
-		            if ([self.userDao selectDDuserByUid:chatroom4.UID3] == nil) {
-		                [self.userDao getTableRowAndInsertLocal:chatroom4.UID3];
+		            if ([userDynamoDB.dduserDao selectDDuserByUid:chatroom4.UID3] == nil) {
+		                [userDynamoDB getDDuserAndInsertLocal:chatroom4.UID3];
 					}
-		            if ([self.userDao selectDDuserByUid:chatroom4.UID4] == nil) {
-		                [self.userDao getTableRowAndInsertLocal:chatroom4.UID4];
+		            if ([userDynamoDB.dduserDao selectDDuserByUid:chatroom4.UID4] == nil) {
+		                [userDynamoDB getDDuserAndInsertLocal:chatroom4.UID4];
 					}
 				}
 			}
@@ -270,12 +266,5 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
     
 }
 
-#pragma mark - Getter
-- (DDUserDAO *)userDao {
-	if (_userDao == nil) {
-		_userDao = [[DDUserDAO alloc] init];
-	}
-	return _userDao;
-}
 
 @end

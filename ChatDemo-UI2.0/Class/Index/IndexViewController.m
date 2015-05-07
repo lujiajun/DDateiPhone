@@ -19,30 +19,29 @@
 #import "DebugViewController.h"
 #import "WCAlertView.h"
 #import "AliCloudController.h"
-#import "DDBDynamoDB.h"
 #import "Constants.h"
 #import "DDRegisterFinishController.h"
 #import "DDPersonalUpdateController.h"
 #import "IndexViewController.h"
-#import "DDBDynamoDB.h"
 #import "ChatRoomDetail.h"
 #import "ChatRoom2DAO.h"
 #import "DDUserDAO.h"
 #import "SRRefreshView.h"
 #import "HomePageListCell.h"
 #import "UIImageView+WebCache.h"
+#import "AWSDynamoDB_ChatRoom2.h"
 
 
-@interface IndexViewController ()<SRRefreshDelegate>
+@interface IndexViewController () <SRRefreshDelegate>
 
 @property (strong, nonatomic) SRRefreshView *slimeView;
 
-@property(strong,nonatomic) DDBDynamoDB *ddbDynamoDB;
-@property(strong,nonatomic) AWSDynamoDBObjectMapper *dynamoDBObjectMapper;
+@property (strong, nonatomic) AWSDynamoDBObjectMapper *dynamoDBObjectMapper;
 
-@property(strong, nonatomic) ChatRoom2DAO *chatroom2Dao;
-@property(strong, nonatomic) DDUserDAO *userDao;
-@property(nonatomic) BOOL haveFriend;
+@property (strong, nonatomic) AWSDynamoDB_ChatRoom2 *chatRoom2DynamoDB;
+
+@property (strong, nonatomic) DDUserDAO *userDao;
+@property (nonatomic) BOOL haveFriend;
 
 @end
 
@@ -73,7 +72,7 @@ static DDUser *uuser;
         _userDao=[[DDUserDAO alloc]init];
     }
     //chaxun
-    [self.chatroom2Dao refreshListWithBlock:^{
+    [self.chatRoom2DynamoDB refreshListWithBlock:^{
         [self.tableView reloadData];
     }];
     [self initdduser];
@@ -127,7 +126,7 @@ static DDUser *uuser;
 //        return self.chatroom2Dao.chatroom2s.count+1;
 //    }
 //    
-    return self.chatroom2Dao.chatroom2s.count;
+    return self.chatRoom2DynamoDB.chatRoom2s.count;
 }
 
 //每行缩进
@@ -145,11 +144,8 @@ static DDUser *uuser;
 	if (cell == nil) {
 		cell = [[HomePageListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 	}
-    if(self.chatroom2Dao.chatroom2s==nil ||self.chatroom2Dao.chatroom2s.count==0){
-        return cell;
-    }
-   
-	CHATROOM2 *chatRoom2 = [self.chatroom2Dao.chatroom2s objectAtIndex:indexPath.row];
+    
+	CHATROOM2 *chatRoom2 = [self.chatRoom2DynamoDB.chatRoom2s objectAtIndex:indexPath.row];
 
 	if (chatRoom2 != nil && chatRoom2.PicturePath != nil) {
 		[cell.bakview sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:chatRoom2.PicturePath]]
@@ -195,9 +191,9 @@ static DDUser *uuser;
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 	if (indexPath.section == 0) {
-		for (NSUInteger i = 0; i < self.chatroom2Dao.chatroom2s.count; i++) {
+		for (NSUInteger i = 0; i < self.chatRoom2DynamoDB.chatRoom2s.count; i++) {
 			if (indexPath.row == i) {
-				CHATROOM2 *room = [[self.chatroom2Dao.chatroom2s objectAtIndex:i] copy];
+				CHATROOM2 *room = [[self.chatRoom2DynamoDB.chatRoom2s objectAtIndex:i] copy];
 				ChatRoomDetail *chatroom = [[ChatRoomDetail alloc]initChatRoom:room uuser1:[self.userDao selectDDuserByUid:room.UID1] uuser2:[self.userDao selectDDuserByUid:room.UID2]];
 				[self.navigationController pushViewController:chatroom animated:YES];
 			}
@@ -210,7 +206,7 @@ static DDUser *uuser;
 
 - (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView {
 	__weak IndexViewController *weakSelf = self;
-	[self.chatroom2Dao refreshListWithBlock: ^{
+	[self.chatRoom2DynamoDB refreshListWithBlock: ^{
 	    [self.tableView reloadData];
 	    [weakSelf.slimeView endRefresh];
 	}];
@@ -250,11 +246,11 @@ static DDUser *uuser;
     return _slimeView;
 }
 
-- (ChatRoom2DAO *)chatroom2Dao {
-	if (_chatroom2Dao == nil) {
-		_chatroom2Dao = [[ChatRoom2DAO alloc] init];
+- (AWSDynamoDB_ChatRoom2 *)chatRoom2DynamoDB {
+	if (_chatRoom2DynamoDB == nil) {
+		_chatRoom2DynamoDB = [[AWSDynamoDB_ChatRoom2 alloc] init];
 	}
-	return _chatroom2Dao;
+	return _chatRoom2DynamoDB;
 }
 
 - (DDUserDAO *)userDao {

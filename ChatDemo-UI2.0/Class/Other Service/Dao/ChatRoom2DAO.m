@@ -7,9 +7,9 @@
 //
 
 #import "ChatRoom2DAO.h"
-#import "DDBDynamoDB.h"
 #import "AWSDynamoDBObjectMapper.h"
 #import "DDUserDAO.h"
+#import "CHATROOM2.h"
 
 @interface ChatRoom2DAO()
 
@@ -41,17 +41,7 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
     if ([self.db open]) {
         FMResultSet *rs = [self.db executeQuery:sql];
         while ([rs next]) {
-            CHATROOM2 *chatroom2 = [CHATROOM2 new];
-            chatroom2.RID = [rs stringForColumn:@"RID"];
-            chatroom2.ClickNum = [rs stringForColumn:@"ClickNum"];
-            chatroom2.Gender = [rs stringForColumn:@"Gender"];
-            chatroom2.GradeFrom = [rs stringForColumn:@"GradeFrom"];
-            chatroom2.Motto = [rs stringForColumn:@"Motto"];
-            chatroom2.PicturePath = [rs stringForColumn:@"PicturePath"];
-            chatroom2.SchoolRestrict = [rs stringForColumn:@"SchoolRestrict"];
-            chatroom2.UID1 = [rs stringForColumn:@"UID1"];
-            chatroom2.UID2 = [rs stringForColumn:@"UID2"];
-            [rooms addObject:chatroom2];
+            [rooms addObject:[self fillModelWithFMResultSet:rs]];
         }
         [rs close];
         [self.db close];
@@ -61,53 +51,6 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
 
 #pragma mark - Public
 
-- (void)refreshListWithBlock:(SuccussBlock)successBlock {
-	//先查询，没有在网络数据库
-	self.chatroom2s = [self getLocalChatRoom2ByCount:20];
-	if (self.chatroom2s == nil || [self.chatroom2s count] == 0) {
-		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-
-		AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-		AWSDynamoDBScanExpression *scanExpression = [AWSDynamoDBScanExpression new];
-		scanExpression.limit = @20;
-
-		[[dynamoDBObjectMapper scan:[CHATROOM2 class]
-		                 expression:scanExpression]
-		 continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
-		    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-		    if (task.error) {
-		        NSLog(@"The request failed. Error: [%@]", task.error);
-			}
-
-		    if (task.exception) {
-		        NSLog(@"The request failed. Exception: [%@]", task.exception);
-			}
-
-		    AWSDynamoDBPaginatedOutput *paginatedOutput = task.result;
-		    self.chatroom2s = paginatedOutput.items;
-		    successBlock();
-		    for (CHATROOM2 *chatroom2 in paginatedOutput.items) {
-		        if (chatroom2.RID != nil && chatroom2.UID1 != nil & chatroom2.UID2 != nil) {
-		            //插入本地数据 item
-		            if ([self getChatRoom2ByRid:chatroom2.RID] == nil) {
-		                [self insertChatroom2:chatroom2];
-					}
-
-		            if ([self.userDao selectDDuserByUid:chatroom2.UID1] == nil) {
-		                [self.userDao getTableRowAndInsertLocal:chatroom2.UID1];
-					}
-		            if ([self.userDao selectDDuserByUid:chatroom2.UID2] == nil) {
-		                [self.userDao getTableRowAndInsertLocal:chatroom2.UID2];
-					}
-				}
-			}
-
-		    return nil;
-		}];
-	} else {
-		successBlock();
-	}
-}
 
 
 
@@ -189,12 +132,18 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
 	return chatroom2;
 }
 
-#pragma mark - Getter
-- (DDUserDAO *)userDao {
-    if (_userDao == nil) {
-        _userDao = [[DDUserDAO alloc] init];
-    }
-    return _userDao;
+- (id)fillModelWithFMResultSet:(FMResultSet *)rs {
+    CHATROOM2 *chatroom2 = [CHATROOM2 new];
+    chatroom2.RID = [rs stringForColumn:@"RID"];
+    chatroom2.ClickNum = [rs stringForColumn:@"ClickNum"];
+    chatroom2.Gender = [rs stringForColumn:@"Gender"];
+    chatroom2.GradeFrom = [rs stringForColumn:@"GradeFrom"];
+    chatroom2.Motto = [rs stringForColumn:@"Motto"];
+    chatroom2.PicturePath = [rs stringForColumn:@"PicturePath"];
+    chatroom2.SchoolRestrict = [rs stringForColumn:@"SchoolRestrict"];
+    chatroom2.UID1 = [rs stringForColumn:@"UID1"];
+    chatroom2.UID2 = [rs stringForColumn:@"UID2"];
+    return chatroom2;
 }
 
 @end

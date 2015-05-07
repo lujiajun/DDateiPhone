@@ -11,7 +11,6 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "DDBDynamoDB.h"
 
 @interface NewSettingViewController : UITableViewController
 

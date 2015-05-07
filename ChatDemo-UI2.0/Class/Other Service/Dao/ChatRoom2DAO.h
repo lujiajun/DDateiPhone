@@ -7,13 +7,11 @@
 //
 
 #import "BaseDAO.h"
-
-typedef void(^SuccussBlock)();
+#import "CHATROOM2.h"
 
 @interface ChatRoom2DAO : BaseDAO
 
-@property(strong, nonatomic) NSArray *chatroom2s;
-
-- (void)refreshListWithBlock:(SuccussBlock)successBlock;
+- (NSMutableArray *)getLocalChatRoom2ByCount:(int)count;
+- (CHATROOM2 *)getChatRoom2ByRid:(NSString *)rid;
 
 @end

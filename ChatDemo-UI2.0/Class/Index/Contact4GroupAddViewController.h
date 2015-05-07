@@ -11,7 +11,7 @@
  */
 
 #import "EMChooseViewController.h"
-#import "DDBDynamoDB.h"
+#import "CHATROOM2.h"
 
 @interface Contact4GroupAddViewController : EMChooseViewController
 

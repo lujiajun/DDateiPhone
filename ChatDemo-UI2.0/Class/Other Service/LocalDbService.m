@@ -1,5 +1,4 @@
 #import "LocalDbService.h"
-#import "DDBDynamoDB.h"
 #import "FMDatabase.h"
 
 NSString *const DATABASE_NAME = @"DoubleDate_%@.db";

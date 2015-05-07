@@ -9,6 +9,7 @@
 #import "Commbox.h"
 #import "DDSchoolRegisterController.h"
 #import "DDRegisterFinishController.h"
+#import "DDUser.h"
 
 
 

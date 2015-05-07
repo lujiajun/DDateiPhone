@@ -283,7 +283,8 @@
 			cell.textLabel.text = NSLocalizedString(@"title.group", @"Group");
 		} else {
 			EMBuddy *buddy = [[self.dataSource objectAtIndex:(indexPath.section - 1)] objectAtIndex:indexPath.row];
-			[[self userDao] getTableRowAndInsertLocal:buddy.username];
+            AWSDynamoDB_DDUser *userDynamoDB = [[AWSDynamoDB_DDUser alloc] init];
+			[userDynamoDB getDDuserAndInsertLocal:buddy.username];
 			DDUser *user = [_userDao selectDDuserByUid:buddy.username];
 			UIImageView *us = [[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x + 5, cell.frame.origin.y + 5, 40, 40)];
             if([user.UID isEqualToString:[IndexViewController instanceDDuser].UID]){

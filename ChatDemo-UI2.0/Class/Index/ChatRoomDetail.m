@@ -14,11 +14,8 @@
 #import "DebugViewController.h"
 #import "WCAlertView.h"
 #import "AliCloudController.h"
-#import "DDBDynamoDB.h"
 #import "Constants.h"
-
 #import "ChatRoomDetail.h"
-#import "DDBDynamoDB.h"
 #import "ContactsViewController.h"
 #import "Contact4GroupAddViewController.h"
 #import "ContactSelectionViewController.h"
@@ -27,6 +24,8 @@
 #import "UIImageView+EMWebCache.h"
 #import "DDUserDAO.h"
 #import "IndexViewController.h"
+#import "AWSDynamoDB_DDUser.h"
+#import "AWSDynamoDB_ChatRoom2.h"
 
 @interface ChatRoomDetail ()
 
@@ -35,7 +34,7 @@
 @property(strong,nonatomic) UIScrollView *scrollView;
 @property(strong,nonatomic) UIImagePickerController  *imagePicker;
 @property(strong,nonatomic) NSMutableArray *datasouce;
-@property(strong,nonatomic) DDBDynamoDB *ddbDynamoDB;
+@property(strong,nonatomic) AWSDynamoDB_DDUser *userDynamoDB;
 @property(strong,nonatomic) AWSDynamoDBObjectMapper *dynamoDBObjectMapper;
 @property(strong,nonatomic) DDUser *uuser1;
 @property(strong,nonatomic) DDUser *uuser2;
@@ -123,12 +122,10 @@
 -(void) updateClickNumber{
      _chatroom2.ClickNum=[NSString stringWithFormat:@"%d",_chatroom2.ClickNum.intValue +  arc4random() % 100];
    
-    DDBDynamoDB *ddb=[DDBDynamoDB alloc];
-    [ddb insertChatroom2:_chatroom2];
-   //更新首页内容
-    ChatRoom2DAO *room2dao=[ChatRoom2DAO alloc];
+    AWSDynamoDB_ChatRoom2 *chatRoom2DynamoDB = [[AWSDynamoDB_ChatRoom2 alloc] init];
+    [chatRoom2DynamoDB insertChatroom2:_chatroom2];
 
-    [room2dao refreshListWithBlock:^{
+    [chatRoom2DynamoDB refreshListWithBlock:^{
         //TODO
     }];
 

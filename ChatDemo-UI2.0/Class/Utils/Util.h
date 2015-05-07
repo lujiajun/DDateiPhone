@@ -12,4 +12,6 @@
 
 + (NSString *)str1:(NSString *)str1 appendStr2:(NSString *) str2;
 
++ (NSString *)str1:(NSString *)str1 appendStr2:(NSString *)str2 appendStr3:(NSString *)str3;
+
 @end

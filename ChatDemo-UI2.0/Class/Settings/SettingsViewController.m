@@ -18,7 +18,6 @@
 #import "DebugViewController.h"
 #import "WCAlertView.h"
 #import "PersonalController.h"
-#import "DDBDynamoDB.h"
 
 
 
