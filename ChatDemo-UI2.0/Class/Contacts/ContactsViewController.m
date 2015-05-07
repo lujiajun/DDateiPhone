@@ -225,7 +225,7 @@
             }
             
             [weakSelf.searchController.searchBar endEditing:YES];
-            ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:buddy.username isGroup:NO];
+            ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:buddy.username isGroup:NO isSubGroup:NO];
             chatVC.title = buddy.username;
             [weakSelf.navigationController pushViewController:chatVC animated:YES];
         }];
@@ -437,7 +437,7 @@
             }
         }
         
-        ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:buddy.username isGroup:NO];
+        ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:buddy.username isGroup:NO isSubGroup:NO];
         chatVC.title = buddy.username;
         [self.navigationController pushViewController:chatVC animated:YES];
     }
@@ -651,14 +651,6 @@
     }
 }
 
-- (void)addFriendAction
-{
-//    InviteFriendByDoubleIdController *addController = [InviteFriendByDoubleIdController alloc];
-//        [self.navigationController pushViewController:addController animated:YES];
-    
-    AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
-    [self.navigationController pushViewController:addController animated:YES];
-}
 
 
 @end

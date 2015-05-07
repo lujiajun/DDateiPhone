@@ -49,11 +49,17 @@
 
 -(void) updateTable:(CHATROOM4 *)tableRow{
     [[self.dynamoDBObjectMapper save: tableRow] continueWithSuccessBlock:^id(BFTask *task) {
-        [self.chatRoom4Dao insertChatroom4:tableRow];
+        [self.chatRoom4Dao updateLikeByGID:tableRow];
         return nil;
     }];
 }
 
+-(void) updateSubGroupTable:(CHATROOM4 *)tableRow{
+    [[self.dynamoDBObjectMapper save: tableRow] continueWithSuccessBlock:^id(BFTask *task) {
+        [self.chatRoom4Dao updateSubGroupByGID:tableRow];
+        return nil;
+    }];
+}
 -(void) deleteRoom4:(NSString *) gid{
     CHATROOM4 *room4 = [CHATROOM4 new];
     room4.GID = gid;
@@ -67,9 +73,7 @@
          if (task.exception) {
              NSLog(@"The request failed. Exception: [%@]", task.exception);
          }
-         if (task.result) {
-             //Item deleted.
-         }
+         [self.chatRoom4Dao delete:gid];
          return nil;
      }];
 }

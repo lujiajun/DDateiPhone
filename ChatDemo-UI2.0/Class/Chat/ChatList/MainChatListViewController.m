@@ -209,7 +209,7 @@
 		    [weakSelf.searchController.searchBar endEditing:YES];
 
 		    EMConversation *conversation = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-		    ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:conversation.chatter isGroup:conversation.isGroup];
+		    ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:conversation.chatter isGroup:conversation.isGroup isSubGroup:NO];
 		    chatVC.title = conversation.chatter;
 		    [weakSelf.navigationController pushViewController:chatVC animated:YES];
 		}];
@@ -387,7 +387,7 @@
        
         CHATROOM4 *chatRoom4 = [self.dataSource objectAtIndex:indexPath.row];
 //        - (EMGroup *)fetchGroupInfo:(NSString *)groupId error:(EMError **)pError;
-		ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:chatRoom4.GID isGroup:YES] initRoom4:chatRoom4 friend:nil isNewRoom:NO];
+        ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:chatRoom4.GID isGroup:YES isSubGroup:NO] initRoom4:chatRoom4 friend:nil isNewRoom:NO];
 //		chatController.title = chatRoom;
 		[self.navigationController pushViewController:chatController animated:YES];
 	}

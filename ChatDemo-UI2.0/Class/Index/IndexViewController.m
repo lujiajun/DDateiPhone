@@ -27,6 +27,7 @@
 #import "ChatRoom2DAO.h"
 #import "DDUserDAO.h"
 #import "SRRefreshView.h"
+#import "AddFriendViewController.h"
 #import "HomePageListCell.h"
 #import "UIImageView+WebCache.h"
 #import "AWSDynamoDB_ChatRoom2.h"
@@ -42,6 +43,9 @@
 
 @property (strong, nonatomic) DDUserDAO *userDao;
 @property (nonatomic) BOOL haveFriend;
+@property(strong,nonatomic) UIView *bak;
+@property(strong,nonatomic) UIImageView *img1;
+@property(strong,nonatomic) UIImageView *img2;
 
 @end
 
@@ -217,6 +221,34 @@ static DDUser *uuser;
         [self.tableView reloadData];
             }];
 }
+
+- (void)addFriendAction
+{
+    //    InviteFriendByDoubleIdController *addController = [InviteFriendByDoubleIdController alloc];
+    //        [self.navigationController pushViewController:addController animated:YES];
+    if(_bak==nil){
+         _bak=[[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-120, 0,120,60)];
+    }
+    
+    _bak.backgroundColor=[UIColor whiteColor];
+    if(_img1==nil){
+        _img1=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0,120, 30)];
+
+    }
+    _img1.image=[UIImage imageNamed:@"80"];
+    [_bak addSubview:_img1];
+    if(_img2==nil){
+         _img2=[[UIImageView alloc] initWithFrame:CGRectMake(0, 31, 120,30)];
+    }
+   
+    _img2.image=[UIImage imageNamed:@"80"];
+    [_bak addSubview:_img2];
+//
+    [self.view addSubview:_bak];
+//    AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
+//    [self.navigationController pushViewController:addController animated:YES];
+}
+
 
 #pragma mark - UIScrollViewDelegate
 

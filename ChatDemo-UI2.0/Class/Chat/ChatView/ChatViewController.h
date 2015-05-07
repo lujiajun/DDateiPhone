@@ -14,7 +14,7 @@
 #import "CHATROOM4.h"
 @interface ChatViewController : UIViewController
 
-- (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup;
+- (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup isSubGroup:(BOOL) isSubGroup;
 
 - (void)reloadData;
 

@@ -26,6 +26,7 @@
 
 
 - (void)updateTable:(CHATROOM4 *)tableRow;
+-(void) updateSubGroupTable:(CHATROOM4 *)tableRow;
 
 
 - (void)insertChatroom4:(CHATROOM4 *) chatRoom4;

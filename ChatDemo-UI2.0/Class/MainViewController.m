@@ -89,11 +89,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     //首页button
     UIButton *inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
     [inviteButton setImage:[UIImage imageNamed:@"inviteFriend.png"] forState:UIControlStateNormal];
-    [inviteButton addTarget:_contactsVC action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
+    [inviteButton addTarget:_indexVC action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
     _inviteFriendItem = [[UIBarButtonItem alloc] initWithCustomView:inviteButton];
     
     //创建二人聊天室
-    UIButton *createGroupButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+    UIButton *createGroupButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [createGroupButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
     [createGroupButton addTarget:self action:@selector(createGroup) forControlEvents:UIControlEventTouchUpInside];
     _createGroupItem = [[UIBarButtonItem alloc] initWithCustomView:createGroupButton];
@@ -212,8 +212,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 //    [_indexVC networkChanged:_connectionState];
     
     _indexVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.index", @"Double Date")
-                                                        image:[UIImage imageNamed:@"indexoff@3.8x"]
-                                                selectedImage:[UIImage imageNamed:@"indexon@2x"]];
+                                                        image:[UIImage imageNamed:@"indexoff"]
+                                                selectedImage:[UIImage imageNamed:@"indexon"]];
     
     _indexVC.tabBarItem.tag = 0;
 
@@ -225,8 +225,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     _chatListVC = [[MainChatListViewController alloc] init];
     [_chatListVC networkChanged:_connectionState];
     _chatListVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.conversation", @"Conversations")
-                                                           image:[UIImage imageNamed:@"chatoff@2x"]
-                                                   selectedImage:[UIImage imageNamed:@"chaton@2x"]];
+                                                           image:[UIImage imageNamed:@"chatoff"]
+                                                   selectedImage:[UIImage imageNamed:@"chaton"]];
     _chatListVC.tabBarItem.tag = 1;
     [self unSelectedTapTabBarItems:_chatListVC.tabBarItem];
     [self selectedTapTabBarItems:_chatListVC.tabBarItem];
@@ -234,8 +234,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     //address book
     _contactsVC = [[ContactsViewController alloc] initWithNibName:nil bundle:nil];
     _contactsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.addressbook", @"AddressBook")
-                                                           image:[UIImage imageNamed:@"friendoff@4x"]
-                                                   selectedImage:[UIImage imageNamed:@"friendon@4x"]];
+                                                           image:[UIImage imageNamed:@"friendoff"]
+                                                   selectedImage:[UIImage imageNamed:@"friendon"]];
     _contactsVC.tabBarItem.tag = 2;
     [self unSelectedTapTabBarItems:_contactsVC.tabBarItem];
     [self selectedTapTabBarItems:_contactsVC.tabBarItem];

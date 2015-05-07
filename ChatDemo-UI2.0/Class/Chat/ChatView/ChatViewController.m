@@ -37,6 +37,8 @@
 #import "Constants.h"
 #import "DDUserDAO.h"
 #import "ChatRoom4DAO.h"
+#import "IndexViewController.h"
+#import "AWSDynamoDB_ChatRoom4.h"
 #define KPageCount 20
 
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, IDeviceManagerDelegate>
@@ -80,7 +82,9 @@
 @property (strong, nonatomic) UIButton *view1;
 @property (nonatomic) NSNumber *count;
 
+
 @property (nonatomic) BOOL isNewRoom;
+@property(nonatomic) BOOL isSubGroup;
 @end
 
 @implementation ChatViewController
@@ -146,7 +150,7 @@ NSDateFormatter *dateformatter;
 }
 
 
-- (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup
+- (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup isSubGroup:(BOOL) isSubGroup
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
@@ -154,7 +158,7 @@ NSDateFormatter *dateformatter;
         _chatter = chatter;
         _isChatGroup = isGroup;
         _messages = [NSMutableArray array];
-        
+        _isSubGroup=isSubGroup;
         //根据接收者的username获取当前会话的管理者
         _conversation = [[EaseMob sharedInstance].chatManager conversationForChatter:chatter isGroup:_isChatGroup];
         [_conversation markAllMessagesAsRead:YES];
@@ -173,14 +177,14 @@ NSDateFormatter *dateformatter;
     
     if(secondsCountDown==0){
         [_countDownTimer invalidate];
-        //删除数据库记录
-//        ChatRoom4DB *db=[ChatRoom4DB alloc];
-//        [db deleteRoom4:_chatroom4.GID];
-        //删除环信数据
-//        [self dissolvegRroup];
-        //删除本地数据
-//        ChatRoom4DAO *dao=[[ChatRoom4DAO alloc]init];
-//        [dao delChatRoom4ByRid:_chatroom4.GID];
+//        删除数据库记录
+         AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
+        [room4Da deleteRoom4:_chatroom4.GID];
+//        删除环信数据
+        [self dissolvegRroup];
+//        删除本地数据
+        [self.lab removeFromSuperview];
+
         
     }
 }
@@ -239,10 +243,13 @@ NSDateFormatter *dateformatter;
     [self setupBarButtonItem];
     [self.view addSubview:self.tableView];
     [self.tableView addSubview:self.slimeView];
-//    [self.tableView.setUserInteractive:yes];
-//    if(_isChatGroup&&_isNewRoom){
-        [self initClickCout];
+    [self.tableView setUserInteractionEnabled:YES];
+    if(!_isSubGroup){
         [self.view addSubview:[self getFriendFrame]];
+    }
+    
+    if(_isChatGroup&&_isNewRoom){
+        [self initClickCout];
   
         dateformatter = [[NSDateFormatter alloc]init] ;//定义NSDateFormatter用来显示格式
         [dateformatter setDateFormat:@"hh mm ss"];//设定格式
@@ -262,6 +269,9 @@ NSDateFormatter *dateformatter;
         [bak addSubview:self.lab];
     
         [self.navigationItem setTitleView:bak];
+    }else{
+          [_view1 setImage:[UIImage imageNamed:@"likeGo"] forState:UIControlStateNormal];
+    }
 
     [self.view addSubview:self.chatToolBar];
     
@@ -284,16 +294,47 @@ NSDateFormatter *dateformatter;
 //    NSLog(  [NSString stringWithFormat: @"%d", _count]);
     if([_count isEqualToNumber:[NSNumber numberWithInt:1]]){
         [_view1 setImage:[UIImage imageNamed:@"like1"] forState:UIControlStateNormal];
+        [_view1 setUserInteractionEnabled:NO];
+//        _view1.alpha=0.4;
     }else if ([_count isEqualToNumber:[NSNumber numberWithInt:2]]){
         [_view1 setImage:[UIImage imageNamed:@"like2"] forState:UIControlStateNormal];
+        [_view1 setUserInteractionEnabled:NO];
+//        _view1.alpha=0.4;
     }else if ([_count isEqualToNumber:[NSNumber numberWithInt:3]]){
         [_view1 setImage:[UIImage imageNamed:@"like3"] forState:UIControlStateNormal];
-
+        [_view1 setUserInteractionEnabled:NO];
+//        _view1.alpha=0.4;
     }else if ([_count isEqualToNumber:[NSNumber numberWithInt:4]]){
+        //计时停止
+        [_countDownTimer invalidate];
+        //去除
+        [self.lab removeFromSuperview];
+        [_view1 setUserInteractionEnabled:NO];
+//        _view1.alpha=0.4;
         [_view1 setImage:[UIImage imageNamed:@"likeGo"] forState:UIControlStateNormal];
-        
 
     }
+    //修改记录
+    
+    NSString *username = [[[EaseMob sharedInstance].chatManager loginInfo] objectForKey:kSDKUsername];
+    if([_chatroom4.UID1 isEqualToString:username]){
+        _chatroom4.isLikeUID1=[NSNumber numberWithInt:1];
+       
+    }
+    if([_chatroom4.UID2 isEqualToString:username]){
+        _chatroom4.isLikeUID2=[NSNumber numberWithInt:1];
+        [_view1 setUserInteractionEnabled:NO];
+    }
+    if([_chatroom4.UID3 isEqualToString:username]){
+        _chatroom4.isLikeUID3=[NSNumber numberWithInt:1];
+        [_view1 setUserInteractionEnabled:NO];
+    }
+    if([_chatroom4.UID4 isEqualToString:username]){
+        _chatroom4.isLikeUID4=[NSNumber numberWithInt:1];
+        
+    }
+//    AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
+//    [room4Da updateTable:_chatroom4];
     
 }
 
@@ -313,14 +354,13 @@ NSDateFormatter *dateformatter;
         if(_chatroom4.isLikeUID4!=nil&&[_chatroom4.isLikeUID4 isEqualToNumber:[NSNumber numberWithInt:1]]){
             _count=[NSNumber numberWithInt: _count.intValue+1];
             [_view1 setUserInteractionEnabled:NO];
-            //计时停止
-             [_countDownTimer invalidate];
+          
             
         }
     }
 
 }
-
+//聊天通栏
 -(UIButton *) getFriendFrame{
     UIButton *bak=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
     [bak setImage:[UIImage imageNamed:@"chatbak"] forState:UIControlStateNormal];
@@ -359,11 +399,63 @@ NSDateFormatter *dateformatter;
 }
 
 -(void)dragInside{
-    //好友的name
+    //好友的name //创建两人聊天室，并添加到四人表中
+    NSString *username = [[[EaseMob sharedInstance].chatManager loginInfo] objectForKey:kSDKUsername];
+    if([_chatroom4.UID1 isEqualToString:username] || [_chatroom4.UID2 isEqualToString:username]){
+        if(_chatroom4.subGID1!=nil){
+            //跳到原来的房间
+            ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:_chatroom4.subGID1 isGroup:YES isSubGroup:YES];
+            [self.navigationController pushViewController:chatController animated:YES];
+        }else{
+            //新建
+            [self createTwoNewGroup:_chatroom4.UID1 UID2:_chatroom4.UID2 isSubG:YES];
+            
+        }
+    }else{
+        if(_chatroom4.subGID2!=nil){
+            //跳到原来的房间
+            ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:_chatroom4.subGID2 isGroup:YES isSubGroup:YES];
+            [self.navigationController pushViewController:chatController animated:YES];
+        }else{
+            //新建
+            [self createTwoNewGroup:_chatroom4.UID3 UID2:_chatroom4.UID4 isSubG:NO];
+            
+        }
+        
+    }
     
-    ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:_friendname isGroup:NO];
-    chatVC.title = _friendname;
-    [self.navigationController pushViewController:chatVC animated:YES];
+}
+
+-(void)createTwoNewGroup:(NSString *) UID1 UID2:(NSString *) UID2 isSubG:(BOOL) isSubG{
+
+    EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
+    groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
+    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[@"临时聊天组" stringByAppendingString:UID1]
+                                                          description:[@"临时聊天组" stringByAppendingString:UID1]
+                                                             invitees:@[UID1,UID2]
+                                                initialWelcomeMessage:@"邀请您加入群组"
+                                                         styleSetting:groupStyleSetting
+                                                           completion:^(EMGroup *group, EMError *error) {
+                                                               if(!error){
+//                                                                   chatroom4.GID=group.groupId;
+                                                                   if(isSubG){
+                                                                       self.chatroom4.subGID1=group.groupId;
+                                                                   }else{
+                                                                       self.chatroom4.subGID2=group.groupId;
+                                                                   }
+                                                                   AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
+                                                                    [room4Da updateSubGroupTable:self.chatroom4];
+                                                                   
+                                                                   ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:YES];
+                                                                   chatController.title = @"临时聊天室";
+                                                                   [self.navigationController pushViewController:chatController animated:YES];
+                                                                   
+                                                                   NSLog(@"创建成功 -- %@",group);
+                                                               }
+                                                           } onQueue:nil];
+    
+
+
 }
 //顶部bar
 - (void)setupBarButtonItem

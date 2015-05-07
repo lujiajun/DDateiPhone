@@ -199,7 +199,7 @@
             [weakSelf.searchController.searchBar endEditing:YES];
             
             EMConversation *conversation = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:conversation.chatter isGroup:conversation.isGroup];
+            ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:conversation.chatter isGroup:conversation.isGroup isSubGroup:NO];
             chatVC.title = conversation.chatter;
             [weakSelf.navigationController pushViewController:chatVC animated:YES];
         }];
@@ -378,7 +378,7 @@
     }
     
     NSString *chatter = conversation.chatter;
-    chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup];
+    chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup isSubGroup:NO];
     chatController.title = title;
     [self.navigationController pushViewController:chatController animated:YES];
 }

@@ -23,7 +23,7 @@
 //好友个数变化时，重新获取数据
 - (void)reloadDataSource;
 
-//添加好友的操作被触发
-- (void)addFriendAction;
+////添加好友的操作被触发
+//- (void)addFriendAction;
 
 @end

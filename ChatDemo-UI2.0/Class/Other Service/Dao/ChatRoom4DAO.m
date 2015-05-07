@@ -92,6 +92,34 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
 	}
 }
 
+- (void)updateLikeByGID:(CHATROOM4 *) room4 {
+    
+    if ([self.db open]) {
+        BOOL res = [self.db executeUpdate:@"UPDATE ChatRoom4 SET isLikeUID1= ?,isLikeUID2=?,isLikeUID3=?,isLikeUID4=? WHERE GID = ?",room4.isLikeUID1,room4.isLikeUID2,room4.isLikeUID3,room4.isLikeUID4,room4.GID];
+        if (res) {
+            NSLog(@"DDUser: success to update db");
+        } else {
+            NSLog(@"DDUser: error when update db");
+        }
+        [self.db close];
+    }
+}
+
+- (void)updateSubGroupByGID:(CHATROOM4 *) room4 {
+    
+    if ([self.db open]) {
+        BOOL res = [self.db executeUpdate:@"UPDATE ChatRoom4 SET subGID1= ?,subGID2=? WHERE GID = ?",room4.subGID1,room4.subGID2,room4.GID];
+        if (res) {
+            NSLog(@"DDUser: success to update db");
+        } else {
+            NSLog(@"DDUser: error when update db");
+        }
+        [self.db close];
+    }
+}
+
+
+
 - (NSMutableArray *)getLocalChatRoom4ByCount:(int) count {
 	NSMutableArray *rooms = [NSMutableArray array];
 	NSString *sql = [NSString stringWithFormat:@"select * from %@ order by systemTimeNumber limit %d", ChatRoom4Table, count];

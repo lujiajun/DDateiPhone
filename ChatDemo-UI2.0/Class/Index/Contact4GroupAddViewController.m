@@ -475,7 +475,7 @@
     chatroom4=[dao isUniqueRoom:_room2.UID1 UID2:_room2.UID2 UID3:_username UID4:_toAddFriend];
     if(chatroom4!=nil&&chatroom4.GID!=nil){
         //跳入原来的房间
-        ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:chatroom4.GID isGroup:YES] initRoom4:chatroom4 friend:self.toAddFriend isNewRoom:NO];
+        ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:chatroom4.GID isGroup:YES isSubGroup:NO] initRoom4:chatroom4 friend:self.toAddFriend isNewRoom:YES];
         chatController.title = self.room2.Motto;
         [self.navigationController pushViewController:chatController animated:YES];
 
@@ -509,7 +509,7 @@
                                                                    chatroom4.systemTimeNumber=[NSNumber numberWithInt:[[NSDate date] timeIntervalSince1970]*1000];
                                                                    AWSDynamoDB_ChatRoom4 *chatroom4DB=[AWSDynamoDB_ChatRoom4 alloc];
                                                                    [chatroom4DB insertChatroom4:chatroom4];
-                                                                   ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES] initRoom4:chatroom4 friend:self.toAddFriend isNewRoom:YES ];
+                                                                   ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:NO] initRoom4:chatroom4 friend:self.toAddFriend isNewRoom:YES ];
                                                                    chatController.title = self.room2.Motto;
                                                                    [self.navigationController pushViewController:chatController animated:YES];
                                                                    
