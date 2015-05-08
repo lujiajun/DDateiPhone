@@ -184,7 +184,10 @@ NSDateFormatter *dateformatter;
         [self dissolvegRroup];
 //        删除本地数据
         [self.lab removeFromSuperview];
-
+        //调回
+//        IndexViewController *index=[IndexViewController alloc];
+//        [index.tableView reloadData];
+        
         
     }
 }
