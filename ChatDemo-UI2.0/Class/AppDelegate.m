@@ -71,6 +71,8 @@
     return YES;
 }
 
+
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     if (_mainController) {

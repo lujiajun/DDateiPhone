@@ -104,12 +104,12 @@
     if(![self isEmpty]){
         DDUser *user=[IndexViewController instanceDDuser];
         user.nickName=_nickvalue.text;
+        user.picPath=_picpath;
 //        IndexViewController *newSetting=[IndexViewController alloc];
         [IndexViewController setDDUser:user];
         
         //删除原图
-        
-        //上传图片
+        //OSS上传图片
         if(self.data!=nil){
             AliCloudController *aliCloud=[AliCloudController alloc];
             [aliCloud updateHeadPic:self.data name:self.picpath];
@@ -120,6 +120,7 @@
         [ddbDynamoDB updateDDUser:user];
         
         NewSettingViewController *settings=[NewSettingViewController alloc];
+        [settings.tableView reloadData];
         [self.navigationController pushViewController:settings animated:YES];
         
 

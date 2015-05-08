@@ -19,6 +19,11 @@
 #import "ChatViewController.h"
 #import "EMSearchDisplayController.h"
 #import "ConvertToCommonEmoticonsHelper.h"
+#import "DDUserDAO.h"
+#import "Util.h"
+#import "Constants.h"
+#import "IndexViewController.h"
+#import "UIImageView+WebCache.h"
 
 @interface ChatListViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchDisplayDelegate,SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
 
@@ -28,6 +33,7 @@
 @property (nonatomic, strong) EMSearchBar           *searchBar;
 @property (nonatomic, strong) SRRefreshView         *slimeView;
 @property (nonatomic, strong) UIView                *networkStateView;
+@property(nonatomic) DDUserDAO      *userDao;
 
 @property (strong, nonatomic) EMSearchDisplayController *searchController;
 
@@ -49,12 +55,16 @@
     [super viewDidLoad];
     [self removeEmptyConversationsFromDB];
 
+    if(_userDao==nil){
+        _userDao=[[DDUserDAO alloc] init];
+    }
     [self.view addSubview:self.searchBar];
     [self.view addSubview:self.tableView];
     [self.tableView addSubview:self.slimeView];
     [self networkStateView];
 
     [self searchController];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -163,9 +173,36 @@
             }
             
             EMConversation *conversation = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            cell.name = conversation.chatter;
+//            cell.name = conversation.chatter;
             if (!conversation.isGroup) {
-                cell.placeholderImage = [UIImage imageNamed:@"chatListCellHead.png"];
+                //查出图片
+              
+                
+                DDUser *user1 = [self.userDao selectDDuserByUid:conversation.chatter];
+                UIImageView *img=[[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width/2-52, 10, 50, 50)];
+                
+                
+                [img sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user1.picPath]]
+                       placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+                [cell.contentView addSubview:img];
+                UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width/2-100, img.frame.size.height+img.frame.origin.y+2, 100, 20)];
+                name.text=conversation.chatter;
+                name.textAlignment = NSTextAlignmentRight;
+                name.font = [UIFont fontWithName:@"Helvetica" size:15];
+                [cell.contentView addSubview:name];
+                
+                //        DDUser *user2 = [_userDao selectDDuserByUid:conversation.chatter];
+                UIImageView *img2=[[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width/2+2, 10, 50, 50)];
+                
+                
+                [img2 sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:[IndexViewController instanceDDuser].picPath]]
+                        placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+                [cell.contentView addSubview:img2];
+                UILabel *name2=[[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width/2+2, img2.frame.size.height+img2.frame.origin.y+2, 100, 20)];
+                name2.text=[IndexViewController instanceDDuser].UID;
+                name2.textAlignment = NSTextAlignmentLeft;
+                name2.font = [UIFont fontWithName:@"Helvetica" size:15];
+                [cell.contentView addSubview:name2];
             }
             else{
                 NSString *imageName = @"groupPublicHeader";
@@ -325,9 +362,39 @@
         cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identify];
     }
     EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
-    cell.name = conversation.chatter;
+//    cell.name = conversation.chatter;
     if (!conversation.isGroup) {
-        cell.placeholderImage = [UIImage imageNamed:@"chatListCellHead.png"];
+        //查出图片
+        if(_userDao==nil){
+            _userDao=[[DDUserDAO alloc] init];
+        }
+        
+        DDUser *user1 = [_userDao selectDDuserByUid:conversation.chatter];
+        UIImageView *img=[[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width/2-52, 10, 50, 50)];
+        
+        
+        [img sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user1.picPath]]
+                placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+        [cell.contentView addSubview:img];
+        UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width/2-100, img.frame.size.height+img.frame.origin.y+2, 100, 20)];
+        name.text=conversation.chatter;
+        name.textAlignment = NSTextAlignmentRight;
+        name.font = [UIFont fontWithName:@"Helvetica" size:15];
+        [cell.contentView addSubview:name];
+        
+//        DDUser *user2 = [_userDao selectDDuserByUid:conversation.chatter];
+        UIImageView *img2=[[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width/2+2, 10, 50, 50)];
+        
+        
+        [img2 sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:[IndexViewController instanceDDuser].picPath]]
+               placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+        [cell.contentView addSubview:img2];
+        UILabel *name2=[[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width/2+2, img2.frame.size.height+img2.frame.origin.y+2, 100, 20)];
+        name2.text=[IndexViewController instanceDDuser].UID;
+        name2.textAlignment = NSTextAlignmentLeft;
+        name2.font = [UIFont fontWithName:@"Helvetica" size:15];
+        [cell.contentView addSubview:name2];
+        
     }
     else{
         NSString *imageName = @"groupPublicHeader";

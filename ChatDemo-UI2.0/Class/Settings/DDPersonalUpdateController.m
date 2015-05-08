@@ -12,6 +12,7 @@
 #import "AliCloudController.h"
 #import "DDUserDAO.h"
 #import "AWSDynamoDB_DDUser.h"
+#import "NewSettingViewController.h"
 
 
 
@@ -183,7 +184,9 @@
 	//XIUGAI BENDI
 	
 	[IndexViewController setDDUser:user];
-	[self.navigationController popViewControllerAnimated:YES];
+    NewSettingViewController *settings=[NewSettingViewController alloc];
+    [settings.tableView reloadData];
+    [self.navigationController pushViewController:settings animated:YES];
 }
 //判断账号和密码是否为空
 - (BOOL)isEmpty{

@@ -93,7 +93,7 @@
 
 	self.textLabel.text = _name;
 	self.textLabel.frame = CGRectMake(10, 62, 175, 20);
-    self.textLabel1.text = @"我";
+//    self.textLabel1.text = @"我";
     self.textLabel1.frame = CGRectMake(150, 62, 175, 20);
 
 //	_detailLabel.text = _detailMsg;

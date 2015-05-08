@@ -161,7 +161,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //好友性别验证
-    if(_toadduser && [_toadduser.gender isEqualToString:[IndexViewController instanceDDuser].gender]){
+    if(_toadduser && ![_toadduser.gender isEqualToString:[IndexViewController instanceDDuser].gender]){
         [self showHint:NSLocalizedString(@"friend.checkApplyFail", @"check friend  fails, please operate again")];
         return;
     }

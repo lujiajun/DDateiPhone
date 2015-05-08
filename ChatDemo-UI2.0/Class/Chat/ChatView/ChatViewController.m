@@ -244,7 +244,7 @@ NSDateFormatter *dateformatter;
     [self.view addSubview:self.tableView];
     [self.tableView addSubview:self.slimeView];
     [self.tableView setUserInteractionEnabled:YES];
-    if(!_isSubGroup){
+    if(!_isSubGroup&&_isChatGroup){
         [self.view addSubview:[self getFriendFrame]];
     }
     
@@ -713,7 +713,12 @@ NSDateFormatter *dateformatter;
             MessageModel *model = (MessageModel *)obj;
             //查询用户头像
             DDUser *user=[[self userDao] selectDDuserByUid:model.username];
-            model.headImageURL=[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]];
+            if(user!=nil&&user.picPath!=nil){
+                  model.headImageURL=[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]];
+            }else{
+                model.image=[UIImage imageNamed:@"Logo_new"];
+            }
+          
             NSString *cellIdentifier = [EMChatViewCell cellIdentifierForMessageModel:model];
             EMChatViewCell *cell = (EMChatViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (cell == nil) {

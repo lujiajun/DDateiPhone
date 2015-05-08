@@ -108,6 +108,7 @@
 		8AA113491AFA8134002DB7F5 /* like2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA113451AFA8134002DB7F5 /* like2.png */; };
 		8AA1134A1AFA8134002DB7F5 /* like3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA113461AFA8134002DB7F5 /* like3.png */; };
 		8AA1134C1AFA8166002DB7F5 /* likeGo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1134B1AFA8166002DB7F5 /* likeGo.png */; };
+		8AD43E351AFC801200F05E8D /* addFriend.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD43E341AFC801200F05E8D /* addFriend.png */; };
 		8AD911CA1AFBC25A0024D4DE /* chatoff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD911BA1AFBC25A0024D4DE /* chatoff.png */; };
 		8AD911CB1AFBC25A0024D4DE /* chatoff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD911BB1AFBC25A0024D4DE /* chatoff@2x.png */; };
 		8AD911CC1AFBC25A0024D4DE /* chaton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD911BC1AFBC25A0024D4DE /* chaton.png */; };
@@ -609,6 +610,7 @@
 		8AA113451AFA8134002DB7F5 /* like2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like2.png; sourceTree = "<group>"; };
 		8AA113461AFA8134002DB7F5 /* like3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like3.png; sourceTree = "<group>"; };
 		8AA1134B1AFA8166002DB7F5 /* likeGo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = likeGo.png; sourceTree = "<group>"; };
+		8AD43E341AFC801200F05E8D /* addFriend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addFriend.png; path = dd/addFriend.png; sourceTree = "<group>"; };
 		8AD911BA1AFBC25A0024D4DE /* chatoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatoff.png; sourceTree = "<group>"; };
 		8AD911BB1AFBC25A0024D4DE /* chatoff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatoff@2x.png"; sourceTree = "<group>"; };
 		8AD911BC1AFBC25A0024D4DE /* chaton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chaton.png; sourceTree = "<group>"; };
@@ -1342,6 +1344,7 @@
 		8ADB38511AE28F3400FCC6FC /* dd */ = {
 			isa = PBXGroup;
 			children = (
+				8AD43E341AFC801200F05E8D /* addFriend.png */,
 				8AEF0ECF1AF31E4B00DE2484 /* help.png */,
 				8A6C0E151AED4352009D5208 /* infoline.png */,
 				8AFE465D1AED034A00B57368 /* clicknum1.png */,
@@ -2641,6 +2644,7 @@
 				8A7DBEFB1AECCAE300D7941F /* sexgirl.png in Resources */,
 				EBD2ABB91A7CDAC000D16528 /* tabbarBackground.png in Resources */,
 				EBD2AB3B1A7CDAC000D16528 /* call_out_h.png in Resources */,
+				8AD43E351AFC801200F05E8D /* addFriend.png in Resources */,
 				EBD2AB901A7CDAC000D16528 /* chat_sender_audio_playing_000.png in Resources */,
 				EBD2AB431A7CDAC000D16528 /* chatBar_more_card.png in Resources */,
 				8AD911D31AFBC25A0024D4DE /* indexoff@2x.png in Resources */,
