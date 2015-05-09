@@ -1,5 +1,0 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#endif
-
-#import "Pods-ChatDemo-UI2.0-environment.h"

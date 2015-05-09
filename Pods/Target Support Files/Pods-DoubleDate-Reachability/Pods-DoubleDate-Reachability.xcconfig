@@ -1,0 +1,1 @@
+PODS_DOUBLEDATE_REACHABILITY_OTHER_LDFLAGS = -framework "SystemConfiguration"

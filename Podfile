@@ -1,7 +1,7 @@
 # Uncomment this line to define a global platform for your project
 # platform :ios, '6.0'
 
-target 'ChatDemo-UI2.0' do
+target 'DoubleDate' do
 
 source 'https://github.com/CocoaPods/Specs.git'
 pod 'AWSCore'
@@ -21,5 +21,6 @@ pod 'AWSSQS'
 pod 'AWSCognito'
 
 pod 'SDWebImage', '~>3.7'
+pod 'Masonry'
 end
 

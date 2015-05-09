@@ -77,6 +77,7 @@ PODS:
   - Mantle (1.5.4):
     - Mantle/extobjc (= 1.5.4)
   - Mantle/extobjc (1.5.4)
+  - Masonry (0.6.1)
   - Reachability (3.2)
   - SDWebImage (3.7.2):
     - SDWebImage/Core (= 3.7.2)
@@ -101,6 +102,7 @@ DEPENDENCIES:
   - AWSSimpleDB
   - AWSSNS
   - AWSSQS
+  - Masonry
   - SDWebImage (~> 3.7)
 
 SPEC CHECKSUMS:
@@ -123,6 +125,7 @@ SPEC CHECKSUMS:
   FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
   GZIP: f0863fda354e8f83316508c0a2c7bbe385e39129
   Mantle: 60acd0cd363e27d945bda0a6b8e90577112d28f3
+  Masonry: 4972309f2f134de9dd312f4dc4a21359b50e6caa
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
   TMCache: a93984b045a5ee84bd8941bd5e0b54296059cc52
