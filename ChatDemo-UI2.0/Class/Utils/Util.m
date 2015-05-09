@@ -47,10 +47,10 @@
     NSError *error;
     NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     
-    NSLog([[NSString alloc]initWithData:response encoding:NSUTF8StringEncoding]);
+//    NSLog([[NSString alloc]initWithData:response encoding:NSUTF8StringEncoding]);
     
     NSDictionary *tokenInfo = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
-    NSLog([tokenInfo objectForKey:@"access_token"]);
+//    NSLog([tokenInfo objectForKey:@"access_token"]);
     return  [tokenInfo objectForKey:@"access_token"];
     //修改密码
    
@@ -77,13 +77,13 @@
     
     [request setHTTPBody:data];
     //Request Headers : {“Authorization”:”Bearer ${token}”}
-//    [request setValue: [[@"Bearer ${" stringByAppendingString:Util.getToken] stringByAppendingString:@"}\""] forHTTPHeaderField:@"Authorization"];
+    [request setValue: [[@"Bearer ${" stringByAppendingString:Util.getToken] stringByAppendingString:@"}\""] forHTTPHeaderField:@"Authorization"];
     
     //第三步，连接服务器
     NSError *error;
     NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     
-    NSLog([[NSString alloc]initWithData:response encoding:NSUTF8StringEncoding]);
+//    NSLog([[NSString alloc]initWithData:response encoding:NSUTF8StringEncoding]);
     //    NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
     
     [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
@@ -91,6 +91,41 @@
         return NO;
     }
     return YES;
+}
+
++(BOOL) registerUser:(NSString *) userName password:(NSString *) password{
+    if(userName!=nil &&password!=nil){
+        NSURL *url = [NSURL URLWithString:@"https://a1.easemob.com/doubledate/doubledate/users"];
+        
+        //第二步，创建请求
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+        
+        [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+        
+        NSString *str = [[@"{\"username\":" stringByAppendingString:userName] stringByAppendingString: @"\",\"password\": \"\"}"];//设置参数
+        
+        NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+         [request setValue: [[@"Bearer ${" stringByAppendingString:Util.getToken] stringByAppendingString:@"}\""] forHTTPHeaderField:@"Authorization"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+         [request setHTTPBody:data];
+        //第三步，连接服务器
+        NSError *error;
+        NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+        
+        NSLog([[NSString alloc]initWithData:response encoding:NSUTF8StringEncoding]);
+        
+        NSDictionary *tokenInfo = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
+//        NSLog([tokenInfo objectForKey:@"access_token"]);
+        if(!error){
+//            return tokenInfo objectForKey:@""
+            return NO;
+        }
+        return YES;
+
+    }
+    return NO;
+    
 }
 
 @end
