@@ -18,6 +18,7 @@ NSString * const DDUserTable=@"DDUser";
             ID INTEGER PRIMARY KEY AUTOINCREMENT, \
             UID varchar(50), \
             nickName varchar(50), \
+            password varchar(50),\
             isPic INTEGER, \
             picPath TEXT, \
             gender varchar(10), \
@@ -51,6 +52,7 @@ NSString * const DDUserTable=@"DDUser";
     NSString *sql = [NSString stringWithFormat:@"Insert or ignore into %@ ( \
                      UID, \
                      nickName, \
+                     password,\
                      isPic, \
                      picPath, \
                      gender, \
@@ -62,11 +64,12 @@ NSString * const DDUserTable=@"DDUser";
                      hobbies,\
                      sign,\
                      isDoublerID) \
-                     values(?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?)", DDUserTable];
+                     values(?, ?, ?,?, ?, ?, ?, ?, ?,?,?,?,?,?)", DDUserTable];
 	if ([self.db open]) {
 		BOOL res = [self.db executeUpdate:sql,
                     dduser.UID,
                     dduser.nickName,
+                    dduser.password,
                     dduser.isPic,
                     dduser.picPath,
                     dduser.gender,
@@ -104,7 +107,7 @@ NSString * const DDUserTable=@"DDUser";
 - (void)updateByUID:(DDUser *)user {
     
     if ([self.db open]) {
-        BOOL res = [self.db executeUpdate:@"UPDATE DDUser SET nickName= ?,isPic=?,picPath=?,gender=?,university=?,grade=?,photos=?,city=?,birthday=?,hobbies=?,sign=?,isDoublerID=? WHERE UID = ?",user.nickName,user.isPic,user.picPath,user.gender,user.university,user.grade,user.photos,user.city,user.birthday,user.hobbies,user.sign,user.isDoublerID,user.UID];
+        BOOL res = [self.db executeUpdate:@"UPDATE DDUser SET nickName= ?,isPic=?,picPath=?,gender=?,university=?,grade=?,photos=?,city=?,birthday=?,hobbies=?,sign=?,isDoublerID=? ,password=? WHERE UID = ?",user.nickName,user.isPic,user.picPath,user.gender,user.university,user.grade,user.photos,user.city,user.birthday,user.hobbies,user.sign,user.isDoublerID,user.password,user.UID];
         if (res) {
             NSLog(@"DDUser: success to update db");
         } else {
@@ -119,6 +122,7 @@ NSString * const DDUserTable=@"DDUser";
     DDUser * dduser = [DDUser new];
     dduser.UID = [rs stringForColumn:@"UID"];
     dduser.nickName = [rs stringForColumn:@"nickName"];
+    dduser.password = [rs stringForColumn:@"password"];
     dduser.isPic = [NSNumber numberWithInt:[rs intForColumn:@"isPic"]];
     dduser.picPath = [rs stringForColumn:@"picPath"];
     dduser.gender = [rs stringForColumn:@"gender"];
