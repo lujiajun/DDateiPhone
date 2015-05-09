@@ -14,11 +14,15 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HP1-ku-0fl">
-                    <rect key="frame" x="20" y="438" width="137" height="44"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HP1-ku-0fl">
+                    <rect key="frame" x="30" y="539" width="137" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="137" id="4d0-Yz-VQR"/>
+                        <constraint firstAttribute="height" constant="44" id="ljv-3r-jOf"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                     <state key="normal" backgroundImage="login.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -31,11 +35,11 @@
                         <action selector="doLogin:" destination="-1" eventType="touchUpInside" id="ptq-31-TGc"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="welcome.png" translatesAutoresizingMaskIntoConstraints="NO" id="aAU-2T-AMp">
-                    <rect key="frame" x="0.0" y="0.0" width="345" height="414"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="welcome.png" translatesAutoresizingMaskIntoConstraints="NO" id="aAU-2T-AMp">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="519"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g7n-mh-wjo">
-                    <rect key="frame" x="173" y="438" width="134" height="44"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g7n-mh-wjo">
+                    <rect key="frame" x="208" y="539" width="137" height="44"/>
                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                     <state key="normal" backgroundImage="register.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -50,6 +54,21 @@
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="aAU-2T-AMp" secondAttribute="trailing" id="DBG-HY-xsR"/>
+                <constraint firstItem="HP1-ku-0fl" firstAttribute="top" secondItem="aAU-2T-AMp" secondAttribute="bottom" constant="20" id="EGm-wI-Bf6"/>
+                <constraint firstAttribute="bottom" secondItem="g7n-mh-wjo" secondAttribute="bottom" constant="20" id="ID6-IP-Fuc"/>
+                <constraint firstItem="g7n-mh-wjo" firstAttribute="width" secondItem="HP1-ku-0fl" secondAttribute="width" id="O7Y-YI-ign"/>
+                <constraint firstAttribute="bottom" secondItem="HP1-ku-0fl" secondAttribute="bottom" constant="20" id="QaB-zo-jBh"/>
+                <constraint firstItem="g7n-mh-wjo" firstAttribute="height" secondItem="HP1-ku-0fl" secondAttribute="height" id="S6v-IT-kgd"/>
+                <constraint firstItem="HP1-ku-0fl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="ZR8-1l-GnT"/>
+                <constraint firstAttribute="trailing" secondItem="g7n-mh-wjo" secondAttribute="trailing" constant="30" id="dD6-am-fSs"/>
+                <constraint firstItem="aAU-2T-AMp" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dqD-0V-vui"/>
+                <constraint firstItem="aAU-2T-AMp" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="y27-KD-u4b"/>
+                <constraint firstItem="g7n-mh-wjo" firstAttribute="top" secondItem="aAU-2T-AMp" secondAttribute="bottom" constant="20" id="zIM-se-XZY"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>
     </objects>
     <resources>
