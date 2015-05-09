@@ -2542,9 +2542,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		90911023192EEA70008A48AA /* ChatDemo-UI2.0 */ = {
+		90911023192EEA70008A48AA /* DoubleDate */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 90911050192EEA70008A48AA /* Build configuration list for PBXNativeTarget "ChatDemo-UI2.0" */;
+			buildConfigurationList = 90911050192EEA70008A48AA /* Build configuration list for PBXNativeTarget "DoubleDate" */;
 			buildPhases = (
 				AD1525B94D385AF0F92F5484 /* Check Pods Manifest.lock */,
 				90911020192EEA70008A48AA /* Sources */,
@@ -2556,7 +2556,7 @@
 			);
 			dependencies = (
 			);
-			name = "ChatDemo-UI2.0";
+			name = DoubleDate;
 			productName = "ChatDemo-UI2.0";
 			productReference = 90911024192EEA70008A48AA /* ChatDemo-UI2.0.app */;
 			productType = "com.apple.product-type.application";
@@ -2594,7 +2594,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				90911023192EEA70008A48AA /* ChatDemo-UI2.0 */,
+				90911023192EEA70008A48AA /* DoubleDate */,
 			);
 		};
 /* End PBXProject section */
@@ -3245,7 +3245,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		90911050192EEA70008A48AA /* Build configuration list for PBXNativeTarget "ChatDemo-UI2.0" */ = {
+		90911050192EEA70008A48AA /* Build configuration list for PBXNativeTarget "DoubleDate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				90911051192EEA70008A48AA /* Debug */,
