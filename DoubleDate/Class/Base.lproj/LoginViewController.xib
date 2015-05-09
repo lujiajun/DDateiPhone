@@ -38,7 +38,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="420"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g7n-mh-wjo">
-                    <rect key="frame" x="181" y="440" width="109" height="44"/>
+                    <rect key="frame" x="180" y="440" width="110" height="44"/>
                     <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                     <state key="normal" backgroundImage="register.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -63,7 +63,7 @@
                 <constraint firstItem="HP1-ku-0fl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="ZR8-1l-GnT"/>
                 <constraint firstAttribute="trailing" secondItem="g7n-mh-wjo" secondAttribute="trailing" constant="30" id="dD6-am-fSs"/>
                 <constraint firstItem="aAU-2T-AMp" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dqD-0V-vui"/>
-                <constraint firstItem="g7n-mh-wjo" firstAttribute="leading" secondItem="HP1-ku-0fl" secondAttribute="trailing" constant="41" id="gl3-xQ-7bG"/>
+                <constraint firstItem="g7n-mh-wjo" firstAttribute="leading" secondItem="HP1-ku-0fl" secondAttribute="trailing" constant="40" id="gl3-xQ-7bG"/>
                 <constraint firstItem="aAU-2T-AMp" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="y27-KD-u4b"/>
                 <constraint firstItem="g7n-mh-wjo" firstAttribute="top" secondItem="aAU-2T-AMp" secondAttribute="bottom" constant="20" id="zIM-se-XZY"/>
             </constraints>

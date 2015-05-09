@@ -14,6 +14,7 @@
 		181782AD1AFB93330007BD3B /* CHATROOM4.m in Sources */ = {isa = PBXBuildFile; fileRef = 181782AC1AFB93330007BD3B /* CHATROOM4.m */; };
 		185E62881AFE50BE00170F41 /* DoubleDate-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 185E62851AFE50BE00170F41 /* DoubleDate-Info.plist */; };
 		185E62891AFE548600170F41 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C18CAED1A0B556D00FEB270 /* libMobClickLibrary.a */; };
+		185E628A1AFE68DA00170F41 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD43E371AFE5F9E00F05E8D /* libWeChatSDK.a */; };
 		1873D80D1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */; };
 		1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */; };
 		18990C711AF7CC8400523A29 /* UIColor+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 18990C701AF7CC8400523A29 /* UIColor+Category.m */; };
@@ -609,6 +610,9 @@
 		8AA113461AFA8134002DB7F5 /* like3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like3.png; sourceTree = "<group>"; };
 		8AA1134B1AFA8166002DB7F5 /* likeGo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = likeGo.png; sourceTree = "<group>"; };
 		8AD43E341AFC801200F05E8D /* addFriend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addFriend.png; path = dd/addFriend.png; sourceTree = "<group>"; };
+		8AD43E371AFE5F9E00F05E8D /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		8AD43E381AFE5F9E00F05E8D /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		8AD43E391AFE5F9E00F05E8D /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		8AD911BA1AFBC25A0024D4DE /* chatoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatoff.png; sourceTree = "<group>"; };
 		8AD911BB1AFBC25A0024D4DE /* chatoff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatoff@2x.png"; sourceTree = "<group>"; };
 		8AD911BC1AFBC25A0024D4DE /* chaton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chaton.png; sourceTree = "<group>"; };
@@ -1131,6 +1135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				185E628A1AFE68DA00170F41 /* libWeChatSDK.a in Frameworks */,
 				185E62891AFE548600170F41 /* libMobClickLibrary.a in Frameworks */,
 				3C1CEF7F196EA37600DBA56B /* ImageIO.framework in Frameworks */,
 				1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */,
@@ -1331,6 +1336,16 @@
 				8A038C2E1AF51A54007A05BE /* IndexViewController.m */,
 			);
 			name = Index;
+			sourceTree = "<group>";
+		};
+		8AD43E361AFE5F9000F05E8D /* Wechat */ = {
+			isa = PBXGroup;
+			children = (
+				8AD43E371AFE5F9E00F05E8D /* libWeChatSDK.a */,
+				8AD43E381AFE5F9E00F05E8D /* WXApi.h */,
+				8AD43E391AFE5F9E00F05E8D /* WXApiObject.h */,
+			);
+			path = Wechat;
 			sourceTree = "<group>";
 		};
 		8ADB38511AE28F3400FCC6FC /* dd */ = {
@@ -1559,6 +1574,7 @@
 		9091101B192EEA70008A48AA = {
 			isa = PBXGroup;
 			children = (
+				8AD43E361AFE5F9000F05E8D /* Wechat */,
 				8A4020B51AE3579F00806014 /* Oss-Universal */,
 				EBC0CDEC1AD6652800E90053 /* EaseMobSDK */,
 				9091102D192EEA70008A48AA /* DoubleDate */,
@@ -3195,6 +3211,7 @@
 					"$(PROJECT_DIR)/OSS-Universal",
 					"$(PROJECT_DIR)/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/DoubleDate/3rdparty/UMeng",
+					"$(PROJECT_DIR)/Wechat",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -3231,6 +3248,7 @@
 					"$(PROJECT_DIR)/OSS-Universal",
 					"$(PROJECT_DIR)/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/DoubleDate/3rdparty/UMeng",
+					"$(PROJECT_DIR)/Wechat",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";

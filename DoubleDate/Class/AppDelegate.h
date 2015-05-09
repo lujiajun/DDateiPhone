@@ -13,8 +13,9 @@
 #import <UIKit/UIKit.h>
 #import "MainViewController.h"
 #import "ApplyViewController.h"
+#import "WXApi.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, IChatManagerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, IChatManagerDelegate,WXApiDelegate>
 {
     EMConnectionState _connectionState;
 }

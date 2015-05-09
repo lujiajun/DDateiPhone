@@ -17,6 +17,7 @@
 #import "Constants.h"
 #import "DDUserDAO.h"
 #import "AWSDynamoDB_DDUser.h"
+#import "Util.h"
 
 
 
@@ -158,6 +159,59 @@ static DDUser   *dduser;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"doRegister" object:@NO];
     
 
+
+}
+
+-(void) newDoRegister{
+    if (![self isEmpty]) {
+        //隐藏键盘
+        [self.view endEditing:YES];
+        //支持是否为中文
+        if ([_username isChinese]) {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:NSLocalizedString(@"login.nameNotSupportZh", @"Name does not support Chinese")
+                                  message:nil
+                                  delegate:nil
+                                  cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                                  otherButtonTitles:nil];
+            
+            [alert show];
+            
+            return;
+        }//判断是否是中文，但不支持中英文混编
+      //url post token注册
+        if([Util registerUser:_username password:_password]){
+            AliCloudController *aliCloud=[AliCloudController alloc];
+            [aliCloud uploadPic:self.data name:self.picpath];
+            
+            AWSDynamoDB_DDUser *ddbDynamoDB=[AWSDynamoDB_DDUser new];
+            DDUser  *user=[DDUser new];
+            user.nickName=self.nicknamevalue.text;
+            user.UID=self.username;
+            user.gender=self.gendervalue.text;
+            //        user.grade=_gradevalue.text;
+            user.password=self.password;
+            user.city=self.city;
+            user.birthday=self.birdatevalue.text;
+            //        user.university=_university;
+            //                NSNumber *isName=NSNUmber num;
+            user.isDoublerID=[NSNumber numberWithInt:1];
+            user.isPic=[NSNumber numberWithInt:1];
+            user.picPath=self.picpath;
+            [ddbDynamoDB insertDDUser:user];
+            
+            DDLoginController *personsign=[DDLoginController alloc];
+            [self.navigationController pushViewController:personsign animated:YES];
+            
+            TTAlertNoTitle(NSLocalizedString(@"register.success", @"Registered successfully, please log in"));
+            
+        }else{
+            TTAlertNoTitle(NSLocalizedString(@"register.repeat", @"You registered user already exists!"));
+            
+        }
+        
+        
+    }
 
 }
 

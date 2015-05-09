@@ -102,9 +102,10 @@
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
         
         [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
+//         {“username”:”${用户名}”,”password”:”${密码}”}
+      NSString *str =   [[[[@"{\"username\":\"" stringByAppendingString:userName] stringByAppendingString:@"\",\"password\":\""]stringByAppendingString:password]stringByAppendingString:@"\"}"];
         
-        NSString *str = [[@"{\"username\":" stringByAppendingString:userName] stringByAppendingString: @"\",\"password\": \"\"}"];//设置参数
-        
+        NSLog(str);
         NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
          [request setValue: [[@"Bearer ${" stringByAppendingString:Util.getToken] stringByAppendingString:@"}\""] forHTTPHeaderField:@"Authorization"];
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -117,11 +118,11 @@
         
         NSDictionary *tokenInfo = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
 //        NSLog([tokenInfo objectForKey:@"access_token"]);
-        if(!error){
+        if(tokenInfo!=nil&&[tokenInfo objectForKey:@"application"]!=nil){
 //            return tokenInfo objectForKey:@""
-            return NO;
+            return YES;
         }
-        return YES;
+        return NO;
 
     }
     return NO;

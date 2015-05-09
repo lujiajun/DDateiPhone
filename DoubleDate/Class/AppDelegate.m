@@ -19,6 +19,7 @@
 
 #import "AWSCore/AWSCore.h"
 #import "AliCloudController.h"
+#import "WXApi.h"
 
 @interface AppDelegate ()
 
@@ -35,6 +36,9 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
+
+    //向微信注册
+    [WXApi registerApp:@"wxa89a834f7feabaed"];
     
     //auto login
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -70,7 +74,6 @@
     [self.window makeKeyAndVisible];
     return YES;
 }
-
 
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
