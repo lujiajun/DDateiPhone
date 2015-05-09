@@ -14,4 +14,7 @@
 
 + (NSString *)str1:(NSString *)str1 appendStr2:(NSString *)str2 appendStr3:(NSString *)str3;
 
++(BOOL) updatePassword:(NSString *) newPassword username:(NSString *) username  oldpassword:(NSString *) oldpassword;
+
++(NSString*)getToken;
 @end

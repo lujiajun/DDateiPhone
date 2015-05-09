@@ -15,6 +15,6 @@
 @interface SettingsViewController : UITableViewController
 
 - (void)refreshConfig;
-
+- (void)logoutAction;
 
 @end

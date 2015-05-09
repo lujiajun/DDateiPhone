@@ -273,12 +273,21 @@
 	NSMutableArray *conversations = [[NSMutableArray alloc] initWithArray:[[EaseMob sharedInstance].chatManager conversations]];
 
 	//剔除群聊
+    @try {
+
 	for (EMConversation *conversation in conversations) {
 		if ([conversation isGroup]) {
-			[conversations removeObject:conversation];
+                           [conversations removeObject:conversation];
+            }
+        
+			
 		}
         
 	}
+    @catch (NSException *e) {
+        NSLog(@"Exception: %@", e);
+    }
+
 
 	NSArray *sorte = [conversations sortedArrayUsingComparator:
 	                  ^(EMConversation *obj1, EMConversation *obj2) {
