@@ -12,6 +12,8 @@
 		181782A71AFA74DB0007BD3B /* DDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 181782A61AFA74DB0007BD3B /* DDUser.m */; };
 		181782AA1AFA80420007BD3B /* CHATROOM2.m in Sources */ = {isa = PBXBuildFile; fileRef = 181782A91AFA80420007BD3B /* CHATROOM2.m */; };
 		181782AD1AFB93330007BD3B /* CHATROOM4.m in Sources */ = {isa = PBXBuildFile; fileRef = 181782AC1AFB93330007BD3B /* CHATROOM4.m */; };
+		185E62881AFE50BE00170F41 /* DoubleDate-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 185E62851AFE50BE00170F41 /* DoubleDate-Info.plist */; };
+		185E62891AFE548600170F41 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C18CAED1A0B556D00FEB270 /* libMobClickLibrary.a */; };
 		1873D80D1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */; };
 		1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */; };
 		18990C711AF7CC8400523A29 /* UIColor+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 18990C701AF7CC8400523A29 /* UIColor+Category.m */; };
@@ -19,7 +21,6 @@
 		18F7F4F01AF693100085EEB8 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F7F4EF1AF693100085EEB8 /* Util.m */; };
 		18F7F4F41AF6A60D0085EEB8 /* ChatRoom4DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F7F4F31AF6A60D0085EEB8 /* ChatRoom4DAO.m */; };
 		283403091A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 283403081A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m */; };
-		333DE476F1C23907F6749D9F /* libPods-ChatDemo-UI2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A7D49E66EDE566E813A0B2 /* libPods-ChatDemo-UI2.0.a */; };
 		3C06AAFF194050A00076FF0B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C06AAFE194050A00076FF0B /* CoreLocation.framework */; };
 		3C06AB0319405D330076FF0B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C06AB0219405D330076FF0B /* MapKit.framework */; };
 		3C11304E195AFFDD00ED1D0D /* EMChatVideoBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C11304D195AFFDD00ED1D0D /* EMChatVideoBubbleView.m */; };
@@ -428,7 +429,6 @@
 		EBD2ABBA1A7CDAC000D16528 /* tabbarBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD2AAFE1A7CDAC000D16528 /* tabbarBackground@2x.png */; };
 		EBD2ABBB1A7CDAC000D16528 /* tabbarSelectBg.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD2AAFF1A7CDAC000D16528 /* tabbarSelectBg.png */; };
 		EBD2ABBC1A7CDAC000D16528 /* tabbarSelectBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD2AB001A7CDAC000D16528 /* tabbarSelectBg@2x.png */; };
-		EBD2ACC51A7CECBC00D16528 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C18CAED1A0B556D00FEB270 /* libMobClickLibrary.a */; };
 		EBD2AD471A7CEFE100D16528 /* chatBar_colorMore_audioCall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD2AD451A7CEFE100D16528 /* chatBar_colorMore_audioCall@2x.png */; };
 		EBD2AD481A7CEFE100D16528 /* chatBar_colorMore_audioCallSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD2AD461A7CEFE100D16528 /* chatBar_colorMore_audioCallSelected@2x.png */; };
 /* End PBXBuildFile section */
@@ -445,6 +445,9 @@
 		181782A91AFA80420007BD3B /* CHATROOM2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHATROOM2.m; path = "Other Service/Model/CHATROOM2.m"; sourceTree = "<group>"; };
 		181782AB1AFB93330007BD3B /* CHATROOM4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CHATROOM4.h; path = "Other Service/Model/CHATROOM4.h"; sourceTree = "<group>"; };
 		181782AC1AFB93330007BD3B /* CHATROOM4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CHATROOM4.m; path = "Other Service/Model/CHATROOM4.m"; sourceTree = "<group>"; };
+		185E62851AFE50BE00170F41 /* DoubleDate-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DoubleDate-Info.plist"; sourceTree = "<group>"; };
+		185E62861AFE50BE00170F41 /* DoubleDate-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DoubleDate-Prefix.pch"; sourceTree = "<group>"; };
+		185E62871AFE50BE00170F41 /* DoubleDateDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoubleDateDefine.h; sourceTree = "<group>"; };
 		1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libALBB_OSS_IOS_SDK.a; sourceTree = "<group>"; };
 		1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		18990C6F1AF7CC8400523A29 /* UIColor+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Category.h"; sourceTree = "<group>"; };
@@ -715,10 +718,8 @@
 		90911027192EEA70008A48AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		90911029192EEA70008A48AA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9091102B192EEA70008A48AA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		9091102F192EEA70008A48AA /* ChatDemo-UI2.0-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ChatDemo-UI2.0-Info.plist"; sourceTree = "<group>"; };
 		90911033192EEA70008A48AA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		90911035192EEA70008A48AA /* ChatDemo-UI2.0-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChatDemo-UI2.0-Prefix.pch"; sourceTree = "<group>"; };
-		90911039192EEA70008A48AA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "ChatDemo-UI2.0/Images.xcassets"; sourceTree = SOURCE_ROOT; };
+		90911039192EEA70008A48AA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = DoubleDate/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		90911085192EEAED008A48AA /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
 		90911086192EEAED008A48AA /* MBProgressHUD+Add.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Add.m"; sourceTree = "<group>"; };
 		90911087192EEAED008A48AA /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -739,7 +740,6 @@
 		90911122192EEBB8008A48AA /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		9091112D192EEC0F008A48AA /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		9091112E192EEC0F008A48AA /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		90911133192EEC59008A48AA /* ChatDemoUIDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatDemoUIDefine.h; sourceTree = "<group>"; };
 		90911134192EEC91008A48AA /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		90911135192EEC91008A48AA /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		90911142192EEE6E008A48AA /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -1131,6 +1131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				185E62891AFE548600170F41 /* libMobClickLibrary.a in Frameworks */,
 				3C1CEF7F196EA37600DBA56B /* ImageIO.framework in Frameworks */,
 				1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */,
 				EBC0CE571AD6652800E90053 /* libEaseMobClientSDK.a in Frameworks */,
@@ -1138,7 +1139,6 @@
 				3C3527451931D37900385240 /* SystemConfiguration.framework in Frameworks */,
 				90F1BECB1930491D00121AEC /* libz.dylib in Frameworks */,
 				3CBB931C1A14B227007FED9E /* libsqlite3.dylib in Frameworks */,
-				EBD2ACC51A7CECBC00D16528 /* libMobClickLibrary.a in Frameworks */,
 				3CE6293319A1B13700829632 /* CoreText.framework in Frameworks */,
 				3C06AB0319405D330076FF0B /* MapKit.framework in Frameworks */,
 				3C06AAFF194050A00076FF0B /* CoreLocation.framework in Frameworks */,
@@ -1150,7 +1150,6 @@
 				90F1BEC91930491600121AEC /* libxml2.dylib in Frameworks */,
 				9091102C192EEA70008A48AA /* UIKit.framework in Frameworks */,
 				90911028192EEA70008A48AA /* Foundation.framework in Frameworks */,
-				333DE476F1C23907F6749D9F /* libPods-ChatDemo-UI2.0.a in Frameworks */,
 				CA819275FA0B5488EA21C924 /* libPods-DoubleDate.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1562,7 +1561,7 @@
 			children = (
 				8A4020B51AE3579F00806014 /* Oss-Universal */,
 				EBC0CDEC1AD6652800E90053 /* EaseMobSDK */,
-				9091102D192EEA70008A48AA /* ChatDemo-UI2.0 */,
+				9091102D192EEA70008A48AA /* DoubleDate */,
 				90911026192EEA70008A48AA /* Frameworks */,
 				90911025192EEA70008A48AA /* Products */,
 				C6E0CC3507DCAE5502DC5B6A /* Pods */,
@@ -1607,7 +1606,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		9091102D192EEA70008A48AA /* ChatDemo-UI2.0 */ = {
+		9091102D192EEA70008A48AA /* DoubleDate */ = {
 			isa = PBXGroup;
 			children = (
 				3CBF90BC19302F5000AD68AE /* Custom */,
@@ -1617,18 +1616,18 @@
 				90911039192EEA70008A48AA /* Images.xcassets */,
 				9091102E192EEA70008A48AA /* Supporting Files */,
 			);
-			path = "ChatDemo-UI2.0";
+			path = DoubleDate;
 			sourceTree = "<group>";
 		};
 		9091102E192EEA70008A48AA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				185E62851AFE50BE00170F41 /* DoubleDate-Info.plist */,
+				185E62861AFE50BE00170F41 /* DoubleDate-Prefix.pch */,
+				185E62871AFE50BE00170F41 /* DoubleDateDefine.h */,
 				EBD2AA341A7CDABF00D16528 /* Resources */,
 				3C9B158D1A6D157E00D09FD6 /* InfoPlist.strings */,
-				9091102F192EEA70008A48AA /* ChatDemo-UI2.0-Info.plist */,
 				90911033192EEA70008A48AA /* main.m */,
-				90911035192EEA70008A48AA /* ChatDemo-UI2.0-Prefix.pch */,
-				90911133192EEC59008A48AA /* ChatDemoUIDefine.h */,
 				3C3D2D1E1A6E5A760099EF88 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
@@ -2588,7 +2587,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9091101F192EEA70008A48AA /* Build configuration list for PBXProject "ChatDemo-UI2.0" */;
+			buildConfigurationList = 9091101F192EEA70008A48AA /* Build configuration list for PBXProject "DoubleDate" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -2821,6 +2820,7 @@
 				EBD2AB761A7CDAC000D16528 /* chatBar_colorMore_videoSelected@2x.png in Resources */,
 				90EF2CED192F2B4E00BDC549 /* sr_refresh@2X.png in Resources */,
 				EBD2AB6C1A7CDAC000D16528 /* chatBar_recordSelectedBg@2x.png in Resources */,
+				185E62881AFE50BE00170F41 /* DoubleDate-Info.plist in Resources */,
 				EBD2AB0A1A7CDAC000D16528 /* chatFire_audioPlaying0@2x.png in Resources */,
 				8A40211D1AE3597900806014 /* inviteFriend.png in Resources */,
 				EBD2ABBC1A7CDAC000D16528 /* tabbarSelectBg@2x.png in Resources */,
@@ -3182,19 +3182,19 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ChatDemo-UI2.0/ChatDemo-UI2.0-Prefix.pch";
+				GCC_PREFIX_HEADER = "DoubleDate/DoubleDate-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				INFOPLIST_FILE = "ChatDemo-UI2.0/ChatDemo-UI2.0-Info.plist";
+				INFOPLIST_FILE = "DoubleDate/DoubleDate-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/ChatDemo-UI2.0/3rdparty",
-					"$(PROJECT_DIR)/ChatDemo-UI2.0/3rdparty/UMeng",
+					"$(PROJECT_DIR)/DoubleDate/3rdparty",
 					"$(PROJECT_DIR)/OSS-Universal",
 					"$(PROJECT_DIR)/EaseMobSDK/lib",
+					"$(PROJECT_DIR)/DoubleDate/3rdparty/UMeng",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -3218,19 +3218,19 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ChatDemo-UI2.0/ChatDemo-UI2.0-Prefix.pch";
+				GCC_PREFIX_HEADER = "DoubleDate/DoubleDate-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				INFOPLIST_FILE = "ChatDemo-UI2.0/ChatDemo-UI2.0-Info.plist";
+				INFOPLIST_FILE = "DoubleDate/DoubleDate-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/ChatDemo-UI2.0/3rdparty",
-					"$(PROJECT_DIR)/ChatDemo-UI2.0/3rdparty/UMeng",
+					"$(PROJECT_DIR)/DoubleDate/3rdparty",
 					"$(PROJECT_DIR)/OSS-Universal",
 					"$(PROJECT_DIR)/EaseMobSDK/lib",
+					"$(PROJECT_DIR)/DoubleDate/3rdparty/UMeng",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -3244,7 +3244,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9091101F192EEA70008A48AA /* Build configuration list for PBXProject "ChatDemo-UI2.0" */ = {
+		9091101F192EEA70008A48AA /* Build configuration list for PBXProject "DoubleDate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9091104E192EEA70008A48AA /* Debug */,

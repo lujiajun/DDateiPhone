@@ -5,20 +5,20 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>17121212-882A-4E3F-9560-9A624A6F46A7</string>
+	<string>AD530F18-4BE0-4147-91C1-AB8321F7A47E</string>
 	<key>IDESourceControlProjectName</key>
-	<string>ChatDemo-UI2.0</string>
+	<string>DoubleDate</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>C4D83E07D4CDB1C751660A7334E85BFE972E034A</key>
 		<string>https://github.com/lujiajun/DDateiPhone.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ChatDemo-UI2.0.xcworkspace</string>
+	<string>DoubleDate.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>C4D83E07D4CDB1C751660A7334E85BFE972E034A</key>
-		<string>..</string>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/lujiajun/DDateiPhone.git</string>
