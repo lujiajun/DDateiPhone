@@ -17,4 +17,5 @@
 +(BOOL) updatePassword:(NSString *) newPassword username:(NSString *) username  oldpassword:(NSString *) oldpassword;
 
 +(NSString*)getToken;
++(BOOL) registerUser:(NSString *) userName password:(NSString *) password;
 @end

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>23B91AB7-19EA-41FA-A0C0-7105DAC5074B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ChatDemo-UI2.0</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C4D83E07D4CDB1C751660A7334E85BFE972E034A</key>
+		<string>https://github.com/lujiajun/DDateiPhone.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ChatDemo-UI2.0.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C4D83E07D4CDB1C751660A7334E85BFE972E034A</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/lujiajun/DDateiPhone.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C4D83E07D4CDB1C751660A7334E85BFE972E034A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C4D83E07D4CDB1C751660A7334E85BFE972E034A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>DDateiPhone</string>
+		</dict>
+	</array>
+</dict>
+</plist>
