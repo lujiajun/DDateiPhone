@@ -469,13 +469,13 @@
 }
 
 -(void) creat4Groups{
-    CHATROOM4 *chatroom4=[CHATROOM4 new];
+
     //判断是否存在同样用户的群组
     ChatRoom4DAO *dao=[[ChatRoom4DAO alloc]init];
-    chatroom4=[dao isUniqueRoom:_room2.UID1 UID2:_room2.UID2 UID3:_username UID4:_toAddFriend];
-    if(chatroom4!=nil&&chatroom4.GID!=nil){
+    CHATROOM4  *room4=[dao isUniqueRoom:_room2.UID1 UID2:_room2.UID2 UID3:_username UID4:_toAddFriend];
+    if(room4!=nil&&room4.GID!=nil){
         //跳入原来的房间
-        ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:chatroom4.GID isGroup:YES isSubGroup:NO] initRoom4:chatroom4 friend:self.toAddFriend isNewRoom:YES];
+        ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:room4.GID isGroup:YES isSubGroup:NO] initRoom4:room4 friend:self.toAddFriend isNewRoom:YES];
         chatController.title = self.room2.Motto;
         [self.navigationController pushViewController:chatController animated:YES];
 
@@ -491,6 +491,7 @@
                                                          styleSetting:groupStyleSetting
                                                            completion:^(EMGroup *group, EMError *error) {
                                                                if(!error){
+                                                                   CHATROOM4 *chatroom4=[CHATROOM4 new];
                                                                    chatroom4.GID=group.groupId;
                                                                    NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
                                                                    [formatter setDateFormat:@"yyyyMMdd_HHmmss"];
