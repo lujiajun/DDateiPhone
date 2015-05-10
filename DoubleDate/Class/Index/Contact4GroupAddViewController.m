@@ -268,6 +268,7 @@
     
     EMBuddy *buddy = [[_dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
+    
     DDUser *user=[_userDao selectDDuserByUid:buddy.username];
     UIImageView *us=[[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40)] ;
     if(user!=nil&&user.picPath!=nil){

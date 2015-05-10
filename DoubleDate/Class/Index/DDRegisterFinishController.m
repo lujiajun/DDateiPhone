@@ -223,6 +223,7 @@ static DDUser   *dduser;
         [self.view endEditing:YES];
         //判断是否是中文，但不支持中英文混编
         
+            
         //异步注册账号
         [[EaseMob sharedInstance].chatManager asyncRegisterNewAccount:_username
                                                              password:_password

@@ -76,9 +76,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor redColor];
     
-    self.tableView.backgroundColor = [UIColor grayColor];
+    self.tableView.backgroundColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
     self.tableView.tableFooterView = self.footerView;
     
     if(_aliCloud==nil){
@@ -228,18 +227,11 @@
             bakview.frame=CGRectMake(0, 0, cell.frame.size.width, 160);
             [cell.contentView addSubview:bakview];
             
-            //touxiang
-            UIImage *img=[UIImage alloc];
-            if([IndexViewController instanceDDuser] && [IndexViewController instanceDDuser].picPath){
-                NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:[IndexViewController instanceDDuser].picPath]]];
-                img = [UIImage imageWithData:data];
-            }else {
-                img=[UIImage imageNamed:@"Logo_new.png"];
-            }
-            UIImageView *imgHead=[[UIImageView alloc] initWithImage:img];
-            imgHead.layer.masksToBounds =YES;
+        
+            UIImageView *imgHead=[[UIImageView alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width/2-50, 10, 100, 100)];
+            [imgHead sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:[IndexViewController instanceDDuser].picPath]]];
             imgHead.layer.cornerRadius =50;
-            imgHead.frame=CGRectMake(self.tableView.frame.size.width/2-50, 10, 100, 100);
+            imgHead.layer.masksToBounds = YES;
             [imgHead setContentMode:UIViewContentModeScaleToFill];
             
             [bakview addSubview:imgHead] ;

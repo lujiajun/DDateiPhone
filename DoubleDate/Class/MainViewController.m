@@ -22,6 +22,7 @@
 #import "MainChatListViewController.h"
 #import "UIColor+Category.h"
 #import "ChatViewController.h"
+#import "AddFriendViewController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -81,15 +82,20 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     self.selectedIndex = 0;
 
        //好友邀请页面button
-    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [addButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+    [addButton setImage:[UIImage imageNamed:@"inviteFriend.png"] forState:UIControlStateNormal];
     [addButton addTarget:_contactsVC action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
     _addFriendItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
     
     //首页button
     UIButton *inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
-    [inviteButton setImage:[UIImage imageNamed:@"inviteFriend.png"] forState:UIControlStateNormal];
-    [inviteButton addTarget:_indexVC action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
+    if ([_indexVC haveDoubleFriend]) {
+        [inviteButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+    }else{
+        [inviteButton setImage:[UIImage imageNamed:@"inviteFriend.png"] forState:UIControlStateNormal];
+    }
+   
+    [inviteButton addTarget:_indexVC action:@selector(indexAddFriendAction) forControlEvents:UIControlEventTouchUpInside];
     _inviteFriendItem = [[UIBarButtonItem alloc] initWithCustomView:inviteButton];
     
     //创建二人聊天室
@@ -103,6 +109,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self setupUntreatedApplyCount];
 }
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -112,6 +119,14 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 {
     [self unregisterNotifications];
 }
+
+- (void) inviteNewFriendAction{
+    AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
+    [self.navigationController pushViewController:addController animated:YES];
+    
+    
+}
+
 
 #pragma mark - UITabBarDelegate
 

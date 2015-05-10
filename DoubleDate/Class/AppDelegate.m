@@ -20,7 +20,7 @@
 #import "AWSCore/AWSCore.h"
 #import "AliCloudController.h"
 #import "WXApi.h"
-
+#import <SMS_SDK/SMS_SDK.h>
 @interface AppDelegate ()
 
 @property (nonatomic, readonly) NSMutableArray *tableRows;
@@ -39,6 +39,9 @@
 
     //向微信注册
     [WXApi registerApp:@"wxa89a834f7feabaed"];
+    //向短信注册mob注册
+    
+    [SMS_SDK registerApp:@"75058c79bdb6" withSecret:@"82b79b974cc87fc82a831e26909e2073"];
     
     //auto login
     [[NSNotificationCenter defaultCenter] addObserver:self

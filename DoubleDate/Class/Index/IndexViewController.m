@@ -32,6 +32,7 @@
 #import "UIImageView+WebCache.h"
 #import "AWSDynamoDB_ChatRoom2.h"
 #import "InviteFriendByDoubleIdController.h"
+#import "CreateGroupViewController.h"
 
 
 @interface IndexViewController () <SRRefreshDelegate>
@@ -44,9 +45,6 @@
 
 @property (strong, nonatomic) DDUserDAO *userDao;
 @property (nonatomic) BOOL haveFriend;
-@property(strong,nonatomic) UIView *bak;
-@property(strong,nonatomic) UIButton *img1;
-@property(strong,nonatomic) UIButton *img2;
 
 @end
 
@@ -83,13 +81,7 @@ static DDUser *uuser;
         [self.tableView reloadData];
     }];
     [self initdduser];
-    //判断用户是否有Double好友
-    [self haveDoubleFriend];
-    if(!_haveFriend){
-        UIImageView *invite=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
-        [self.view addSubview:invite];
-        
-    }
+    
     
 }
 
@@ -113,12 +105,12 @@ static DDUser *uuser;
 		
 	}
 }
--(void) haveDoubleFriend{
+-(BOOL) haveDoubleFriend{
      NSArray *buddyList = [[EaseMob sharedInstance].chatManager buddyList];
     if(buddyList!=nil&&buddyList.count>0){
-        _haveFriend=YES;
+       return YES;
     }
-    _haveFriend=NO;
+     return NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -213,6 +205,7 @@ static DDUser *uuser;
 #pragma mark - SRRefreshDelegate
 
 - (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView {
+    [self haveDoubleFriend];
 	__weak IndexViewController *weakSelf = self;
 	[self.chatRoom2DynamoDB refreshListWithBlock: ^{
 	    [self.tableView reloadData];
@@ -225,66 +218,20 @@ static DDUser *uuser;
         [self.tableView reloadData];
             }];
 }
-//邀请按钮
-- (void)addFriendAction
-{
-    //    InviteFriendByDoubleIdController *addController = [InviteFriendByDoubleIdController alloc];
-    if (_bak!=nil&&_img1!=nil&&_img2!=nil) {
-        [_bak removeFromSuperview];
-        _bak=nil;
-        _img1=nil;
-        _img2=nil;
-        return;
-    }
-    //        [self.navigationController pushViewController:addController animated:YES];
-    if(_bak==nil){
-         _bak=[[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-120, 0,120,60)];
-    }
-    
-    _bak.backgroundColor=[UIColor whiteColor];
-    if(_img1==nil){
-        _img1=[[UIButton alloc] initWithFrame:CGRectMake(0, 0,120, 30)];
-        [_img1 setBackgroundColor:RGBACOLOR(228, 90, 80, 1)];
-        [_img1 addTarget:self action:@selector(doInviteFriend) forControlEvents:UIControlEventTouchUpInside];
-        UIImageView *img1Click=[[UIImageView alloc] initWithFrame:CGRectMake(5,5, 20, 20)];
-        img1Click.image=[UIImage imageNamed:@"inviteFriend"];
-        [_img1 addSubview: img1Click];
-        UILabel *lab1=[[UILabel alloc] initWithFrame:CGRectMake(40, 0, 80, 30)];
-        lab1.text=@"邀请朋友";
-        [_img1 addSubview:lab1];
+
+-(void) indexAddFriendAction{
+    //判断状态，进行跳转
+    if([self haveDoubleFriend]){
+        CreateGroupViewController *createChatroom = [[CreateGroupViewController alloc] init];
+        [self.navigationController pushViewController:createChatroom animated:YES];
         
-
-    }
-    [_bak addSubview:_img1];
-    if(_img2==nil){
-         _img2=[[UIButton alloc] initWithFrame:CGRectMake(0, 31, 120,30)];
-        [_img2 addTarget:self action:@selector(doAddFriend) forControlEvents:UIControlEventTouchUpInside];
-        [_img2 setBackgroundColor:RGBACOLOR(228, 90, 80, 1)];
-        UIImageView *img1Click=[[UIImageView alloc] initWithFrame:CGRectMake(5,5, 20,20)];
-        img1Click.image=[UIImage imageNamed:@"addFriend"];
-        [_img2 addSubview: img1Click];
-        UILabel *lab1=[[UILabel alloc] initWithFrame:CGRectMake(40, 0, 80, 30)];
-        lab1.text=@"添加朋友";
-        [_img2 addSubview:lab1];
-
-    }
-   
-//    [_img2 setImage:[UIImage imageNamed:@"80"] forState:UIControlStateNormal];
-    [_bak addSubview:_img2];
-//
-    [self.view addSubview:_bak];
-
-}
-
--(void) doAddFriend{
+    }else{
         AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
         [self.navigationController pushViewController:addController animated:YES];
-}
--(void) doInviteFriend{
-    InviteFriendByDoubleIdController *addController = [InviteFriendByDoubleIdController alloc];
-    [self.navigationController pushViewController:addController animated:YES];
-}
+        
+    }
 
+}
 
 
 #pragma mark - UIScrollViewDelegate

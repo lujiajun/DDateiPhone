@@ -179,30 +179,30 @@
               
                 
                 DDUser *user1 = [self.userDao selectDDuserByUid:conversation.chatter];
-                UIImageView *img=[[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width/2-52, 10, 50, 50)];
+                UIImageView *img=[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 70, 70)];
                 
                 
                 [img sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user1.picPath]]
                        placeholderImage:[UIImage imageNamed:@"Logo_new"]];
                 [cell.contentView addSubview:img];
-                UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width/2-100, img.frame.size.height+img.frame.origin.y+2, 100, 20)];
+                UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(img.frame.size.width+20, 10, 100, 20)];
                 name.text=conversation.chatter;
                 name.textAlignment = NSTextAlignmentRight;
                 name.font = [UIFont fontWithName:@"Helvetica" size:15];
                 [cell.contentView addSubview:name];
-                
-                //        DDUser *user2 = [_userDao selectDDuserByUid:conversation.chatter];
-                UIImageView *img2=[[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width/2+2, 10, 50, 50)];
-                
-                
-                [img2 sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:[IndexViewController instanceDDuser].picPath]]
-                        placeholderImage:[UIImage imageNamed:@"Logo_new"]];
-                [cell.contentView addSubview:img2];
-                UILabel *name2=[[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width/2+2, img2.frame.size.height+img2.frame.origin.y+2, 100, 20)];
-                name2.text=[IndexViewController instanceDDuser].UID;
-                name2.textAlignment = NSTextAlignmentLeft;
-                name2.font = [UIFont fontWithName:@"Helvetica" size:15];
-                [cell.contentView addSubview:name2];
+//                
+//                //        DDUser *user2 = [_userDao selectDDuserByUid:conversation.chatter];
+//                UIImageView *img2=[[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width/2+2, 10, 50, 50)];
+//                
+//                
+//                [img2 sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:[IndexViewController instanceDDuser].picPath]]
+//                        placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+//                [cell.contentView addSubview:img2];
+//                UILabel *name2=[[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width/2+2, img2.frame.size.height+img2.frame.origin.y+2, 100, 20)];
+//                name2.text=[IndexViewController instanceDDuser].UID;
+//                name2.textAlignment = NSTextAlignmentLeft;
+//                name2.font = [UIFont fontWithName:@"Helvetica" size:15];
+//                [cell.contentView addSubview:name2];
             }
             else{
                 NSString *imageName = @"groupPublicHeader";
@@ -379,30 +379,30 @@
         }
         
         DDUser *user1 = [_userDao selectDDuserByUid:conversation.chatter];
-        UIImageView *img=[[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width/2-52, 10, 50, 50)];
+        UIImageView *img=[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 70, 70)];
         
         
         [img sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user1.picPath]]
                 placeholderImage:[UIImage imageNamed:@"Logo_new"]];
         [cell.contentView addSubview:img];
-        UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width/2-100, img.frame.size.height+img.frame.origin.y+2, 100, 20)];
+        UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(img.frame.size.width+20, 10, 100, 20)];
         name.text=conversation.chatter;
-        name.textAlignment = NSTextAlignmentRight;
+        name.textAlignment = NSTextAlignmentLeft;
         name.font = [UIFont fontWithName:@"Helvetica" size:15];
         [cell.contentView addSubview:name];
         
 //        DDUser *user2 = [_userDao selectDDuserByUid:conversation.chatter];
-        UIImageView *img2=[[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width/2+2, 10, 50, 50)];
-        
-        
-        [img2 sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:[IndexViewController instanceDDuser].picPath]]
-               placeholderImage:[UIImage imageNamed:@"Logo_new"]];
-        [cell.contentView addSubview:img2];
-        UILabel *name2=[[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width/2+2, img2.frame.size.height+img2.frame.origin.y+2, 100, 20)];
-        name2.text=[IndexViewController instanceDDuser].UID;
-        name2.textAlignment = NSTextAlignmentLeft;
-        name2.font = [UIFont fontWithName:@"Helvetica" size:15];
-        [cell.contentView addSubview:name2];
+//        UIImageView *img2=[[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width/2+2, 10, 50, 50)];
+//        
+//        
+//        [img2 sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:[IndexViewController instanceDDuser].picPath]]
+//               placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+//        [cell.contentView addSubview:img2];
+//        UILabel *name2=[[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width/2+2, img2.frame.size.height+img2.frame.origin.y+2, 100, 20)];
+//        name2.text=[IndexViewController instanceDDuser].UID;
+//        name2.textAlignment = NSTextAlignmentLeft;
+//        name2.font = [UIFont fontWithName:@"Helvetica" size:15];
+//        [cell.contentView addSubview:name2];
         
     }
     else{
