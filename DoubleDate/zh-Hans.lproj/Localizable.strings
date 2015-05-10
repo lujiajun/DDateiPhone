@@ -253,3 +253,6 @@
 "NSDateCategory.text12" = "晚上hh:mm";
 "NSDateCategory.text13" = "昨天HH:mm";
 "NSDateCategory.text14" = "今天 %@";
+
+//HomePage
+"homepage.paperPlane.invite" = "点击右上方的纸飞机邀请好友，或在下方直接输入好友的double号，拉上好友double date！";
