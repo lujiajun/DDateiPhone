@@ -33,9 +33,11 @@
 #import "AWSDynamoDB_ChatRoom2.h"
 #import "InviteFriendByDoubleIdController.h"
 #import "CreateGroupViewController.h"
-
+#import "View+MASAdditions.h"
 
 @interface IndexViewController () <SRRefreshDelegate>
+
+@property (strong, nonatomic) UIView *headerView;
 
 @property (strong, nonatomic) SRRefreshView *slimeView;
 
@@ -44,7 +46,10 @@
 @property (strong, nonatomic) AWSDynamoDB_ChatRoom2 *chatRoom2DynamoDB;
 
 @property (strong, nonatomic) DDUserDAO *userDao;
+
 @property (nonatomic) BOOL haveFriend;
+
+@property (strong, nonatomic) UITextField *textField;
 
 @end
 
@@ -71,11 +76,12 @@ static DDUser *uuser;
     
     self.tableView.backgroundColor = [UIColor whiteColor];
     [self.tableView addSubview:self.slimeView];
-  
+    
+    self.tableView.tableHeaderView = [self haveDoubleFriend] ? nil : self.headerView;
                 
-    if(_userDao==nil){
-        _userDao=[[DDUserDAO alloc]init];
-    }
+	if (_userDao == nil) {
+		_userDao = [[DDUserDAO alloc]init];
+	}
     //chaxun
     [self.chatRoom2DynamoDB refreshListWithBlock:^{
         [self.tableView reloadData];
@@ -105,12 +111,13 @@ static DDUser *uuser;
 		
 	}
 }
--(BOOL) haveDoubleFriend{
-     NSArray *buddyList = [[EaseMob sharedInstance].chatManager buddyList];
-    if(buddyList!=nil&&buddyList.count>0){
-       return YES;
-    }
-     return NO;
+
+- (BOOL)haveDoubleFriend {
+	NSArray *buddyList = [[EaseMob sharedInstance].chatManager buddyList];
+	if (buddyList != nil && buddyList.count > 0) {
+		return YES;
+	}
+	return NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -219,21 +226,19 @@ static DDUser *uuser;
             }];
 }
 
--(void) indexAddFriendAction{
-    //判断状态，进行跳转
-    if([self haveDoubleFriend]){
-        CreateGroupViewController *createChatroom = [[CreateGroupViewController alloc] init];
-        [self.navigationController pushViewController:createChatroom animated:YES];
-        
-    }else{
+
+- (void)indexAddFriendAction {
+	//判断状态，进行跳转
+	if ([self haveDoubleFriend]) {
+		CreateGroupViewController *createChatroom = [[CreateGroupViewController alloc] init];
+		[self.navigationController pushViewController:createChatroom animated:YES];
+	} else {
 //        AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
 //        [self.navigationController pushViewController:addController animated:YES];
 
-        InviteFriendByDoubleIdController *addController = [InviteFriendByDoubleIdController alloc];
-        [self.navigationController pushViewController:addController animated:YES];
-
-    }
-
+		InviteFriendByDoubleIdController *addController = [InviteFriendByDoubleIdController alloc];
+		[self.navigationController pushViewController:addController animated:YES];
+	}
 }
 
 
@@ -248,6 +253,60 @@ static DDUser *uuser;
 }
 
 #pragma mark - getter
+
+-(UIView *)headerView {
+    if (_headerView == nil) {
+        _headerView = [[UIView alloc] init];
+        _headerView.frame = CGRectMake(0, 0, self.view.frame.size.width, 100);
+        
+        //Label
+        UILabel *label = [[UILabel alloc] init];
+		label.frame = CGRectMake(20, 0, self.view.frame.size.width - 40, 60);
+        label.text = NSLocalizedString(@"homepage.paperPlane.invite", @"homepage.paperPlane.invite");
+        label.font = [UIFont systemFontOfSize:12];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.numberOfLines = 0;
+        label.textColor = [UIColor lightGrayColor];
+        [_headerView addSubview:label];
+        
+        //UITextView
+        self.textField = [[UITextField alloc] init];
+        self.textField.placeholder=@"快快输入好友的double号";
+        self.textField.font = [UIFont systemFontOfSize:12];
+        
+        UIButton *button = [[UIButton alloc] init];
+        button.backgroundColor = [UIColor redColor];
+        button.layer.cornerRadius = 5;
+        [button setTitle:@"确定" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+        [button addTarget:self action:@selector(addFriend:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [_headerView addSubview:self.textField];
+        [_headerView addSubview:button];
+        
+        [self.textField mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(label.mas_bottom);
+            make.left.equalTo(self.headerView.mas_left).with.offset(60);
+            make.right.equalTo(button.mas_left).with.offset(-10);
+            make.bottom.equalTo(self.headerView.mas_bottom);
+        }];
+        
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(label.mas_bottom).with.offset(5);
+            make.left.equalTo(self.textField.mas_right).with.offset(10);
+            make.right.equalTo(self.headerView.mas_right).with.offset(-60);
+            make.height.mas_equalTo(@30);
+            make.width.mas_equalTo(@60);
+        }];
+        
+        //line
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 1)];
+        line.backgroundColor = [UIColor lightGrayColor];
+        [_headerView addSubview:line];
+    }
+    return _headerView;
+}
 
 - (SRRefreshView *)slimeView {
     if (_slimeView == nil) {
@@ -277,5 +336,9 @@ static DDUser *uuser;
         _userDao = [[DDUserDAO alloc] init];
     }
     return _userDao;
+}
+
+#pragma mark - Private
+- (void)addFriend:(id *)sender {
 }
 @end
