@@ -53,6 +53,8 @@
 
 @end
 
+static BOOL haveFriend=NO;
+
 @implementation ContactsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

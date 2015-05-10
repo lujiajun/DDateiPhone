@@ -385,10 +385,10 @@
         [img sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user1.picPath]]
                 placeholderImage:[UIImage imageNamed:@"Logo_new"]];
         [cell.contentView addSubview:img];
-        UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(img.frame.size.width+20, 10, 100, 20)];
+        UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(img.frame.size.width+20, 10, 150, 20)];
         name.text=conversation.chatter;
         name.textAlignment = NSTextAlignmentLeft;
-        name.font = [UIFont fontWithName:@"Helvetica" size:15];
+        name.font = [UIFont fontWithName:@"Helvetica" size:18];
         [cell.contentView addSubview:name];
         
 //        DDUser *user2 = [_userDao selectDDuserByUid:conversation.chatter];

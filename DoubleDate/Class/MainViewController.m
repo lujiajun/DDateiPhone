@@ -83,7 +83,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
        //好友邀请页面button
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
-    [addButton setImage:[UIImage imageNamed:@"inviteFriend.png"] forState:UIControlStateNormal];
+    [addButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
     [addButton addTarget:_contactsVC action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
     _addFriendItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
     

@@ -61,14 +61,14 @@
     self.title = NSLocalizedString(@"title.createGroup", @"Create a group");
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-    addButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
-    [addButton setTitle:NSLocalizedString(@"group.create.addOccupant", @"add members") forState:UIControlStateNormal];
-    [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-    [addButton addTarget:self action:@selector(addContacts:) forControlEvents:UIControlEventTouchUpInside];
-    _rightItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
-    [self.navigationItem setRightBarButtonItem:_rightItem];
+//    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+//    addButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
+//    [addButton setTitle:NSLocalizedString(@"group.create.addOccupant", @"add members") forState:UIControlStateNormal];
+//    [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+//    [addButton addTarget:self action:@selector(addContacts:) forControlEvents:UIControlEventTouchUpInside];
+//    _rightItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
+//    [self.navigationItem setRightBarButtonItem:_rightItem];
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
@@ -79,6 +79,14 @@
     [self.view addSubview:self.chatRoomCover];
     [self.view addSubview:self.mottoTextView];
 //    [self.view addSubview:self.switchView];
+    
+    UIButton *nextButton = [[UIButton alloc] initWithFrame:CGRectMake(0, _mottoTextView.frame.origin.y+_mottoTextView.frame.size.height+10, self.view.frame.size.width, 30)];
+    nextButton.backgroundColor=[UIColor redColor];
+    [nextButton setTitle:@"加入聊天室" forState:UIControlStateNormal];
+    [nextButton addTarget:self action:@selector(addContacts:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:nextButton];
+
+    
 }
 
 - (void)didReceiveMemoryWarning

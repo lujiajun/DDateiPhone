@@ -26,6 +26,7 @@
 #import "IndexViewController.h"
 #import "AWSDynamoDB_DDUser.h"
 #import "AWSDynamoDB_ChatRoom2.h"
+#import "Util.h"
 
 @interface ChatRoomDetail ()
 
@@ -137,18 +138,19 @@
 
 -(void)showUser1:(UIImageView *) bakview{
     
-    UIImageView *headview=[[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 80, 80)];
-    [headview sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:_uuser1.picPath]]
+    UIImageView *headview=[[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 100, 100)];
+    
+    [headview sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:_uuser1.picPath]]
                 placeholderImage:[UIImage imageNamed:@"Logo_new"]];
     headview.layer.masksToBounds =YES;
-    headview.layer.cornerRadius =40;
+    headview.layer.cornerRadius =50;
     [bakview addSubview:headview];
     
     //姓名
-    UILabel *nickname=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, headview.frame.origin.y+10, 70, 12)];
+    UILabel *nickname=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, headview.frame.origin.y+10, 100, 12)];
     nickname.text=_uuser1.nickName;
     nickname.textAlignment=NSTextAlignmentLeft;
-    nickname.font=[UIFont fontWithName:@"Helvetica" size:12];
+    nickname.font=[UIFont fontWithName:@"Helvetica" size:14];
     [bakview addSubview:nickname];
     //性别
     BOOL isboy=NO;
@@ -164,24 +166,24 @@
         isboyimg=[UIImage imageNamed:@"sexgirl"];
     }
     UIImageView *isboyview=[[UIImageView alloc] initWithImage:isboyimg];
-    isboyview.frame=CGRectMake(headview.frame.origin.x+headview.frame.size.width+nickname.frame.size.width+15, headview.frame.origin.y+8, 10, 10);
+    isboyview.frame=CGRectMake(nickname.frame.origin.x+nickname.frame.size.width+2, headview.frame.origin.y+8, 10, 10);
     [bakview addSubview:isboyview];
     //chengshi
     UILabel *city=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, nickname.frame.origin.y+nickname.frame.size.height+5, 70, 12)];
     city.text=_uuser1.city;
     city.textAlignment=NSTextAlignmentLeft;
-    city.font=[UIFont fontWithName:@"Helvetica" size:12];
+    city.font=[UIFont fontWithName:@"Helvetica" size:14];
     [bakview addSubview:city];
     //学校图片
-    UIImage *schoolimg=[UIImage imageNamed:@"confirm"];
-    UIImageView *schoolview=[[UIImageView alloc] initWithImage:schoolimg];
-    schoolview.frame=CGRectMake(city.frame.origin.x+city.frame.size.width+15, city.frame.origin.y, 20, 10);
-    [bakview addSubview:schoolview];
+//    UIImage *schoolimg=[UIImage imageNamed:@"confirm"];
+//    UIImageView *schoolview=[[UIImageView alloc] initWithImage:schoolimg];
+//    schoolview.frame=CGRectMake(city.frame.origin.x+city.frame.size.width+15, city.frame.origin.y, 20, 10);
+//    [bakview addSubview:schoolview];
     //爱好
     UILabel *intr=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, city.frame.origin.y+city.frame.size.height+5, 50, 12)];
     intr.text=_uuser1.hobbies;
     intr.textAlignment=NSTextAlignmentLeft;
-    intr.font=[UIFont fontWithName:@"Helvetica" size:12];
+    intr.font=[UIFont fontWithName:@"Helvetica" size:14];
     [bakview addSubview:intr];
     
     
@@ -189,13 +191,14 @@
     
     UIImage *signimg=[UIImage imageNamed:@"infoline"];
     UIImageView *signview=[[UIImageView alloc] initWithImage:signimg];
-    signview.frame=CGRectMake(10, headview.frame.origin.y+headview.frame.size.height+20, bakview.frame.size.width-20, 50);
+    signview.frame=CGRectMake(10, headview.frame.origin.y+headview.frame.size.height+20, bakview.frame.size.width-20, bakview.frame.size.height/2-10);
     
-    UILabel *sininfo=[[UILabel alloc] initWithFrame:CGRectMake(5, signview.frame.origin.y+2, signview.frame.size.width-20, 50)];
-    sininfo.text=@"testXXXXXXXXXXXXXXX";
+    UILabel *sininfo=[[UILabel alloc] initWithFrame:CGRectMake(10, 5, signview.frame.size.width-20, 50)];
+    sininfo.text=@"testXXXXXXXXXXXXXXXXdfjsklajxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
     sininfo.textAlignment=NSTextAlignmentLeft;
+    [sininfo setNumberOfLines:0];
     //                    sininfo.lineBreakMode = UILineBreakModeWordWrap;
-    sininfo.font=[UIFont fontWithName:@"Helvetica" size:12];
+    sininfo.font=[UIFont fontWithName:@"Helvetica" size:14];
     [signview addSubview:sininfo];
 
     
@@ -207,18 +210,18 @@
 
 -(void)showUser2:(UIImageView *) bakview{
    
-    UIImageView *headview=[[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 80, 80)];
-    [headview sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:_uuser2.picPath]]
+    UIImageView *headview=[[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 100, 100)];
+    [headview sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:_uuser2.picPath]]
                 placeholderImage:[UIImage imageNamed:@"Logo_new"]];
     headview.layer.masksToBounds =YES;
-    headview.layer.cornerRadius =40;
+    headview.layer.cornerRadius =50;
     [bakview addSubview:headview];
     
     //姓名
-    UILabel *nickname=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, headview.frame.origin.y+10, 70, 12)];
+    UILabel *nickname=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, headview.frame.origin.y+10, 100, 12)];
     nickname.text=_uuser2.nickName;
     nickname.textAlignment=NSTextAlignmentLeft;
-    nickname.font=[UIFont fontWithName:@"Helvetica" size:12];
+    nickname.font=[UIFont fontWithName:@"Helvetica" size:14];
     [bakview addSubview:nickname];
     //性别
     BOOL isboy=NO;
@@ -237,35 +240,39 @@
     isboyview.frame=CGRectMake(headview.frame.origin.x+headview.frame.size.width+nickname.frame.size.width, headview.frame.origin.y+8, 10, 10);
     [bakview addSubview:isboyview];
     //city
-    UILabel *city=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, nickname.frame.origin.y+nickname.frame.size.height+5, 70, 10)];
+    UILabel *city=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, nickname.frame.origin.y+nickname.frame.size.height+5, 70, 12)];
     city.text=_uuser2.city;
     city.textAlignment=NSTextAlignmentLeft;
-    city.font=[UIFont fontWithName:@"Helvetica" size:12];
+    city.font=[UIFont fontWithName:@"Helvetica" size:14];
     [bakview addSubview:city];
-    //学校图片
-    UIImage *schoolimg=[UIImage imageNamed:@"confirm"];
-    UIImageView *schoolview=[[UIImageView alloc] initWithImage:schoolimg];
-    schoolview.frame=CGRectMake(city.frame.origin.x+city.frame.size.width+15, city.frame.origin.y, 20, 10);
-    [bakview addSubview:schoolview];
+//    //学校图片
+//    UIImage *schoolimg=[UIImage imageNamed:@"confirm"];
+//    UIImageView *schoolview=[[UIImageView alloc] initWithImage:schoolimg];
+//    schoolview.frame=CGRectMake(city.frame.origin.x+city.frame.size.width+15, city.frame.origin.y, 20, 10);
+//    [bakview addSubview:schoolview];
     //aihaoci
     UILabel *intr=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, city.frame.origin.y+city.frame.size.height+5, 50, 12)];
     intr.text=_uuser2.hobbies;
     intr.textAlignment=NSTextAlignmentLeft;
-    intr.font=[UIFont fontWithName:@"Helvetica" size:12];
+    intr.font=[UIFont fontWithName:@"Helvetica" size:14];
     [bakview addSubview:intr];
     
     //qianming
     
     UIImage *signimg=[UIImage imageNamed:@"infoline"];
     UIImageView *signview=[[UIImageView alloc] initWithImage:signimg];
-    signview.frame=CGRectMake(10, headview.frame.origin.y+headview.frame.size.height+20, bakview.frame.size.width-20, 50);
-    [bakview addSubview:signview];
+    signview.frame=CGRectMake(10, headview.frame.origin.y+headview.frame.size.height+20, bakview.frame.size.width-20, bakview.frame.size.height/2-10);
     
-    //                    UILabel *sininfo=[[UILabel alloc] initWithFrame:CGRectMake(signview.frame.origin.x+5, 100, cell.frame.size.width-20, 50)];
-    //                    sininfo.text=@"testXXXXXXXXXXXXXXX";
-    //                    sininfo.textAlignment=NSTextAlignmentLeft;
-    //                    sininfo.font=[UIFont fontWithName:@"Helvetica" size:12];
-    //                    [signview addSubview:sininfo];
+    UILabel *sininfo=[[UILabel alloc] initWithFrame:CGRectMake(10, 5, signview.frame.size.width-20, 50)];
+    sininfo.text=@"testXXXXXXXXXXXXXXXXdfjsklajxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+    sininfo.textAlignment=NSTextAlignmentLeft;
+    [sininfo setNumberOfLines:0];
+    //                    sininfo.lineBreakMode = UILineBreakModeWordWrap;
+    sininfo.font=[UIFont fontWithName:@"Helvetica" size:14];
+    [signview addSubview:sininfo];
+    
+    [bakview addSubview:signview];
+
 
     
 }

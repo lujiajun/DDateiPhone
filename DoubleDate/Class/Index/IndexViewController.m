@@ -226,13 +226,17 @@ static DDUser *uuser;
             }];
 }
 
+
 - (void)indexAddFriendAction {
 	//判断状态，进行跳转
 	if ([self haveDoubleFriend]) {
 		CreateGroupViewController *createChatroom = [[CreateGroupViewController alloc] init];
 		[self.navigationController pushViewController:createChatroom animated:YES];
 	} else {
-		AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
+//        AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
+//        [self.navigationController pushViewController:addController animated:YES];
+
+		InviteFriendByDoubleIdController *addController = [InviteFriendByDoubleIdController alloc];
 		[self.navigationController pushViewController:addController animated:YES];
 	}
 }
