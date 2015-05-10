@@ -39,6 +39,7 @@
 #import "ChatRoom4DAO.h"
 #import "IndexViewController.h"
 #import "AWSDynamoDB_ChatRoom4.h"
+#import "MainChatListViewController.h"
 #define KPageCount 20
 
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, IDeviceManagerDelegate>
@@ -220,6 +221,14 @@ NSDateFormatter *dateformatter;
     [super viewDidLoad];
     _userDao=[[DDUserDAO alloc] init];
     
+    
+    UIButton *createButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 30, 30)];
+    [createButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [createButton addTarget:self action:@selector(backtochatlist) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *createGroupItem = [[UIBarButtonItem alloc] initWithCustomView:createButton];
+    
+    [self.navigationItem setLeftBarButtonItem:createGroupItem];
+    
     //使用timer定时，每秒触发一次，然后就是写selector了。
     [self registerBecomeActive];
     // Do any additional setup after loading the view.
@@ -227,7 +236,8 @@ NSDateFormatter *dateformatter;
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
         self.edgesForExtendedLayout =  UIRectEdgeNone;
     }
-
+    
+    
     #warning 以下三行代码必须写，注册为SDK的ChatManager的delegate
     [[[EaseMob sharedInstance] deviceManager] addDelegate:self onQueue:nil];
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
@@ -257,7 +267,7 @@ NSDateFormatter *dateformatter;
         dateformatter = [[NSDateFormatter alloc]init] ;//定义NSDateFormatter用来显示格式
         [dateformatter setDateFormat:@"hh mm ss"];//设定格式
     
-        _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
+//        _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
     
         UIView *bak=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-60, 10, 200, 25)];
     
@@ -393,12 +403,17 @@ NSDateFormatter *dateformatter;
     label.font= [UIFont fontWithName:@"Helvetica" size:11];
     [bak addSubview:label];
     UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(label.frame.origin.x, label.frame.origin.y+15,200, 10)];
-    name.text=_friendname;
+    name.text=_friend.nickName;
     name.font= [UIFont fontWithName:@"Helvetica" size:11];
     [bak addSubview:name];
     
     return bak;
     
+}
+
+-(void)backtochatlist{
+    MainChatListViewController *chatController = [MainChatListViewController alloc] ;
+    [self.navigationController pushViewController:chatController animated:YES];
 }
 
 -(void)dragInside{

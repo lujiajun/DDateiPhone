@@ -1,5 +1,6 @@
 #import "InviteFriendByDoubleIdController.h"
 #import "IndexViewController.h"
+#import <MessageUI/MFMessageComposeViewController.h>
 
 @implementation InviteFriendByDoubleIdController
 
@@ -30,24 +31,61 @@
     info3.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:info3];
     
-    UIImageView *weixin=[[UIImageView alloc]initWithFrame:CGRectMake(40, info3.frame.origin.y+25, 40, 40)];
-    weixin.image=[UIImage imageNamed:@"weixin"];
+    
+    UIButton *weixin=[[UIButton alloc]initWithFrame:CGRectMake(40, info3.frame.origin.y+25, 40, 40)];
+    [weixin setBackgroundImage:[UIImage imageNamed:@"weixin"] forState:UIControlStateNormal];
     [self.view addSubview:weixin];
     
     UIImageView *duanxin=[[UIImageView alloc]initWithFrame:CGRectMake(weixin.frame.origin.x+weixin.frame.size.width+10, info3.frame.origin.y+25, 40, 40)];
-    duanxin.image=[UIImage imageNamed:@"email"];
+    duanxin.image=[UIImage imageNamed:@"weibo"];
     [self.view addSubview:duanxin];
     
     UIImageView *weibo=[[UIImageView alloc]initWithFrame:CGRectMake(duanxin.frame.origin.x+duanxin.frame.size.width+10, info3.frame.origin.y+25, 40, 40)];
-    weibo.image=[UIImage imageNamed:@"mail"];
+    weibo.image=[UIImage imageNamed:@"email"];
     [self.view addSubview:weibo];
     
-    UIImageView *mail=[[UIImageView alloc]initWithFrame:CGRectMake(weibo.frame.origin.x+weibo.frame.size.width+10, info3.frame.origin.y+25, 40, 40)];
-    mail.image=[UIImage imageNamed:@"mail"];
+    UIButton *mail=[[UIButton alloc]initWithFrame:CGRectMake(weibo.frame.origin.x+weibo.frame.size.width+10, info3.frame.origin.y+25, 40, 40)];
+    [mail setBackgroundImage:[UIImage imageNamed:@"mail"] forState:UIControlStateNormal];
+//    [mail addTarget:_contactsVC action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:mail];
     
     
 }
+
+- (void)sendSMS:(NSString *)bodyOfMessage recipientList:(NSArray *)recipients
+{
+    
+    MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
+    
+    if([MFMessageComposeViewController canSendText])
+        
+    {
+        
+        controller.body = bodyOfMessage;
+        
+        controller.recipients = recipients;
+        
+        controller.messageComposeDelegate = self;
+        
+        [self presentModalViewController:controller animated:YES];
+        
+    }
+    
+}
+
+// 处理发送完的响应结果
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    [self dismissModalViewControllerAnimated:YES];
+    
+    if (result == MessageComposeResultCancelled)
+        NSLog(@"Message cancelled");
+        else if (result == MessageComposeResultSent)
+            NSLog(@"Message sent");
+            else 
+                NSLog(@"Message failed");
+                }
+
 
 
 

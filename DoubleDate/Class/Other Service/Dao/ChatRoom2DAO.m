@@ -80,7 +80,7 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
 }
 
 
-- (NSMutableArray *)getLocalChatRoom2sByCount:(int)count {
+- (NSMutableArray *)getLocalChatRoom2ByCount:(int)count {
 	NSMutableArray *rooms = [NSMutableArray array];
 	NSString *sql = [NSString stringWithFormat:@"select * from %@ order by ID limit %d", ChatRoom2Table, count];
     [self.dbQueue inDatabase:^(FMDatabase *db) {

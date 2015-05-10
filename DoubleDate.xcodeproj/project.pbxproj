@@ -79,7 +79,6 @@
 		8A4021231AE3597900806014 /* Logo_new.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4021081AE3597900806014 /* Logo_new.png */; };
 		8A4021241AE3597900806014 /* luanch.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4021091AE3597900806014 /* luanch.png */; };
 		8A4021251AE3597900806014 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A40210A1AE3597900806014 /* mail.png */; };
-		8A4021261AE3597900806014 /* qq.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A40210B1AE3597900806014 /* qq.png */; };
 		8A4021291AE3597900806014 /* weixin.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A40210E1AE3597900806014 /* weixin.png */; };
 		8A40212C1AE3956B00806014 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A40212B1AE3956B00806014 /* Constants.m */; };
 		8A46EDBF1AE9F3FC0062F518 /* PersonalSignController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A46EDBE1AE9F3FC0062F518 /* PersonalSignController.m */; };
@@ -119,6 +118,7 @@
 		8AD43E5F1AFE783E00F05E8D /* RegViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD43E5A1AFE783E00F05E8D /* RegViewController.m */; };
 		8AD43E601AFE783E00F05E8D /* SectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD43E5C1AFE783E00F05E8D /* SectionsViewController.m */; };
 		8AD43E701AFE7BE100F05E8D /* NSDictionary-DeepMutableCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD43E6F1AFE7BE100F05E8D /* NSDictionary-DeepMutableCopy.m */; };
+		8AD43E721AFF5A4E00F05E8D /* weibo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD43E711AFF5A4E00F05E8D /* weibo.png */; };
 		8AD911CA1AFBC25A0024D4DE /* chatoff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD911BA1AFBC25A0024D4DE /* chatoff.png */; };
 		8AD911CB1AFBC25A0024D4DE /* chatoff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD911BB1AFBC25A0024D4DE /* chatoff@2x.png */; };
 		8AD911CC1AFBC25A0024D4DE /* chaton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD911BC1AFBC25A0024D4DE /* chaton.png */; };
@@ -582,7 +582,6 @@
 		8A4021081AE3597900806014 /* Logo_new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Logo_new.png; path = dd/Logo_new.png; sourceTree = "<group>"; };
 		8A4021091AE3597900806014 /* luanch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = luanch.png; path = dd/luanch.png; sourceTree = "<group>"; };
 		8A40210A1AE3597900806014 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mail.png; path = dd/mail.png; sourceTree = "<group>"; };
-		8A40210B1AE3597900806014 /* qq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = qq.png; path = dd/qq.png; sourceTree = "<group>"; };
 		8A40210E1AE3597900806014 /* weixin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = weixin.png; path = dd/weixin.png; sourceTree = "<group>"; };
 		8A40212A1AE3950E00806014 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		8A40212B1AE3956B00806014 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
@@ -633,6 +632,7 @@
 		8AD43E5C1AFE783E00F05E8D /* SectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionsViewController.m; sourceTree = "<group>"; };
 		8AD43E6E1AFE7BE100F05E8D /* NSDictionary-DeepMutableCopy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary-DeepMutableCopy.h"; sourceTree = "<group>"; };
 		8AD43E6F1AFE7BE100F05E8D /* NSDictionary-DeepMutableCopy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary-DeepMutableCopy.m"; sourceTree = "<group>"; };
+		8AD43E711AFF5A4E00F05E8D /* weibo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = weibo.png; path = dd/weibo.png; sourceTree = "<group>"; };
 		8AD911BA1AFBC25A0024D4DE /* chatoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatoff.png; sourceTree = "<group>"; };
 		8AD911BB1AFBC25A0024D4DE /* chatoff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatoff@2x.png"; sourceTree = "<group>"; };
 		8AD911BC1AFBC25A0024D4DE /* chaton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chaton.png; sourceTree = "<group>"; };
@@ -1399,6 +1399,7 @@
 		8ADB38511AE28F3400FCC6FC /* dd */ = {
 			isa = PBXGroup;
 			children = (
+				8AD43E711AFF5A4E00F05E8D /* weibo.png */,
 				8AD43E341AFC801200F05E8D /* addFriend.png */,
 				8AEF0ECF1AF31E4B00DE2484 /* help.png */,
 				8A6C0E151AED4352009D5208 /* infoline.png */,
@@ -1425,7 +1426,6 @@
 				8A4021081AE3597900806014 /* Logo_new.png */,
 				8A4021091AE3597900806014 /* luanch.png */,
 				8A40210A1AE3597900806014 /* mail.png */,
-				8A40210B1AE3597900806014 /* qq.png */,
 				8A40210E1AE3597900806014 /* weixin.png */,
 			);
 			name = dd;
@@ -2744,6 +2744,7 @@
 				EBD2AD481A7CEFE100D16528 /* chatBar_colorMore_audioCallSelected@2x.png in Resources */,
 				EBD2AB581A7CDAC000D16528 /* messageSendFail@2x.png in Resources */,
 				EBD2ABB21A7CDAC000D16528 /* tabbar_contacts@2x.png in Resources */,
+				8AD43E721AFF5A4E00F05E8D /* weibo.png in Resources */,
 				EBD2AB201A7CDAC000D16528 /* VoiceSearchFeedback008@2x.png in Resources */,
 				EBD2AB9E1A7CDAC000D16528 /* password.png in Resources */,
 				EBD2AB4B1A7CDAC000D16528 /* chatBar_textBg.png in Resources */,
@@ -2855,7 +2856,6 @@
 				EBD2AB931A7CDAC000D16528 /* chat_sender_audio_playing_001@2x.png in Resources */,
 				EBD2AB391A7CDAC000D16528 /* call_out.png in Resources */,
 				EBD2AB1D1A7CDAC000D16528 /* VoiceSearchFeedback007.png in Resources */,
-				8A4021261AE3597900806014 /* qq.png in Resources */,
 				EBD2AB991A7CDAC000D16528 /* chat_sender_audio_playing_full@2x.png in Resources */,
 				8AD911D01AFBC25A0024D4DE /* friendon.png in Resources */,
 				EBD2AB121A7CDAC000D16528 /* VoiceSearchFeedback001@2x.png in Resources */,
