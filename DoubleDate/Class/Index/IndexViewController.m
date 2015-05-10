@@ -68,6 +68,8 @@ static DDUser *uuser;
 {
     
     [super viewDidLoad];
+	self.edgesForExtendedLayout = UIRectEdgeAll;
+	self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
     
     self.tableView.backgroundColor = [UIColor whiteColor];
     [self.tableView addSubview:self.slimeView];

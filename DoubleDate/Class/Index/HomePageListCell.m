@@ -13,6 +13,7 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
 	self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
 	if (self) {
+        self.frame = [[UIScreen mainScreen] applicationFrame];
 		//Background
 		_bakview = [[UIImageView alloc] init];
 		_bakview.frame = CGRectMake(5, 5, self.frame.size.width - 10, 150);
