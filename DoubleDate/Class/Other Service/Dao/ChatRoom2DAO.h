@@ -13,5 +13,5 @@
 
 - (NSMutableArray *)getLocalChatRoom2ByCount:(int)count;
 - (CHATROOM2 *)getChatRoom2ByRid:(NSString *)rid;
-
+- (void)insertChatroom2:(CHATROOM2 *)chatRoom2 ;
 @end

@@ -88,7 +88,7 @@
 @end
 
 @implementation ChatViewController
-int secondsCountDown = 30;
+int secondsCountDown = 5*60;
 
 NSDateFormatter *dateformatter;
 

@@ -69,7 +69,9 @@
                  if (chatroom2.RID != nil && chatroom2.UID1 != nil & chatroom2.UID2 != nil) {
                      //插入本地数据 item
                      if ([self.chatRoom2Dao getChatRoom2ByRid:chatroom2.RID] == nil) {
-                         [self insertChatroom2:chatroom2];
+                         [self.chatRoom2Dao insertChatroom2:chatroom2];
+                         
+//                         [self insertChatroom2:chatroom2];
                      }
                      
 					 if ([userDynamoDB.dduserDao selectDDuserByUid:chatroom2.UID1] == nil) {

@@ -224,9 +224,12 @@ static DDUser *uuser;
         [self.navigationController pushViewController:createChatroom animated:YES];
         
     }else{
-        AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
+//        AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
+//        [self.navigationController pushViewController:addController animated:YES];
+
+        InviteFriendByDoubleIdController *addController = [InviteFriendByDoubleIdController alloc];
         [self.navigationController pushViewController:addController animated:YES];
-        
+
     }
 
 }
