@@ -17,7 +17,7 @@ NSString *const DATABASE_NAME = @"DoubleDate_%@.db";
 
 - (instancetype)init {
 	if (self = [super init]) {
-		_db = [[FMDatabase alloc] initWithPath:[self dataFilePath]];
+		_dbQueue = [FMDatabaseQueue databaseQueueWithPath:[self dataFilePath]];
 	}
 	return self;
 }
@@ -26,11 +26,10 @@ NSString *const DATABASE_NAME = @"DoubleDate_%@.db";
 #pragma mark - Public 
 
 - (void)createTableUsingDao:(BaseDAO *)dao {
-    if ([self.db open]) {
+    [self.dbQueue inDatabase:^(FMDatabase *db) {
         NSString *sql = [dao tableCreateSql];
-        [self.db executeUpdate:sql];
-        [self.db close];
-    }
+        [db executeUpdate:sql];
+    }];
 }
 
 

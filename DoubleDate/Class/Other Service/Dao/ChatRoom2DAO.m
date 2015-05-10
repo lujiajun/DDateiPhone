@@ -35,30 +35,11 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
             UNIQUE(RID));", ChatRoom2Table];
 }
 
-- (NSArray *)queryChatRoom2s {
-    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@", ChatRoom2Table];
-    NSMutableArray *rooms = [NSMutableArray array];
-    if ([self.db open]) {
-        FMResultSet *rs = [self.db executeQuery:sql];
-        while ([rs next]) {
-            [rooms addObject:[self fillModelWithFMResultSet:rs]];
-        }
-        [rs close];
-        [self.db close];
-    }
-    return rooms;
-}
-
-#pragma mark - Public
 
 
 
-
-
-#pragma mark - Private
-
-- (void)insertChatroom2:(CHATROOM2 *)chatRoom2 {
-    NSString *sql = [NSString stringWithFormat:@"Insert into %@ ( \
+- (void)insertLocalChatroom2:(CHATROOM2 *)chatRoom2 {
+	NSString *sql = [NSString stringWithFormat:@"Insert into %@ ( \
                      RID, \
                      ClickNum, \
                      Gender, \
@@ -68,69 +49,67 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
                      SchoolRestrict, \
                      UID1, \
                      UID2) \
-                     values (?, ?, ?, ?, ?, ?, ?, ?, ?)" , ChatRoom2Table];
-    
-	if ([self.db open]) {
-		[self.db executeUpdate:sql,
-		 chatRoom2.RID,
-		 chatRoom2.ClickNum,
-		 chatRoom2.Gender,
-		 chatRoom2.GradeFrom,
-		 chatRoom2.Motto,
-		 chatRoom2.PicturePath,
-		 chatRoom2.SchoolRestrict,
-		 chatRoom2.UID1,
-		 chatRoom2.UID2];
-		[self.db close];
-	}
+                     values (?, ?, ?, ?, ?, ?, ?, ?, ?)", ChatRoom2Table];
+
+	[self.dbQueue inDatabase: ^(FMDatabase *db) {
+	    [db executeUpdate:sql,
+	     chatRoom2.RID,
+	     chatRoom2.ClickNum,
+	     chatRoom2.Gender,
+	     chatRoom2.GradeFrom,
+	     chatRoom2.Motto,
+	     chatRoom2.PicturePath,
+	     chatRoom2.SchoolRestrict,
+	     chatRoom2.UID1,
+	     chatRoom2.UID2];
+	}];
 }
 
-- (NSMutableArray *)getLocalChatRoom2ByCount:(int)count {
-	NSMutableArray *rooms = [NSMutableArray arrayWithCapacity:10];
+- (CHATROOM2 *)getLocalChatRoom2ByRid:(NSString *)rid {
+    __block CHATROOM2 *chatroom2;
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@ where RID='%@'", ChatRoom2Table, rid];
+    [self.dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [db executeQuery:sql];
+        while ([rs next]) {
+            chatroom2 = [self fillModelWithFMResultSet:rs];
+        }
+        [rs close];
+
+    }];
+    return chatroom2;
+}
+
+
+- (NSMutableArray *)getLocalChatRoom2sByCount:(int)count {
+	NSMutableArray *rooms = [NSMutableArray array];
 	NSString *sql = [NSString stringWithFormat:@"select * from %@ order by ID limit %d", ChatRoom2Table, count];
-	if ([self.db open]) {
-		FMResultSet *rs = [self.db executeQuery:sql];
-		while ([rs next]) {
-			CHATROOM2 *chatroom2 = [CHATROOM2 new];
-			chatroom2.RID = [rs stringForColumn:@"RID"];
-			chatroom2.ClickNum = [rs stringForColumn:@"ClickNum"];
-			chatroom2.Gender = [rs stringForColumn:@"Gender"];
-			chatroom2.GradeFrom = [rs stringForColumn:@"GradeFrom"];
-			chatroom2.Motto = [rs stringForColumn:@"Motto"];
-			chatroom2.PicturePath = [rs stringForColumn:@"PicturePath"];
-			chatroom2.SchoolRestrict = [rs stringForColumn:@"SchoolRestrict"];
-			chatroom2.UID1 = [rs stringForColumn:@"UID1"];
-			chatroom2.UID2 = [rs stringForColumn:@"UID2"];
-			[rooms addObject:chatroom2];
-		}
-		[rs close];
-		[self.db close];
-	}
+    [self.dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [db executeQuery:sql];
+        while ([rs next]) {
+            CHATROOM2 *chatroom2 = [self fillModelWithFMResultSet:rs];
+            [rooms addObject:chatroom2];
+        }
+        [rs close];
+    }];
 	return rooms;
 }
 
-- (CHATROOM2 *)getChatRoom2ByRid:(NSString *)rid {
-	CHATROOM2 *chatroom2;
-	NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@ where RID='%@'", ChatRoom2Table, rid];
-	if ([self.db open]) {
-		FMResultSet *rs = [self.db executeQuery:sql];
-		while ([rs next]) {
-			chatroom2 = [CHATROOM2 new];
-			chatroom2.RID = [rs stringForColumn:@"RID"];
-			chatroom2.ClickNum = [rs stringForColumn:@"ClickNum"];
-			chatroom2.Gender = [rs stringForColumn:@"Gender"];
-			chatroom2.GradeFrom = [rs stringForColumn:@"GradeFrom"];
-			chatroom2.Motto = [rs stringForColumn:@"Motto"];
-			chatroom2.PicturePath = [rs stringForColumn:@"PicturePath"];
-			chatroom2.SchoolRestrict = [rs stringForColumn:@"SchoolRestrict"];
-			chatroom2.UID1 = [rs stringForColumn:@"UID1"];
-			chatroom2.UID2 = [rs stringForColumn:@"UID2"];
-		}
-		[rs close];
-		[self.db close];
-	}
-	return chatroom2;
+
+- (NSArray *)queryChatRoom2s {
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@", ChatRoom2Table];
+    NSMutableArray *rooms = [NSMutableArray array];
+    [self.dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [db executeQuery:sql];
+        while ([rs next]) {
+            [rooms addObject:[self fillModelWithFMResultSet:rs]];
+        }
+        [rs close];
+    }];
+    return rooms;
 }
+
+
+# pragma mark - Private
 
 - (id)fillModelWithFMResultSet:(FMResultSet *)rs {
     CHATROOM2 *chatroom2 = [CHATROOM2 new];

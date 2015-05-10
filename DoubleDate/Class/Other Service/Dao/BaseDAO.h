@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "FMDatabase.h"
+#import "FMDatabaseQueue.h"
+
 
 @interface BaseDAO : NSObject
 
-@property (strong, nonatomic) FMDatabase *db;
+@property (strong, nonatomic) FMDatabaseQueue *dbQueue;
 
 - (NSString *)tableCreateSql;
 

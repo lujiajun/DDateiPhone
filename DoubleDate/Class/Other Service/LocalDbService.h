@@ -1,11 +1,12 @@
 #import "BaseDAO.h"
+#import "FMDatabaseQueue.h"
 
-@interface LocalDbService: NSObject
+@interface LocalDbService : NSObject
 
-@property(strong, nonatomic) FMDatabase *db;
+@property (strong, nonatomic) FMDatabaseQueue *dbQueue;
 
 //获得单例
 + (LocalDbService *)defaultService;
-- (void) createTableUsingDao:(BaseDAO *)dao;
+- (void)createTableUsingDao:(BaseDAO *)dao;
 
 @end

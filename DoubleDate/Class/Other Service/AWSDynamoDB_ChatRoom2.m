@@ -39,7 +39,7 @@
 
 - (void)refreshListWithBlock:(SuccussBlock)successBlock {
     //先查询，没有在网络数据库
-    self.chatRoom2s = [self.chatRoom2Dao getLocalChatRoom2ByCount:20];
+    self.chatRoom2s = [self.chatRoom2Dao getLocalChatRoom2sByCount:20];
     if (self.chatRoom2s == nil || [self.chatRoom2s count] == 0) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         
@@ -68,7 +68,7 @@
              for (CHATROOM2 *chatroom2 in paginatedOutput.items) {
                  if (chatroom2.RID != nil && chatroom2.UID1 != nil & chatroom2.UID2 != nil) {
                      //插入本地数据 item
-                     if ([self.chatRoom2Dao getChatRoom2ByRid:chatroom2.RID] == nil) {
+                     if ([self.chatRoom2Dao getLocalChatRoom2ByRid:chatroom2.RID] == nil) {
                          [self insertChatroom2:chatroom2];
                      }
                      
