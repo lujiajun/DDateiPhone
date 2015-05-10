@@ -20,7 +20,7 @@
 	if (self = [super init]) {
         _dbService = [LocalDbService defaultService];
         [_dbService createTableUsingDao:self];
-        _db = [_dbService db];
+        _dbQueue = _dbService.dbQueue;
 	}
 	return self;
 }

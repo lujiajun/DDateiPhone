@@ -39,15 +39,14 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
 - (NSArray *)queryChatRoom4s {
 	NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@", ChatRoom4Table];
 	NSMutableArray *rooms = [NSMutableArray array];
-	if ([self.db open]) {
-		FMResultSet *rs = [self.db executeQuery:sql];
-		while ([rs next]) {
-			CHATROOM4 *chatroom4 = [self fillModelWithFMResultSet:rs];
-			[rooms addObject:chatroom4];
+	[self.dbQueue inDatabase: ^(FMDatabase *db) {
+	    FMResultSet *rs = [db executeQuery:sql];
+	    while ([rs next]) {
+	        CHATROOM4 *chatroom4 = [self fillModelWithFMResultSet:rs];
+	        [rooms addObject:chatroom4];
 		}
-		[rs close];
-		[self.db close];
-	}
+	    [rs close];
+	}];
 	return rooms;
 }
 
@@ -71,104 +70,102 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
                      subGID2,\
                      systemTimeNumber) \
                      values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", ChatRoom4Table];
-
-	if ([self.db open]) {
-		[self.db executeUpdate:sql,
-		 chatRoom4.GID,
-		 chatRoom4.CTIMEH,
-		 chatRoom4.CTIMER,
-		 chatRoom4.UID1,
-		 chatRoom4.UID2,
-		 chatRoom4.UID3,
-		 chatRoom4.UID4,
-		 chatRoom4.isLikeUID1,
-		 chatRoom4.isLikeUID2,
-		 chatRoom4.isLikeUID3,
-		 chatRoom4.isLikeUID4,
-		 chatRoom4.subGID1,
-		 chatRoom4.subGID2,
-		 chatRoom4.systemTimeNumber];
-		[self.db close];
-	}
-}
-
-- (void)updateLikeByGID:(CHATROOM4 *) room4 {
     
-    if ([self.db open]) {
-        BOOL res = [self.db executeUpdate:@"UPDATE ChatRoom4 SET isLikeUID1= ?,isLikeUID2=?,isLikeUID3=?,isLikeUID4=? WHERE GID = ?",room4.isLikeUID1,room4.isLikeUID2,room4.isLikeUID3,room4.isLikeUID4,room4.GID];
-        if (res) {
-            NSLog(@"DDUser: success to update db");
-        } else {
-            NSLog(@"DDUser: error when update db");
-        }
-        [self.db close];
-    }
+	[self.dbQueue inDatabase: ^(FMDatabase *db) {
+	    [db executeUpdate:sql,
+	     chatRoom4.GID,
+	     chatRoom4.CTIMEH,
+	     chatRoom4.CTIMER,
+	     chatRoom4.UID1,
+	     chatRoom4.UID2,
+	     chatRoom4.UID3,
+	     chatRoom4.UID4,
+	     chatRoom4.isLikeUID1,
+	     chatRoom4.isLikeUID2,
+	     chatRoom4.isLikeUID3,
+	     chatRoom4.isLikeUID4,
+	     chatRoom4.subGID1,
+	     chatRoom4.subGID2,
+	     chatRoom4.systemTimeNumber];
+	}];
 }
 
-- (void)updateSubGroupByGID:(CHATROOM4 *) room4 {
-    
-    if ([self.db open]) {
-        BOOL res = [self.db executeUpdate:@"UPDATE ChatRoom4 SET subGID1= ?,subGID2=? WHERE GID = ?",room4.subGID1,room4.subGID2,room4.GID];
-        if (res) {
-            NSLog(@"DDUser: success to update db");
-        } else {
-            NSLog(@"DDUser: error when update db");
-        }
-        [self.db close];
-    }
+- (void)updateLikeByGID:(CHATROOM4 *)room4 {
+	[self.dbQueue inDatabase: ^(FMDatabase *db) {
+	    BOOL res = [db executeUpdate:@"UPDATE ChatRoom4 SET isLikeUID1= ?,isLikeUID2=?,isLikeUID3=?,isLikeUID4=? WHERE GID = ?",
+                    room4.isLikeUID1,
+                    room4.isLikeUID2,
+                    room4.isLikeUID3,
+                    room4.isLikeUID4,
+                    room4.GID];
+	    if (res) {
+	        NSLog(@"CHATROOM4: success to update db");
+		} else {
+	        NSLog(@"CHATROOM4: error when update db");
+		}
+	}];
+}
+
+- (void)updateSubGroupByGID:(CHATROOM4 *)room4 {
+	[self.dbQueue inDatabase: ^(FMDatabase *db) {
+	    BOOL res = [db executeUpdate:@"UPDATE ChatRoom4 SET subGID1= ?,subGID2=? WHERE GID = ?", room4.subGID1, room4.subGID2, room4.GID];
+	    if (res) {
+	        NSLog(@"CHATROOM4: success to update sub group");
+		} else {
+	        NSLog(@"CHATROOM4: error when update sub group");
+		}
+	}];
 }
 
 
-
-- (NSMutableArray *)getLocalChatRoom4ByCount:(int) count {
+- (NSMutableArray *)getLocalChatRoom4ByCount:(int)count {
 	NSMutableArray *rooms = [NSMutableArray array];
 	NSString *sql = [NSString stringWithFormat:@"select * from %@ order by systemTimeNumber limit %d", ChatRoom4Table, count];
-	if ([self.db open]) {
-		FMResultSet *rs = [self.db executeQuery:sql];
-		while ([rs next]) {
-			CHATROOM4 *chatroom4 = [self fillModelWithFMResultSet:rs];
-			[rooms addObject:chatroom4];
+	[self.dbQueue inDatabase: ^(FMDatabase *db) {
+	    FMResultSet *rs = [db executeQuery:sql];
+	    while ([rs next]) {
+	        CHATROOM4 *chatroom4 = [self fillModelWithFMResultSet:rs];
+	        [rooms addObject:chatroom4];
 		}
-		[rs close];
-		[self.db close];
-	}
+	    [rs close];
+	}];
 	return rooms;
 }
 
 - (CHATROOM4 *)getChatRoom4ByRid:(NSString *)rid {
-	CHATROOM4 *chatroom4;
+	__block CHATROOM4 *chatroom4;
 	NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@ where RID='%@'", ChatRoom4Table, rid];
-	if ([self.db open]) {
-		FMResultSet *rs = [self.db executeQuery:sql];
-		while ([rs next]) {
-			chatroom4 = [self fillModelWithFMResultSet:rs];
+	[self.dbQueue inDatabase: ^(FMDatabase *db) {
+	    FMResultSet *rs = [db executeQuery:sql];
+	    while ([rs next]) {
+	        chatroom4 = [self fillModelWithFMResultSet:rs];
 		}
-		[rs close];
-		[self.db close];
-	}
+	    [rs close];
+	}];
 	return chatroom4;
 }
 
 - (CHATROOM4 *)isUniqueRoom:(NSString *)UID1 UID2:(NSString *)UID2 UID3:(NSString *)UID3 UID4:(NSString *)UID4 {
+	__block CHATROOM4 *chatroom4;
 	if (UID1 != nil && UID2 != nil && UID3 != nil && UID4 != nil) {
-		NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@ where UID1='%@' and UID2='%@' and UID3='%@' and UID4='%@' ", ChatRoom4Table, UID1, UID2, UID3, UID4];
-		if ([self.db open]) {
-			FMResultSet *rs = [self.db executeQuery:sql];
-			while ([rs next]) {
-				CHATROOM4 *chatroom4 = [self fillModelWithFMResultSet:rs];
-				return chatroom4;
+		NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@ where UID1='%@' and UID2='%@' and UID3='%@' and UID4='%@' ",
+		                 ChatRoom4Table, UID1, UID2, UID3, UID4];
+		[self.dbQueue inDatabase: ^(FMDatabase *db) {
+		    FMResultSet *rs = [db executeQuery:sql];
+		    while ([rs next]) {
+		        chatroom4 = [self fillModelWithFMResultSet:rs];
 			}
-		}
+		    [rs close];
+		}];
 	}
-	return nil;
+	return chatroom4;
 }
 
 - (void)delChatRoom4ByRid:(NSString *)rid {
 	NSString *sql = [NSString stringWithFormat:@"delete FROM %@ where GID='%@'", ChatRoom4Table, rid];
-	if ([self.db open]) {
-		[self.db executeQuery:sql];
-		[self.db close];
-	}
+	[self.dbQueue inDatabase: ^(FMDatabase *db) {
+	    [db executeUpdate:sql];
+	}];
 }
 
 - (id)fillModelWithFMResultSet:(FMResultSet *)rs {

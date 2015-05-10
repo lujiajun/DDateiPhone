@@ -34,16 +34,15 @@ NSString * const DDUserTable=@"DDUser";
 }
 
 - (DDUser *)selectDDuserByUid:(NSString *)uid {
-    DDUser *dduser = nil;
-    if ([self.db open]) {
-        NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE UID='%@'", DDUserTable, uid];
-        FMResultSet *rs = [self.db executeQuery:query];
+    __block DDUser *dduser;
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE UID='%@'", DDUserTable, uid];
+    [self.dbQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet *rs = [db executeQuery:sql];
         while ([rs next]) {
             dduser = [self fillModelWithFMResultSet:rs];
         }
         [rs close];
-        [self.db close];
-    }
+    }];
     return dduser;
 }
 
@@ -65,8 +64,9 @@ NSString * const DDUserTable=@"DDUser";
                      sign,\
                      isDoublerID) \
                      values(?, ?, ?,?, ?, ?, ?, ?, ?,?,?,?,?,?)", DDUserTable];
-	if ([self.db open]) {
-		BOOL res = [self.db executeUpdate:sql,
+    
+    [self.dbQueue inDatabase:^(FMDatabase *db) {
+        BOOL res = [db executeUpdate:sql,
                     dduser.UID,
                     dduser.nickName,
                     dduser.password,
@@ -81,40 +81,63 @@ NSString * const DDUserTable=@"DDUser";
                     dduser.hobbies,
                     dduser.sign,
                     dduser.isDoublerID];
-		if (res) {
-			NSLog(@"DDUser: success to insert db");
-		} else {
-			NSLog(@"DDUser: error when insert db");
-		}
-		[self.db close];
-	}
-}
-
-- (void)updatePhotosByUID:(NSString *)photos uid:(NSString *) UID {
-   
-    if ([self.db open]) {
-        BOOL res = [self.db executeUpdate:@"UPDATE DDUser SET photos = ? WHERE UID = ?",photos,UID];
         if (res) {
             NSLog(@"DDUser: success to insert db");
         } else {
             NSLog(@"DDUser: error when insert db");
         }
-        [self.db close];
-    }
+
+    }];
+}
+
+- (void)updatePhotosByUID:(NSString *)photos uid:(NSString *)UID {
+	[self.dbQueue inDatabase: ^(FMDatabase *db) {
+	    BOOL res = [db executeUpdate:@"UPDATE DDUser SET photos = ? WHERE UID = ?", photos, UID];
+	    if (res) {
+	        NSLog(@"DDUser: success to update db");
+		} else {
+	        NSLog(@"DDUser: error when update db");
+		}
+	}];
 }
 
 
 - (void)updateByUID:(DDUser *)user {
-    
-    if ([self.db open]) {
-        BOOL res = [self.db executeUpdate:@"UPDATE DDUser SET nickName= ?,isPic=?,picPath=?,gender=?,university=?,grade=?,photos=?,city=?,birthday=?,hobbies=?,sign=?,isDoublerID=? ,password=? WHERE UID = ?",user.nickName,user.isPic,user.picPath,user.gender,user.university,user.grade,user.photos,user.city,user.birthday,user.hobbies,user.sign,user.isDoublerID,user.password,user.UID];
-        if (res) {
-            NSLog(@"DDUser: success to update db");
-        } else {
-            NSLog(@"DDUser: error when update db");
-        }
-        [self.db close];
-    }
+	[self.dbQueue inDatabase: ^(FMDatabase *db) {
+	    BOOL res = [db executeUpdate:@"UPDATE DDUser SET nickName=?, \
+                    isPic=?, \
+                    picPath=?, \
+                    gender=?, \
+                    university=?, \
+                    grade=?, \
+                    photos=?, \
+                    city=?, \
+                    birthday=?, \
+                    hobbies=?, \
+                    sign=?, \
+                    isDoublerID=?, \
+                    password=? \
+                    WHERE UID=?",
+                    user.nickName,
+                    user.isPic,
+                    user.picPath,
+                    user.gender,
+                    user.university,
+                    user.grade,
+                    user.photos,
+                    user.city,
+                    user.birthday,
+                    user.hobbies,
+                    user.sign,
+                    user.isDoublerID,
+                    user.password,
+                    user.UID];
+	    if (res) {
+	        NSLog(@"DDUser: success to update db");
+		} else {
+	        NSLog(@"DDUser: error when update db");
+		}
+	}];
 }
 
 
