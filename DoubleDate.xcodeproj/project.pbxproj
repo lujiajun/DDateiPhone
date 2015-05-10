@@ -14,6 +14,7 @@
 		181782AD1AFB93330007BD3B /* CHATROOM4.m in Sources */ = {isa = PBXBuildFile; fileRef = 181782AC1AFB93330007BD3B /* CHATROOM4.m */; };
 		185E62881AFE50BE00170F41 /* DoubleDate-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 185E62851AFE50BE00170F41 /* DoubleDate-Info.plist */; };
 		185E62891AFE548600170F41 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C18CAED1A0B556D00FEB270 /* libMobClickLibrary.a */; };
+		185E628A1AFE68DA00170F41 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD43E371AFE5F9E00F05E8D /* libWeChatSDK.a */; };
 		1873D80D1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80C1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a */; };
 		1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */; };
 		18990C711AF7CC8400523A29 /* UIColor+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 18990C701AF7CC8400523A29 /* UIColor+Category.m */; };
@@ -110,9 +111,14 @@
 		8AA1134A1AFA8134002DB7F5 /* like3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA113461AFA8134002DB7F5 /* like3.png */; };
 		8AA1134C1AFA8166002DB7F5 /* likeGo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1134B1AFA8166002DB7F5 /* likeGo.png */; };
 		8AD43E351AFC801200F05E8D /* addFriend.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD43E341AFC801200F05E8D /* addFriend.png */; };
-		8AD43E3A1AFE5F9E00F05E8D /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD43E371AFE5F9E00F05E8D /* libWeChatSDK.a */; };
-		8AD43E3B1AFE602700F05E8D /* WXApi.h in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD43E381AFE5F9E00F05E8D /* WXApi.h */; };
-		8AD43E3C1AFE602700F05E8D /* WXApiObject.h in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD43E391AFE5F9E00F05E8D /* WXApiObject.h */; };
+		8AD43E501AFE737900F05E8D /* SMS_SDKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8AD43E4C1AFE737900F05E8D /* SMS_SDKLocalizable.strings */; };
+		8AD43E511AFE737900F05E8D /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD43E4E1AFE737900F05E8D /* SMS_SDK.framework */; };
+		8AD43E531AFE748700F05E8D /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD43E521AFE748700F05E8D /* libicucore.dylib */; };
+		8AD43E551AFE749B00F05E8D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD43E541AFE749B00F05E8D /* MessageUI.framework */; };
+		8AD43E571AFE74BE00F05E8D /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD43E561AFE74BE00F05E8D /* AddressBookUI.framework */; };
+		8AD43E5F1AFE783E00F05E8D /* RegViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD43E5A1AFE783E00F05E8D /* RegViewController.m */; };
+		8AD43E601AFE783E00F05E8D /* SectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD43E5C1AFE783E00F05E8D /* SectionsViewController.m */; };
+		8AD43E701AFE7BE100F05E8D /* NSDictionary-DeepMutableCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD43E6F1AFE7BE100F05E8D /* NSDictionary-DeepMutableCopy.m */; };
 		8AD911CA1AFBC25A0024D4DE /* chatoff.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD911BA1AFBC25A0024D4DE /* chatoff.png */; };
 		8AD911CB1AFBC25A0024D4DE /* chatoff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD911BB1AFBC25A0024D4DE /* chatoff@2x.png */; };
 		8AD911CC1AFBC25A0024D4DE /* chaton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD911BC1AFBC25A0024D4DE /* chaton.png */; };
@@ -612,9 +618,21 @@
 		8AA113461AFA8134002DB7F5 /* like3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like3.png; sourceTree = "<group>"; };
 		8AA1134B1AFA8166002DB7F5 /* likeGo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = likeGo.png; sourceTree = "<group>"; };
 		8AD43E341AFC801200F05E8D /* addFriend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addFriend.png; path = dd/addFriend.png; sourceTree = "<group>"; };
-		8AD43E371AFE5F9E00F05E8D /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = weixin/libWeChatSDK.a; sourceTree = "<group>"; };
-		8AD43E381AFE5F9E00F05E8D /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WXApi.h; path = weixin/WXApi.h; sourceTree = "<group>"; };
-		8AD43E391AFE5F9E00F05E8D /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WXApiObject.h; path = weixin/WXApiObject.h; sourceTree = "<group>"; };
+		8AD43E371AFE5F9E00F05E8D /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		8AD43E381AFE5F9E00F05E8D /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		8AD43E391AFE5F9E00F05E8D /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		8AD43E4D1AFE737900F05E8D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SMS_SDKLocalizable.strings; sourceTree = "<group>"; };
+		8AD43E4E1AFE737900F05E8D /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
+		8AD43E4F1AFE737900F05E8D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/SMS_SDKLocalizable.strings"; sourceTree = "<group>"; };
+		8AD43E521AFE748700F05E8D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		8AD43E541AFE749B00F05E8D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		8AD43E561AFE74BE00F05E8D /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		8AD43E591AFE783E00F05E8D /* RegViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegViewController.h; sourceTree = "<group>"; };
+		8AD43E5A1AFE783E00F05E8D /* RegViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegViewController.m; sourceTree = "<group>"; };
+		8AD43E5B1AFE783E00F05E8D /* SectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionsViewController.h; sourceTree = "<group>"; };
+		8AD43E5C1AFE783E00F05E8D /* SectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionsViewController.m; sourceTree = "<group>"; };
+		8AD43E6E1AFE7BE100F05E8D /* NSDictionary-DeepMutableCopy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary-DeepMutableCopy.h"; sourceTree = "<group>"; };
+		8AD43E6F1AFE7BE100F05E8D /* NSDictionary-DeepMutableCopy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary-DeepMutableCopy.m"; sourceTree = "<group>"; };
 		8AD911BA1AFBC25A0024D4DE /* chatoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatoff.png; sourceTree = "<group>"; };
 		8AD911BB1AFBC25A0024D4DE /* chatoff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatoff@2x.png"; sourceTree = "<group>"; };
 		8AD911BC1AFBC25A0024D4DE /* chaton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chaton.png; sourceTree = "<group>"; };
@@ -1137,16 +1155,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8AD43E3A1AFE5F9E00F05E8D /* libWeChatSDK.a in Frameworks */,
-				8AD43E3B1AFE602700F05E8D /* WXApi.h in Frameworks */,
-				8AD43E3C1AFE602700F05E8D /* WXApiObject.h in Frameworks */,
+				8AD43E571AFE74BE00F05E8D /* AddressBookUI.framework in Frameworks */,
+				90F1BECF1930492B00121AEC /* AddressBook.framework in Frameworks */,
+				3C3527451931D37900385240 /* SystemConfiguration.framework in Frameworks */,
+				8AD43E551AFE749B00F05E8D /* MessageUI.framework in Frameworks */,
+				90F1BECB1930491D00121AEC /* libz.dylib in Frameworks */,
+				8AD43E531AFE748700F05E8D /* libicucore.dylib in Frameworks */,
+				185E628A1AFE68DA00170F41 /* libWeChatSDK.a in Frameworks */,
+				8AD43E511AFE737900F05E8D /* SMS_SDK.framework in Frameworks */,
 				185E62891AFE548600170F41 /* libMobClickLibrary.a in Frameworks */,
 				3C1CEF7F196EA37600DBA56B /* ImageIO.framework in Frameworks */,
 				1873D8101AE817330019E02D /* libstdc++.6.0.9.dylib in Frameworks */,
 				EBC0CE571AD6652800E90053 /* libEaseMobClientSDK.a in Frameworks */,
 				1873D80D1AE80FFA0019E02D /* libALBB_OSS_IOS_SDK.a in Frameworks */,
-				3C3527451931D37900385240 /* SystemConfiguration.framework in Frameworks */,
-				90F1BECB1930491D00121AEC /* libz.dylib in Frameworks */,
 				3CBB931C1A14B227007FED9E /* libsqlite3.dylib in Frameworks */,
 				3CE6293319A1B13700829632 /* CoreText.framework in Frameworks */,
 				3C06AB0319405D330076FF0B /* MapKit.framework in Frameworks */,
@@ -1154,7 +1175,6 @@
 				902DEC551931D934006CA75E /* libresolv.dylib in Frameworks */,
 				90F1BED51930495800121AEC /* MobileCoreServices.framework in Frameworks */,
 				90F1BED11930493200121AEC /* libiconv.dylib in Frameworks */,
-				90F1BECF1930492B00121AEC /* AddressBook.framework in Frameworks */,
 				90F1BECD1930492300121AEC /* CFNetwork.framework in Frameworks */,
 				90F1BEC91930491600121AEC /* libxml2.dylib in Frameworks */,
 				9091102C192EEA70008A48AA /* UIKit.framework in Frameworks */,
@@ -1320,6 +1340,7 @@
 		8A4BD07E1AE1FB5F00FFDFF1 /* Index */ = {
 			isa = PBXGroup;
 			children = (
+				8AD43E581AFE783E00F05E8D /* MobSMS */,
 				8A038C1D1AF51A54007A05BE /* ChatRoomDetail.h */,
 				8A038C1E1AF51A54007A05BE /* ChatRoomDetail.m */,
 				8A038C1F1AF51A54007A05BE /* Commbox.h */,
@@ -1342,14 +1363,37 @@
 			name = Index;
 			sourceTree = "<group>";
 		};
-		8AD43E361AFE5F9000F05E8D /* weixin */ = {
+		8AD43E361AFE5F9000F05E8D /* Wechat */ = {
 			isa = PBXGroup;
 			children = (
 				8AD43E371AFE5F9E00F05E8D /* libWeChatSDK.a */,
 				8AD43E381AFE5F9E00F05E8D /* WXApi.h */,
 				8AD43E391AFE5F9E00F05E8D /* WXApiObject.h */,
 			);
-			name = weixin;
+			path = Wechat;
+			sourceTree = "<group>";
+		};
+		8AD43E4B1AFE737900F05E8D /* SMS_SDK */ = {
+			isa = PBXGroup;
+			children = (
+				8AD43E4C1AFE737900F05E8D /* SMS_SDKLocalizable.strings */,
+				8AD43E4E1AFE737900F05E8D /* SMS_SDK.framework */,
+			);
+			path = SMS_SDK;
+			sourceTree = "<group>";
+		};
+		8AD43E581AFE783E00F05E8D /* MobSMS */ = {
+			isa = PBXGroup;
+			children = (
+				8AD43E6E1AFE7BE100F05E8D /* NSDictionary-DeepMutableCopy.h */,
+				8AD43E6F1AFE7BE100F05E8D /* NSDictionary-DeepMutableCopy.m */,
+				8AD43E591AFE783E00F05E8D /* RegViewController.h */,
+				8AD43E5A1AFE783E00F05E8D /* RegViewController.m */,
+				8AD43E5B1AFE783E00F05E8D /* SectionsViewController.h */,
+				8AD43E5C1AFE783E00F05E8D /* SectionsViewController.m */,
+			);
+			name = MobSMS;
+			path = Index/MobSMS;
 			sourceTree = "<group>";
 		};
 		8ADB38511AE28F3400FCC6FC /* dd */ = {
@@ -1578,7 +1622,8 @@
 		9091101B192EEA70008A48AA = {
 			isa = PBXGroup;
 			children = (
-				8AD43E361AFE5F9000F05E8D /* weixin */,
+				8AD43E4B1AFE737900F05E8D /* SMS_SDK */,
+				8AD43E361AFE5F9000F05E8D /* Wechat */,
 				8A4020B51AE3579F00806014 /* Oss-Universal */,
 				EBC0CDEC1AD6652800E90053 /* EaseMobSDK */,
 				9091102D192EEA70008A48AA /* DoubleDate */,
@@ -1599,6 +1644,9 @@
 		90911026192EEA70008A48AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8AD43E561AFE74BE00F05E8D /* AddressBookUI.framework */,
+				8AD43E541AFE749B00F05E8D /* MessageUI.framework */,
+				8AD43E521AFE748700F05E8D /* libicucore.dylib */,
 				1873D80F1AE817330019E02D /* libstdc++.6.0.9.dylib */,
 				90F1BECE1930492B00121AEC /* AddressBook.framework */,
 				90F1BECC1930492300121AEC /* CFNetwork.framework */,
@@ -2878,6 +2926,7 @@
 				EBD2AB321A7CDAC000D16528 /* VoiceSearchFeedback017@2x.png in Resources */,
 				EBD2AB281A7CDAC000D16528 /* VoiceSearchFeedback012@2x.png in Resources */,
 				EBD2AB4E1A7CDAC000D16528 /* chat_location_annotation_someone@2x.png in Resources */,
+				8AD43E501AFE737900F05E8D /* SMS_SDKLocalizable.strings in Resources */,
 				EBD2AB261A7CDAC000D16528 /* VoiceSearchFeedback011@2x.png in Resources */,
 				8AA113481AFA8134002DB7F5 /* like1.png in Resources */,
 				8AA1134C1AFA8166002DB7F5 /* likeGo.png in Resources */,
@@ -2990,6 +3039,7 @@
 				283403091A9EBB8200B7DE9B /* GroupSubjectChangingViewController.m in Sources */,
 				9003D9151939D8D000DC38A4 /* ApplyFriendCell.m in Sources */,
 				8AEF0ECE1AF31C8900DE2484 /* HelpViewController.m in Sources */,
+				8AD43E5F1AFE783E00F05E8D /* RegViewController.m in Sources */,
 				3C6BBA091941A58C00A64684 /* XHMessageTextView.m in Sources */,
 				90911118192EEAED008A48AA /* WCAlertView.m in Sources */,
 				90133E611972D11000C49B56 /* NSString+Valid.m in Sources */,
@@ -3035,6 +3085,7 @@
 				90A705FA1A8B63B200376154 /* MWCaptionView.m in Sources */,
 				90A706191A8B63B200376154 /* PSTCollectionViewItemKey.m in Sources */,
 				8A038C2F1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m in Sources */,
+				8AD43E701AFE7BE100F05E8D /* NSDictionary-DeepMutableCopy.m in Sources */,
 				9003D8A51939D8D000DC38A4 /* EMChatTimeCell.m in Sources */,
 				90A7061B1A8B63B200376154 /* PSTCollectionViewUpdateItem.m in Sources */,
 				3C11304E195AFFDD00ED1D0D /* EMChatVideoBubbleView.m in Sources */,
@@ -3049,6 +3100,7 @@
 				3C6FFA2419A2F5560003EB25 /* DebugViewController.m in Sources */,
 				9003D9071939D8D000DC38A4 /* MessageReadManager.m in Sources */,
 				8A038C491AF51A95007A05BE /* AWSDynamoDB_ChatRoom2.m in Sources */,
+				8AD43E601AFE783E00F05E8D /* SectionsViewController.m in Sources */,
 				3C35365C19A22164003EF79E /* GroupSettingViewController.m in Sources */,
 				905325CF1932ED8B00F064D7 /* EMSearchBar.m in Sources */,
 				3C914D8619514BBD0002DAD3 /* CreateGroupViewController.m in Sources */,
@@ -3100,6 +3152,15 @@
 				3C9B15931A6D158C00D09FD6 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		8AD43E4C1AFE737900F05E8D /* SMS_SDKLocalizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8AD43E4D1AFE737900F05E8D /* en */,
+				8AD43E4F1AFE737900F05E8D /* zh-Hans */,
+			);
+			name = SMS_SDKLocalizable.strings;
 			sourceTree = "<group>";
 		};
 		909E89C41A6E7A270064B20F /* LoginViewController.xib */ = {
@@ -3199,7 +3260,10 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SMS_SDK",
+				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DoubleDate/DoubleDate-Prefix.pch";
@@ -3215,7 +3279,7 @@
 					"$(PROJECT_DIR)/OSS-Universal",
 					"$(PROJECT_DIR)/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/DoubleDate/3rdparty/UMeng",
-					"$(PROJECT_DIR)/weixin",
+					"$(PROJECT_DIR)/Wechat",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -3236,7 +3300,10 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SMS_SDK",
+				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DoubleDate/DoubleDate-Prefix.pch";
@@ -3252,7 +3319,7 @@
 					"$(PROJECT_DIR)/OSS-Universal",
 					"$(PROJECT_DIR)/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/DoubleDate/3rdparty/UMeng",
-					"$(PROJECT_DIR)/weixin",
+					"$(PROJECT_DIR)/Wechat",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";

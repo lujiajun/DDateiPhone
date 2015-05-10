@@ -16,6 +16,7 @@
 #import "DDRegisterController.h"
 #import "DDLoginController.h"
 #import "DDRegisterFinishController.h"
+#import "RegViewController.h"
 
 @interface LoginViewController ()<IChatManagerDelegate,UITextFieldDelegate>
 
@@ -76,6 +77,7 @@
 - (IBAction)doRegister:(id)sender {
 //     DDRegisterFinishController *personsign=[DDRegisterFinishController alloc];
     DDRegisterController *personsign=[DDRegisterController alloc];
+//    RegViewController *personsign=[RegViewController alloc];
     [self.navigationController pushViewController:personsign animated:YES];
 
 }

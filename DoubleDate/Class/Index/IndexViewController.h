@@ -8,6 +8,5 @@
 +(void) setDDUser:(DDUser *) user;
 
 - (void)initdduser;
-
-- (void)addFriendAction;
+-(BOOL) haveDoubleFriend;
 @end

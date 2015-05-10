@@ -7,6 +7,7 @@
 #import "PasswordUpdateView.h"
 #import "NewSettingViewController.h"
 #import "AWSDynamoDB_DDUser.h"
+#import "UIImageView+EMWebCache.h"
 
 @interface DDupdatePicAndName ()
 @property(strong,nonatomic) UIImageView *imgHead;
@@ -25,17 +26,13 @@
     
     self.title = @"修改头像";
     //touxiang
-    UIImage *img=[UIImage alloc];
-    if([IndexViewController instanceDDuser] && [IndexViewController instanceDDuser].picPath){
-        NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:[IndexViewController instanceDDuser].picPath]]];
-        img = [UIImage imageWithData:data];
-    }else {
-        img=[UIImage imageNamed:@"Logo_new.png"];
-    }
-    _imgHead=[[UIImageView alloc] initWithImage:img];
+ 
+ 
+    _imgHead=[[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-50, 10, 100, 100)];
+    [_imgHead sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:[IndexViewController instanceDDuser].picPath]]];
     _imgHead.layer.masksToBounds =YES;
     _imgHead.layer.cornerRadius =50;
-    _imgHead.frame=CGRectMake(self.view.frame.size.width/2-50, 10, 100, 100);
+
     [_imgHead setContentMode:UIViewContentModeScaleToFill];
     [self.view addSubview:_imgHead];
     

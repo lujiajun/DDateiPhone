@@ -59,12 +59,12 @@
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
     }
     self.title = NSLocalizedString(@"title.createGroup", @"Create a group");
-    self.view.backgroundColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
     addButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
     [addButton setTitle:NSLocalizedString(@"group.create.addOccupant", @"add members") forState:UIControlStateNormal];
-    [addButton setTitleColor:[UIColor colorWithRed:32 / 255.0 green:134 / 255.0 blue:158 / 255.0 alpha:1.0] forState:UIControlStateNormal];
+    [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     [addButton addTarget:self action:@selector(addContacts:) forControlEvents:UIControlEventTouchUpInside];
     _rightItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
@@ -96,7 +96,7 @@
 		_chatRoomCover.layer.borderColor = [[UIColor lightGrayColor] CGColor];
 		_chatRoomCover.layer.borderWidth = 0.5;
 		_chatRoomCover.layer.cornerRadius = 3;
-		_chatRoomCover.backgroundColor = [UIColor whiteColor];
+        _chatRoomCover.backgroundColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
         _chatRoomCover.userInteractionEnabled = YES;
 
 		UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 40)];
@@ -116,7 +116,7 @@
 - (EMTextView *)mottoTextView
 {
     if (_mottoTextView == nil) {
-        _mottoTextView = [[EMTextView alloc] initWithFrame:CGRectMake(10, 220, 300, 80)];
+        _mottoTextView = [[EMTextView alloc] initWithFrame:CGRectMake(10, 220, self.view.frame.size.width-20, 80)];
         _mottoTextView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
         _mottoTextView.layer.borderWidth = 0.5;
         _mottoTextView.layer.cornerRadius = 3;

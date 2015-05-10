@@ -50,9 +50,8 @@
 {
     [super viewDidLoad];
     self.title =_chatroom2.Motto;
-    self.view.backgroundColor = [UIColor redColor];
     
-    self.view.backgroundColor = [UIColor grayColor];
+    self.view.backgroundColor =[UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
     
     UIImageView *bak1=[[UIImageView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-10, self.view.frame.size.height/2-80)];
     bak1.backgroundColor=[UIColor whiteColor];
