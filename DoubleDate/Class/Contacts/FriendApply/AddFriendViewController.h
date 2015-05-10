@@ -14,4 +14,5 @@
 
 @interface AddFriendViewController : UITableViewController
 
+-(void) initname:(NSString *) name;
 @end

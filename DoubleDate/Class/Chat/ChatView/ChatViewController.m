@@ -89,9 +89,13 @@
 @end
 
 @implementation ChatViewController
-int secondsCountDown = 5*60;
+static int secondsCountDown = 60*5;
 
 NSDateFormatter *dateformatter;
+
++(int) getSecondsCount{
+    return secondsCountDown;
+}
 
 -(id) initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend isNewRoom:(BOOL) isNewRoom{
     
@@ -178,7 +182,7 @@ NSDateFormatter *dateformatter;
     
     if(secondsCountDown==0){
         [_countDownTimer invalidate];
-//        删除数据库记录
+        NSLog(@"删除数据库记录");
          AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
         [room4Da deleteRoom4:_chatroom4.GID];
 //        删除环信数据
@@ -222,12 +226,12 @@ NSDateFormatter *dateformatter;
     _userDao=[[DDUserDAO alloc] init];
     
     
-    UIButton *createButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 30, 30)];
-    [createButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-    [createButton addTarget:self action:@selector(backtochatlist) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *createGroupItem = [[UIBarButtonItem alloc] initWithCustomView:createButton];
-    
-    [self.navigationItem setLeftBarButtonItem:createGroupItem];
+//    UIButton *createButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 30, 30)];
+//    [createButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//    [createButton addTarget:self action:@selector(backtochatlist) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *createGroupItem = [[UIBarButtonItem alloc] initWithCustomView:createButton];
+//    
+//    [self.navigationItem setLeftBarButtonItem:createGroupItem];
     
     //使用timer定时，每秒触发一次，然后就是写selector了。
     [self registerBecomeActive];
@@ -426,7 +430,9 @@ NSDateFormatter *dateformatter;
             [self.navigationController pushViewController:chatController animated:YES];
         }else{
             //新建
-            [self createTwoNewGroup:_chatroom4.UID1 UID2:_chatroom4.UID2 isSubG:YES];
+//            _isSubGroup=YES;
+            [self doneAction:self];
+//            [self createTwoNewGroup:_chatroom4.UID1 UID2:_chatroom4.UID2 isSubG:YES];
             
         }
     }else{
@@ -436,33 +442,47 @@ NSDateFormatter *dateformatter;
             [self.navigationController pushViewController:chatController animated:YES];
         }else{
             //新建
-            [self createTwoNewGroup:_chatroom4.UID3 UID2:_chatroom4.UID4 isSubG:NO];
-            
+//            _isSubGroup=NO;
+//            [self createTwoNewGroup:_chatroom4.UID3 UID2:_chatroom4.UID4 isSubG:NO];
+            [self doneSUBAction:self];
         }
         
     }
     
 }
 
--(void)createTwoNewGroup:(NSString *) UID1 UID2:(NSString *) UID2 isSubG:(BOOL) isSubG{
+- (void)doneAction:(id)sender
+{
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(createTwoMainNewGroup)
+                                                     name:@"createTwoMainNewGroup"
+                                                   object:nil];
+        
+        
+        
+        [self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"createTwoMainNewGroup" object:@NO];
+    
+    
+    
+}
 
+-(void)createTwoMainNewGroup{
+
+    
     EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
     groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
-    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[@"临时聊天组" stringByAppendingString:UID1]
-                                                          description:[@"临时聊天组" stringByAppendingString:UID1]
-                                                             invitees:@[UID1,UID2]
+    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[@"临时聊天组" stringByAppendingString:_chatroom4.UID1]
+                                                          description:[@"临时聊天组" stringByAppendingString:_chatroom4.UID1]
+                                                             invitees:@[_chatroom4.UID1,_chatroom4.UID2]
                                                 initialWelcomeMessage:@"邀请您加入群组"
                                                          styleSetting:groupStyleSetting
                                                            completion:^(EMGroup *group, EMError *error) {
                                                                if(!error){
-//                                                                   chatroom4.GID=group.groupId;
-                                                                   if(isSubG){
-                                                                       self.chatroom4.subGID1=group.groupId;
-                                                                   }else{
-                                                                       self.chatroom4.subGID2=group.groupId;
-                                                                   }
+                                                                   self.chatroom4.subGID1=group.groupId;
+                                                                   
                                                                    AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
-                                                                    [room4Da updateSubGroupTable:self.chatroom4];
+                                                                   [room4Da updateSubGroupTable:self.chatroom4];
                                                                    
                                                                    ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:YES];
                                                                    chatController.title = @"临时聊天室";
@@ -473,8 +493,55 @@ NSDateFormatter *dateformatter;
                                                            } onQueue:nil];
     
 
-
 }
+
+
+
+- (void)doneSUBAction:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(createSUBTwoMainNewGroup)
+                                                 name:@"createSUBTwoMainNewGroup"
+                                               object:nil];
+    
+    
+    
+    [self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"createSUBTwoMainNewGroup" object:@NO];
+    
+    
+    
+}
+
+-(void)createSUBTwoMainNewGroup{
+    
+    
+    EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
+    groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
+    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[@"临时聊天组" stringByAppendingString:_chatroom4.UID3]
+                                                          description:[@"临时聊天组" stringByAppendingString:_chatroom4.UID4]
+                                                             invitees:@[_chatroom4.UID3,_chatroom4.UID4]
+                                                initialWelcomeMessage:@"邀请您加入群组"
+                                                         styleSetting:groupStyleSetting
+                                                           completion:^(EMGroup *group, EMError *error) {
+                                                               if(!error){
+                                                                   self.chatroom4.subGID2=group.groupId;
+                                                                   
+                                                                   AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
+                                                                   [room4Da updateSubGroupTable:self.chatroom4];
+                                                                   
+                                                                   ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:YES];
+                                                                   chatController.title = @"临时聊天室";
+                                                                   [self.navigationController pushViewController:chatController animated:YES];
+                                                                   
+                                                                   NSLog(@"创建成功 -- %@",group);
+                                                               }
+                                                           } onQueue:nil];
+    
+    
+}
+
+
 //顶部bar
 - (void)setupBarButtonItem
 {

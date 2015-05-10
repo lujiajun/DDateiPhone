@@ -190,6 +190,7 @@
 		        cell.placeholderImage = [UIImage imageNamed:imageName];
 			}
 		    cell.detailMsg = [weakSelf subTitleMessageByConversation:conversation];
+        
 		    cell.time = [weakSelf lastMessageTimeByConversation:conversation];
 		    cell.unreadCount = [weakSelf unreadMessageCountByConversation:conversation];
 		    if (indexPath.row % 2 == 1) {
@@ -321,10 +322,11 @@
 		if (!cell) {
 			cell = [[ChatRoom4ListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
 		}
-       
         
+       
         CHATROOM4 *chatRoom4 = [self.dataSource objectAtIndex:indexPath.row];
         
+       EMConversation *conversion= [[EaseMob sharedInstance].chatManager conversationForChatter:chatRoom4.GID isGroup:YES];
         //用户1
         DDUser *user1 = [self.ddUserDao selectDDuserByUid:chatRoom4.UID1];
         [cell.user1Avatar sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user1.picPath]]
@@ -348,8 +350,32 @@
         [cell.user4Avatar sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user4.picPath]]
                             placeholderImage:[UIImage imageNamed:@"Logo_new"]];
         cell.user4Name.text = user4.nickName;
+        //时间
+        NSUInteger  unread=conversion.unreadMessagesCount;
+        if(unread>0){
+            if (unread < 9) {
+                cell.unreadMessage.font = [UIFont systemFontOfSize:13];
+            } else if (unread > 9 && unread < 99) {
+                cell.unreadMessage.font = [UIFont systemFontOfSize:12];
+            } else {
+                cell.unreadMessage.font = [UIFont systemFontOfSize:10];
+            }
+            cell.unreadMessage.text=[NSString stringWithFormat:@"%ld", (long)unread];
+            
+            [cell addSubview:cell.unreadMessage];
+            
+        }
+        NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
+        [inputFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"]];
+        [inputFormatter setDateFormat:@"yyyyMMdd_HHmmss"];
+        NSDate* inputDate = [inputFormatter dateFromString:chatRoom4.CTIMER];
+//        NSLog(@"date = %@", inputDate);
         
-        cell.timeLabel.text = [NSDate formattedTimeFromTimeInterval:chatRoom4.systemTimeNumber.longLongValue];
+        NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+        [outputFormatter setLocale:[NSLocale currentLocale]];
+        [outputFormatter setDateFormat:@"yyyy年MM月dd日 HH时mm分ss秒"];
+        
+        cell.timeLabel.text = [outputFormatter stringFromDate:inputDate];
         
 		if (indexPath.row % 2 == 1) {
 			cell.contentView.backgroundColor = RGBACOLOR(246, 246, 246, 1);

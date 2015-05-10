@@ -99,9 +99,11 @@
          if (loginInfo && !error) {
              //获取群组列表
              [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsList];
-             
+
              //设置是否自动登录
              [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:YES];
+             //获取好友列表
+             [[EaseMob sharedInstance].chatManager buddyList];
              
              //将旧版的coredata数据导入新的数据库
              EMError *error = [[EaseMob sharedInstance].chatManager importDataToNewDatabase];

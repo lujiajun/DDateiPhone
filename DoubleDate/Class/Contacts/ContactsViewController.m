@@ -57,6 +57,10 @@ static BOOL haveFriend=NO;
 
 @implementation ContactsViewController
 
++(BOOL) haveFriend{
+    return haveFriend;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -672,6 +676,9 @@ static BOOL haveFriend=NO;
     [self.contactsSource removeAllObjects];
     
     NSArray *buddyList = [[EaseMob sharedInstance].chatManager buddyList];
+    if(buddyList!=nil&&buddyList.count>0){
+        haveFriend=YES;
+    }
     for (EMBuddy *buddy in buddyList) {
         if (buddy.followState != eEMBuddyFollowState_NotFollowed) {
             [self.contactsSource addObject:buddy];

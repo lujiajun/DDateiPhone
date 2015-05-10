@@ -508,9 +508,11 @@
                                                                    chatroom4.isLikeUID3=[NSNumber numberWithInt:0];
                                                                    chatroom4.isLikeUID4=[NSNumber numberWithInt:0];
                                                                    chatroom4.roomStatus=@"New";
-                                                                   chatroom4.systemTimeNumber=[NSNumber numberWithInt:[[NSDate date] timeIntervalSince1970]*1000];
-                                                                   AWSDynamoDB_ChatRoom4 *chatroom4DB=[AWSDynamoDB_ChatRoom4 alloc];
+                                                                   
+                                                                   chatroom4.systemTimeNumber=[NSNumber numberWithInt:[[NSDate date] timeIntervalSince1970]*1000+ [ChatViewController getSecondsCount]*1000];
+                                                                   AWSDynamoDB_ChatRoom4 *chatroom4DB=[[AWSDynamoDB_ChatRoom4 alloc]init];
                                                                    [chatroom4DB insertChatroom4:chatroom4];
+                                                                   
                                                                    ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:NO] initRoom4:chatroom4 friend:self.toAddFriend isNewRoom:YES ];
                                                                    chatController.title = self.room2.Motto;
                                                                    [self.navigationController pushViewController:chatController animated:YES];

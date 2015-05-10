@@ -30,6 +30,7 @@
 @property (strong, nonatomic) UITextField *textField;
 @property (strong, nonatomic) NSIndexPath *selectedIndexPath;
 @property(strong,nonatomic) DDUser *toadduser;
+@property(strong,nonatomic) NSString *name;
 
 @end
 
@@ -43,6 +44,10 @@
         _dataSource = [NSMutableArray array];
     }
     return self;
+}
+
+-(void) initname:(NSString *) name{
+    _name=name;
 }
 
 - (void)viewDidLoad
@@ -99,7 +104,12 @@
         _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _textField.font = [UIFont systemFontOfSize:15.0];
         _textField.backgroundColor = [UIColor whiteColor];
-        _textField.placeholder = NSLocalizedString(@"friend.inputNameToSearch", @"input to find friends");
+        if(_name==nil){
+            _textField.placeholder = NSLocalizedString(@"friend.inputNameToSearch", @"input to find friends");
+        }else{
+            _textField.text=_name;
+        }
+        
         _textField.returnKeyType = UIReturnKeyDone;
         _textField.delegate = self;
     }

@@ -113,6 +113,7 @@ static DDUser *uuser;
 }
 
 - (BOOL)haveDoubleFriend {
+    
 	NSArray *buddyList = [[EaseMob sharedInstance].chatManager buddyList];
 	if (buddyList != nil && buddyList.count > 0) {
 		return YES;
@@ -340,5 +341,9 @@ static DDUser *uuser;
 
 #pragma mark - Private
 - (void)addFriend:(id *)sender {
+    AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
+    [addController initname:self.textField.text];
+    [self.navigationController pushViewController:addController animated:YES];
+    
 }
 @end

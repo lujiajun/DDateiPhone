@@ -39,8 +39,10 @@
 }
 
 - (void)insertChatroom4:(CHATROOM4 *)tableRow {
+   
 	if (tableRow != nil && tableRow.GID != nil) {
 		[[self.dynamoDBObjectMapper save:tableRow] continueWithSuccessBlock: ^id (BFTask *task) {
+          
 		    [self.chatRoom4Dao insertChatroom4:tableRow];
 		    return nil;
 		}];
@@ -73,7 +75,8 @@
          if (task.exception) {
              NSLog(@"The request failed. Exception: [%@]", task.exception);
          }
-         [self.chatRoom4Dao delete:gid];
+         //删除
+         [self.chatRoom4Dao delChatRoom4ByRid:gid];
          return nil;
      }];
 }
@@ -101,7 +104,7 @@
 
 -(CHATROOM4 *)getChatroom4InsertLocal:(NSString*) uid{
         AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    
+//    NSLog(uid);
         [[dynamoDBObjectMapper load:[CHATROOM4 class] hashKey:uid rangeKey:nil]
          continueWithBlock:^id(BFTask *task) {
              if (task.error) {
@@ -112,9 +115,13 @@
              }
              if (task.result) {
                  CHATROOM4 *room4 = task.result;
-                 ChatRoom4DAO *room4Dao=[[ChatRoom4DAO alloc] init];
-                 [room4Dao insertChatroom4:room4];
-                 return  room4;
+                 if(room4!=nil&&room4.GID!=nil){
+//                     NSLog(@"开始插入四人房间");
+                     ChatRoom4DAO *room4Dao=[[ChatRoom4DAO alloc] init];
+                     [room4Dao insertChatroom4:room4];
+                     return  room4;
+                     
+                 }
                  //Do something with the result.
              }
              return nil;

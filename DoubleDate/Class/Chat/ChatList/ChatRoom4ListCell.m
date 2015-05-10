@@ -68,14 +68,24 @@
 		_user4Avatar = [[UIImageView alloc] init];
 		_user4Avatar.frame = CGRectMake(start + AVARTAR_SIZE * 3, AVARTAR_MARGIN_TOP, AVARTAR_SIZE, AVARTAR_SIZE);
 		[self.contentView addSubview:_user4Avatar];
-
+       
+        
 		_user4Name = [[UILabel alloc] init];
 		_user4Name.frame = CGRectMake(0, 0, AVARTAR_SIZE, 10);
 		_user4Name.center = CGPointMake(_user4Avatar.center.x, _user4Avatar.center.y + AVARTAR_SIZE / 2 + 10);
 		_user4Name.textAlignment = NSTextAlignmentCenter;
 		_user4Name.font = [UIFont systemFontOfSize:12];
 		[self.contentView addSubview:_user4Name];
+        
+        _unreadMessage=[[UILabel alloc] initWithFrame:CGRectMake(start + AVARTAR_SIZE * 4, 0, 20, 20)];
+        _unreadMessage.backgroundColor = [UIColor redColor];
+        _unreadMessage.textColor = [UIColor whiteColor];
+        
+        _unreadMessage.textAlignment = NSTextAlignmentCenter;
+        _unreadMessage.layer.cornerRadius = 10;
+        _unreadMessage.clipsToBounds = YES;
 
+      
 		//time label
 		_timeLabel = [[UILabel alloc] init];
 		_timeLabel.frame = CGRectMake(self.frame.size.width - 175, CELL_HEIGHT - 20, 175, 20);
@@ -86,13 +96,14 @@
 		[self.contentView addSubview:_timeLabel];
 
 		//unread label
-		_unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(start - 10 + AVARTAR_SIZE * 4, 0, 20, 20)];
+		_unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(start + AVARTAR_SIZE * 3, AVARTAR_MARGIN_TOP, AVARTAR_SIZE, AVARTAR_SIZE)];
 		_unreadLabel.backgroundColor = [UIColor redColor];
 		_unreadLabel.textColor = [UIColor whiteColor];
 
 		_unreadLabel.textAlignment = NSTextAlignmentCenter;
 		_unreadLabel.font = [UIFont systemFontOfSize:11];
 		_unreadLabel.layer.cornerRadius = 10;
+        _unreadLabel.text=@"10";
 		_unreadLabel.clipsToBounds = YES;
 		[self.contentView addSubview:_unreadLabel];
 

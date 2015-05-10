@@ -20,4 +20,8 @@
 
 
 -(id)initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend isNewRoom:(BOOL) isNewRoom;
+
+-(void)createTwoMainNewGroup;
+
++(int) getSecondsCount;
 @end

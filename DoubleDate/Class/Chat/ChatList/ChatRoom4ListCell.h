@@ -19,6 +19,7 @@
 @property (strong, nonatomic) UILabel *user2Name;
 @property (strong, nonatomic) UILabel *user3Name;
 @property (strong, nonatomic) UILabel *user4Name;
+@property (strong, nonatomic) UILabel *unreadMessage;
 
 @property (strong, nonatomic) UILabel *timeLabel;
 
