@@ -107,4 +107,9 @@
 	return nil;
 }
 
+- (void)getUserByUID:(SuccussBlock)successBlock UID:(NSString *) UID{
+    
+        
+}
+
 @end

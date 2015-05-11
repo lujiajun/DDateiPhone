@@ -311,7 +311,13 @@
 	}
 
 	if (indexPath.section == 0) {
-		normalCell.textLabel.text = @"两人窃窃私语";
+        //按照用户名搜索头像
+        UIImageView *head=[[UIImageView alloc]initWithFrame:CGRectMake(10,5, 40, 40)];
+        head.image=[UIImage imageNamed:@"Hi"];
+        [normalCell.contentView addSubview:head];
+        UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(60, 12, 200, 30)];
+        name.text=@"两人窃窃私语";;
+        [normalCell.contentView addSubview:name];
 	} else if (indexPath.section == 1) {
 		normalCell.textLabel.text = @"四人聊聊聊~liao";
 	} else if (indexPath.section == 2) {

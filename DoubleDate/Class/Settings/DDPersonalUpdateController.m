@@ -184,9 +184,10 @@
 	//XIUGAI BENDI
 	
 	[IndexViewController setDDUser:user];
-    NewSettingViewController *settings=[NewSettingViewController alloc];
-    [settings.tableView reloadData];
-    [self.navigationController pushViewController:settings animated:YES];
+//    NewSettingViewController *settings=[NewSettingViewController alloc];
+//    [settings.tableView reloadData];
+//    [self.navigationController pushViewController:settings animated:YES];
+    [self.navigationController popToRootViewControllerAnimated:NO];
 }
 //判断账号和密码是否为空
 - (BOOL)isEmpty{

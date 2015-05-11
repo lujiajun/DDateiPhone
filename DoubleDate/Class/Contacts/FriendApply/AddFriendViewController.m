@@ -21,7 +21,9 @@
 #import "AWSDynamoDBObjectMapper.h"
 #import "IndexViewController.h"
 #import "BFTask.h"
-
+#import "Util.h"
+#import "Constants.h"
+#import "UIImageView+WebCache.h"
 @interface AddFriendViewController ()<UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *dataSource;
@@ -153,9 +155,13 @@
         cell = [[AddFriendCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     //按照用户名搜索头像
-    
-    cell.imageView.image = [UIImage imageNamed:@"chatListCellHead.png"];
-    cell.textLabel.text = [self.dataSource objectAtIndex:indexPath.row];
+    UIImageView *head=[[UIImageView alloc]initWithFrame:CGRectMake(5,5, 60, 60)];
+    [head sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:_toadduser.picPath]]
+                        placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+    [cell.contentView addSubview:head];
+    UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(70, 25, 200, 30)];
+    name.text=[self.dataSource objectAtIndex:indexPath.row];
+    [cell.contentView addSubview:name];
     
     return cell;
 }
@@ -164,7 +170,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return 80;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -269,21 +275,6 @@
     
     _toadduser= bftask.result;
     
-
-    
-  //
-//    [[dynamoDBObjectMapper load:[DDUser class]
-//                         hashKey:uid
-//                        rangeKey:nil] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
-//        if (!task.error) {
-//            
-//            
-//        } else {
-//            NSLog(@"Error: [%@]", task.error);
-//            
-//        }
-//        return nil;
-//    }];
 
 }
 

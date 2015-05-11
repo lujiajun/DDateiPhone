@@ -41,7 +41,7 @@ static OSSBucket *bucket;
 -(void) uploadPic:(NSData *)upData name:(NSString *) name{
     NSError *error = nil;
     OSSData *testData = [[OSSData alloc] initWithBucket:bucket withKey:name];
-    [testData setData:upData withType:@"jpg"];
+    [testData setData:upData withType:@"jpeg"];
     [testData upload:&error];
     
 }
@@ -53,18 +53,27 @@ static OSSBucket *bucket;
     NSError *error = nil;
     [testData delete:&error];
     //插入
-    [self uploadPic:upData name:name];
+    [testData setData:upData withType:@"jpeg"];
+    [testData uploadWithUploadCallback:^(BOOL isSuccess, NSError *error) {
+        if (isSuccess) {
+        } else {
+            NSLog(@"errorInfo_testDataUploadWithProgress:%@", [error userInfo]);
+        }
+    } withProgressCallback:^(float progress) { NSLog(@"current get %f", progress);
+    }];
+
 }
 
 //OSS ,username_1
 //1|2|3|4
 -(void) asynUploadPic:(NSData *) upData name:(NSString *) picname username:(NSString *) username{
-    OSSData *testData = [[OSSData alloc] initWithBucket:bucket withKey:[[username stringByAppendingString:@"_"] stringByAppendingString:picname]];
-    [testData setData:upData withType:@"jpg"];
+
+    OSSData *testData = [[OSSData alloc] initWithBucket:bucket withKey:[[username stringByAppendingString:@"_photo_"]stringByAppendingString:picname]];
+    [testData setData:upData withType:@"jpeg"];
     [testData uploadWithUploadCallback:^(BOOL isSuccess, NSError *error) {
         if (isSuccess) {
            //成功了，则插入AWS
-            AWSDynamoDB_DDUser *dynamoDB=[AWSDynamoDB_DDUser alloc];
+            AWSDynamoDB_DDUser *dynamoDB=[[AWSDynamoDB_DDUser alloc]init];
             DDUserDAO *dao=[[DDUserDAO alloc]init];
             DDUser *dduser= [dao selectDDuserByUid:username];
             if(dduser!=nil){
@@ -92,7 +101,7 @@ static OSSBucket *bucket;
     NSError *error = nil;
     NSString *name=self.createUUID;
     OSSData *testData = [[OSSData alloc] initWithBucket:bucket withKey:name];
-    [testData setData:upData withType:@"jpg"];
+    [testData setData:upData withType:@"jpeg"];
     [testData upload:&error];
     return name;
 }

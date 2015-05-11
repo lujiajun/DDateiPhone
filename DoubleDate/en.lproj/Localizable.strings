@@ -63,6 +63,7 @@
 "register.school" = "plsase enter city and school";
 "register.nicknameandgender"="please enter nickname and gender";
 "login.inputApnsNickname" = "Please enter nickname for apns";
+"register.uploadHeadError"="please upload your picture";
 
 //register
 "register.ongoing" = "Is to register...";
