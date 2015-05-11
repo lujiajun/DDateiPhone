@@ -27,6 +27,7 @@
 #import "AWSDynamoDB_DDUser.h"
 #import "AWSDynamoDB_ChatRoom2.h"
 #import "Util.h"
+#import "PersonInfoController.h"
 
 @interface ChatRoomDetail ()
 
@@ -56,6 +57,9 @@
     
     UIImageView *bak1=[[UIImageView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-10, self.view.frame.size.height/2-80)];
     bak1.backgroundColor=[UIColor whiteColor];
+    [bak1 setUserInteractionEnabled:YES];
+    [bak1 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getUser1DetailInfo)]];
+    
     bak1.layer.masksToBounds =YES;
     bak1.layer.cornerRadius =5;
     [self.view addSubview:bak1];
@@ -64,6 +68,8 @@
     bak2.backgroundColor=[UIColor whiteColor];
     bak2.layer.masksToBounds =YES;
     bak2.layer.cornerRadius =5;
+    [bak2 setUserInteractionEnabled:YES];
+    [bak2 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getUser2DetailInfo)]];
     [self showUser2:bak2];
     [self.view addSubview:bak2];
     
@@ -79,6 +85,17 @@
     [self updateClickNumber];
   
 }
+
+-(void) getUser1DetailInfo{
+    PersonInfoController *personInfo=[[PersonInfoController alloc]initUser:_uuser1];
+    [self.navigationController pushViewController:personInfo animated:YES];
+}
+
+-(void) getUser2DetailInfo{
+    PersonInfoController *personInfo=[[PersonInfoController alloc]initUser:_uuser2];
+    [self.navigationController pushViewController:personInfo animated:YES];
+}
+
 
 -(void) addUser{
     //判断性别

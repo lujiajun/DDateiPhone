@@ -126,6 +126,7 @@
 		8ABE78151B00998D0020BD6C /* ShareSDKFlatShareViewUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE78091B00998D0020BD6C /* ShareSDKFlatShareViewUI.framework */; };
 		8ABE78161B00998D0020BD6C /* ShareSDKShareActionSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE780A1B00998D0020BD6C /* ShareSDKShareActionSheet.framework */; };
 		8ABE781D1B01088D0020BD6C /* Hi.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ABE781C1B01088D0020BD6C /* Hi.png */; };
+		8ABE78201B011E8A0020BD6C /* PersonInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE781F1B011E8A0020BD6C /* PersonInfoController.m */; };
 		8AD43E351AFC801200F05E8D /* addFriend.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD43E341AFC801200F05E8D /* addFriend.png */; };
 		8AD43E501AFE737900F05E8D /* SMS_SDKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8AD43E4C1AFE737900F05E8D /* SMS_SDKLocalizable.strings */; };
 		8AD43E511AFE737900F05E8D /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD43E4E1AFE737900F05E8D /* SMS_SDK.framework */; };
@@ -651,6 +652,8 @@
 		8ABE78091B00998D0020BD6C /* ShareSDKFlatShareViewUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKFlatShareViewUI.framework; sourceTree = "<group>"; };
 		8ABE780A1B00998D0020BD6C /* ShareSDKShareActionSheet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKShareActionSheet.framework; sourceTree = "<group>"; };
 		8ABE781C1B01088D0020BD6C /* Hi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Hi.png; path = dd/Hi.png; sourceTree = "<group>"; };
+		8ABE781E1B011E710020BD6C /* PersonInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonInfoController.h; sourceTree = "<group>"; };
+		8ABE781F1B011E8A0020BD6C /* PersonInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonInfoController.m; sourceTree = "<group>"; };
 		8AD43E341AFC801200F05E8D /* addFriend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addFriend.png; path = dd/addFriend.png; sourceTree = "<group>"; };
 		8AD43E371AFE5F9E00F05E8D /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		8AD43E381AFE5F9E00F05E8D /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
@@ -1407,6 +1410,8 @@
 				8A038C2C1AF51A54007A05BE /* HomePageListCell.m */,
 				8A038C2D1AF51A54007A05BE /* IndexViewController.h */,
 				8A038C2E1AF51A54007A05BE /* IndexViewController.m */,
+				8ABE781E1B011E710020BD6C /* PersonInfoController.h */,
+				8ABE781F1B011E8A0020BD6C /* PersonInfoController.m */,
 			);
 			name = Index;
 			sourceTree = "<group>";
@@ -3198,6 +3203,7 @@
 				18F7F4EC1AF53B9E0085EEB8 /* ChatRoom4ListCell.m in Sources */,
 				90A706001A8B63B200376154 /* MWTapDetectingView.m in Sources */,
 				9003D8A71939D8D000DC38A4 /* EMChatViewCell.m in Sources */,
+				8ABE78201B011E8A0020BD6C /* PersonInfoController.m in Sources */,
 				8ADB388C1AE2A17100FCC6FC /* UsernickController.m in Sources */,
 				90A705FA1A8B63B200376154 /* MWCaptionView.m in Sources */,
 				90A706191A8B63B200376154 /* PSTCollectionViewItemKey.m in Sources */,
