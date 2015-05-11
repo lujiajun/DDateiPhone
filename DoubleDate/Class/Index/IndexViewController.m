@@ -36,7 +36,7 @@
 #import "CreateGroupViewController.h"
 #import "View+MASAdditions.h"
 
-@interface IndexViewController () <SRRefreshDelegate>
+@interface IndexViewController () <UITableViewDelegate, UITableViewDataSource, SRRefreshDelegate>
 
 @property (strong, nonatomic) UIView *headerView;
 
@@ -48,17 +48,21 @@
 
 @property (strong, nonatomic) DDUserDAO *userDao;
 
-@property (nonatomic) BOOL haveFriend;
-
 @property (strong, nonatomic) UITextField *textField;
+
+@property (strong, nonatomic) NSMutableArray *dataSource;
+
+@property (nonatomic) BOOL haveFriend;
 
 @end
 
 static DDUser *uuser;
 
-@implementation IndexViewController
-
 #define kIMGCOUNT 5
+
+#define TAB_BAR_HEIGHT self.tabBarController.tabBar.frame.size.height
+
+@implementation IndexViewController
 
 + (DDUser *)instanceDDuser {
 	return uuser;
@@ -68,62 +72,70 @@ static DDUser *uuser;
 	uuser = user;
 }
 
-- (void)viewDidLoad
-{
-    
-    [super viewDidLoad];
-	self.edgesForExtendedLayout = UIRectEdgeAll;
-	self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
-    
-    self.tableView.backgroundColor = [UIColor whiteColor];
-    [self.tableView addSubview:self.slimeView];
-    
-    
-                
-	if (_userDao == nil) {
-		_userDao = [[DDUserDAO alloc]init];
+- (instancetype)init {
+	if (self = [super init]) {
+		_userDao = [[DDUserDAO alloc] init];
+		_chatRoom2DynamoDB = [[AWSDynamoDB_ChatRoom2 alloc] init];
+		_dataSource = [NSMutableArray array];
+		
+        //1.先用本地数据做展示
+		[_dataSource addObjectsFromArray:[self.chatRoom2DynamoDB refreshListWithLocalData]];
 	}
-    //chaxun
-    [self.chatRoom2DynamoDB refreshListWithBlock:^{
-        
-        
-        self.tableView.tableHeaderView = [self haveDoubleFriend] ? nil : self.headerView;
-        [self.tableView reloadData];
-    }];
-    
-    //首页button
-    [self initdduser];
-//    NSLog([NSString stringWithFormat:@"%@",[NSNumber numberWithInt:[[NSDate date] timeIntervalSinceNow]]]);
-   
-    
+	return self;
 }
-//1431006443804
-//1431316020743
 
+- (void)viewDidLoad {
+	[super viewDidLoad];
+	[self.view addSubview:self.tableView];
+	[self.tableView mas_makeConstraints: ^(MASConstraintMaker *make) {
+	    make.top.equalTo(self.view.mas_top);
+	    make.left.equalTo(self.view.mas_left);
+	    make.right.equalTo(self.view.mas_right);
+	    make.bottom.equalTo(self.view.mas_bottom).with.offset(-TAB_BAR_HEIGHT);
+	}];
+
+	//2.去网络端获取最新的数据
+	[self.chatRoom2DynamoDB refreshListWithBlock: ^(NSArray *chatRoom2s) {
+	    [self addDataSourceIgnoreSame:chatRoom2s];
+	    [self.tableView reloadData];
+	}];
+
+	//首页button
+	[self initdduser];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	//获取好友列表
+	self.haveFriend = [self haveDoubleFriend];
+	if (!self.haveFriend) {
+		[self.view addSubview:self.headerView];
+		[self.tableView mas_remakeConstraints: ^(MASConstraintMaker *make) {
+		    make.top.equalTo(self.headerView.mas_bottom);
+		    make.left.equalTo(self.view.mas_left);
+		    make.right.equalTo(self.view.mas_right);
+		    make.bottom.equalTo(self.view.mas_bottom).with.offset(-TAB_BAR_HEIGHT);
+		}];
+	}
+}
 
 - (void)initdduser {
 	if (uuser == nil) {
 		NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
 		NSString *username = [loginInfo objectForKey:kSDKUsername];
-        if(_userDao==nil){
-            _userDao=[[DDUserDAO alloc]init];
-        }
-        uuser=[_userDao selectDDuserByUid:username];
-        if(uuser==nil){
-            
-            _dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-            [[_dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil]
-             continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
-                 uuser = task.result;
-                 return nil;
-             }];
-        }
-		
+		uuser = [_userDao selectDDuserByUid:username];
+		if (uuser == nil) {
+			_dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+			[[_dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil]
+			 continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
+			    uuser = task.result;
+			    [self.userDao insertDDUser:uuser];
+			    return nil;
+			}];
+		}
 	}
 }
 
 - (BOOL)haveDoubleFriend {
-    
 	NSArray *buddyList = [[EaseMob sharedInstance].chatManager buddyList];
 	if (buddyList != nil && buddyList.count > 0) {
 		return YES;
@@ -140,20 +152,7 @@ static DDUser *uuser;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    if(!_haveFriend){
-//        return self.chatroom2Dao.chatroom2s.count+1;
-//    }
-//    
-    return self.chatRoom2DynamoDB.chatRoom2s.count;
-}
-
-//每行缩进
--(NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row ==0) {
-        return 10;
-    }
-    return 0;
+    return [self.dataSource count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -163,7 +162,7 @@ static DDUser *uuser;
 		cell = [[HomePageListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 	}
     
-	CHATROOM2 *chatRoom2 = [self.chatRoom2DynamoDB.chatRoom2s objectAtIndex:indexPath.row];
+	CHATROOM2 *chatRoom2 = [self.dataSource objectAtIndex:indexPath.row];
 
 	if (chatRoom2 != nil && chatRoom2.PicturePath != nil) {
 		[cell.bakview sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:chatRoom2.PicturePath]]
@@ -207,9 +206,9 @@ static DDUser *uuser;
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 	if (indexPath.section == 0) {
-		for (NSUInteger i = 0; i < self.chatRoom2DynamoDB.chatRoom2s.count; i++) {
+		for (NSUInteger i = 0; i < self.dataSource.count; i++) {
 			if (indexPath.row == i) {
-				CHATROOM2 *room = [[self.chatRoom2DynamoDB.chatRoom2s objectAtIndex:i] copy];
+				CHATROOM2 *room = [[self.dataSource objectAtIndex:i] copy];
 				ChatRoomDetail *chatroom = [[ChatRoomDetail alloc]initChatRoom:room uuser1:[self.userDao selectDDuserByUid:room.UID1] uuser2:[self.userDao selectDDuserByUid:room.UID2]];
 //                 self.navigationController.navigationBarHidden=YES;
                 
@@ -219,24 +218,21 @@ static DDUser *uuser;
 	}
 }
 
+//每行缩进
+- (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 0;
+}
 
 #pragma mark - SRRefreshDelegate
 
 - (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView {
-    [self haveDoubleFriend];
 	__weak IndexViewController *weakSelf = self;
-	[self.chatRoom2DynamoDB refreshListWithBlock: ^{
-	    [self.tableView reloadData];
-	    [weakSelf.slimeView endRefresh];
-	}];
-}
-//首页刷新
--(void)refreshAll{
-    [self.chatRoom2DynamoDB refreshListWithBlock: ^{
+	[self.chatRoom2DynamoDB refreshListWithBlock:^(NSArray *chatRoom2s) {
+        [self addDataSourceIgnoreSame:chatRoom2s];
         [self.tableView reloadData];
-            }];
+        [weakSelf.slimeView endRefresh];
+    }];
 }
-
 
 - (void)indexAddFriendAction {
 	//判断状态，进行跳转
@@ -264,6 +260,16 @@ static DDUser *uuser;
 }
 
 #pragma mark - getter
+- (UITableView *)tableView {
+	if (_tableView == nil) {
+		_tableView = [[UITableView alloc] init];
+        _tableView.backgroundColor = [UIColor whiteColor];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        [_tableView addSubview:self.slimeView];
+	}
+	return _tableView;
+}
 
 -(UIView *)headerView {
     if (_headerView == nil) {
@@ -335,20 +341,6 @@ static DDUser *uuser;
     return _slimeView;
 }
 
-- (AWSDynamoDB_ChatRoom2 *)chatRoom2DynamoDB {
-	if (_chatRoom2DynamoDB == nil) {
-		_chatRoom2DynamoDB = [[AWSDynamoDB_ChatRoom2 alloc] init];
-	}
-	return _chatRoom2DynamoDB;
-}
-
-- (DDUserDAO *)userDao {
-    if (_userDao == nil) {
-        _userDao = [[DDUserDAO alloc] init];
-    }
-    return _userDao;
-}
-
 #pragma mark - Private
 - (void)addFriend:(id *)sender {
     AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -356,4 +348,22 @@ static DDUser *uuser;
     [self.navigationController pushViewController:addController animated:YES];
     
 }
+
+- (void)addDataSourceIgnoreSame:(NSArray *)data {
+	for (CHATROOM2 *chatRoom2 in data) {
+		if (![self isInDataSource:chatRoom2]) {
+			[self.dataSource addObject:chatRoom2];
+		}
+	}
+}
+
+- (BOOL)isInDataSource:(CHATROOM2 *)chatRoom2 {
+	for (CHATROOM2 *eachDataSource in self.dataSource) {
+		if ([chatRoom2.RID isEqualToString:eachDataSource.RID]) {
+			return YES;
+		}
+	}
+	return NO;
+}
+
 @end

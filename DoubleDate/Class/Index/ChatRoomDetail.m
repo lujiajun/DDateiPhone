@@ -126,7 +126,7 @@
     AWSDynamoDB_ChatRoom2 *chatRoom2DynamoDB = [[AWSDynamoDB_ChatRoom2 alloc] init];
     [chatRoom2DynamoDB insertChatroom2:_chatroom2];
 
-    [chatRoom2DynamoDB refreshListWithBlock:^{
+    [chatRoom2DynamoDB refreshListWithBlock:^(NSArray *chatRoom2s) {
         //TODO
     }];
 

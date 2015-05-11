@@ -18,91 +18,87 @@
 #import "BFExecutor.h"
 #import "AWSDynamoDB_DDUser.h"
 
+#define DEFAULT_COUNT 20
+
 @implementation AWSDynamoDB_ChatRoom2
 
 - (instancetype)init {
-    if (self = [super init]) {
-        _chatRoom2Dao = [[ChatRoom2DAO alloc] init];
-    }
-    return self;
+	if (self = [super init]) {
+		_chatRoom2Dao = [[ChatRoom2DAO alloc] init];
+	}
+	return self;
 }
 
 - (void)insertChatroom2:(CHATROOM2 *)chatRoom2 {
-    //先删除重复的
-    [self removeFromAWSandLocal:chatRoom2];
+	//先删除重复的
+	[self removeFromAWSandLocal:chatRoom2];
 	AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
 	[[dynamoDBObjectMapper save:chatRoom2] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
 	    if (task.error) {
-	      	NSLog(@"Error: [%@]", task.error);
+	        NSLog(@"Error: [%@]", task.error);
 		}
 	    return nil;
 	}];
-    [self.chatRoom2Dao insertLocalChatroom2:chatRoom2];
+	[self.chatRoom2Dao insertLocalChatroom2:chatRoom2];
 }
 
--(void) removeFromAWSandLocal:(CHATROOM2 *) chatRoom2{
-    if(chatRoom2!=nil&&chatRoom2.RID!=nil){
-        AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-        [dynamoDBObjectMapper remove:chatRoom2];
-        [self.chatRoom2Dao delChatRoom4ByRid:chatRoom2.RID];
-    }
-    
+- (void)removeFromAWSandLocal:(CHATROOM2 *)chatRoom2 {
+	if (chatRoom2 != nil && chatRoom2.RID != nil) {
+		AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+		[dynamoDBObjectMapper remove:chatRoom2];
+		[self.chatRoom2Dao delChatRoom4ByRid:chatRoom2.RID];
+	}
+}
+
+- (NSArray *)refreshListWithLocalData {
+	return [self.chatRoom2Dao getLocalChatRoom2sByCount:DEFAULT_COUNT];
 }
 
 - (void)refreshListWithBlock:(SuccussBlock)successBlock {
-    //先查询，没有在网络数据库
-    self.chatRoom2s = [self.chatRoom2Dao getLocalChatRoom2sByCount:20];
-    if (self.chatRoom2s == nil || [self.chatRoom2s count] == 0) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        
-        AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-        AWSDynamoDBScanExpression *scanExpression = [AWSDynamoDBScanExpression new];
-        scanExpression.limit = @20;
-        
-        [[dynamoDBObjectMapper scan:[CHATROOM2 class]
-                         expression:scanExpression]
-         continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
-             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-             if (task.error) {
-                 NSLog(@"The request failed. Error: [%@]", task.error);
-             }
-             
-             if (task.exception) {
-                 NSLog(@"The request failed. Exception: [%@]", task.exception);
-             }
-             
-             AWSDynamoDBPaginatedOutput *paginatedOutput = task.result;
-             self.chatRoom2s = paginatedOutput.items;
-             successBlock();
-             
-             AWSDynamoDB_DDUser *userDynamoDB = [[AWSDynamoDB_DDUser alloc] init];
-             
-             for (CHATROOM2 *chatroom2 in paginatedOutput.items) {
-                 if (chatroom2.RID != nil && chatroom2.UID1 != nil & chatroom2.UID2 != nil) {
-                     //插入本地数据 item
-                     if ([self.chatRoom2Dao getLocalChatRoom2ByRid:chatroom2.RID] == nil) {
-                         [self.chatRoom2Dao insertLocalChatroom2:chatroom2];
-                     }
-                     
-					 if ([userDynamoDB.dduserDao selectDDuserByUid:chatroom2.UID1] == nil) {
-						 [userDynamoDB getDDuserAndInsertLocal:chatroom2.UID1];
-					 }
-                     
-					 if ([userDynamoDB.dduserDao selectDDuserByUid:chatroom2.UID2] == nil) {
-						 [userDynamoDB getDDuserAndInsertLocal:chatroom2.UID2];
-					 }
-                 }
-             }
-             
-             return nil;
-         }];
-    } else {
-        successBlock();
-    }
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+	AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+	AWSDynamoDBScanExpression *scanExpression = [AWSDynamoDBScanExpression new];
+	scanExpression.limit = [NSNumber numberWithInt:DEFAULT_COUNT];
+
+	[[dynamoDBObjectMapper scan:[CHATROOM2 class]
+	                 expression:scanExpression]
+	 continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
+	    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+	    if (task.error) {
+	        NSLog(@"The request failed. Error: [%@]", task.error);
+		}
+
+	    if (task.exception) {
+	        NSLog(@"The request failed. Exception: [%@]", task.exception);
+		}
+
+	    AWSDynamoDBPaginatedOutput *paginatedOutput = task.result;
+
+	    successBlock(paginatedOutput.items);
+
+	    AWSDynamoDB_DDUser *userDynamoDB = [[AWSDynamoDB_DDUser alloc] init];
+
+	    for (CHATROOM2 *chatroom2 in paginatedOutput.items) {
+	        if (chatroom2.RID != nil && chatroom2.UID1 != nil & chatroom2.UID2 != nil) {
+	            //插入本地数据 item
+	            if ([self.chatRoom2Dao getLocalChatRoom2ByRid:chatroom2.RID] == nil) {
+	                [self.chatRoom2Dao insertLocalChatroom2:chatroom2];
+				}
+
+	            if ([userDynamoDB.dduserDao selectDDuserByUid:chatroom2.UID1] == nil) {
+	                [userDynamoDB getDDuserAndInsertLocal:chatroom2.UID1];
+				}
+
+	            if ([userDynamoDB.dduserDao selectDDuserByUid:chatroom2.UID2] == nil) {
+	                [userDynamoDB getDDuserAndInsertLocal:chatroom2.UID2];
+				}
+			}
+		}
+
+	    return nil;
+	}];
 }
 
-
-
 @end
-
-

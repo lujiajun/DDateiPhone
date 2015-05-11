@@ -18,20 +18,18 @@
 #import "CHATROOM2.h"
 #import "ChatRoom2DAO.h"
 
-typedef void(^SuccussBlock)();
+typedef void (^SuccussBlock)(NSArray *chatRoom2s);
 
 @interface AWSDynamoDB_ChatRoom2 : NSObject
 
-@property(strong, nonatomic) ChatRoom2DAO *chatRoom2Dao;
+@property (strong, nonatomic) ChatRoom2DAO *chatRoom2Dao;
 
-@property(strong, nonatomic) NSArray *chatRoom2s;
+- (NSArray *)refreshListWithLocalData;
 
 - (void)refreshListWithBlock:(SuccussBlock)successBlock;
 
 - (void)insertChatroom2:(CHATROOM2 *)chatRoom2;
 
--(void) removeFromAWSandLocal:(CHATROOM2 *) chatRoom2;
+- (void)removeFromAWSandLocal:(CHATROOM2 *)chatRoom2;
 
 @end
-
-
