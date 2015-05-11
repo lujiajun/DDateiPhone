@@ -68,7 +68,7 @@
     [self.view addSubview:_passwordTextField];
     
     UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, 30)];
-    registerButton.backgroundColor=[UIColor redColor];
+    registerButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [registerButton setTitle:@"登录" forState:UIControlStateNormal];
     [imageView addSubview:registerButton];
     [registerButton addTarget:self action:@selector(doLogin) forControlEvents:UIControlEventTouchUpInside];

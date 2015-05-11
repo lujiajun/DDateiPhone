@@ -21,6 +21,7 @@
 #import "DXFaceView.h"
 #import "EMChatViewCell.h"
 #import "EMChatTimeCell.h"
+#import "Util.h"
 #import "ChatSendHelper.h"
 #import "MessageReadManager.h"
 #import "MessageModelManager.h"
@@ -89,13 +90,11 @@
 @end
 
 @implementation ChatViewController
-static int secondsCountDown = 60*5;
+long secondsCountDown = 60*5;
+
 
 NSDateFormatter *dateformatter;
 
-+(int) getSecondsCount{
-    return secondsCountDown;
-}
 
 -(id) initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend isNewRoom:(BOOL) isNewRoom{
     
@@ -172,31 +171,6 @@ NSDateFormatter *dateformatter;
     return self;
 }
 
--(void)timeFireMethod{
-    //60秒倒计时
-    secondsCountDown--;
-    int hour=secondsCountDown/3600;
-    int minte=secondsCountDown%3600/60;
-    int seconds=secondsCountDown-hour*3600-minte*60;
-    self.lab.text = [NSString stringWithFormat:@"%d时%d分%d秒", hour,minte, seconds];
-    
-    if(secondsCountDown==0){
-        [_countDownTimer invalidate];
-        NSLog(@"删除数据库记录");
-         AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
-        [room4Da deleteRoom4:_chatroom4.GID];
-//        删除环信数据
-        [self dissolvegRroup];
-//        删除本地数据
-        [self.lab removeFromSuperview];
-        //调回
-//        IndexViewController *index=[IndexViewController alloc];
-//        [index.tableView reloadData];
-        
-        
-    }
-}
-
 
 //解散群组
 - (void)dissolvegRroup
@@ -224,14 +198,15 @@ NSDateFormatter *dateformatter;
 {
     [super viewDidLoad];
     _userDao=[[DDUserDAO alloc] init];
+    //隐藏默认返回按钮
+    [self.navigationItem setHidesBackButton:YES];
     
+    UIButton *createButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 30, 30)];
+    [createButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [createButton addTarget:self action:@selector(backtochatlist) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *createGroupItem = [[UIBarButtonItem alloc] initWithCustomView:createButton];
     
-//    UIButton *createButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 30, 30)];
-//    [createButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-//    [createButton addTarget:self action:@selector(backtochatlist) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *createGroupItem = [[UIBarButtonItem alloc] initWithCustomView:createButton];
-//    
-//    [self.navigationItem setLeftBarButtonItem:createGroupItem];
+    [self.navigationItem setLeftBarButtonItem:createGroupItem];
     
     //使用timer定时，每秒触发一次，然后就是写selector了。
     [self registerBecomeActive];
@@ -265,13 +240,21 @@ NSDateFormatter *dateformatter;
         [self.view addSubview:[self getFriendFrame]];
     }
     
-    if(_isChatGroup&&_isNewRoom){
+    if(_isChatGroup){
+        
+        //初始化count数量
         [self initClickCout];
+        if(_count<[NSNumber numberWithInt:4] &&[_chatroom4.roomStatus isEqualToString:@"New" ]){
+            //计算倒计时时间
+            secondsCountDown= ([_chatroom4.systemTimeNumber longLongValue] -[[NSDate date] timeIntervalSince1970]*1000)/1000;
+            NSLog([NSString stringWithFormat:@"%u",secondsCountDown ]);
+            _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
+        }
   
-        dateformatter = [[NSDateFormatter alloc]init] ;//定义NSDateFormatter用来显示格式
-        [dateformatter setDateFormat:@"hh mm ss"];//设定格式
+//        dateformatter = [[NSDateFormatter alloc]init] ;//定义NSDateFormatter用来显示格式
+//        [dateformatter setDateFormat:@"hh mm ss"];//设定格式
     
-//        _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
+        
     
         UIView *bak=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-60, 10, 200, 25)];
     
@@ -305,9 +288,38 @@ NSDateFormatter *dateformatter;
     [self loadMoreMessages];
 }
 
+-(void)timeFireMethod{
+    //60秒倒计时
+    secondsCountDown--;
+    long hour=secondsCountDown/3600;
+    long minte=secondsCountDown%3600/60;
+    long seconds=secondsCountDown-hour*3600-minte*60;
+    self.lab.text = [NSString stringWithFormat:@"%d时%d分%d秒", hour,minte, seconds];
+    
+    if(secondsCountDown==0){
+        [_countDownTimer invalidate];
+        NSLog(@"删除数据库记录");
+        AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
+        [room4Da deleteRoom4:_chatroom4.GID];
+        //        删除环信数据
+        [self dissolvegRroup];
+        //        删除本地数据
+        [self.lab removeFromSuperview];
+        //调回
+      
+        
+      
+        
+        
+    }
+}
+
 -(void) clickLike{
    //修改数据库和本地数据记录
     _count=[NSNumber numberWithInt: _count.intValue+1];
+    if([_count isEqual: [NSNumber numberWithInt:4]]){
+        _chatroom4.roomStatus=@"Match";
+    }
 //    NSLog(  [NSString stringWithFormat: @"%d", _count]);
     if([_count isEqualToNumber:[NSNumber numberWithInt:1]]){
         [_view1 setImage:[UIImage imageNamed:@"like1"] forState:UIControlStateNormal];
@@ -340,22 +352,25 @@ NSDateFormatter *dateformatter;
     }
     if([_chatroom4.UID2 isEqualToString:username]){
         _chatroom4.isLikeUID2=[NSNumber numberWithInt:1];
-        [_view1 setUserInteractionEnabled:NO];
+
     }
     if([_chatroom4.UID3 isEqualToString:username]){
         _chatroom4.isLikeUID3=[NSNumber numberWithInt:1];
-        [_view1 setUserInteractionEnabled:NO];
+
     }
     if([_chatroom4.UID4 isEqualToString:username]){
         _chatroom4.isLikeUID4=[NSNumber numberWithInt:1];
         
     }
-//    AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
-//    [room4Da updateTable:_chatroom4];
+    AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
+    [room4Da updateLikeByGID:_chatroom4];
     
 }
 
 -(void) initClickCout{
+    if(_count==nil){
+        _count=[NSNumber numberWithInt:0];
+    }
     if(_count==0){
         if(_chatroom4.isLikeUID1!=nil&&[_chatroom4.isLikeUID1 isEqualToNumber:[NSNumber numberWithInt:1]]){
             _count=[NSNumber numberWithInt: _count.intValue+1];
@@ -392,7 +407,8 @@ NSDateFormatter *dateformatter;
     }
     
     if(_friend!=nil){
-        [head sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:_friend.picPath]]
+
+        [head sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:_friend.picPath]]
                 placeholderImage:[UIImage imageNamed:@"Logo_new"]];
     }else {
         head.image=[UIImage imageNamed:@"Logo_new"];
@@ -416,8 +432,7 @@ NSDateFormatter *dateformatter;
 }
 
 -(void)backtochatlist{
-    MainChatListViewController *chatController = [MainChatListViewController alloc] ;
-    [self.navigationController pushViewController:chatController animated:YES];
+   [self.navigationController popViewControllerAnimated:NO];
 }
 
 -(void)dragInside{
@@ -472,8 +487,8 @@ NSDateFormatter *dateformatter;
     
     EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
     groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
-    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[@"临时聊天组" stringByAppendingString:_chatroom4.UID1]
-                                                          description:[@"临时聊天组" stringByAppendingString:_chatroom4.UID1]
+    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[Util str1:@"临时聊天组"  appendStr2:_chatroom4.UID1]
+                                                          description:[Util str1:@"临时聊天组"  appendStr2:_chatroom4.UID1]
                                                              invitees:@[_chatroom4.UID1,_chatroom4.UID2]
                                                 initialWelcomeMessage:@"邀请您加入群组"
                                                          styleSetting:groupStyleSetting
@@ -518,8 +533,8 @@ NSDateFormatter *dateformatter;
     
     EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
     groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
-    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[@"临时聊天组" stringByAppendingString:_chatroom4.UID3]
-                                                          description:[@"临时聊天组" stringByAppendingString:_chatroom4.UID4]
+    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:    [Util str1:@"临时聊天组"  appendStr2:_chatroom4.UID3]
+                                                          description:    [Util str1:@"临时聊天组"  appendStr2:_chatroom4.UID4]
                                                              invitees:@[_chatroom4.UID3,_chatroom4.UID4]
                                                 initialWelcomeMessage:@"邀请您加入群组"
                                                          styleSetting:groupStyleSetting
@@ -799,7 +814,7 @@ NSDateFormatter *dateformatter;
             //查询用户头像
             DDUser *user=[[self userDao] selectDDuserByUid:model.username];
             if(user!=nil&&user.picPath!=nil){
-                  model.headImageURL=[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]];
+                  model.headImageURL=[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]];
             }else{
                 model.image=[UIImage imageNamed:@"Logo_new"];
             }

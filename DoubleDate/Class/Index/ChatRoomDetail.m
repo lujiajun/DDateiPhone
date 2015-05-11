@@ -66,10 +66,11 @@
     bak2.layer.cornerRadius =5;
     [self showUser2:bak2];
     [self.view addSubview:bak2];
+    
     //buton
     
     UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, bak2.frame.origin.y+bak2.frame.size.height+10, self.view.frame.size.width, 30)];
-    registerButton.backgroundColor=[UIColor redColor];
+    registerButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [registerButton setTitle:@"加入聊天室" forState:UIControlStateNormal];
     [self.view addSubview:registerButton];
     [registerButton addTarget:self action:@selector(addUser) forControlEvents:UIControlEventTouchUpInside];

@@ -25,7 +25,7 @@
 @property (strong, nonatomic) NSArray *chatroom4s;
 
 
-- (void)updateTable:(CHATROOM4 *)tableRow;
+- (void)updateLikeByGID:(CHATROOM4 *)tableRow;
 -(void) updateSubGroupTable:(CHATROOM4 *)tableRow;
 
 

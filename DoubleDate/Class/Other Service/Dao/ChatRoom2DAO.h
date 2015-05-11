@@ -17,4 +17,6 @@
 
 - (NSMutableArray *)getLocalChatRoom2sByCount:(int)count;
 
+- (void)delChatRoom4ByRid:(NSString *)rid ;
+
 @end

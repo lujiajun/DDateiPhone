@@ -21,6 +21,7 @@
 #import "Constants.h"
 #import "UIImageView+WebCache.h"
 #import "DDUserDAO.h"
+#import "Util.h"
 
 #pragma mark - ChatGroupDetailViewController
 
@@ -310,7 +311,8 @@
 -(void)showUser1:(UIView *) bakview uuser1:(DDUser *) user{
     
     UIImageView *headview=[[UIImageView alloc]initWithFrame:CGRectMake(bakview.frame.origin.x+5, bakview.frame.origin.y+10, 80, 80)];
-    [headview sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
+
+    [headview sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]]
           placeholderImage:[UIImage imageNamed:@"Logo_new"]];
 
     

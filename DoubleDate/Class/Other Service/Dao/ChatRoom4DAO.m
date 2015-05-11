@@ -33,6 +33,7 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
             isLikeUID4 INTEGER, \
             subGID1 varchar(50), \
             subGID2 varchar(50), \
+            roomStatus varchar(50), \
             systemTimeNumber varchar(50));", ChatRoom4Table];
 }
 
@@ -68,8 +69,9 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
                      isLikeUID4,\
                      subGID1,\
                      subGID2,\
+                     roomStatus,\
                      systemTimeNumber) \
-                     values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", ChatRoom4Table];
+                     values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)", ChatRoom4Table];
     
 	[self.dbQueue inDatabase: ^(FMDatabase *db) {
 	    [db executeUpdate:sql,
@@ -86,6 +88,7 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
 	     chatRoom4.isLikeUID4,
 	     chatRoom4.subGID1,
 	     chatRoom4.subGID2,
+         chatRoom4.roomStatus,
 	     chatRoom4.systemTimeNumber];
 	}];
 }
@@ -183,6 +186,7 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
 	chatroom4.isLikeUID4 = [NSNumber numberWithInt:[rs intForColumn:@"isLikeUID4"]];
 	chatroom4.subGID1 = [rs stringForColumn:@"subGID1"];
 	chatroom4.subGID2 = [rs stringForColumn:@"subGID2"];
+    chatroom4.roomStatus = [rs stringForColumn:@"roomStatus"];
 	chatroom4.systemTimeNumber = [NSNumber numberWithLongLong:[rs longLongIntForColumn:@"systemTimeNumber"]];
 	return chatroom4;
 }

@@ -16,7 +16,11 @@
 #import "EMRemarkImageView.h"
 #import "EMSearchDisplayController.h"
 #import "RealtimeSearchUtil.h"
+#import "IndexViewController.h"
+#import "Util.h"
 #import "DDUserDAO.h"
+#import "ChatRoom2DAO.h"
+#import "AWSDynamoDB_ChatRoom2.h"
 #import "Constants.h"
 #import "UIImageView+EMWebCache.h"
 
@@ -34,6 +38,8 @@
 @property (strong, nonatomic) UIScrollView *footerScrollView;
 @property (strong, nonatomic) UIButton *doneButton;
 @property(strong) DDUserDAO *userDao;
+@property(strong,nonatomic) NSString *toAddFriend;
+@property(strong,nonatomic) NSString *username;
 
 @end
 
@@ -157,7 +163,7 @@
             
             DDUser *user=[self.userDao selectDDuserByUid:buddy.username];
             UIImageView *us=[[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40)] ;
-            [us sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
+            [us sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]]
                   placeholderImage:[UIImage imageNamed:@"Logo_new"]];
             [cell.contentView addSubview:us];
 
@@ -260,7 +266,7 @@
     DDUser *user=[_userDao selectDDuserByUid:buddy.username];
     UIImageView *us=[[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40)] ;
     if(user!=nil&&user.picPath!=nil){
-        [us sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
+        [us sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]]
               placeholderImage:[UIImage imageNamed:@"Logo_new"]];
     }else{
         us.image=[UIImage imageNamed:@"Logo_new"];
@@ -391,7 +397,7 @@
         EMBuddy *buddy = [self.selectedContacts objectAtIndex:i];
         EMRemarkImageView *remarkView = [[EMRemarkImageView alloc] initWithFrame:CGRectMake(i * imageSize, 0, imageSize, imageSize)];
         DDUser *user=[_userDao selectDDuserByUid:buddy.username];
-        [remarkView sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
+        [remarkView sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]]
                       placeholderImage:[UIImage imageNamed:@"Logo_new"]];
         
         remarkView.remark = buddy.username;
@@ -427,13 +433,15 @@
     [self.tableView reloadData];
 }
 
+
 - (void)doneAction:(id)sender
 {
-//    NSLog(_blockSelectedUsernames);
+
 	if (_delegate && [_delegate respondsToSelector:@selector(viewController:didFinishSelectedSources:)]) {
-//        NSLog(_blockSelectedUsernames);
 		if ([_blockSelectedUsernames count] == 0) {
 			[_delegate viewController:self didFinishSelectedSources:self.selectedContacts];
+            IndexViewController *index=[[IndexViewController alloc]init];
+            [index.tableView reloadData];
 			[self.navigationController popViewControllerAnimated:NO];
 		} else {
 			NSMutableArray *resultArray = [NSMutableArray array];

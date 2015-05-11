@@ -21,13 +21,39 @@
 }
 
 - (void)insertDDUser:(DDUser *)dduser {
-	[self.dynamoDBObjectMapper save:dduser];
-    [self.dduserDao insertDDUser:dduser];
+    [[self.dynamoDBObjectMapper save:dduser]
+     continueWithBlock:^id(BFTask *task) {
+         if (task.error) {
+             NSLog(@"The request failed. Error: [%@]", task.error);
+         }
+         if (task.exception) {
+             NSLog(@"The request failed. Exception: [%@]", task.exception);
+         }
+         if (task.result) {
+            [self.dduserDao insertDDUser:dduser];
+         }
+         return nil;
+     }];
+    
+//	[self.dynamoDBObjectMapper save:dduser];
+    
 }
 
 - (void)updateDDUser:(DDUser *)dduser {
-	[self.dynamoDBObjectMapper save:dduser];
-    [self.dduserDao updateByUID:dduser];
+    [[self.dynamoDBObjectMapper save:dduser]
+     continueWithBlock:^id(BFTask *task) {
+         if (task.error) {
+             NSLog(@"The request failed. Error: [%@]", task.error);
+         }
+         if (task.exception) {
+             NSLog(@"The request failed. Exception: [%@]", task.exception);
+         }
+         if (task.result) {
+            [self.dduserDao updateByUID:dduser];
+         }
+         return nil;
+     }];
+    
 }
 
 - (DDUser *)getTableUser:(NSString *)uid {

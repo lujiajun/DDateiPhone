@@ -79,10 +79,17 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
     return chatroom2;
 }
 
+- (void)delChatRoom4ByRid:(NSString *)rid {
+    NSString *sql = [NSString stringWithFormat:@"delete FROM %@ where RID='%@'", ChatRoom2Table, rid];
+    [self.dbQueue inDatabase: ^(FMDatabase *db) {
+        [db executeUpdate:sql];
+    }];
+}
+
 
 - (NSMutableArray *)getLocalChatRoom2sByCount:(int)count {
 	NSMutableArray *rooms = [NSMutableArray array];
-	NSString *sql = [NSString stringWithFormat:@"select * from %@ order by ID limit %d", ChatRoom2Table, count];
+	NSString *sql = [NSString stringWithFormat:@"select * from %@ limit %d", ChatRoom2Table, count];
     [self.dbQueue inDatabase:^(FMDatabase *db) {
         FMResultSet *rs = [db executeQuery:sql];
         while ([rs next]) {
@@ -107,6 +114,7 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
     }];
     return rooms;
 }
+
 
 
 # pragma mark - Private

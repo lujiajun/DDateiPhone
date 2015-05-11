@@ -31,6 +31,7 @@
 #import "HomePageListCell.h"
 #import "UIImageView+WebCache.h"
 #import "AWSDynamoDB_ChatRoom2.h"
+#import "Util.h"
 #import "InviteFriendByDoubleIdController.h"
 #import "CreateGroupViewController.h"
 #import "View+MASAdditions.h"
@@ -77,19 +78,28 @@ static DDUser *uuser;
     self.tableView.backgroundColor = [UIColor whiteColor];
     [self.tableView addSubview:self.slimeView];
     
-    self.tableView.tableHeaderView = [self haveDoubleFriend] ? nil : self.headerView;
+    
                 
 	if (_userDao == nil) {
 		_userDao = [[DDUserDAO alloc]init];
 	}
     //chaxun
     [self.chatRoom2DynamoDB refreshListWithBlock:^{
+        
+        
+        self.tableView.tableHeaderView = [self haveDoubleFriend] ? nil : self.headerView;
         [self.tableView reloadData];
     }];
-    [self initdduser];
     
+    //首页button
+    [self initdduser];
+//    NSLog([NSString stringWithFormat:@"%@",[NSNumber numberWithInt:[[NSDate date] timeIntervalSinceNow]]]);
+   
     
 }
+//1431006443804
+//1431316020743
+
 
 - (void)initdduser {
 	if (uuser == nil) {
@@ -162,17 +172,15 @@ static DDUser *uuser;
 
 	//查询用户1
 	DDUser *uuser1 = [self.userDao selectDDuserByUid:chatRoom2.UID1];
-	if (uuser1 != nil && uuser1.picPath != nil) {
-		[cell.user1Avatar sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:uuser1.picPath]]
+
+    [cell.user1Avatar sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:uuser1.picPath]]
 		                    placeholderImage:[UIImage imageNamed:@"Logo_new"]];
-	}
 
 	//查询用户2
 	DDUser *uuser2 = [self.userDao selectDDuserByUid:chatRoom2.UID2];
-	if (uuser2 != nil && uuser2.picPath != nil) {
-		[cell.user2Avatar sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:uuser2.picPath]]
+    
+    [cell.user2Avatar sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:uuser2.picPath]]
 		                    placeholderImage:[UIImage imageNamed:@"Logo_new"]];
-	}
 
 	//性别
 	BOOL isboy = [uuser1.gender isEqualToString:@"Male"] || [uuser1.gender isEqualToString:@"男"];
@@ -203,6 +211,8 @@ static DDUser *uuser;
 			if (indexPath.row == i) {
 				CHATROOM2 *room = [[self.chatRoom2DynamoDB.chatRoom2s objectAtIndex:i] copy];
 				ChatRoomDetail *chatroom = [[ChatRoomDetail alloc]initChatRoom:room uuser1:[self.userDao selectDDuserByUid:room.UID1] uuser2:[self.userDao selectDDuserByUid:room.UID2]];
+//                 self.navigationController.navigationBarHidden=YES;
+                
 				[self.navigationController pushViewController:chatroom animated:YES];
 			}
 		}
@@ -276,7 +286,7 @@ static DDUser *uuser;
         self.textField.font = [UIFont systemFontOfSize:12];
         
         UIButton *button = [[UIButton alloc] init];
-        button.backgroundColor = [UIColor redColor];
+        button.backgroundColor = RGBACOLOR(232, 79, 60, 1);
         button.layer.cornerRadius = 5;
         [button setTitle:@"确定" forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

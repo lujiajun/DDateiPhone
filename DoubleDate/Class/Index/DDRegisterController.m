@@ -18,6 +18,8 @@
 
 #import <SMS_SDK/SMS_SDK.h>
 #import <SMS_SDK/CountryAndAreaCode.h>
+#import "AWSDynamoDB_DDUser.h"
+
 
 @interface DDRegisterController ()
 {
@@ -60,8 +62,10 @@ static DDUser   *dduser;
 
     [imageView addSubview:_usernameTextField];
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(260, 10, 44, 30)];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(260, 10, 50, 30)];
     [button setImage:[UIImage imageNamed:@"getCode.png"] forState:UIControlStateNormal];
+    button.layer.cornerRadius = 5;
+    button.layer.masksToBounds = YES;
     [imageView addSubview:button];
     [button addTarget:self action:@selector(getCode) forControlEvents:UIControlEventTouchUpInside];
 
@@ -77,20 +81,10 @@ static DDUser   *dduser;
     [imageView addSubview:_passwordTextField];
     
     UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 120, self.view.frame.size.width, 30)];
-    registerButton.backgroundColor=[UIColor redColor];
+    registerButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [registerButton setTitle:@"下一步" forState:UIControlStateNormal];
     [imageView addSubview:registerButton];
     [registerButton addTarget:self action:@selector(doRegister) forControlEvents:UIControlEventTouchUpInside];
-    
-////    UIButton *saveButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
-//    [saveButton setTitle:NSLocalizedString(@"save", @"Save") forState:UIControlStateNormal];
-//    [saveButton addTarget:self action:@selector(savePushOptions) forControlEvents:UIControlEventTouchUpInside];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:saveButton];
-//    
-//    self.tableView.tableFooterView = [[UIView alloc] init];
-    
-    //    [self refreshPushOptions];
-//    [self.tableView reloadData];
     
     
 }
@@ -98,6 +92,18 @@ static DDUser   *dduser;
 -(void)getCode
 {
     int compareResult = 0;
+    //验证ID是否存在
+    AWSDynamoDB_DDUser *dynamo=[[AWSDynamoDB_DDUser alloc]init];
+    DDUser *user=    [dynamo getUserByUid:_usernameTextField.text];
+    if(user!=nil&&user.UID!=nil){
+        [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
+                                message:NSLocalizedString(@"register.repeat", @"You registered user already exists!")
+                     customizationBlock:nil
+                        completionBlock:nil
+                      cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                      otherButtonTitles: nil];
+        return;
+    }
     
     if (!compareResult)
     {
@@ -126,7 +132,6 @@ static DDUser   *dduser;
 {
     if (1==buttonIndex)
     {
-        //        VerifyViewController* verify=[[VerifyViewController alloc] init];
         [SMS_SDK getVerificationCodeBySMSWithPhone:_usernameTextField.text
                                               zone:@"86"
                                             result:^(SMS_SDKError *error)
@@ -134,10 +139,9 @@ static DDUser   *dduser;
             
              if (!error)
              {
-                 //                [self presentViewController:verify animated:YES completion:^{
-                 //                    ;
-                 //                }];
                  NSLog(@"发送成功");
+                 [self showHint:@"发送成功"];
+                 
              }
              else
              {
@@ -153,68 +157,50 @@ static DDUser   *dduser;
     }
 }
 
--(BOOL)validate
+-(void)doRegister
 {
     //验证号码
     //验证成功后 获取通讯录 上传通讯录
     [self.view endEditing:YES];
-    BOOL state=NO;
+//    if(self.isEmpty){
+//        return;
+//    }
+    DDSchoolRegisterController *personsign=[[DDSchoolRegisterController alloc] initWithNibName:self.usernameTextField.text password:self.passwordTextField.text];
+    [self.navigationController pushViewController:personsign animated:YES];
     
-    if(_code.text.length!=4)
-    {
-        UIAlertView* alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"notice", nil)
-                                                      message:NSLocalizedString(@"verifycodeformaterror", nil)
-                                                     delegate:self
-                                            cancelButtonTitle:@"确定"
-                                            otherButtonTitles:nil, nil];
-        [alert show];
-    }
-    else
-    {
-        NSLog(_code.text);
-        [SMS_SDK commitVerifyCode:_code.text result:^(enum SMS_ResponseState state) {
-//            NSLog(state);
-            
-            if (1==state)
-            {
-                NSLog(@"验证成功");
-                NSString* str=[NSString stringWithFormat:NSLocalizedString(@"verifycoderightmsg", nil)];
-                UIAlertView* alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"verifycoderighttitle", nil)
-                                                              message:str
-                                                             delegate:self
-                                                    cancelButtonTitle:NSLocalizedString(@"sure", nil)
-                                                    otherButtonTitles:nil, nil];
-                [alert show];
-                state=YES;
-//                _alert3=alert;
-            }
-            else if(0==state)
-            {
-                NSLog(@"验证失败");
-                NSString* str=[NSString stringWithFormat:NSLocalizedString(@"verifycodeerrormsg", nil)];
-                UIAlertView* alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"verifycodeerrortitle", nil)
-                                                              message:str
-                                                             delegate:self
-                                                    cancelButtonTitle:NSLocalizedString(@"sure", nil)
-                                                    otherButtonTitles:nil, nil];
-                [alert show];
-            }
-        }];
-    }
-    return state;
+//    if(_code.text.length!=4)
+//    {
+//        UIAlertView* alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"notice", nil)
+//                                                      message:NSLocalizedString(@"verifycodeformaterror", nil)
+//                                                     delegate:self
+//                                            cancelButtonTitle:@"确定"
+//                                            otherButtonTitles:nil, nil];
+//        [alert show];
+//    }
+//    else
+//    {
+//        [SMS_SDK commitVerifyCode:_code.text result:^(enum SMS_ResponseState state) {
+//            if (1==state)
+//            {
+//                NSLog(@"验证成功");
+//                DDSchoolRegisterController *personsign=[[DDSchoolRegisterController alloc] initWithNibName:self.usernameTextField.text password:self.passwordTextField.text];
+//                [self.navigationController pushViewController:personsign animated:YES];
+//            }
+//            else if(0==state)
+//            {
+//                NSLog(@"验证失败");
+//                NSString* str=[NSString stringWithFormat:NSLocalizedString(@"verifycodeerrormsg", nil)];
+//                UIAlertView* alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"verifycodeerrortitle", nil)
+//                                                              message:str
+//                                                             delegate:self
+//                                                    cancelButtonTitle:NSLocalizedString(@"sure", nil)
+//                                                    otherButtonTitles:nil, nil];
+//                [alert show];
+//            }
+//        }];
+//    }
 }
-//注册账号
-- (void)doRegister{
-    if(!self.isEmpty){
-        if([self validate]){
-        DDSchoolRegisterController *personsign=[[DDSchoolRegisterController alloc] initWithNibName:_usernameTextField.text password:_passwordTextField.text];
-        [self.navigationController pushViewController:personsign animated:YES];
-        }
-        
-    }
-   
-    
-}
+
 
 
 
@@ -228,7 +214,7 @@ static DDUser   *dduser;
 //判断账号和密码是否为空
 - (BOOL)isEmpty{
     BOOL ret = NO;
-    if (_usernameTextField.text.length == 0 || _passwordTextField.text.length == 0 || _code.text.length==0) {
+    if (_usernameTextField.text.length == 0 || _passwordTextField.text.length == 0) {
         ret = YES;
         [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
                                 message:NSLocalizedString(@"login.inputNameAndPswd", @"Please enter username and password")

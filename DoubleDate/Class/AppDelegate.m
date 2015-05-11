@@ -20,6 +20,7 @@
 #import "AWSCore/AWSCore.h"
 #import "AliCloudController.h"
 #import "WXApi.h"
+#import <ShareSDK/ShareSDK.h>
 #import <SMS_SDK/SMS_SDK.h>
 @interface AppDelegate ()
 
@@ -37,11 +38,23 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
 
-    //向微信注册
-    [WXApi registerApp:@"wxa89a834f7feabaed"];
-    //向短信注册mob注册
+    //注册mob 短信服务注册
     
     [SMS_SDK registerApp:@"75058c79bdb6" withSecret:@"82b79b974cc87fc82a831e26909e2073"];
+    
+    //mob share功能注册
+    [ShareSDK registerApp:@"7591dedfa998"];
+    //添加微信应用 注册网址 http://open.weixin.qq.com
+    [ShareSDK connectWeChatWithAppId:@"wxa89a834f7feabaed"
+                           wechatCls:[WXApi class]];
+    //微信登陆的时候需要初始化
+    [ShareSDK connectWeChatWithAppId:@"wxa89a834f7feabaed"
+                           appSecret:@"b7fb9ce3d0660154d7e97d88b9e8e3dd"
+                           wechatCls:[WXApi class]];
+    //链接短信
+    [ShareSDK connectSMS];
+    //连接邮件
+    [ShareSDK connectMail];
     
     //auto login
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -49,8 +62,9 @@
                                                  name:KNOTIFICATION_LOGINCHANGE
                                                object:nil];
     
+//   [[UINavigationBar appearance] setBarTintColor:RGBACOLOR(232, 85, 70, 1)];
     if ([UIDevice currentDevice].systemVersion.floatValue >= 7.0) {
-        [[UINavigationBar appearance] setBarTintColor:RGBACOLOR(232, 85, 70, 1)];
+        [[UINavigationBar appearance] setBarTintColor:RGBACOLOR(232, 79, 60, 1)];
         [[UINavigationBar appearance] setTitleTextAttributes:
          [NSDictionary dictionaryWithObjectsAndKeys:RGBACOLOR(245, 245, 245, 1), NSForegroundColorAttributeName, [UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:18.0], NSFontAttributeName, nil]];
     }
@@ -91,6 +105,24 @@
     if (_mainController) {
         [_mainController jumpToChatList];
     }
+}
+//分享
+- (BOOL)application:(UIApplication *)application
+      handleOpenURL:(NSURL *)url
+{
+    return [ShareSDK handleOpenURL:url
+                        wxDelegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    return [ShareSDK handleOpenURL:url
+                 sourceApplication:sourceApplication
+                        annotation:annotation
+                        wxDelegate:self];
 }
 
 #pragma mark - private
@@ -133,8 +165,8 @@
     
     self.window.rootViewController = nav;
     
-    [nav setNavigationBarHidden:YES];
-    [nav setNavigationBarHidden:NO];
+//    [nav setNavigationBarHidden:YES];
+//    [nav setNavigationBarHidden:NO];
 }
 
 @end

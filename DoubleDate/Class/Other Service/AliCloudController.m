@@ -91,7 +91,7 @@ static OSSBucket *bucket;
 -(NSString *) uploadPic:(NSData *)upData{
     NSError *error = nil;
     NSString *name=self.createUUID;
-    OSSData *testData = [[OSSData alloc] initWithBucket:bucket withKey:self.createUUID];
+    OSSData *testData = [[OSSData alloc] initWithBucket:bucket withKey:name];
     [testData setData:upData withType:@"jpg"];
     [testData upload:&error];
     return name;

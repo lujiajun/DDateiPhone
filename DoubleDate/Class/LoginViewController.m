@@ -18,6 +18,7 @@
 #import "DDRegisterFinishController.h"
 #import "RegViewController.h"
 
+
 @interface LoginViewController ()<IChatManagerDelegate,UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;

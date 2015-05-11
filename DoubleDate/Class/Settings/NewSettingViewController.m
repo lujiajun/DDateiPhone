@@ -227,9 +227,9 @@
             bakview.frame=CGRectMake(0, 0, cell.frame.size.width, 160);
             [cell.contentView addSubview:bakview];
             
-        
+            
             UIImageView *imgHead=[[UIImageView alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width/2-50, 10, 100, 100)];
-            [imgHead sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:[IndexViewController instanceDDuser].picPath]]];
+            [imgHead sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:[IndexViewController instanceDDuser].picPath]] placeholderImage:[UIImage imageNamed:@"80" ]];
             imgHead.layer.cornerRadius =50;
             imgHead.layer.masksToBounds = YES;
             [imgHead setContentMode:UIViewContentModeScaleToFill];

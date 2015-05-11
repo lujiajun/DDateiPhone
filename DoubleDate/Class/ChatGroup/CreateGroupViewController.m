@@ -34,7 +34,7 @@
 @property (strong, nonatomic) UILabel *groupMemberTitleLabel;
 @property (strong, nonatomic) UISwitch *groupMemberSwitch;
 @property (strong, nonatomic) UILabel *groupMemberLabel;
-
+@property(strong,nonatomic) UIButton *button;
 @end
 
 @implementation CreateGroupViewController
@@ -81,7 +81,7 @@
 //    [self.view addSubview:self.switchView];
     
     UIButton *nextButton = [[UIButton alloc] initWithFrame:CGRectMake(0, _mottoTextView.frame.origin.y+_mottoTextView.frame.size.height+10, self.view.frame.size.width, 30)];
-    nextButton.backgroundColor=[UIColor redColor];
+    nextButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [nextButton setTitle:@"加入聊天室" forState:UIControlStateNormal];
     [nextButton addTarget:self action:@selector(addContacts:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextButton];
@@ -106,16 +106,17 @@
 		_chatRoomCover.layer.cornerRadius = 3;
         _chatRoomCover.backgroundColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
         _chatRoomCover.userInteractionEnabled = YES;
-
-		UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 40)];
-        button.titleLabel.font = [UIFont systemFontOfSize:14.0];
-        [button setTitle:@"设置封面" forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor colorWithRed:32 / 255.0 green:134 / 255.0 blue:158 / 255.0 alpha:1.0] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-		button.backgroundColor = [UIColor redColor];
-		button.center = CGPointMake(_chatRoomCover.frame.size.width / 2, _chatRoomCover.frame.size.height / 2);
-        [button addTarget:self action:@selector(chooseChatRoomCoverImage:) forControlEvents:UIControlEventTouchUpInside];
-        [_chatRoomCover addSubview:button];
+        if(_button==nil){
+            _button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, 40)];
+        }
+        _button.titleLabel.font = [UIFont systemFontOfSize:14.0];
+        [_button setTitle:@"设置封面" forState:UIControlStateNormal];
+        [_button setTitleColor:[UIColor colorWithRed:32 / 255.0 green:134 / 255.0 blue:158 / 255.0 alpha:1.0] forState:UIControlStateNormal];
+        [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+		_button.backgroundColor = RGBACOLOR(232, 79, 60, 1);
+		_button.center = CGPointMake(_chatRoomCover.frame.size.width / 2, _chatRoomCover.frame.size.height / 2);
+        [_button addTarget:self action:@selector(chooseChatRoomCoverImage:) forControlEvents:UIControlEventTouchUpInside];
+        [_chatRoomCover addSubview:_button];
 	}
 
 	return _chatRoomCover;
@@ -131,7 +132,7 @@
         _mottoTextView.font = [UIFont systemFontOfSize:14.0];
         _mottoTextView.backgroundColor = [UIColor whiteColor];
         _mottoTextView.placeholder = NSLocalizedString(@"group.create.declaration", @"please enter the Double Date declaration");
-        _mottoTextView.returnKeyType = UIReturnKeyDone;
+//        _mottoTextView.returnKeyType = UIReturnKeyDone;
         _mottoTextView.delegate = self;
     }
     
@@ -230,6 +231,8 @@
 	chatRoom2.SchoolRestrict = @"无限制";
 	chatRoom2.UID1 = username;
 	chatRoom2.UID2 = username2;
+    //先删除老得组，替换新的
+    
 	[chatRoom2DynamoDB insertChatroom2:chatRoom2];
 }
 
@@ -353,6 +356,9 @@
 		//关闭相册界面
         [picker dismissViewControllerAnimated:YES completion:nil];
         self.chatRoomCover.image = image;
+        [_button removeFromSuperview];
+        
+//        _picpath=[[IndexViewController instanceDDuser].UID stringByAppendingString:@"_head_pic" ];
 
 		AliCloudController *aliCloud = [AliCloudController alloc];
 		self.coverImagePath = [aliCloud uploadPic:data];

@@ -69,31 +69,38 @@ static DDUser   *dduser;
     
     [super viewDidLoad];
     self.title = @"注册";
+   
+    //头像
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.backgroundColor=[UIColor grayColor];
+    imageView.frame =CGRectMake(self.view.frame.size.width/2-75, 20, 150, 150);
+    imageView.image=[UIImage imageNamed:@"Logo_new"];
+    [self.view addSubview:imageView];
+    [imageView setUserInteractionEnabled:YES];
+    imageView.layer.masksToBounds =YES;
+    imageView.layer.cornerRadius =75;
+    [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClick:)]];
+    
     //nickname
-    _nickname=[[UILabel alloc]initWithFrame:CGRectMake(10, 30, 60, 30)];
+    _nickname=[[UILabel alloc]initWithFrame:CGRectMake(10, imageView.frame.origin.y+imageView.frame.size.height+10, 60, 30)];
     _nickname.text=@"昵称:";
+    _nickname.font=[UIFont fontWithName:@"Helvetica" size:12];
     _nickname.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:_nickname];
     
-    _nicknamevalue=[[UITextField alloc]initWithFrame:CGRectMake(_nickname.frame.size.width+4, 30, 180, 30)];
+    _nicknamevalue=[[UITextField alloc]initWithFrame:CGRectMake(_nickname.frame.size.width+4, _nickname.frame.origin.y, self.view.frame.size.width-70, 30)];
     _nicknamevalue.placeholder=@"nicknamevalue";
     _nicknamevalue.textAlignment=NSTextAlignmentLeft;
     [_nicknamevalue setBorderStyle:UITextBorderStyleRoundedRect];
     [self.view addSubview:_nicknamevalue];
-    //头像
-    UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.image = [UIImage imageNamed:@"80.png"];
-    imageView.frame = CGRectMake(_nickname.frame.size.width+ _nicknamevalue.frame.size.width+10,10,50,50);
-    [self.view addSubview:imageView];
-    [imageView setUserInteractionEnabled:YES];
-    [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClick:)]];
     
     //性别
-    UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*2+10, 60, 30)];
+    UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.origin.y+ 35, 60, 30)];
     gender.text=@"性别:";
+    gender.font=[UIFont fontWithName:@"Helvetica" size:12];
     gender.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:gender];
-    _gendervalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*2+10, 120, 30)];
+    _gendervalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4,_nickname.frame.origin.y+ 35, 120, 30)];
     _gendervalue.placeholder=@"性别";
     [_gendervalue setBorderStyle:UITextBorderStyleRoundedRect];
     _gendervalue.textAlignment=NSTextAlignmentLeft;
@@ -110,9 +117,10 @@ static DDUser   *dduser;
 //    [self.view addSubview:universityvalue];
 //    
     //城市
-    UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*3+10, 200, 30)];
+    UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(10, gender.frame.origin.y+35, 200, 30)];
   
-    city.text=[@"城市:" stringByAppendingString:_city];
+    city.text=[Util str1:@"城市:     " appendStr2:_city];
+    city.font=[UIFont fontWithName:@"Helvetica" size:12];
     city.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:city];
     
@@ -128,19 +136,19 @@ static DDUser   *dduser;
 //    [self.view addSubview:_gradevalue];
     
     //出生日期
-    UITextField *birdate=[[UITextField alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*5+11, 100, 30)];
+    UITextField *birdate=[[UITextField alloc]initWithFrame:CGRectMake(10,city.frame.origin.y+35, 100, 30)];
     birdate.text=@"出生日期:";
     birdate.textAlignment=NSTextAlignmentLeft;
     birdate.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:birdate];
-    _birdatevalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*5+10, 200, 30)];
+    _birdatevalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, city.frame.origin.y+33, 200, 30)];
     _birdatevalue.placeholder=@"birthday";
     _birdatevalue.textAlignment=NSTextAlignmentLeft;
     [_birdatevalue setBorderStyle:UITextBorderStyleRoundedRect];
     [self.view addSubview:_birdatevalue];
     
-    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, _nickname.frame.size.height*7+30, 300, 30)];
-    registerButton.backgroundColor=[UIColor redColor];
+    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, birdate.frame.origin.y+33, self.view.frame.size.width, 30)];
+    registerButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [registerButton setTitle:@"注册" forState:UIControlStateNormal];
     [self.view addSubview:registerButton];
     [registerButton addTarget:self action:@selector(registerUser) forControlEvents:UIControlEventTouchUpInside];
@@ -150,13 +158,13 @@ static DDUser   *dduser;
 }
 -(void) registerUser{
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(doRegister)
-                                                 name:@"doRegister"
+                                             selector:@selector(doRegisterAWSHX)
+                                                 name:@"doRegisterAWSHX"
                                                object:nil];
     
     
     [self showHudInView:self.view hint:NSLocalizedString(@"register.ongoing", @"Is to register...")];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"doRegister" object:@NO];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"doRegisterAWSHX" object:@NO];
     
 
 
@@ -216,7 +224,7 @@ static DDUser   *dduser;
 }
 
 //注册账号
-- (void)doRegister{
+- (void)doRegisterAWSHX{
     //注册
         if (![self isEmpty]) {
         //隐藏键盘
@@ -251,8 +259,8 @@ static DDUser   *dduser;
                  user.picPath=self.picpath;
                  [ddbDynamoDB insertDDUser:user];
                                   
-                 DDLoginController *personsign=[DDLoginController alloc];
-                 [self.navigationController pushViewController:personsign animated:YES];
+
+                 [self.navigationController popToRootViewControllerAnimated:NO];
                  
                  TTAlertNoTitle(NSLocalizedString(@"register.success", @"Registered successfully, please log in"));
                  
@@ -271,6 +279,8 @@ static DDUser   *dduser;
                          TTAlertNoTitle(NSLocalizedString(@"register.fail", @"Registration failed"));
                          break;
                  }
+                 [self.navigationController popToRootViewControllerAnimated:NO];
+
              }
          } onQueue:nil];
       
@@ -368,8 +378,10 @@ static DDUser   *dduser;
         //关闭相册界面
         [picker dismissModalViewControllerAnimated:YES];
         UIImageView *smallimage = [[UIImageView alloc] initWithFrame:
-                                   CGRectMake(_nickname.frame.size.width+ _nicknamevalue.frame.size.width+10,10,50,50)];
-        
+                                  CGRectMake(self.view.frame.size.width/2-75, 20, 150, 150)];
+
+        smallimage.layer.masksToBounds =YES;
+        smallimage.layer.cornerRadius =75;
         smallimage.image = image;
         //加在视图中
         [self.view addSubview:smallimage];

@@ -28,6 +28,8 @@
 }
 
 - (void)insertChatroom2:(CHATROOM2 *)chatRoom2 {
+    //先删除重复的
+    [self removeFromAWSandLocal:chatRoom2];
 	AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
 	[[dynamoDBObjectMapper save:chatRoom2] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
 	    if (task.error) {
@@ -35,6 +37,16 @@
 		}
 	    return nil;
 	}];
+    [self.chatRoom2Dao insertLocalChatroom2:chatRoom2];
+}
+
+-(void) removeFromAWSandLocal:(CHATROOM2 *) chatRoom2{
+    if(chatRoom2!=nil&&chatRoom2.RID!=nil){
+        AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+        [dynamoDBObjectMapper remove:chatRoom2];
+        [self.chatRoom2Dao delChatRoom4ByRid:chatRoom2.RID];
+    }
+    
 }
 
 - (void)refreshListWithBlock:(SuccussBlock)successBlock {

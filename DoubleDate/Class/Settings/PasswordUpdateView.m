@@ -57,7 +57,7 @@
     [self.view addSubview:_confirmText];
     
     UIButton *update = [[UIButton alloc] initWithFrame:CGRectMake(0, newConfirm.frame.origin.y+newConfirm.frame.size.height+5, self.view.frame.size.width, 30)];
-    update.backgroundColor=[UIColor redColor];
+    update.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [update setTitle:@"登录" forState:UIControlStateNormal];
     [self.view addSubview:update];
     [update addTarget:self action:@selector(doLogin) forControlEvents:UIControlEventTouchUpInside];

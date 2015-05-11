@@ -48,6 +48,9 @@ NSString * const DDUserTable=@"DDUser";
 
 
 - (void)insertDDUser:(DDUser *)dduser {
+    if(dduser==nil ||dduser.UID==nil){
+        return;
+    }
     NSString *sql = [NSString stringWithFormat:@"Insert or ignore into %@ ( \
                      UID, \
                      nickName, \

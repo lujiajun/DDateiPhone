@@ -30,6 +30,8 @@ typedef void(^SuccussBlock)();
 
 - (void)insertChatroom2:(CHATROOM2 *)chatRoom2;
 
+-(void) removeFromAWSandLocal:(CHATROOM2 *) chatRoom2;
+
 @end
 
 

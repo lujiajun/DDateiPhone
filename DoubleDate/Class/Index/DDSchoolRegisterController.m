@@ -62,7 +62,7 @@ static DDUser   *dduser;
     
     
     UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, imageView.frame.size.height+city.frame.size.height*2+40, self.view.frame.size.width, 30)];
-    registerButton.backgroundColor=[UIColor redColor];
+    registerButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [registerButton setTitle:@"下一步" forState:UIControlStateNormal];
     [self.view addSubview:registerButton];
     [registerButton addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];

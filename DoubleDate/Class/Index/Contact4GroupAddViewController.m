@@ -19,6 +19,7 @@
 #import "ChatViewController.h"
 #import "DDUserDAO.h"
 #import "Constants.h"
+#import "Util.h"
 #import "UIImageView+EMWebCache.h"
 #import "ChatRoom4DAO.h"
 #import "AWSDynamoDB_ChatRoom4.h"
@@ -172,7 +173,7 @@
             EMBuddy *buddy = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
             DDUser *user=[self.userDao selectDDuserByUid:buddy.username];
             UIImageView *us=[[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40)] ;
-            [us sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
+            [us sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]]
                   placeholderImage:[UIImage imageNamed:@"Logo_new"]];
             [cell.contentView addSubview:us];
             cell.textLabel.text = buddy.username;
@@ -272,7 +273,7 @@
     DDUser *user=[_userDao selectDDuserByUid:buddy.username];
     UIImageView *us=[[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40)] ;
     if(user!=nil&&user.picPath!=nil){
-        [us sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
+        [us sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]]
               placeholderImage:[UIImage imageNamed:@"Logo_new"]];
     }else{
         us.image=[UIImage imageNamed:@"Logo_new"];
@@ -404,7 +405,7 @@
         EMRemarkImageView *remarkView = [[EMRemarkImageView alloc] initWithFrame:CGRectMake(i * imageSize, 0, imageSize, imageSize)];
         
         DDUser *user=[_userDao selectDDuserByUid:buddy.username];
-        [remarkView sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]
+        [remarkView sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]]
               placeholderImage:[UIImage imageNamed:@"Logo_new"]];
      
         remarkView.remark = buddy.username;
@@ -509,12 +510,14 @@
                                                                    chatroom4.isLikeUID4=[NSNumber numberWithInt:0];
                                                                    chatroom4.roomStatus=@"New";
                                                                    
-                                                                   chatroom4.systemTimeNumber=[NSNumber numberWithInt:[[NSDate date] timeIntervalSince1970]*1000+ [ChatViewController getSecondsCount]*1000];
+                                                                   chatroom4.systemTimeNumber=[NSString stringWithFormat:@"%@",[NSNumber numberWithLong:[[NSDate date] timeIntervalSince1970]*1000+5*60*1000]];
+                                                                   
                                                                    AWSDynamoDB_ChatRoom4 *chatroom4DB=[[AWSDynamoDB_ChatRoom4 alloc]init];
                                                                    [chatroom4DB insertChatroom4:chatroom4];
                                                                    
                                                                    ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:NO] initRoom4:chatroom4 friend:self.toAddFriend isNewRoom:YES ];
                                                                    chatController.title = self.room2.Motto;
+                                                                  
                                                                    [self.navigationController pushViewController:chatController animated:YES];
                                                                    
                                                                    NSLog(@"创建成功 -- %@",group);

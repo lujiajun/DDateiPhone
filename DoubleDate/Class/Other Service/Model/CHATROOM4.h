@@ -28,4 +28,5 @@
 @property (nonatomic, strong) NSString *subGID2;
 @property (nonatomic,strong) NSNumber *systemTimeNumber;
 
+
 @end

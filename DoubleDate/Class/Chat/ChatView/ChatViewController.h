@@ -23,5 +23,5 @@
 
 -(void)createTwoMainNewGroup;
 
-+(int) getSecondsCount;
+
 @end

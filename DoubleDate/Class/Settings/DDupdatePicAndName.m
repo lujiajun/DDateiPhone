@@ -8,7 +8,7 @@
 #import "NewSettingViewController.h"
 #import "AWSDynamoDB_DDUser.h"
 #import "UIImageView+EMWebCache.h"
-
+#import "Util.h"
 @interface DDupdatePicAndName ()
 @property(strong,nonatomic) UIImageView *imgHead;
 @property (strong,nonatomic) NSString *picpath;
@@ -29,7 +29,8 @@
  
  
     _imgHead=[[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-50, 10, 100, 100)];
-    [_imgHead sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:[IndexViewController instanceDDuser].picPath]]];
+
+    [_imgHead sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:[IndexViewController instanceDDuser].picPath]]];
     _imgHead.layer.masksToBounds =YES;
     _imgHead.layer.cornerRadius =50;
 
@@ -38,13 +39,13 @@
     
     //UITUTTON
     UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(10,_imgHead.frame.origin.y+_imgHead.frame.size.height+20 , self.view.frame.size.width-20, 30)];
-    registerButton.backgroundColor=[UIColor redColor];
+    registerButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [registerButton setTitle:@"从本地图片中选择头像" forState:UIControlStateNormal];
     [self.view addSubview:registerButton];
     [registerButton addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     //
     UIButton *updatepasswordButton = [[UIButton alloc] initWithFrame:CGRectMake(10,registerButton.frame.origin.y+registerButton.frame.size.height+20 , self.view.frame.size.width-20, 30)];
-    updatepasswordButton.backgroundColor=[UIColor redColor];
+    updatepasswordButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [updatepasswordButton setTitle:@"修改密码" forState:UIControlStateNormal];
     [self.view addSubview:updatepasswordButton];
     [updatepasswordButton addTarget:self action:@selector(passwordclick) forControlEvents:UIControlEventTouchUpInside];
@@ -62,7 +63,7 @@
     [self.view addSubview:_nickvalue];
     //UITUTTON
     UIButton *save = [[UIButton alloc] initWithFrame:CGRectMake(10,nick.frame.origin.y+nick.frame.size.height+20 , self.view.frame.size.width-20, 30)];
-    save.backgroundColor=[UIColor redColor];
+    save.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [save setTitle:@"保存修改" forState:UIControlStateNormal];
     [self.view addSubview:save];
     [save addTarget:self action:@selector(updateNick) forControlEvents:UIControlEventTouchUpInside];
@@ -101,24 +102,27 @@
     if(![self isEmpty]){
         DDUser *user=[IndexViewController instanceDDuser];
         user.nickName=_nickvalue.text;
-        user.picPath=_picpath;
-//        IndexViewController *newSetting=[IndexViewController alloc];
-        [IndexViewController setDDUser:user];
-        
-        //删除原图
-        //OSS上传图片
-        if(self.data!=nil){
-            AliCloudController *aliCloud=[AliCloudController alloc];
-            [aliCloud updateHeadPic:self.data name:self.picpath];
-            
+        if(_picpath!=nil){
+            user.picPath=_picpath;
+            //删除原图
+            //OSS上传图片
+            if(self.data!=nil){
+                AliCloudController *aliCloud=[AliCloudController alloc];
+                [aliCloud updateHeadPic:self.data name:self.picpath];
+                
+            }
         }
+
+        [IndexViewController setDDUser:user];
         
         AWSDynamoDB_DDUser *ddbDynamoDB=[AWSDynamoDB_DDUser new];
         [ddbDynamoDB updateDDUser:user];
         
         NewSettingViewController *settings=[NewSettingViewController alloc];
+        [self showHint:@"修改成功"];
+        
         [settings.tableView reloadData];
-        [self.navigationController pushViewController:settings animated:YES];
+        [self.navigationController popToRootViewControllerAnimated:NO];
         
 
     }
