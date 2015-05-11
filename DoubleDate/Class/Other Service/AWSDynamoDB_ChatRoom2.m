@@ -54,7 +54,7 @@
 	return [self.chatRoom2Dao getLocalChatRoom2sByCount:DEFAULT_COUNT];
 }
 
-- (void)refreshListWithBlock:(SuccussBlock)successBlock {
+- (void)refreshListWithBlock:(SuccussCompleteBlock)successBlock {
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
 	AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];

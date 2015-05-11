@@ -18,7 +18,7 @@
 #import "CHATROOM2.h"
 #import "ChatRoom2DAO.h"
 
-typedef void (^SuccussBlock)(NSArray *chatRoom2s);
+typedef void (^SuccussCompleteBlock)(NSArray *chatRoom2s);
 
 @interface AWSDynamoDB_ChatRoom2 : NSObject
 
@@ -26,7 +26,7 @@ typedef void (^SuccussBlock)(NSArray *chatRoom2s);
 
 - (NSArray *)refreshListWithLocalData;
 
-- (void)refreshListWithBlock:(SuccussBlock)successBlock;
+- (void)refreshListWithBlock:(SuccussCompleteBlock)successBlock;
 
 - (void)insertChatroom2:(CHATROOM2 *)chatRoom2;
 
