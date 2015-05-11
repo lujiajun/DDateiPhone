@@ -60,13 +60,14 @@
 -(void) sendWX{
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK" ofType:@"png"];
     
-    //构造分享内容
-    id<ISSContainer> publishContent = [ShareSDK content:@"welcome to double date"
-                                       defaultContent:@"测试from double date"
+    //构造分享内容 ;
+    NSString *content=[[@"我发现了一款特别好玩的四人交友App，名字叫Double Date，两男两女一起组队参加哦，现在邀请你跟我一起组队，下载链接是：wwww.22dateapp.com，我的Double号是:" stringByAppendingString:[IndexViewController instanceDDuser].UID] stringByAppendingString:@";快快下载来跟我Double一下吧"];
+    id<ISSContainer> publishContent = [ShareSDK content:content
+                                       defaultContent:@"double date together"
                                                 image:[ShareSDK imageWithPath:imagePath]
-                                                title:@"ShareSDK"
-                                                  url:@"http://www.mob.com"
-                                          description:@"这是一条测试信息"
+                                                title:@"DoubleDate"
+                                                  url:@"http://www.22dateapp.com"
+                                          description:@"DoubleDate分享"
                                             mediaType:SSPublishContentMediaTypeNews];
     //创建弹出菜单容器
     id<ISSContainer> container = [ShareSDK container];

@@ -92,7 +92,7 @@
     if(_addedPicArray==nil){
         _addedPicArray =[[NSMutableArray alloc]init];
         _user= [IndexViewController instanceDDuser];
-        if(_user==nil){
+        if(_user==nil||![_user.UID isEqualToString:_loginname]){
             IndexViewController *index=[IndexViewController alloc];
             [index initdduser];
             _user=[IndexViewController instanceDDuser];
@@ -254,7 +254,8 @@
             [bakview addSubview:sexview];
             //添加double 号
             UILabel *doubledate=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width/2-35, 134, 150, 20)];
-            doubledate.text=[@"Double号:" stringByAppendingString:[IndexViewController instanceDDuser].UID];
+            
+            doubledate.text=[Util str1:@"Double号:" appendStr2:[IndexViewController instanceDDuser].UID];
 //            NSLog([IndexViewController instanceDDuser].UID);
             doubledate.textAlignment=NSTextAlignmentLeft;
             doubledate.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -282,13 +283,12 @@
                         
                         //图片显示
                         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(_scrollView.frame.origin.x+PIC_WIDTH*i,cell.frame.origin.y, PIC_WIDTH, PIC_HEIGHT)];
-                        
-                        [imageView sd_setImageWithURL:[NSURL URLWithString:[[DDPicPath stringByAppendingString:[_loginname stringByAppendingString:@"_"]] stringByAppendingString:element]]placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+                       
+                        [imageView sd_setImageWithURL:[NSURL URLWithString: [[DDPicPath stringByAppendingString:[_loginname stringByAppendingString:@"_photo_"]] stringByAppendingString:element]]placeholderImage:[UIImage imageNamed:@"Logo_new"]];
                         
                         //获取图片的框架，得到长、宽
                         //赋值
                         imageView.tag = i;
-                        
                         //ScrollView添加子视图
                         [_scrollView addSubview:imageView];
                         i++;
@@ -439,6 +439,10 @@
     return 160;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self.tableView reloadData];
+}
+
 
 -(void) btnClick{
     UIActionSheet* actionSheet = [[UIActionSheet alloc]
@@ -529,8 +533,10 @@
         //先显示，在上传
         //获得addPicArry中得最大值
         NSString *picname=[self getNewPicName];
+        if(picname!=nil&&![picname isEqualToString:@""]){
+            [_addedPicArray addObject:picname];
+        }
         
-        [_addedPicArray addObject:picname];
         [self refreshScrollView];
         [[self tableView] reloadData];
     

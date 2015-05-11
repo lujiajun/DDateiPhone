@@ -102,6 +102,18 @@
     if(![self isEmpty]){
         DDUser *user=[IndexViewController instanceDDuser];
         user.nickName=_nickvalue.text;
+       
+        
+        [self showHint:@"修改成功"];
+        
+        [self.navigationController popToRootViewControllerAnimated:NO];
+
+        [IndexViewController setDDUser:user];
+        
+        AWSDynamoDB_DDUser *ddbDynamoDB=[AWSDynamoDB_DDUser new];
+        [ddbDynamoDB updateDDUser:user];
+       
+        
         if(_picpath!=nil){
             user.picPath=_picpath;
             //删除原图
@@ -112,18 +124,6 @@
                 
             }
         }
-
-        [IndexViewController setDDUser:user];
-        
-        AWSDynamoDB_DDUser *ddbDynamoDB=[AWSDynamoDB_DDUser new];
-        [ddbDynamoDB updateDDUser:user];
-        
-        NewSettingViewController *settings=[NewSettingViewController alloc];
-        [self showHint:@"修改成功"];
-        
-        [settings.tableView reloadData];
-        [self.navigationController popToRootViewControllerAnimated:NO];
-        
 
     }
     
@@ -200,12 +200,15 @@
         }
         //关闭相册界面
         [picker dismissModalViewControllerAnimated:YES];
-        UIImageView *smallimage = [[UIImageView alloc] initWithFrame:
-                                   CGRectMake(_imgHead.frame.origin.x,_imgHead.frame.origin.y,_imgHead.frame.size.width,_imgHead.frame.size.height)];
-        
-        smallimage.image = image;
+//        UIImageView *smallimage = [[UIImageView alloc] initWithFrame:
+//                                   CGRectMake(_imgHead.frame.origin.x,_imgHead.frame.origin.y,_imgHead.frame.size.width,_imgHead.frame.size.height)];
+//        
+//        smallimage.layer.masksToBounds =YES;
+//        smallimage.layer.cornerRadius =50;
+//        smallimage.image = image;
+        _imgHead.image=image;
         //加在视图中
-        [self.view addSubview:smallimage];
+//        [self.view addSubview:smallimage];
         //上传
         
         _picpath=[[IndexViewController instanceDDuser].UID stringByAppendingString:@"_head_pic" ];

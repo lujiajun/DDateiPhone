@@ -306,7 +306,7 @@ NSDateFormatter *dateformatter;
         //        删除本地数据
         [self.lab removeFromSuperview];
         //调回
-      
+        [self.navigationController popToRootViewControllerAnimated:NO];
         
       
         

@@ -43,6 +43,8 @@
 @property (strong,nonatomic) NSString *picpath;
 @property(strong,nonatomic)  NSData *data;
 
+@property(strong,nonatomic) UIImageView *imageView ;
+
 
 
 @end
@@ -71,18 +73,18 @@ static DDUser   *dduser;
     self.title = @"注册";
    
     //头像
-    UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.backgroundColor=[UIColor grayColor];
-    imageView.frame =CGRectMake(self.view.frame.size.width/2-75, 20, 150, 150);
-    imageView.image=[UIImage imageNamed:@"Logo_new"];
-    [self.view addSubview:imageView];
-    [imageView setUserInteractionEnabled:YES];
-    imageView.layer.masksToBounds =YES;
-    imageView.layer.cornerRadius =75;
-    [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClick:)]];
+     _imageView = [[UIImageView alloc] init];
+    _imageView.backgroundColor=[UIColor grayColor];
+    _imageView.frame =CGRectMake(self.view.frame.size.width/2-75, 20, 150, 150);
+    _imageView.image=[UIImage imageNamed:@"Logo_new"];
+    [self.view addSubview:_imageView];
+    [_imageView setUserInteractionEnabled:YES];
+    _imageView.layer.masksToBounds =YES;
+    _imageView.layer.cornerRadius =75;
+    [_imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClick:)]];
     
     //nickname
-    _nickname=[[UILabel alloc]initWithFrame:CGRectMake(10, imageView.frame.origin.y+imageView.frame.size.height+10, 60, 30)];
+    _nickname=[[UILabel alloc]initWithFrame:CGRectMake(10, _imageView.frame.origin.y+_imageView.frame.size.height+10, 60, 30)];
     _nickname.text=@"昵称:";
     _nickname.font=[UIFont fontWithName:@"Helvetica" size:12];
     _nickname.textAlignment=NSTextAlignmentLeft;
@@ -157,6 +159,20 @@ static DDUser   *dduser;
     
 }
 -(void) registerUser{
+    
+    if(self.picpath==nil){
+        [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
+                                message:NSLocalizedString(@"register.uploadHeadError", @"Please upload your head picture")
+                     customizationBlock:nil
+                        completionBlock:nil
+                      cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+                      otherButtonTitles: nil];
+        return;
+    }
+    if ([self isEmpty]) {
+        return;
+    }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(doRegisterAWSHX)
                                                  name:@"doRegisterAWSHX"
@@ -226,11 +242,11 @@ static DDUser   *dduser;
 //注册账号
 - (void)doRegisterAWSHX{
     //注册
-        if (![self isEmpty]) {
+    
         //隐藏键盘
         [self.view endEditing:YES];
         //判断是否是中文，但不支持中英文混编
-        
+          
             
         //异步注册账号
         [[EaseMob sharedInstance].chatManager asyncRegisterNewAccount:_username
@@ -256,7 +272,12 @@ static DDUser   *dduser;
                  //                NSNumber *isName=NSNUmber num;
                  user.isDoublerID=[NSNumber numberWithInt:1];
                  user.isPic=[NSNumber numberWithInt:1];
-                 user.picPath=self.picpath;
+                 
+                 if(self.picpath==nil){
+                     user.picPath=@"Logo_new";
+                 }else{
+                     user.picPath=self.picpath;
+                 }
                  [ddbDynamoDB insertDDUser:user];
                                   
 
@@ -284,15 +305,13 @@ static DDUser   *dduser;
              }
          } onQueue:nil];
       
-        
-        
-    }
+
     
 }
 //判断账号和密码是否为空
 - (BOOL)isEmpty{
     BOOL ret = NO;
-    if (_nicknamevalue.text.length == 0 || _gendervalue.text.length == 0) {
+    if (_nicknamevalue.text.length == 0 || _gendervalue.text.length == 0 ||_birdatevalue.text.length==0) {
         ret = YES;
         [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
                                 message:NSLocalizedString(@"register.nicknameandgender", @"Please input your nickname and gender")
@@ -379,7 +398,7 @@ static DDUser   *dduser;
         [picker dismissModalViewControllerAnimated:YES];
         UIImageView *smallimage = [[UIImageView alloc] initWithFrame:
                                   CGRectMake(self.view.frame.size.width/2-75, 20, 150, 150)];
-
+        _imageView.removeFromSuperview;
         smallimage.layer.masksToBounds =YES;
         smallimage.layer.cornerRadius =75;
         smallimage.image = image;

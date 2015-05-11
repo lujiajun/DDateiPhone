@@ -115,6 +115,7 @@ static DDUser *uuser;
             [[_dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil]
              continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
                  uuser = task.result;
+                 [self.userDao insertDDUser:uuser];
                  return nil;
              }];
         }

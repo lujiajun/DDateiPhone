@@ -125,6 +125,7 @@
 		8ABE78141B00998D0020BD6C /* ShareSDKFlatShareViewUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8ABE78081B00998D0020BD6C /* ShareSDKFlatShareViewUI.bundle */; };
 		8ABE78151B00998D0020BD6C /* ShareSDKFlatShareViewUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE78091B00998D0020BD6C /* ShareSDKFlatShareViewUI.framework */; };
 		8ABE78161B00998D0020BD6C /* ShareSDKShareActionSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE780A1B00998D0020BD6C /* ShareSDKShareActionSheet.framework */; };
+		8ABE781D1B01088D0020BD6C /* Hi.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ABE781C1B01088D0020BD6C /* Hi.png */; };
 		8AD43E351AFC801200F05E8D /* addFriend.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD43E341AFC801200F05E8D /* addFriend.png */; };
 		8AD43E501AFE737900F05E8D /* SMS_SDKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8AD43E4C1AFE737900F05E8D /* SMS_SDKLocalizable.strings */; };
 		8AD43E511AFE737900F05E8D /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD43E4E1AFE737900F05E8D /* SMS_SDK.framework */; };
@@ -649,6 +650,7 @@
 		8ABE78081B00998D0020BD6C /* ShareSDKFlatShareViewUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKFlatShareViewUI.bundle; sourceTree = "<group>"; };
 		8ABE78091B00998D0020BD6C /* ShareSDKFlatShareViewUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKFlatShareViewUI.framework; sourceTree = "<group>"; };
 		8ABE780A1B00998D0020BD6C /* ShareSDKShareActionSheet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKShareActionSheet.framework; sourceTree = "<group>"; };
+		8ABE781C1B01088D0020BD6C /* Hi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Hi.png; path = dd/Hi.png; sourceTree = "<group>"; };
 		8AD43E341AFC801200F05E8D /* addFriend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addFriend.png; path = dd/addFriend.png; sourceTree = "<group>"; };
 		8AD43E371AFE5F9E00F05E8D /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		8AD43E381AFE5F9E00F05E8D /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
@@ -1506,6 +1508,7 @@
 		8ADB38511AE28F3400FCC6FC /* dd */ = {
 			isa = PBXGroup;
 			children = (
+				8ABE781C1B01088D0020BD6C /* Hi.png */,
 				8AD43E711AFF5A4E00F05E8D /* weibo.png */,
 				8AD43E341AFC801200F05E8D /* addFriend.png */,
 				8AEF0ECF1AF31E4B00DE2484 /* help.png */,
@@ -2946,6 +2949,7 @@
 				EBD2AB0B1A7CDAC000D16528 /* chatFire_audioPlaying1.png in Resources */,
 				3C372B5F19FE60DC005925B6 /* (null) in Resources */,
 				EBD2AB8F1A7CDAC000D16528 /* chat_receiver_bg@2x.png in Resources */,
+				8ABE781D1B01088D0020BD6C /* Hi.png in Resources */,
 				EBD2ABA91A7CDAC000D16528 /* groupPrivateHeader@2x.png in Resources */,
 				EBD2AB8E1A7CDAC000D16528 /* chat_receiver_bg.png in Resources */,
 				EBD2AB681A7CDAC000D16528 /* chatBar_recordBg@2x.png in Resources */,

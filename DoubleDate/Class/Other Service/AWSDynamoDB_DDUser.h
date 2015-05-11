@@ -11,7 +11,7 @@
 #import "DDUserDAO.h"
 #import "DDUser.h"
 
-
+typedef void(^SuccussBlock)();
 
 @interface AWSDynamoDB_DDUser : NSObject
 
