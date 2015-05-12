@@ -1,12 +1,13 @@
-
 #import <UIKit/UIKit.h>
 #import "AWSDynamoDB_DDUser.h"
 
-@interface IndexViewController : UITableViewController
+@interface IndexViewController : UIViewController
 
-+(DDUser *) instanceDDuser;
-+(void) setDDUser:(DDUser *) user;
+@property (strong, nonatomic) UITableView *tableView;
+
++ (DDUser *)instanceDDuser;
++ (void)setDDUser:(DDUser *)user;
 
 - (void)initdduser;
--(BOOL) haveDoubleFriend;
+- (BOOL)haveDoubleFriend;
 @end
