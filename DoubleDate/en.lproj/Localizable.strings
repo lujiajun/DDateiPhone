@@ -64,6 +64,7 @@
 "register.nicknameandgender"="please enter nickname and gender";
 "login.inputApnsNickname" = "Please enter nickname for apns";
 "register.uploadHeadError"="please upload your picture";
+"register.check.code"="please input your validate code";
 
 //register
 "register.ongoing" = "Is to register...";
