@@ -60,7 +60,7 @@
 "login.ongoing" = "正在登陆...";
 "login.fail" = "登录失败";
 "login.inputNameAndPswd" = "请输入账号和密码";
-"register.school" = "请选择地区和学校";
+"register.school" = "请填写一下您所在的城市呗";
 "register.nicknameandgender"="请输入昵称,性别和您的出生年份哦，以便为您提供更优质的服务";
 "login.inputApnsNickname" = "填写推送消息时使用的昵称";
 "register.uploadHeadError"="请上传您帅气迷人美丽大方的头像哦";

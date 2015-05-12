@@ -236,29 +236,29 @@
             
             [bakview addSubview:imgHead] ;
             //添加nickname
-            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width/2-35, 112, 80, 20)];
+            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(0, 112, self.view.frame.size.width, 20)];
             mylable.text=[IndexViewController instanceDDuser].nickName;
             mylable.textAlignment=NSTextAlignmentCenter;
-            mylable.font=[UIFont fontWithName:@"Helvetica" size:12];
+            mylable.font=[UIFont fontWithName:@"Helvetica" size:14];
             [bakview addSubview:mylable];
             //添加性别图标
             NSString *sex;
-            if([[IndexViewController instanceDDuser].gender isEqualToString: @"男" ]|| [[IndexViewController instanceDDuser].gender isEqualToString: @"Male"]){
-                sex=@"sexbox";
+            if([IndexViewController instanceDDuser].gender.intValue==1){
+                sex=@"sexboy";
             }else{
                 sex=@"sexgirl";
             }
             UIImage *seximg=[UIImage imageNamed:sex];
             UIImageView *sexview=[[UIImageView alloc] initWithImage:seximg];
-            sexview.frame=CGRectMake(mylable.frame.origin.x+mylable.frame.size.width, mylable.frame.origin.y, 10, 10);
+            sexview.frame=CGRectMake(self.view.frame.size.width/2+50, imgHead.frame.origin.y+80, 20, 20);
             [bakview addSubview:sexview];
             //添加double 号
-            UILabel *doubledate=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width/2-35, 134, 150, 20)];
+            UILabel *doubledate=[[UILabel alloc]initWithFrame:CGRectMake(0, 134, self.view.frame.size.width, 20)];
             
             doubledate.text=[Util str1:@"Double号:" appendStr2:[IndexViewController instanceDDuser].UID];
 //            NSLog([IndexViewController instanceDDuser].UID);
-            doubledate.textAlignment=NSTextAlignmentLeft;
-            doubledate.font=[UIFont fontWithName:@"Helvetica" size:12];
+            doubledate.textAlignment=NSTextAlignmentCenter;
+            doubledate.font=[UIFont fontWithName:@"Helvetica" size:14];
             [bakview addSubview:doubledate];
     }
             break;
@@ -439,9 +439,6 @@
     return 160;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [self.tableView reloadData];
-}
 
 
 -(void) btnClick{

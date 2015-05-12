@@ -105,13 +105,13 @@ NSDateFormatter *dateformatter;
         if(_userDao==nil){
             _userDao=[[DDUserDAO alloc]init];
         }
-        NSString *gender=nil;
+        NSNumber *gender=nil;
         if(login!=nil){
             gender=login.gender;
         }
         if(![login.UID isEqualToString:room4.UID1]){
             DDUser *user1=[_userDao selectDDuserByUid:room4.UID1];
-            if(user1!=nil && [user1.gender isEqualToString:gender]){
+            if(user1!=nil && user1.gender==gender){
                 _friend=user1;
                 _friendname=user1.UID;
                 return self;
@@ -120,7 +120,7 @@ NSDateFormatter *dateformatter;
         }
         if(![login.UID isEqualToString:room4.UID2]){
             DDUser *user2=[_userDao selectDDuserByUid:room4.UID2];
-            if(user2!=nil && [user2.gender isEqualToString:gender]){
+            if(user2!=nil && user2.gender==gender){
                 _friend=user2;
                 _friendname=user2.UID;
                 return self;
@@ -129,7 +129,7 @@ NSDateFormatter *dateformatter;
         }
         if(![login.UID isEqualToString:room4.UID3]){
             DDUser *user3=[_userDao selectDDuserByUid:room4.UID3];
-            if(user3!=nil && [user3.gender isEqualToString:gender]){
+            if(user3!=nil && user3.gender==gender){
                 _friend=user3;
                 _friendname=user3.UID;
                 return self;
@@ -247,7 +247,7 @@ NSDateFormatter *dateformatter;
         if(_count<[NSNumber numberWithInt:4] &&[_chatroom4.roomStatus isEqualToString:@"New" ]){
             //计算倒计时时间
             secondsCountDown= ([_chatroom4.systemTimeNumber longLongValue] -[[NSDate date] timeIntervalSince1970]*1000)/1000;
-            NSLog([NSString stringWithFormat:@"%u",secondsCountDown ]);
+//            NSLog([NSString stringWithFormat:@"%u",secondsCountDown ]);
             _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
         }
   
@@ -395,8 +395,9 @@ NSDateFormatter *dateformatter;
 //聊天通栏
 -(UIButton *) getFriendFrame{
     UIButton *bak=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+    
     [bak setImage:[UIImage imageNamed:@"chatbak"] forState:UIControlStateNormal];
-    [bak setImage:[UIImage imageNamed:@"chatjianbian"] forState:UIControlStateSelected];
+    [bak setImage:[UIImage imageNamed:@"jianbian"] forState:UIControlStateSelected];
     [bak addTarget:self action:@selector(dragInside) forControlEvents:UIControlEventTouchUpInside];
     bak.userInteractionEnabled = YES;
     

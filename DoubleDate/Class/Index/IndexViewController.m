@@ -182,7 +182,7 @@ static DDUser *uuser;
 		                    placeholderImage:[UIImage imageNamed:@"Logo_new"]];
 
 	//性别
-	BOOL isboy = [uuser1.gender isEqualToString:@"Male"] || [uuser1.gender isEqualToString:@"男"];
+    BOOL isboy = [uuser1.gender isEqualToString:@"Male"]==YES?YES:NO;
 	UIImage *genderImage = isboy ? [UIImage imageNamed:@"sexboy"] : [UIImage imageNamed:@"sexgirl"];
     cell.genderView.image = genderImage;
 
