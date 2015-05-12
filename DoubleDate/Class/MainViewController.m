@@ -166,18 +166,16 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     }
 }
 
--(void) reloadIndexAll{
-        [_view1 setImage:[UIImage imageNamed:@"all_on"] forState:UIControlStateNormal];
-        [_view2 setImage:[UIImage imageNamed:@"other_off"] forState:UIControlStateNormal];
-    
-
+- (void)reloadIndexAll {
+	[_view1 setImage:[UIImage imageNamed:@"all_on"] forState:UIControlStateNormal];
+	[_view2 setImage:[UIImage imageNamed:@"other_off"] forState:UIControlStateNormal];
+    _indexVC.showOppositeGender = NO;
 }
 
--(void) reloadIndexNoAll{
-    [_view1 setImage:[UIImage imageNamed:@"all_off"] forState:UIControlStateNormal];
-    [_view2 setImage:[UIImage imageNamed:@"other_on"] forState:UIControlStateNormal];
-    
-    
+- (void)reloadIndexNoAll {
+	[_view1 setImage:[UIImage imageNamed:@"all_off"] forState:UIControlStateNormal];
+	[_view2 setImage:[UIImage imageNamed:@"other_on"] forState:UIControlStateNormal];
+    _indexVC.showOppositeGender = YES;
 }
 
 #pragma mark - UIAlertViewDelegate

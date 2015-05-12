@@ -101,7 +101,7 @@
     //判断性别
     if(_chatroom2!=nil&&_uuser1!=nil&&_uuser2!=nil){
         if(_uuser1.gender!=nil){
-            if([_uuser1.gender isEqualToString:[IndexViewController instanceDDuser].gender]){
+            if(_uuser1.gender.intValue == [IndexViewController instanceDDuser].gender.intValue){
                 [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
                                         message:NSLocalizedString(@"group.notSameSex", @"Please join in the other sex room")
                              customizationBlock:nil
@@ -173,7 +173,7 @@
     //性别
     BOOL isboy=NO;
     if(_uuser1!=nil){
-        if([_uuser1.gender isEqualToString:@"Male"] || [_uuser1.gender isEqualToString:@"男"]){
+        if(_uuser1.gender.intValue == 0){
             isboy=YES;
         }
     }
@@ -244,7 +244,7 @@
     //性别
     BOOL isboy=NO;
     if(_uuser1!=nil){
-        if([_uuser1.gender isEqualToString: @"Male"] || [_uuser1.gender isEqualToString: @"男"]){
+        if(_uuser1.gender.intValue == 0){
             isboy=YES;
         }
     }

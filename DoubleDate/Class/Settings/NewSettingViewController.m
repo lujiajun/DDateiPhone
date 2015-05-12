@@ -243,11 +243,11 @@
             [bakview addSubview:mylable];
             //添加性别图标
             NSString *sex;
-            if([[IndexViewController instanceDDuser].gender isEqualToString: @"男" ]|| [[IndexViewController instanceDDuser].gender isEqualToString: @"Male"]){
-                sex=@"sexbox";
-            }else{
-                sex=@"sexgirl";
-            }
+			if ([IndexViewController instanceDDuser].gender.intValue == 0) {
+				sex = @"sexbox";
+			} else {
+				sex = @"sexgirl";
+			}
             UIImage *seximg=[UIImage imageNamed:sex];
             UIImageView *sexview=[[UIImageView alloc] initWithImage:seximg];
             sexview.frame=CGRectMake(mylable.frame.origin.x+mylable.frame.size.width, mylable.frame.origin.y, 10, 10);

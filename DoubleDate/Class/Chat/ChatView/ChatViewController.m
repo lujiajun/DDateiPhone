@@ -96,61 +96,51 @@ long secondsCountDown = 60*5;
 NSDateFormatter *dateformatter;
 
 
--(id) initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend isNewRoom:(BOOL) isNewRoom{
-    
-    _isNewRoom=isNewRoom;
-    _chatroom4=room4;
-    if(friend==nil){
-      DDUser *login=  [IndexViewController instanceDDuser];
-        if(_userDao==nil){
-            _userDao=[[DDUserDAO alloc]init];
-        }
-        NSString *gender=nil;
-        if(login!=nil){
-            gender=login.gender;
-        }
-        if(![login.UID isEqualToString:room4.UID1]){
-            DDUser *user1=[_userDao selectDDuserByUid:room4.UID1];
-            if(user1!=nil && [user1.gender isEqualToString:gender]){
-                _friend=user1;
-                _friendname=user1.UID;
-                return self;
-                
-            }
-        }
-        if(![login.UID isEqualToString:room4.UID2]){
-            DDUser *user2=[_userDao selectDDuserByUid:room4.UID2];
-            if(user2!=nil && [user2.gender isEqualToString:gender]){
-                _friend=user2;
-                _friendname=user2.UID;
-                return self;
-                
-            }
-        }
-        if(![login.UID isEqualToString:room4.UID3]){
-            DDUser *user3=[_userDao selectDDuserByUid:room4.UID3];
-            if(user3!=nil && [user3.gender isEqualToString:gender]){
-                _friend=user3;
-                _friendname=user3.UID;
-                return self;
-                
-            }
-        }
-        if(![login.UID isEqualToString:room4.UID4]){
-            DDUser *user4=[_userDao selectDDuserByUid:room4.UID4];
-            if(user4!=nil && [user4.gender isEqualToString:gender]){
-                _friend=user4;
-                _friendname=user4.UID;
-                return self;
-                
-            }
-        }
-        
-        
-    }else{
-        _friendname=friend;
-    }
-    return self;
+- (id)initRoom4:(CHATROOM4 *)room4 friend:(NSString *)friend isNewRoom:(BOOL)isNewRoom {
+	_isNewRoom = isNewRoom;
+	_chatroom4 = room4;
+	if (friend == nil) {
+		DDUser *login =  [IndexViewController instanceDDuser];
+		if (_userDao == nil) {
+			_userDao = [[DDUserDAO alloc]init];
+		}
+		int gender = login.gender.intValue;
+		if (![login.UID isEqualToString:room4.UID1]) {
+			DDUser *user1 = [_userDao selectDDuserByUid:room4.UID1];
+			if (user1 != nil && user1.gender.intValue == gender) {
+				_friend = user1;
+				_friendname = user1.UID;
+				return self;
+			}
+		}
+		if (![login.UID isEqualToString:room4.UID2]) {
+			DDUser *user2 = [_userDao selectDDuserByUid:room4.UID2];
+			if (user2 != nil && user2.gender.intValue == gender) {
+				_friend = user2;
+				_friendname = user2.UID;
+				return self;
+			}
+		}
+		if (![login.UID isEqualToString:room4.UID3]) {
+			DDUser *user3 = [_userDao selectDDuserByUid:room4.UID3];
+			if (user3 != nil && user3.gender.intValue == gender) {
+				_friend = user3;
+				_friendname = user3.UID;
+				return self;
+			}
+		}
+		if (![login.UID isEqualToString:room4.UID4]) {
+			DDUser *user4 = [_userDao selectDDuserByUid:room4.UID4];
+			if (user4 != nil && user4.gender.intValue == gender) {
+				_friend = user4;
+				_friendname = user4.UID;
+				return self;
+			}
+		}
+	} else {
+		_friendname = friend;
+	}
+	return self;
 }
 
 

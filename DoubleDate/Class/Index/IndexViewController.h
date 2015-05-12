@@ -5,6 +5,8 @@
 
 @property (strong, nonatomic) UITableView *tableView;
 
+@property (nonatomic) BOOL showOppositeGender;
+
 + (DDUser *)instanceDDuser;
 + (void)setDDUser:(DDUser *)user;
 

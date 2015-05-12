@@ -52,6 +52,8 @@
 
 @property (strong, nonatomic) NSMutableArray *dataSource;
 
+@property (strong, nonatomic) NSMutableArray *oppositeGenderDataSource;
+
 @property (nonatomic) BOOL haveFriend;
 
 @end
@@ -77,6 +79,7 @@ static DDUser *uuser;
 		_userDao = [[DDUserDAO alloc] init];
 		_chatRoom2DynamoDB = [[AWSDynamoDB_ChatRoom2 alloc] init];
 		_dataSource = [NSMutableArray array];
+        _oppositeGenderDataSource = [NSMutableArray array];
 		
         //1.先用本地数据做展示
 		[_dataSource addObjectsFromArray:[self.chatRoom2DynamoDB refreshListWithLocalData]];
@@ -152,7 +155,7 @@ static DDUser *uuser;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.dataSource count];
+	return self.showOppositeGender ? self.oppositeGenderDataSource.count : self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -162,7 +165,7 @@ static DDUser *uuser;
 		cell = [[HomePageListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 	}
     
-	CHATROOM2 *chatRoom2 = [self.dataSource objectAtIndex:indexPath.row];
+	CHATROOM2 *chatRoom2 = self.showOppositeGender ? [self.oppositeGenderDataSource objectAtIndex:indexPath.row] : [self.dataSource objectAtIndex:indexPath.row];
 
 	if (chatRoom2 != nil && chatRoom2.PicturePath != nil) {
 		[cell.bakview sd_setImageWithURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:chatRoom2.PicturePath]]
@@ -182,7 +185,7 @@ static DDUser *uuser;
 		                    placeholderImage:[UIImage imageNamed:@"Logo_new"]];
 
 	//性别
-	BOOL isboy = [uuser1.gender isEqualToString:@"Male"] || [uuser1.gender isEqualToString:@"男"];
+	BOOL isboy = uuser1.gender.intValue == 0;
 	UIImage *genderImage = isboy ? [UIImage imageNamed:@"sexboy"] : [UIImage imageNamed:@"sexgirl"];
     cell.genderView.image = genderImage;
 
@@ -257,6 +260,23 @@ static DDUser *uuser;
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
 	[_slimeView scrollViewDidEndDraging];
+}
+
+#pragma mark - setter
+
+- (void)setShowOppositeGender:(BOOL)showOppositeGender {
+	if (_showOppositeGender != showOppositeGender) {
+		_showOppositeGender = showOppositeGender;
+		if (showOppositeGender) {
+			[self.oppositeGenderDataSource removeAllObjects];
+			for (CHATROOM2 *chatRoom2 in self.dataSource) {
+				if (chatRoom2.Gender.intValue != uuser.gender.intValue) {
+					[self.oppositeGenderDataSource addObject:chatRoom2];
+				}
+			}
+		}
+		[self.tableView reloadData];
+	}
 }
 
 #pragma mark - getter
