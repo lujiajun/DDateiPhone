@@ -86,7 +86,7 @@ static DDUser   *dduser;
     [imageView addSubview:registerButton];
     [registerButton addTarget:self action:@selector(doRegister) forControlEvents:UIControlEventTouchUpInside];
     
-    
+   
 }
 
 -(void)getCode

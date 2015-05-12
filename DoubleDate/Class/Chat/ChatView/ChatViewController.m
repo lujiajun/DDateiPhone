@@ -237,7 +237,7 @@ NSDateFormatter *dateformatter;
         if(_count<[NSNumber numberWithInt:4] &&[_chatroom4.roomStatus isEqualToString:@"New" ]){
             //计算倒计时时间
             secondsCountDown= ([_chatroom4.systemTimeNumber longLongValue] -[[NSDate date] timeIntervalSince1970]*1000)/1000;
-            NSLog([NSString stringWithFormat:@"%u",secondsCountDown ]);
+//            NSLog([NSString stringWithFormat:@"%u",secondsCountDown ]);
             _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
         }
   
@@ -385,8 +385,9 @@ NSDateFormatter *dateformatter;
 //聊天通栏
 -(UIButton *) getFriendFrame{
     UIButton *bak=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+    
     [bak setImage:[UIImage imageNamed:@"chatbak"] forState:UIControlStateNormal];
-    [bak setImage:[UIImage imageNamed:@"chatjianbian"] forState:UIControlStateSelected];
+    [bak setImage:[UIImage imageNamed:@"jianbian"] forState:UIControlStateSelected];
     [bak addTarget:self action:@selector(dragInside) forControlEvents:UIControlEventTouchUpInside];
     bak.userInteractionEnabled = YES;
     

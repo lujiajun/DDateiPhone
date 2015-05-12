@@ -45,7 +45,7 @@
 
 		//GenderView
 		_genderView = [[UIImageView alloc] init];
-		_genderView.frame = CGRectMake(_bakview.frame.size.width - 40, _bakview.frame.origin.y + 80, 20, 20);
+		_genderView.frame = CGRectMake(_bakview.frame.size.width - 40, _bakview.frame.origin.y + 80, 25, 25);
 		[_bakview addSubview:_genderView];
 
 		//Click Number Background

@@ -31,17 +31,19 @@
 @property (strong,nonatomic)  NSString *password;
 
 @property (strong, nonatomic) NSString *grade;
-@property (strong, nonatomic) NSString *gender;
+@property (strong, nonatomic) NSNumber *gender;
 @property (strong, nonatomic) NSString *school;
 @property (strong, nonatomic) NSString *city;
 //@property (strong, nonatomic) NSString *university;
 @property (strong,nonatomic)  UITextField *nicknamevalue;
-@property (strong,nonatomic)  UITextField *gendervalue;
+//@property (strong,nonatomic)  UITextField *gendervalue;
 @property (strong,nonatomic) UITextField *gradevalue;
 @property (strong,nonatomic) UITextField *birdatevalue;
 @property (strong,nonatomic) UILabel *nickname;
 @property (strong,nonatomic) NSString *picpath;
 @property(strong,nonatomic)  NSData *data;
+@property(strong,nonatomic) UIButton *boy;
+@property(strong,nonatomic) UIButton *girl;
 
 @property(strong,nonatomic) UIImageView *imageView ;
 
@@ -49,6 +51,7 @@
 
 @end
 static DDUser   *dduser;
+NSNumber *sex;
 
 @implementation DDRegisterFinishController
 
@@ -62,7 +65,7 @@ static DDUser   *dduser;
 
 - (id)init:(NSString *)nickname gender:(NSString *)gender grade:(NSString *)grade university:(NSString *)university city:(NSString *)city{
     _nickname.text=nickname;
-    _gendervalue.text=gender;
+//    _gendervalue.text=gender;
     return self;
 }
 
@@ -96,17 +99,30 @@ static DDUser   *dduser;
     [_nicknamevalue setBorderStyle:UITextBorderStyleRoundedRect];
     [self.view addSubview:_nicknamevalue];
     
+    
     //性别
-    UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.origin.y+ 35, 60, 30)];
+    UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(10,_nickname.frame.origin.y+ 35 , 50, 30)];
     gender.text=@"性别:";
     gender.font=[UIFont fontWithName:@"Helvetica" size:12];
     gender.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:gender];
-    _gendervalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4,_nickname.frame.origin.y+ 35, 120, 30)];
-    _gendervalue.placeholder=@"性别";
-    [_gendervalue setBorderStyle:UITextBorderStyleRoundedRect];
-    _gendervalue.textAlignment=NSTextAlignmentLeft;
-    [self.view addSubview:_gendervalue];
+    
+    _boy=[[UIButton alloc]initWithFrame:CGRectMake(60,_nickname.frame.origin.y+ 35, 25, 25 )];
+    [_boy setImage:[UIImage imageNamed:@"sexboy"] forState:UIControlStateNormal];
+    [_boy addTarget:self action:@selector(changeBoySex) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_boy];
+    
+    _girl=[[UIButton alloc]initWithFrame:CGRectMake(_boy.frame.origin.x+_boy.frame.size.width+15    ,_nickname.frame.origin.y+ 35, 25, 25 )];
+    _girl.backgroundColor=[UIColor grayColor];
+    [_girl setImage:[UIImage imageNamed:@"sexgirl"] forState:UIControlStateNormal];
+    [_girl addTarget:self action:@selector(changeGirlSex) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_girl];
+//
+//    _gendervalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4,_nickname.frame.origin.y+ 35, 120, 30)];
+//    _gendervalue.placeholder=@"性别";
+//    [_gendervalue setBorderStyle:UITextBorderStyleRoundedRect];
+//    _gendervalue.textAlignment=NSTextAlignmentLeft;
+//    [self.view addSubview:_gendervalue];
     
     //学校
 //    UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*3+10, 60, 30)];
@@ -119,12 +135,18 @@ static DDUser   *dduser;
 //    [self.view addSubview:universityvalue];
 //    
     //城市
-    UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(10, gender.frame.origin.y+35, 200, 30)];
+    UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(10, _boy.frame.origin.y+35, 50, 30)];
   
-    city.text=[Util str1:@"城市:     " appendStr2:_city];
+    city.text=@"城市:     ";
     city.font=[UIFont fontWithName:@"Helvetica" size:12];
     city.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:city];
+    
+    UILabel *cityValue=[[UILabel alloc]initWithFrame:CGRectMake(city.frame.origin.x+city.frame.size.width, city.frame.origin.y, self.view.frame.size.width-60, 30)];
+    cityValue.text=@"beijingxxxxxxxxxxxxx";
+    cityValue.textAlignment=NSTextAlignmentLeft;
+    [self.view  addSubview:cityValue];
+    
     
     //年级
 //    UILabel *grade=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*5+10, 60, 30)];
@@ -138,12 +160,12 @@ static DDUser   *dduser;
 //    [self.view addSubview:_gradevalue];
     
     //出生日期
-    UITextField *birdate=[[UITextField alloc]initWithFrame:CGRectMake(10,city.frame.origin.y+35, 100, 30)];
+    UITextField *birdate=[[UITextField alloc]initWithFrame:CGRectMake(10,city.frame.origin.y+35, 70, 30)];
     birdate.text=@"出生日期:";
     birdate.textAlignment=NSTextAlignmentLeft;
     birdate.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:birdate];
-    _birdatevalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, city.frame.origin.y+33, 200, 30)];
+    _birdatevalue=[[UITextField alloc]initWithFrame:CGRectMake(70, city.frame.origin.y+33, 200, 30)];
     _birdatevalue.placeholder=@"birthday";
     _birdatevalue.textAlignment=NSTextAlignmentLeft;
     [_birdatevalue setBorderStyle:UITextBorderStyleRoundedRect];
@@ -154,10 +176,23 @@ static DDUser   *dduser;
     [registerButton setTitle:@"注册" forState:UIControlStateNormal];
     [self.view addSubview:registerButton];
     [registerButton addTarget:self action:@selector(registerUser) forControlEvents:UIControlEventTouchUpInside];
-    
-    
+}
+
+-(void) changeBoySex{
+    _girl.backgroundColor=[UIColor grayColor];
+    _boy.backgroundColor=nil;
+    sex=@"Male";
     
 }
+
+
+-(void) changeGirlSex{
+    _boy.backgroundColor=[UIColor grayColor];
+    _girl.backgroundColor=nil;
+    sex=@"Female";
+    
+}
+
 -(void) registerUser{
     
     if(self.picpath==nil){
@@ -212,7 +247,7 @@ static DDUser   *dduser;
             DDUser  *user=[DDUser new];
             user.nickName=self.nicknamevalue.text;
             user.UID=self.username;
-            user.gender=self.gendervalue.text;
+            user.gender=sex;
             //        user.grade=_gradevalue.text;
             user.password=self.password;
             user.city=self.city;
@@ -263,7 +298,7 @@ static DDUser   *dduser;
                  DDUser  *user=[DDUser new];
                  user.nickName=self.nicknamevalue.text;
                  user.UID=self.username;
-                 user.gender=self.gendervalue.text;
+                 user.gender=sex;
                  //        user.grade=_gradevalue.text;
                  user.password=self.password;
                  user.city=self.city;
@@ -311,7 +346,7 @@ static DDUser   *dduser;
 //判断账号和密码是否为空
 - (BOOL)isEmpty{
     BOOL ret = NO;
-    if (_nicknamevalue.text.length == 0 || _gendervalue.text.length == 0 ||_birdatevalue.text.length==0) {
+    if (_nicknamevalue.text.length == 0  ||_birdatevalue.text.length==0) {
         ret = YES;
         [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
                                 message:NSLocalizedString(@"register.nicknameandgender", @"Please input your nickname and gender")

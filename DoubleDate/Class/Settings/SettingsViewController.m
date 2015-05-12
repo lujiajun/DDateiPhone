@@ -120,7 +120,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -140,17 +140,17 @@
             [cell.contentView addSubview:self.autoLoginSwitch];
 
         }
+//        else if (indexPath.row == 1)
+//        {
+//            cell.textLabel.text = NSLocalizedString(@"title.apnsSetting", @"Apns Settings");
+//            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        }
         else if (indexPath.row == 1)
-        {
-            cell.textLabel.text = NSLocalizedString(@"title.apnsSetting", @"Apns Settings");
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-        else if (indexPath.row == 2)
         {
             cell.textLabel.text = NSLocalizedString(@"title.buddyBlock", @"Black List");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        else if (indexPath.row == 3)
+        else if (indexPath.row == 2)
         {
             cell.textLabel.text = NSLocalizedString(@"title.debug", @"Debug");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

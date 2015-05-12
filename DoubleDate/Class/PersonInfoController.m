@@ -253,13 +253,10 @@
             // 1.创建UIScrollView
             
             if(_addedPicArray.count==0){
-                
-                //赋值
-                _plusImageView.frame = CGRectMake(0,_scrollView.frame.origin.y, PIC_WIDTH, PIC_HEIGHT);
-                UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClick)];
-                [_plusImageView addGestureRecognizer:singleTap];//点击图片事件
-                
-                [_scrollView addSubview:_plusImageView];
+                UILabel * info=[[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width/2-50, cell.frame.size.height/2, 100, 30)];
+                info.text=@"用户暂时没有上传照片哟";
+                [cell.contentView addSubview:info];
+              
             }else{
                 int i=0;
                 for (id element in _addedPicArray) {
@@ -280,13 +277,7 @@
                     }
                     
                 }
-                if(_addedPicArray.count>1){
-                    _plusImageView.frame = CGRectMake(PIC_WIDTH*(_addedPicArray.count-1),_scrollView.frame.origin.y, PIC_WIDTH, PIC_HEIGHT);
-                    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClick)];
-                    [_plusImageView addGestureRecognizer:singleTap];//点击图片事件
                     
-                    [_scrollView addSubview:_plusImageView];
-                }
                 
                 
             }
@@ -391,207 +382,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self.tableView reloadData];
-}
-
-
--(void) btnClick{
-    UIActionSheet* actionSheet = [[UIActionSheet alloc]
-                                  initWithTitle:@"请选择文件来源"
-                                  delegate:self
-                                  cancelButtonTitle:@"取消"
-                                  destructiveButtonTitle:nil
-                                  otherButtonTitles:@"照相机",@"本地相簿",nil];
-    [actionSheet showInView:self.view];
-    //    [actionSheet release];
-}
-
-
-#pragma mark -
-#pragma UIActionSheet Delegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    NSLog(@"buttonIndex = [%d]",buttonIndex);
-    switch (buttonIndex) {
-        case 0://照相机
-        {                 UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-            imagePicker.delegate = self;
-            imagePicker.allowsEditing = YES;
-            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            //            imagePicker.mediaTypes =  [[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil];
-            [self presentModalViewController:imagePicker animated:YES];
-            //            [imagePicker release];
-        }
-            break;
-        case 1://本地相簿
-        {
-            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-            imagePicker.delegate = self;
-            imagePicker.allowsEditing = YES;
-            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            //            imagePicker.mediaTypes =  [[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil];
-            [self presentModalViewController:imagePicker animated:YES];
-            //            [imagePicker release];
-        }
-            break;
-            
-        default:
-            break;
-    }
-}
-
-#pragma mark -
-#pragma UIImagePickerController Delegate
-//当选择一张图片后进入这里
--(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-
-{
-    
-    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
-    
-    //当选择的类型是图片
-    if ([type isEqualToString:@"public.image"])
-    {
-        //先把图片转成NSData
-        UIImage* image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
-        
-        NSData *data;
-        if (UIImagePNGRepresentation(image) == nil)
-        {
-            data = UIImageJPEGRepresentation(image, 1.0);
-        }
-        else
-        {
-            data = UIImagePNGRepresentation(image);
-        }
-        //关闭相册
-        [picker dismissModalViewControllerAnimated:YES];
-        //添加图片
-        UIImageView *aImageView=[[UIImageView alloc]initWithImage:image];
-        [aImageView setFrame:CGRectMake(_plusImageView.frame.origin.x, _plusImageView.frame.origin.y, PIC_WIDTH, PIC_HEIGHT)];
-        [_scrollView addSubview:aImageView];
-        //放置图片到指定位置
-        
-        CABasicAnimation *positionAnim=[CABasicAnimation animationWithKeyPath:@"position"];
-        [positionAnim setFromValue:[NSValue valueWithCGPoint:CGPointMake(_plusImageView.center.x, _plusImageView.center.y)]];
-        [positionAnim setToValue:[NSValue valueWithCGPoint:CGPointMake(_plusImageView.center.x+PIC_WIDTH, _plusImageView.center.y)]];
-        [positionAnim setDelegate:self];
-        [positionAnim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-        [positionAnim setDuration:0.25f];
-        [_plusImageView.layer addAnimation:positionAnim forKey:nil];
-        [_plusImageView setCenter:CGPointMake(_plusImageView.center.x+PIC_WIDTH, _plusImageView.center.y)];
-        
-        //先显示，在上传
-        //获得addPicArry中得最大值
-        NSString *picname=[self getNewPicName];
-        if(picname!=nil&&![picname isEqualToString:@""]){
-            [_addedPicArray addObject:picname];
-        }
-        
-        [self refreshScrollView];
-        [[self tableView] reloadData];
-        
-        [_aliCloud asynUploadPic:data name:picname username:_user.UID];
-        
-    }
-    
-}
-//最大值加1
--(NSString *) getNewPicName{
-    if(_addedPicArray==nil ||_addedPicArray.count==0){
-        //        [_addedPicArray addObject:1];
-        return @"1";
-    }else{
-        NSComparator cmptr = ^(id obj1, id obj2){
-            if ([obj1 integerValue] > [obj2 integerValue]) {
-                return (NSComparisonResult)NSOrderedDescending;
-            }
-            
-            if ([obj1 integerValue] < [obj2 integerValue]) {
-                return (NSComparisonResult)NSOrderedAscending;
-            }
-            return (NSComparisonResult)NSOrderedSame;
-        };
-        NSArray *array = [_addedPicArray sortedArrayUsingComparator:cmptr];
-        return   [NSString stringWithFormat: @"%d",  [array.lastObject integerValue]+1];
-    }
-    
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [picker dismissModalViewControllerAnimated:YES];
-}
-
-
-#pragma mark - Table view delegate
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch (indexPath.section) {
-        case 0:{
-            DDupdatePicAndName *pushController = [DDupdatePicAndName alloc] ;
-            [self.navigationController pushViewController:pushController animated:YES];
-            
-            break;
-        }
-        case 2:{
-            DDPersonalUpdateController *blackController = [DDPersonalUpdateController alloc];
-            [self.navigationController pushViewController:blackController animated:YES];
-            break;
-        }
-        case 3:{
-           
-        }
-            
-    }
-    
-}
-
-#pragma mark - getter
-
-- (UIView *)footerView
-{
-    if (_footerView == nil) {
-        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
-        _footerView.backgroundColor = [UIColor clearColor];
-    }
-    
-    return _footerView;
-}
-
-#pragma mark - action
-
-- (void)autoLoginChanged:(UISwitch *)autoSwitch
-{
-    [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:autoSwitch.isOn];
-}
-
-- (void)useIpChanged:(UISwitch *)ipSwitch
-{
-    [[EaseMob sharedInstance].chatManager setIsUseIp:ipSwitch.isOn];
-}
-
-- (void)beInvitedChanged:(UISwitch *)beInvitedSwitch
-{
-    //    if (beInvitedSwitch.isOn) {
-    //        self.beInvitedLabel.text = @"允许选择";
-    //    }
-    //    else{
-    //        self.beInvitedLabel.text = @"自动加入";
-    //    }
-    //
-    //    [[EaseMob sharedInstance].chatManager setAutoAcceptGroupInvitation:!(beInvitedSwitch.isOn)];
-}
-
-
-- (void)refreshConfig
-{
-    [self.autoLoginSwitch setOn:[[EaseMob sharedInstance].chatManager isAutoLoginEnabled] animated:YES];
-    [self.ipSwitch setOn:[[EaseMob sharedInstance].chatManager isUseIp] animated:YES];
-    
     [self.tableView reloadData];
 }
 
