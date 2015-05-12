@@ -245,7 +245,7 @@
             NSString *sex;
             
 			if ([IndexViewController instanceDDuser].gender.intValue == 0) {
-				sex = @"sexbox";
+				sex = @"sexboy";
 			} else {
 				sex = @"sexgirl";
 			}
@@ -353,7 +353,12 @@
 //            [bakview addSubview:school];
             
             UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(30, university.frame.origin.y+20, 200, 20)];
-            gender.text=[Util str1:@"性别：   " appendStr2:[IndexViewController instanceDDuser].gender==nil?@"请编辑性别信息":[IndexViewController instanceDDuser].gender];
+            if([IndexViewController instanceDDuser].gender.intValue==0){
+                gender.text=@"性别：   男";;
+            }else{
+                gender.text=@"性别：   女";
+            }
+          
 
             gender.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:gender];

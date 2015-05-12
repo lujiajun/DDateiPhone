@@ -74,6 +74,9 @@ NSNumber *sex;
     
     [super viewDidLoad];
     self.title = @"注册";
+    if(sex==nil){
+      sex=[[NSNumber alloc]initWithInt:0];
+    }
    
     //头像
      _imageView = [[UIImageView alloc] init];
@@ -181,7 +184,7 @@ NSNumber *sex;
 -(void) changeBoySex{
     _girl.backgroundColor=[UIColor grayColor];
     _boy.backgroundColor=nil;
-    sex=@"Male";
+    sex=[[NSNumber alloc]initWithInt:0];
     
 }
 
@@ -189,7 +192,7 @@ NSNumber *sex;
 -(void) changeGirlSex{
     _boy.backgroundColor=[UIColor grayColor];
     _girl.backgroundColor=nil;
-    sex=@"Female";
+    sex=[[NSNumber alloc]initWithInt:1];
     
 }
 

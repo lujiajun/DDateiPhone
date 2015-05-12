@@ -37,7 +37,7 @@
 
 @end
 static DDUser   *dduser;
-
+static BOOL isDebug=YES;
 @implementation DDRegisterController
 
 
@@ -162,9 +162,9 @@ static DDUser   *dduser;
     //验证号码
     //验证成功后 获取通讯录 上传通讯录
 //    [self.view endEditing:YES];
-//    if(self.isEmpty){
-//        return;
-//    }
+    if(self.isEmpty){
+        return;
+    }
     DDSchoolRegisterController *personsign=[[DDSchoolRegisterController alloc] initWithNibName:self.usernameTextField.text password:self.passwordTextField.text];
                     [self.navigationController pushViewController:personsign animated:YES];
     

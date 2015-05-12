@@ -31,7 +31,7 @@
 @property (strong, nonatomic) NSString *city;
 @property (strong, nonatomic) NSString *university;
 @property (strong,nonatomic)  UITextField *nicknamevalue;
-@property (strong,nonatomic)  UITextField *gendervalue;
+
 @property (strong,nonatomic) UITextField *gradevalue;
 @property (strong,nonatomic) UITextField *birdatevalue;
 @property (strong,nonatomic) UITextField *universityvalue;
@@ -40,10 +40,13 @@
 @property (strong,nonatomic) UITextField *signvalue;
 @property (strong,nonatomic) UILabel *nickname;
 @property (strong,nonatomic) NSString *picpath;
+@property(strong,nonatomic) UIButton *boy;
+@property(strong,nonatomic) UIButton *girl;
 
 
 
 @end
+NSNumber *sex;
 
 @implementation DDPersonalUpdateController
 
@@ -57,7 +60,7 @@
 
 - (id)init:(NSString *)nickname gender:(NSString *)gender grade:(NSString *)grade university:(NSString *)university city:(NSString *)city{
     _nickname.text=nickname;
-    _gendervalue.text=gender;
+   
     return self;
 }
 
@@ -66,6 +69,10 @@
     
     [super viewDidLoad];
     self.title = @"注册信息修改";
+    if(sex==nil){
+        sex=[IndexViewController instanceDDuser].gender;
+    }
+
 
     //学校
     UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+10, self.view.frame.origin.y+20, 60, 30)];
@@ -112,13 +119,23 @@
     gender.textAlignment=NSTextAlignmentLeft;
     gender.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:gender];
-    _gendervalue=[[UITextField alloc]initWithFrame:CGRectMake(city.frame.origin.x+50, city.frame.origin.y+40, 180, 30)];
-    _gendervalue.text=[IndexViewController instanceDDuser].gender;
-    [_gendervalue setBorderStyle:UITextBorderStyleRoundedRect];
-    _gendervalue.textAlignment=NSTextAlignmentLeft;
-    _gendervalue.font=[UIFont fontWithName:@"Helvetica" size:12];
-    [self.view addSubview:_gendervalue];
     
+    _boy=[[UIButton alloc]initWithFrame:CGRectMake(city.frame.origin.x+50,gender.frame.origin.y, 25, 25 )];
+    [_boy setImage:[UIImage imageNamed:@"sexboy"] forState:UIControlStateNormal];
+    if([IndexViewController instanceDDuser].gender.intValue==1){
+        _boy.backgroundColor=[UIColor grayColor];
+    }
+    [_boy addTarget:self action:@selector(changeBoySex) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_boy];
+    
+    _girl=[[UIButton alloc]initWithFrame:CGRectMake(_boy.frame.origin.x+_boy.frame.size.width+15    ,gender.frame.origin.y, 25, 25 )];
+    if([IndexViewController instanceDDuser].gender.intValue==0){
+        _girl.backgroundColor=[UIColor grayColor];
+    }
+    [_girl setImage:[UIImage imageNamed:@"sexgirl"] forState:UIControlStateNormal];
+    [_girl addTarget:self action:@selector(changeGirlSex) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_girl];
+
     
     //出生日期
     UITextField *birdate=[[UITextField alloc]initWithFrame:CGRectMake(10, gender.frame.origin.y+40, 60, 30)];
@@ -168,13 +185,26 @@
     
     
 }
+-(void) changeBoySex{
+    _girl.backgroundColor=[UIColor grayColor];
+    _boy.backgroundColor=nil;
+    sex=[[NSNumber alloc]initWithInt:0];
+    
+}
 
+
+-(void) changeGirlSex{
+    _boy.backgroundColor=[UIColor grayColor];
+    _girl.backgroundColor=nil;
+    sex=[[NSNumber alloc]initWithInt:1];
+    
+}
 //xiugai账号
 - (void)updateDDUser {
 	AWSDynamoDB_DDUser *userDynamoDB = [[AWSDynamoDB_DDUser alloc] init];
 	DDUser *user = [IndexViewController instanceDDuser];
 	user.university = _universityvalue.text == nil ? user.university : _universityvalue.text;
-	user.gender = _gendervalue.text == nil ? user.gender : _gendervalue.text;
+	user.gender = sex;
 	user.city = _cityvalue.text == nil ? user.city : _cityvalue.text;
 	user.hobbies = _hobbiesvalue.text == nil ? user.hobbies : _hobbiesvalue.text;
 	user.sign = _signvalue.text == nil ? user.sign : _signvalue.text;
@@ -192,7 +222,7 @@
 //判断账号和密码是否为空
 - (BOOL)isEmpty{
     BOOL ret = NO;
-    if (_nicknamevalue.text.length == 0 || _gendervalue.text.length == 0) {
+    if (_nicknamevalue.text.length == 0 ) {
         ret = YES;
         [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
                                 message:NSLocalizedString(@"register.nicknameandgender", @"Please input your nickname and gender")

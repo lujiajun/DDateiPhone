@@ -330,7 +330,7 @@
     //性别
     BOOL isboy=NO;
     if(user!=nil){
-        if([user.gender isEqual:@"Male"] || [user.gender isEqual:@"男"]){
+        if(user.gender.intValue==0){
             isboy=YES;
         }
     }
