@@ -16,7 +16,7 @@
 @property (nonatomic, strong) NSString *password;
 @property (nonatomic, strong) NSNumber *isPic;
 @property (nonatomic, strong) NSString *picPath;
-@property (nonatomic, strong) NSString *gender;
+@property (nonatomic, strong) NSNumber *gender;
 @property (nonatomic, strong) NSString *university;
 @property (nonatomic, strong) NSString *city;
 @property (nonatomic, strong) NSString *birthday;

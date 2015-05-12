@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) NSString *RID;
 @property (nonatomic, strong) NSString *ClickNum;
-@property (nonatomic, strong) NSString *Gender;
+@property (nonatomic, strong) NSNumber *Gender;
 @property (nonatomic, strong) NSString *GradeFrom;
 @property (nonatomic, strong) NSString *Motto;
 @property (nonatomic, strong) NSString *PicturePath;
