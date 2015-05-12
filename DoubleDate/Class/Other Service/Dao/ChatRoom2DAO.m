@@ -25,7 +25,7 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
 	return [NSString stringWithFormat:@"Create table if not exists %@( \
             RID varchar(50) PRIMARY KEY, \
             ClickNum varchar(10), \
-            Gender varchar(10), \
+            Gender INTEGER, \
             GradeFrom varchar(10), \
             Motto varchar(50), \
             PicturePath varchar(50), \
@@ -123,7 +123,7 @@ NSString *const ChatRoom2Table = @"ChatRoom2";
     CHATROOM2 *chatroom2 = [CHATROOM2 new];
     chatroom2.RID = [rs stringForColumn:@"RID"];
     chatroom2.ClickNum = [rs stringForColumn:@"ClickNum"];
-    chatroom2.Gender = [rs stringForColumn:@"Gender"];
+    chatroom2.Gender = [NSNumber numberWithInt:[rs intForColumn:@"Gender"]];
     chatroom2.GradeFrom = [rs stringForColumn:@"GradeFrom"];
     chatroom2.Motto = [rs stringForColumn:@"Motto"];
     chatroom2.PicturePath = [rs stringForColumn:@"PicturePath"];

@@ -21,7 +21,7 @@ NSString * const DDUserTable=@"DDUser";
             password varchar(50),\
             isPic INTEGER, \
             picPath TEXT, \
-            gender varchar(10), \
+            gender INTEGER, \
             university varchar(10), \
             grade varchar(10), \
             isDoublerID INTEGER, \
@@ -151,7 +151,7 @@ NSString * const DDUserTable=@"DDUser";
     dduser.password = [rs stringForColumn:@"password"];
     dduser.isPic = [NSNumber numberWithInt:[rs intForColumn:@"isPic"]];
     dduser.picPath = [rs stringForColumn:@"picPath"];
-    dduser.gender = [rs stringForColumn:@"gender"];
+    dduser.gender = [NSNumber numberWithInt:[rs intForColumn:@"gender"]];
     dduser.university = [rs stringForColumn:@"university"];
     dduser.grade = [rs stringForColumn:@"grade"];
     dduser.isDoublerID = [NSNumber numberWithInt:[rs intForColumn:@"isDoublerID"]];
