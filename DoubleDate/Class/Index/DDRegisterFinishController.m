@@ -146,7 +146,7 @@ NSNumber *sex;
     [self.view addSubview:city];
     
     UILabel *cityValue=[[UILabel alloc]initWithFrame:CGRectMake(city.frame.origin.x+city.frame.size.width, city.frame.origin.y, self.view.frame.size.width-60, 30)];
-    cityValue.text=@"beijingxxxxxxxxxxxxx";
+    cityValue.text=_city;
     cityValue.textAlignment=NSTextAlignmentLeft;
     [self.view  addSubview:cityValue];
     

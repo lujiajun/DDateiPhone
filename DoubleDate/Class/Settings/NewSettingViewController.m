@@ -229,6 +229,7 @@
             
             
             UIImageView *imgHead=[[UIImageView alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width/2-50, 10, 100, 100)];
+            NSLog([Util str1:DDPicPath appendStr2:[IndexViewController instanceDDuser].picPath]);
             [imgHead sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:[IndexViewController instanceDDuser].picPath]] placeholderImage:[UIImage imageNamed:@"80" ]];
             imgHead.layer.cornerRadius =50;
             imgHead.layer.masksToBounds = YES;
@@ -321,7 +322,7 @@
             bakview.frame=CGRectMake(0, cell.frame.origin.y+5, cell.frame.size.width, 140);
             [cell.contentView addSubview:bakview];
             
-            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(30, bakview.frame.origin.y+5, 100, 20)];
+            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(30, bakview.frame.origin.y+5, 250, 20)];
             
             mylable.text=[Util str1:@"城市：   " appendStr2:[IndexViewController instanceDDuser].city==nil?@"请编辑城市信息":[IndexViewController instanceDDuser].city];
             mylable.textAlignment=NSTextAlignmentLeft;
@@ -339,7 +340,7 @@
             bianjiView.frame = CGRectMake(cell.frame.size.width-30, mylable.frame.origin.y, 15, 15);
             [bakview addSubview:bianjiView];
             
-            UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(30, mylable.frame.origin.y+20, 200, 20)];
+            UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(30, mylable.frame.origin.y+20, 250, 20)];
             university.text=[Util str1:@"学校：   " appendStr2:[IndexViewController instanceDDuser].university==nil?@"请编辑学校信息":[IndexViewController instanceDDuser].university];
             university.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:university];

@@ -222,10 +222,10 @@ NSNumber *sex;
 //判断账号和密码是否为空
 - (BOOL)isEmpty{
     BOOL ret = NO;
-    if (_nicknamevalue.text.length == 0 ) {
+    if (_nicknamevalue.text.length == 0 || _cityvalue.text.length==0 ||_hobbiesvalue.text.length==0 ||_signvalue.text.length==0||_birdatevalue.text.length==0) {
         ret = YES;
         [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
-                                message:NSLocalizedString(@"register.nicknameandgender", @"Please input your nickname and gender")
+                                message:@"请完善您的个人信息，我们才能更快捷给您分配优质好友哦"
                      customizationBlock:nil
                         completionBlock:nil
                       cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
