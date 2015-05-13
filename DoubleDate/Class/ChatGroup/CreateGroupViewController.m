@@ -82,7 +82,7 @@
     
     UIButton *nextButton = [[UIButton alloc] initWithFrame:CGRectMake(0, _mottoTextView.frame.origin.y+_mottoTextView.frame.size.height+10, self.view.frame.size.width, 30)];
     nextButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
-    [nextButton setTitle:@"加入聊天室" forState:UIControlStateNormal];
+    [nextButton setTitle:@"创建聊天室" forState:UIControlStateNormal];
     [nextButton addTarget:self action:@selector(addContacts:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextButton];
 
@@ -225,14 +225,12 @@
 	chatRoom2.RID = [Util str1:username appendStr2:@"_" appendStr3:username2];
 	chatRoom2.ClickNum = 0;
 	chatRoom2.Gender = [userDynamoDB.dduserDao selectDDuserByUid:username].gender;
-	chatRoom2.GradeFrom = @"无限制";
 	chatRoom2.Motto = self.mottoTextView.text;
 	chatRoom2.PicturePath = self.coverImagePath;
-	chatRoom2.SchoolRestrict = @"无限制";
 	chatRoom2.UID1 = username;
 	chatRoom2.UID2 = username2;
-    //先删除老得组，替换新的
     
+    //先删除老得组，替换新的
 	[chatRoom2DynamoDB insertChatroom2:chatRoom2];
 }
 

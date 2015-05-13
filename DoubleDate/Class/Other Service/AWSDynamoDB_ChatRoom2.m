@@ -37,16 +37,19 @@
 	    if (task.error) {
 	        NSLog(@"Error: [%@]", task.error);
 		}
+        
+	    if (task.result) {
+	        [self.chatRoom2Dao insertLocalChatroom2:chatRoom2];
+		}
 	    return nil;
 	}];
-	[self.chatRoom2Dao insertLocalChatroom2:chatRoom2];
 }
 
 - (void)removeFromAWSandLocal:(CHATROOM2 *)chatRoom2 {
 	if (chatRoom2 != nil && chatRoom2.RID != nil) {
 		AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
 		[dynamoDBObjectMapper remove:chatRoom2];
-		[self.chatRoom2Dao delChatRoom4ByRid:chatRoom2.RID];
+		[self.chatRoom2Dao delChatRoom2ByRid:chatRoom2.RID];
 	}
 }
 
