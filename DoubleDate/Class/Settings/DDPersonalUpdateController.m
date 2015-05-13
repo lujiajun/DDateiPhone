@@ -69,6 +69,7 @@ NSNumber *sex;
     
     [super viewDidLoad];
     self.title = @"注册信息修改";
+    self.view.backgroundColor = [UIColor whiteColor];
     if(sex==nil){
         sex=[IndexViewController instanceDDuser].gender;
     }

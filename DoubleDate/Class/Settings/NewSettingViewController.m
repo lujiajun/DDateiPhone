@@ -263,7 +263,7 @@
 					}
 				}
 				if (_addedPicArray.count > 1) {
-					_plusImageView.frame = CGRectMake(PIC_WIDTH * (_addedPicArray.count - 1), _scrollView.frame.origin.y, PIC_WIDTH, PIC_HEIGHT);
+					_plusImageView.frame = CGRectMake(PIC_WIDTH * i, _scrollView.frame.origin.y, PIC_WIDTH, PIC_HEIGHT);
 					UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClick)];
 					[_plusImageView addGestureRecognizer:singleTap];//点击图片事件
 
@@ -284,7 +284,7 @@
 			bakview.frame = CGRectMake(0, cell.frame.origin.y + 5, self.view.frame.size.width, 140);
 			[cell.contentView addSubview:bakview];
 
-			UILabel *mylable = [[UILabel alloc]initWithFrame:CGRectMake(30, bakview.frame.origin.y + 5, 100, 20)];
+			UILabel *mylable = [[UILabel alloc]initWithFrame:CGRectMake(30, bakview.frame.origin.y + 5, 250, 20)];
 
 			mylable.text = [Util str1:@"城市：   " appendStr2:[IndexViewController instanceDDuser].city == nil ? @"请编辑城市信息" : [IndexViewController instanceDDuser].city];
 			mylable.textAlignment = NSTextAlignmentLeft;
@@ -302,7 +302,7 @@
 			bianjiView.frame = CGRectMake(self.view.frame.size.width - 30, mylable.frame.origin.y, 15, 15);
 			[bakview addSubview:bianjiView];
 
-			UILabel *university = [[UILabel alloc]initWithFrame:CGRectMake(30, mylable.frame.origin.y + 20, 200, 20)];
+			UILabel *university = [[UILabel alloc]initWithFrame:CGRectMake(30, mylable.frame.origin.y + 20, 260, 20)];
 			university.text = [Util str1:@"学校：   " appendStr2:[IndexViewController instanceDDuser].university == nil ? @"请编辑学校信息" : [IndexViewController instanceDDuser].university];
 			university.font = [UIFont fontWithName:@"Helvetica" size:12];
 			[bakview addSubview:university];
@@ -327,19 +327,19 @@
 			[bakview addSubview:gender];
 
 
-			UILabel *birth = [[UILabel alloc]initWithFrame:CGRectMake(30, gender.frame.origin.y + 20, 200, 20)];
+			UILabel *birth = [[UILabel alloc]initWithFrame:CGRectMake(30, gender.frame.origin.y + 20, self.view.frame.size.width-40, 20)];
 
 			birth.text = [Util str1:@"BIRTH：   " appendStr2:[IndexViewController instanceDDuser].birthday == nil ? @"请编辑出生日期信息" : [IndexViewController instanceDDuser].birthday];
 
 			birth.font = [UIFont fontWithName:@"Helvetica" size:12];
 			[bakview addSubview:birth];
 
-			UILabel *intre = [[UILabel alloc]initWithFrame:CGRectMake(30, birth.frame.origin.y + 20, 200, 20)];
+			UILabel *intre = [[UILabel alloc]initWithFrame:CGRectMake(30, birth.frame.origin.y + 20, self.view.frame.size.width-40, 20)];
 			intre.text = [Util str1:@"爱好：   " appendStr2:[IndexViewController instanceDDuser].hobbies == nil ? @"请编辑爱好信息" : [IndexViewController instanceDDuser].hobbies];
 			intre.font = [UIFont fontWithName:@"Helvetica" size:12];
 			[bakview addSubview:intre];
 
-			UILabel *sign = [[UILabel alloc]initWithFrame:CGRectMake(30, intre.frame.origin.y + 20, 200, 20)];
+			UILabel *sign = [[UILabel alloc]initWithFrame:CGRectMake(30, intre.frame.origin.y + 20, self.view.frame.size.width-40, 20)];
 			sign.text = [Util str1:@"签名：   " appendStr2:[IndexViewController instanceDDuser].sign == nil ? @"请编辑签名信息" : [IndexViewController instanceDDuser].sign];
 			sign.font = [UIFont fontWithName:@"Helvetica" size:12];
 			[bakview addSubview:sign];

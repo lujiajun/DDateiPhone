@@ -22,6 +22,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     _username=[IndexViewController instanceDDuser].nickName;
     
     self.title = @"修改头像";

@@ -224,10 +224,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     _indexVC = [[IndexViewController alloc] init];
 //    [_indexVC networkChanged:_connectionState];
     
-    _indexVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.index", @"Double Date")
-                                                        image:[UIImage imageNamed:@"indexoff"]
-                                                selectedImage:[UIImage imageNamed:@"indexon"]];
-    
+    _indexVC.tabBarItem.title=NSLocalizedString(@"title.index", @"Double Date");
+    _indexVC.tabBarItem.image=[[UIImage imageNamed:@"indexoff"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _indexVC.tabBarItem.selectedImage=[[UIImage imageNamed:@"indexon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _indexVC.tabBarItem.tag = 0;
 
     //    _indexVC.tabBarItem.imageInsets = UIEdgeInsetsMake(0, -10, -6, -10);
@@ -237,27 +236,28 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     //conversations
     _chatListVC = [[MainChatListViewController alloc] init];
     [_chatListVC networkChanged:_connectionState];
-    _chatListVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.conversation", @"Conversations")
-                                                           image:[UIImage imageNamed:@"chatoff"]
-                                                   selectedImage:[UIImage imageNamed:@"chaton"]];
+    _chatListVC.tabBarItem.title=NSLocalizedString(@"title.conversation", @"Conversations");
+    _chatListVC.tabBarItem.image=[[UIImage imageNamed:@"chatoff"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _chatListVC.tabBarItem.selectedImage=[[UIImage imageNamed:@"chaton"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _chatListVC.tabBarItem.tag = 1;
     [self unSelectedTapTabBarItems:_chatListVC.tabBarItem];
     [self selectedTapTabBarItems:_chatListVC.tabBarItem];
     
     //address book
     _contactsVC = [[ContactsViewController alloc] initWithNibName:nil bundle:nil];
-    _contactsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.addressbook", @"AddressBook")
-                                                           image:[UIImage imageNamed:@"friendoff"]
-                                                   selectedImage:[UIImage imageNamed:@"friendon"]];
+    
+    _contactsVC.tabBarItem.title=NSLocalizedString(@"title.addressbook", @"AddressBook");
+    _contactsVC.tabBarItem.image=[[UIImage imageNamed:@"friendoff"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _contactsVC.tabBarItem.selectedImage=[[UIImage imageNamed:@"friendon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _contactsVC.tabBarItem.tag = 2;
     [self unSelectedTapTabBarItems:_contactsVC.tabBarItem];
     [self selectedTapTabBarItems:_contactsVC.tabBarItem];
     
     //Setting
     _settingsVC = [[NewSettingViewController alloc] init];
-    _settingsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"title.setting", @"Setting")
-                                                           image:[UIImage imageNamed:@"settingoff"]
-                                                   selectedImage:[UIImage imageNamed:@"settingon"]];
+    _settingsVC.title=NSLocalizedString(@"title.setting", @"Setting");
+    _settingsVC.tabBarItem.image=[[UIImage imageNamed:@"settingoff"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    _settingsVC.tabBarItem.selectedImage=[[UIImage imageNamed:@"settingon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     _settingsVC.tabBarItem.tag = 3;
     _settingsVC.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     [self unSelectedTapTabBarItems:_settingsVC.tabBarItem];

@@ -162,7 +162,8 @@
         
         [nav.navigationBar.layer setMasksToBounds:YES];
     }
-    
+
+
     self.window.rootViewController = nav;
     
 //    [nav setNavigationBarHidden:YES];

@@ -74,6 +74,7 @@ NSNumber *sex;
     
     [super viewDidLoad];
     self.title = @"注册";
+    self.view.backgroundColor = [UIColor whiteColor];
     if(sex==nil){
       sex=[[NSNumber alloc]initWithInt:0];
     }

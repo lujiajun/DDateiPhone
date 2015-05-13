@@ -43,6 +43,7 @@ static DDUser   *dduser;
     
     [super viewDidLoad];
     self.title = @"注册";
+    self.view.backgroundColor = [UIColor whiteColor];
     
     UIImageView *imageView = [[UIImageView alloc] init];
     imageView.backgroundColor=[UIColor lightGrayColor];

@@ -18,6 +18,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     UILabel *old=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 60, 30)];
     old.text=@"原密码";
     old.font=[UIFont fontWithName:@"Helvetica" size:12];
