@@ -220,7 +220,7 @@
             
             [bakview addSubview:imgHead] ;
             //添加nickname
-            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width/2-35, 112, 80, 20)];
+          UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(0, 112, self.view.frame.size.width, 20)];
             mylable.text=_user.nickName;
             mylable.textAlignment=NSTextAlignmentCenter;
             mylable.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -253,8 +253,9 @@
             // 1.创建UIScrollView
             
             if(_addedPicArray.count==0){
-                UILabel * info=[[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width/2-50, cell.frame.size.height/2, 100, 30)];
+                UILabel * info=[[UILabel alloc]initWithFrame:CGRectMake(0, cell.frame.size.height/2, cell.frame.size.width, 30)];
                 info.text=@"用户暂时没有上传照片哟";
+                info.textAlignment=NSTextAlignmentCenter;
                 [cell.contentView addSubview:info];
               
             }else{
@@ -294,7 +295,7 @@
             bakview.frame=CGRectMake(0, cell.frame.origin.y+5, cell.frame.size.width, 140);
             [cell.contentView addSubview:bakview];
             
-            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(30, bakview.frame.origin.y+5, 100, 20)];
+            UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(30, bakview.frame.origin.y+5, 200, 20)];
             
             mylable.text=[Util str1:@"城市：   " appendStr2:_user.city==nil?@"请编辑城市信息":_user.city];
             mylable.textAlignment=NSTextAlignmentLeft;
@@ -312,7 +313,7 @@
             bianjiView.frame = CGRectMake(cell.frame.size.width-30, mylable.frame.origin.y, 15, 15);
             [bakview addSubview:bianjiView];
             
-            UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(30, mylable.frame.origin.y+20, 200, 20)];
+            UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(30, mylable.frame.origin.y+20, 250, 20)];
             university.text=[Util str1:@"学校：   " appendStr2:_user.university==nil?@"请编辑学校信息":_user.university];
             university.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:university];
@@ -326,7 +327,13 @@
             //            [bakview addSubview:school];
             
             UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(30, university.frame.origin.y+20, 200, 20)];
-            gender.text=[Util str1:@"性别：   " appendStr2:_user.gender==nil?@"请编辑性别信息":_user.gender];
+
+            if(_user.gender==0){
+                gender.text=@"性别：   男";;
+            }else{
+                gender.text=@"性别：   女";
+            }
+
             
             gender.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:gender];
