@@ -127,6 +127,7 @@
 		8ABE78161B00998D0020BD6C /* ShareSDKShareActionSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABE780A1B00998D0020BD6C /* ShareSDKShareActionSheet.framework */; };
 		8ABE781D1B01088D0020BD6C /* Hi.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ABE781C1B01088D0020BD6C /* Hi.png */; };
 		8ABE78201B011E8A0020BD6C /* PersonInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE781F1B011E8A0020BD6C /* PersonInfoController.m */; };
+		8ABE78231B03B6510020BD6C /* DropDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE78221B03B6510020BD6C /* DropDown.m */; };
 		8AD43E351AFC801200F05E8D /* addFriend.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD43E341AFC801200F05E8D /* addFriend.png */; };
 		8AD43E501AFE737900F05E8D /* SMS_SDKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8AD43E4C1AFE737900F05E8D /* SMS_SDKLocalizable.strings */; };
 		8AD43E511AFE737900F05E8D /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AD43E4E1AFE737900F05E8D /* SMS_SDK.framework */; };
@@ -654,6 +655,8 @@
 		8ABE781C1B01088D0020BD6C /* Hi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Hi.png; path = dd/Hi.png; sourceTree = "<group>"; };
 		8ABE781E1B011E710020BD6C /* PersonInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonInfoController.h; sourceTree = "<group>"; };
 		8ABE781F1B011E8A0020BD6C /* PersonInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonInfoController.m; sourceTree = "<group>"; };
+		8ABE78211B03B6220020BD6C /* DropDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDown.h; sourceTree = "<group>"; };
+		8ABE78221B03B6510020BD6C /* DropDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDown.m; sourceTree = "<group>"; };
 		8AD43E341AFC801200F05E8D /* addFriend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addFriend.png; path = dd/addFriend.png; sourceTree = "<group>"; };
 		8AD43E371AFE5F9E00F05E8D /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		8AD43E381AFE5F9E00F05E8D /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
@@ -1695,6 +1698,8 @@
 				9003D85C1939D8D000DC38A4 /* FriendApply */,
 				9003D8661939D8D000DC38A4 /* RealtimeSearchUtil.h */,
 				9003D8671939D8D000DC38A4 /* RealtimeSearchUtil.m */,
+				8ABE78211B03B6220020BD6C /* DropDown.h */,
+				8ABE78221B03B6510020BD6C /* DropDown.m */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -3192,6 +3197,7 @@
 				9003D86F1939D8D000DC38A4 /* ChatSendHelper.m in Sources */,
 				8ADB38501AE286F000FCC6FC /* PersonalController.m in Sources */,
 				909308BF19604821005013BD /* EmojiEmoticons.m in Sources */,
+				8ABE78231B03B6510020BD6C /* DropDown.m in Sources */,
 				8A038C401AF51A88007A05BE /* ChatRoom2DAO.m in Sources */,
 				90A706041A8B63B200376154 /* EMSDWebImageCompat.m in Sources */,
 				9091111C192EEAED008A48AA /* UIViewController+HUD.m in Sources */,

@@ -110,11 +110,18 @@
 	}
 	//出事scroview
 	[self refreshScrollView];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(execute:) name:@"NOTIFICATION_NAME" object:nil];
 }
+
+//-(void)execute:(NSNotification *) notification {
+//    ///////to do your logic
+//    [self.tableView reloadData];
+//}
 
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 }
+
 
 #pragma mark - getter
 
@@ -507,6 +514,11 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
 	[picker dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self.tableView reloadData];
+}
+
 
 #pragma mark - Table view delegate
 

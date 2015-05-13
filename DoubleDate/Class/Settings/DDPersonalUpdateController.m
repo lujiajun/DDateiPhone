@@ -218,7 +218,8 @@ NSNumber *sex;
 //    NewSettingViewController *settings=[NewSettingViewController alloc];
 //    [settings.tableView reloadData];
 //    [self.navigationController pushViewController:settings animated:YES];
-    [self.navigationController popToRootViewControllerAnimated:NO];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"NOTIFICATION_NAME" object:nil];
 }
 //判断账号和密码是否为空
 - (BOOL)isEmpty{
