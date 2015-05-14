@@ -28,7 +28,7 @@
 #import "UIImageView+WebCache.h"
 #import "Util.h"
 #import "IndexViewController.h"
-
+#import "DropDown.h"
 @interface ContactsViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UIActionSheetDelegate, BaseTableCellDelegate, SRRefreshDelegate>
 {
     NSIndexPath *_currentLongPressIndex;
@@ -248,8 +248,15 @@ static BOOL haveFriend=NO;
 //邀请按钮
 - (void)addFriendAction
 {
+//    DropDown *dd1 = [[DropDown alloc] initWithFrame:CGRectMake(self.view.frame.size.width-120, 0,120,60)];
+//    dd1.textField.placeholder = @"请输入联系方式";
+//    NSArray* arr=[[NSArray alloc]initWithObjects:@"邀请好友",@"添加朋友",nil];
+//    dd1.tableArray = arr;
+//
+//    [self.view addSubview:dd1];
+
     
-    //    InviteFriendByDoubleIdController *addController = [InviteFriendByDoubleIdController alloc];
+    
     if (_bak!=nil&&_img1!=nil&&_img2!=nil) {
         [_bak removeFromSuperview];
         _bak=nil;
@@ -257,7 +264,7 @@ static BOOL haveFriend=NO;
         _img2=nil;
         return;
     }
-    //        [self.navigationController pushViewController:addController animated:YES];
+   
     if(_bak==nil){
         _bak=[[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-120, 0,120,60)];
     }
@@ -295,6 +302,11 @@ static BOOL haveFriend=NO;
     //
     [self.view addSubview:_bak];
     
+}
+- (void)viewDidAppear:(BOOL)animated {
+
+    [_bak removeFromSuperview];
+    _bak=nil;
 }
 
 -(void) doAddFriend{
