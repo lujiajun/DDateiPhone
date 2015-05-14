@@ -211,7 +211,7 @@ static BOOL haveFriend=NO;
             [cell.contentView addSubview:us];
 
 //            cell.imageView.image = [UIImage imageNamed:@"chatListCellHead.png"];
-            cell.textLabel.text = buddy.username;
+            cell.textLabel.text = user.nickName;
             
             return cell;
         }];
@@ -304,7 +304,6 @@ static BOOL haveFriend=NO;
     
 }
 - (void)viewDidAppear:(BOOL)animated {
-
     [_bak removeFromSuperview];
     _bak=nil;
 }
@@ -374,7 +373,7 @@ static BOOL haveFriend=NO;
             DDUser *user = [_userDao selectDDuserByUid:buddy.username];
 			[cell.imageView sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]]
 			                  placeholderImage:[UIImage imageNamed:@"Logo_new"]];
-			cell.textLabel.text = buddy.username;
+			cell.textLabel.text = user.nickName;
 		}
 	}
 

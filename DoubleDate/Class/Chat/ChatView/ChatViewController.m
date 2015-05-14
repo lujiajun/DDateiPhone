@@ -423,7 +423,7 @@ NSDateFormatter *dateformatter;
 }
 
 -(void)backtochatlist{
-   [self.navigationController popViewControllerAnimated:NO];
+   [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 -(void)dragInside{
@@ -432,7 +432,7 @@ NSDateFormatter *dateformatter;
     if([_chatroom4.UID1 isEqualToString:username] || [_chatroom4.UID2 isEqualToString:username]){
         if(_chatroom4.subGID1!=nil){
             //跳到原来的房间
-            ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:_chatroom4.subGID1 isGroup:YES isSubGroup:YES];
+            ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:_chatroom4.subGID1 isGroup:NO isSubGroup:YES];
             [self.navigationController pushViewController:chatController animated:YES];
         }else{
             //新建
@@ -444,7 +444,7 @@ NSDateFormatter *dateformatter;
     }else{
         if(_chatroom4.subGID2!=nil){
             //跳到原来的房间
-            ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:_chatroom4.subGID2 isGroup:YES isSubGroup:YES];
+            ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:_chatroom4.subGID2 isGroup:NO isSubGroup:YES];
             [self.navigationController pushViewController:chatController animated:YES];
         }else{
             //新建
@@ -809,7 +809,7 @@ NSDateFormatter *dateformatter;
             }else{
                 model.image=[UIImage imageNamed:@"Logo_new"];
             }
-          
+
             NSString *cellIdentifier = [EMChatViewCell cellIdentifierForMessageModel:model];
             EMChatViewCell *cell = (EMChatViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (cell == nil) {
@@ -817,6 +817,8 @@ NSDateFormatter *dateformatter;
                 cell.backgroundColor = [UIColor clearColor];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
+            model.nickName=user.nickName;
+            model.username=user.nickName;
             
             cell.messageModel = model;
             

@@ -298,10 +298,10 @@
 			mylable.font = [UIFont fontWithName:@"Helvetica" size:12];
 			[bakview addSubview:mylable];
 			//isdoubled
-			UIImageView *imageView = [[UIImageView alloc] init];
-			imageView.image = [UIImage imageNamed:@"confirm.png"];
-			imageView.frame = CGRectMake(140, mylable.frame.origin.y, 20, 15);
-			[bakview addSubview:imageView];
+//			UIImageView *imageView = [[UIImageView alloc] init];
+//			imageView.image = [UIImage imageNamed:@"confirm.png"];
+//			imageView.frame = CGRectMake(140, mylable.frame.origin.y, 20, 15);
+//			[bakview addSubview:imageView];
 
 			//BIANJI
 			UIImageView *bianjiView = [[UIImageView alloc] init];

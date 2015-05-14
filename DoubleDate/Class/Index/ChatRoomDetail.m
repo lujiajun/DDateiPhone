@@ -199,7 +199,7 @@
 //    [bakview addSubview:schoolview];
     //爱好
     UILabel *intr=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, city.frame.origin.y+city.frame.size.height+5, self.view.frame.size.width-120, 20)];
-    intr.text=_uuser1.sign;
+    intr.text=_uuser1.birthday;
     [intr setNumberOfLines:0];
     intr.textAlignment=NSTextAlignmentLeft;
     intr.font=[UIFont fontWithName:@"Helvetica" size:14];
@@ -271,7 +271,7 @@
 //    [bakview addSubview:schoolview];
     //aihaoci
     UILabel *intr=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, city.frame.origin.y+city.frame.size.height+5, self.view.frame.size.width-120, 20)];
-    intr.text=_uuser2.sign;
+    intr.text=_uuser2.birthday;
     [intr setNumberOfLines:0];
     intr.textAlignment=NSTextAlignmentLeft;
     intr.font=[UIFont fontWithName:@"Helvetica" size:14];

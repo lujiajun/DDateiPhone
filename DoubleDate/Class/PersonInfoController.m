@@ -302,17 +302,17 @@
             mylable.font=[UIFont fontWithName:@"Helvetica" size:12];
             [bakview addSubview:mylable];
             //isdoubled
-            UIImageView *imageView = [[UIImageView alloc] init];
-            imageView.image = [UIImage imageNamed:@"confirm.png"];
-            imageView.frame = CGRectMake(140, mylable.frame.origin.y, 20, 15);
-            [bakview addSubview:imageView];
+//            UIImageView *imageView = [[UIImageView alloc] init];
+//            imageView.image = [UIImage imageNamed:@"confirm.png"];
+//            imageView.frame = CGRectMake(140, mylable.frame.origin.y, 20, 15);
+//            [bakview addSubview:imageView];
             
             //BIANJI
-            UIImageView *bianjiView = [[UIImageView alloc] init];
-            bianjiView.image = [UIImage imageNamed:@"bianji.png"];
-            bianjiView.frame = CGRectMake(cell.frame.size.width-30, mylable.frame.origin.y, 15, 15);
-            [bakview addSubview:bianjiView];
-            
+//            UIImageView *bianjiView = [[UIImageView alloc] init];
+//            bianjiView.image = [UIImage imageNamed:@"bianji.png"];
+//            bianjiView.frame = CGRectMake(cell.frame.size.width-30, mylable.frame.origin.y, 15, 15);
+//            [bakview addSubview:bianjiView];
+//            
             UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(30, mylable.frame.origin.y+20, 250, 20)];
             university.text=[Util str1:@"学校：   " appendStr2:_user.university==nil?@"请编辑学校信息":_user.university];
             university.font=[UIFont fontWithName:@"Helvetica" size:12];

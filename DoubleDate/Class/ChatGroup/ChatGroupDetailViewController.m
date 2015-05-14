@@ -310,7 +310,7 @@
 }
 -(void)showUser1:(UIView *) bakview uuser1:(DDUser *) user{
     
-    UIImageView *headview=[[UIImageView alloc]initWithFrame:CGRectMake(bakview.frame.origin.x+5, bakview.frame.origin.y+10, 80, 80)];
+    UIImageView *headview=[[UIImageView alloc]initWithFrame:CGRectMake(bakview.frame.origin.x+10, bakview.frame.origin.y+10, 80, 80)];
 
     [headview sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]]
           placeholderImage:[UIImage imageNamed:@"Logo_new"]];
@@ -322,7 +322,7 @@
     [bakview addSubview:headview];
     
     //姓名
-    UILabel *nickname=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, headview.frame.origin.y+10, 50, 12)];
+    UILabel *nickname=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, headview.frame.origin.y+15, self.view.frame.size.width-120, 12)];
     nickname.text=user.nickName;
     nickname.textAlignment=NSTextAlignmentLeft;
     nickname.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -341,22 +341,22 @@
         isboyimg=[UIImage imageNamed:@"sexgirl"];
     }
     UIImageView *isboyview=[[UIImageView alloc] initWithImage:isboyimg];
-    isboyview.frame=CGRectMake(headview.frame.origin.x+headview.frame.size.width+nickname.frame.size.width+15, headview.frame.origin.y+8, 10, 10);
+    isboyview.frame=CGRectMake(150, 6, 20, 20);
     [bakview addSubview:isboyview];
     //学校
-    UILabel *university=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, nickname.frame.origin.y+nickname.frame.size.height+2, 50, 12)];
-    university.text=user.university;
+    UILabel *university=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+15, nickname.frame.origin.y+nickname.frame.size.height+5, self.view.frame.size.width-120, 12)];
+    university.text=user.city;
     university.textAlignment=NSTextAlignmentLeft;
     university.font=[UIFont fontWithName:@"Helvetica" size:12];
     [bakview addSubview:university];
     //学校图片
-    UIImage *schoolimg=[UIImage imageNamed:@"confirm"];
-    UIImageView *schoolview=[[UIImageView alloc] initWithImage:schoolimg];
-    schoolview.frame=CGRectMake(university.frame.origin.x+university.frame.size.width+15, university.frame.origin.y, 20, 10);
-    [bakview addSubview:schoolview];
+//    UIImage *schoolimg=[UIImage imageNamed:@"confirm"];
+//    UIImageView *schoolview=[[UIImageView alloc] initWithImage:schoolimg];
+//    schoolview.frame=CGRectMake(university.frame.origin.x+university.frame.size.width+15, university.frame.origin.y, 20, 10);
+//    [bakview addSubview:schoolview];
     //年级
-    UILabel *gender=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+10, university.frame.origin.y+university.frame.size.height+2, 50, 12)];
-    gender.text=user.grade;
+    UILabel *gender=[[UILabel alloc] initWithFrame:CGRectMake(headview.frame.origin.x+headview.frame.size.width+12, university.frame.origin.y+university.frame.size.height+5, self.view.frame.size.width-120, 12)];
+    gender.text=user.birthday;
     gender.textAlignment=NSTextAlignmentLeft;
     gender.font=[UIFont fontWithName:@"Helvetica" size:12];
     [bakview addSubview:gender];
