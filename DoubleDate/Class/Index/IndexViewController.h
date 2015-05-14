@@ -12,4 +12,5 @@
 
 - (void)initdduser;
 - (BOOL)haveDoubleFriend;
+- (void)indexAddFriendAction;
 @end

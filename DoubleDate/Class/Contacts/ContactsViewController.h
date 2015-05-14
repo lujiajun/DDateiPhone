@@ -25,4 +25,6 @@
 
 +(BOOL) haveFriend;
 
+- (void)addFriendAction;
+
 @end

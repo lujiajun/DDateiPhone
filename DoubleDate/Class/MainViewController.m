@@ -40,6 +40,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     UIBarButtonItem *_inviteFriendItem;
     UIBarButtonItem *_createGroupItem;
     
+    UIButton *_inviteButton;
 }
 
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
@@ -88,15 +89,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     _addFriendItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
     
     //首页button
-    UIButton *inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
-    if ([_indexVC haveDoubleFriend]) {
-        [inviteButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
-    }else{
-        [inviteButton setImage:[UIImage imageNamed:@"inviteFriend.png"] forState:UIControlStateNormal];
-    }
-   
-    [inviteButton addTarget:_indexVC action:@selector(indexAddFriendAction) forControlEvents:UIControlEventTouchUpInside];
-    _inviteFriendItem = [[UIBarButtonItem alloc] initWithCustomView:inviteButton];
+    _inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+    [_inviteButton addTarget:_indexVC action:@selector(indexAddFriendAction) forControlEvents:UIControlEventTouchUpInside];
+    _inviteFriendItem = [[UIBarButtonItem alloc] initWithCustomView:_inviteButton];
     
     //创建二人聊天室
     UIButton *createGroupButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
@@ -107,6 +102,14 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     self.navigationItem.rightBarButtonItem = _inviteFriendItem;
     [self setupUnreadMessageCount];
     [self setupUntreatedApplyCount];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	if ([_indexVC haveDoubleFriend]) {
+		[_inviteButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+	} else {
+		[_inviteButton setImage:[UIImage imageNamed:@"inviteFriend.png"] forState:UIControlStateNormal];
+	}
 }
 
 
