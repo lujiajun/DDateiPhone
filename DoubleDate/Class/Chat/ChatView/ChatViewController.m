@@ -90,7 +90,7 @@
 @end
 
 @implementation ChatViewController
-long secondsCountDown = 60*5;
+long secondsCountDown = TOTAL_SECONDS;
 
 
 NSDateFormatter *dateformatter;
@@ -161,28 +161,6 @@ NSDateFormatter *dateformatter;
     return self;
 }
 
-
-//解散群组
-- (void)dissolvegRroup
-{
-    __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"group.destroy", @"dissolution of the group")];
-    [[EaseMob sharedInstance].chatManager asyncDestroyGroup:_chatroom4.GID completion:^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
-        [weakSelf hideHud];
-        if (error) {
-            [weakSelf showHint:NSLocalizedString(@"group.destroyFail", @"dissolution of group failure")];
-        }
-        else{
-            [weakSelf showHint:NSLocalizedString(@"group is over time", @"dissolution of group failure")];
-            IndexViewController *selectionController = [IndexViewController alloc];
-            [self.navigationController pushViewController:selectionController animated:YES];
-
-          
-        }
-    } onQueue:nil];
-    
-    //    [[EaseMob sharedInstance].chatManager asyncLeaveGroup:_chatGroup.groupId];
-}
 
 - (void)viewDidLoad
 {
@@ -286,23 +264,46 @@ NSDateFormatter *dateformatter;
     long seconds=secondsCountDown-hour*3600-minte*60;
     self.lab.text = [NSString stringWithFormat:@"%d时%d分%d秒", hour,minte, seconds];
     
-    if(secondsCountDown==0){
+    if(secondsCountDown==0 ||secondsCountDown<0){
         [_countDownTimer invalidate];
-        NSLog(@"删除数据库记录");
+        NSLog(@"删除数据库记录和AWS数据");
         AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
         [room4Da deleteRoom4:_chatroom4.GID];
-        //        删除环信数据
+        NSLog(@"删除环信数据");
         [self dissolvegRroup];
         //        删除本地数据
         [self.lab removeFromSuperview];
         //调回
-        [self.navigationController popToRootViewControllerAnimated:NO];
+        [self.navigationController popToRootViewControllerAnimated:YES];
         
       
         
         
     }
 }
+
+//解散群组
+- (void)dissolvegRroup
+{
+    __weak typeof(self) weakSelf = self;
+    [self showHudInView:self.view hint:NSLocalizedString(@"group.destroy", @"dissolution of the group")];
+    [[EaseMob sharedInstance].chatManager asyncDestroyGroup:_chatroom4.GID completion:^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
+        [weakSelf hideHud];
+        if (error) {
+            [weakSelf showHint:NSLocalizedString(@"group.destroyFail", @"dissolution of group failure")];
+        }
+        else{
+            [weakSelf showHint:NSLocalizedString(@"group is over time", @"group is dimissed because of over time")];
+            IndexViewController *selectionController = [[IndexViewController alloc] init];
+            [self.navigationController pushViewController:selectionController animated:YES];
+            
+            
+        }
+    } onQueue:nil];
+    
+    //    [[EaseMob sharedInstance].chatManager asyncLeaveGroup:_chatGroup.groupId];
+}
+
 
 -(void) clickLike{
    //修改数据库和本地数据记录
@@ -551,11 +552,6 @@ NSDateFormatter *dateformatter;
 //顶部bar
 - (void)setupBarButtonItem
 {
-//    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-//    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-//    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-//    [self.navigationItem setLeftBarButtonItem:backItem];
     
     if (_isChatGroup) {
         //跳转到详情页面，需要修改
@@ -600,6 +596,10 @@ NSDateFormatter *dateformatter;
     [_conversation markAllMessagesAsRead:YES];
     [[EaseMob sharedInstance].deviceManager disableProximitySensor];
     
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self.tableView reloadData];
 }
 
 - (void)dealloc

@@ -368,6 +368,7 @@
     }
     EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
 //    cell.name = conversation.chatter;
+    
     if (!conversation.isGroup) {
         //查出图片
         if(_userDao==nil){
@@ -386,32 +387,21 @@
         name.textAlignment = NSTextAlignmentLeft;
         name.font = [UIFont fontWithName:@"Helvetica" size:18];
         [cell.contentView addSubview:name];
-        
-//        DDUser *user2 = [_userDao selectDDuserByUid:conversation.chatter];
-//        UIImageView *img2=[[UIImageView alloc] initWithFrame:CGRectMake(cell.frame.size.width/2+2, 10, 50, 50)];
-//        
-//        
-//        [img2 sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:[IndexViewController instanceDDuser].picPath]]
-//               placeholderImage:[UIImage imageNamed:@"Logo_new"]];
-//        [cell.contentView addSubview:img2];
-//        UILabel *name2=[[UILabel alloc]initWithFrame:CGRectMake(cell.frame.size.width/2+2, img2.frame.size.height+img2.frame.origin.y+2, 100, 20)];
-//        name2.text=[IndexViewController instanceDDuser].UID;
-//        name2.textAlignment = NSTextAlignmentLeft;
-//        name2.font = [UIFont fontWithName:@"Helvetica" size:15];
-//        [cell.contentView addSubview:name2];
+
         
     }
     else{
-        NSString *imageName = @"groupPublicHeader";
-        NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
-        for (EMGroup *group in groupArray) {
-            if ([group.groupId isEqualToString:conversation.chatter]) {
-                cell.name = group.groupSubject;
-                imageName = group.isPublic ? @"groupPublicHeader" : @"groupPrivateHeader";
-                break;
-            }
-        }
-        cell.placeholderImage = [UIImage imageNamed:imageName];
+        //不显示群组
+//        NSString *imageName = @"groupPublicHeader";
+//        NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
+//        for (EMGroup *group in groupArray) {
+//            if ([group.groupId isEqualToString:conversation.chatter]) {
+//                cell.name = group.groupSubject;
+//                imageName = group.isPublic ? @"groupPublicHeader" : @"groupPrivateHeader";
+//                break;
+//            }
+//        }
+//        cell.placeholderImage = [UIImage imageNamed:imageName];
     }
     cell.detailMsg = [self subTitleMessageByConversation:conversation];
     cell.time = [self lastMessageTimeByConversation:conversation];

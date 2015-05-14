@@ -13,4 +13,5 @@
 - (void)initdduser;
 - (BOOL)haveDoubleFriend;
 - (void)indexAddFriendAction;
+-(void) reloadChatRoom2;
 @end

@@ -441,6 +441,7 @@
 		if ([_blockSelectedUsernames count] == 0) {
 			[_delegate viewController:self didFinishSelectedSources:self.selectedContacts];
             IndexViewController *index=[[IndexViewController alloc]init];
+            [index reloadChatRoom2];
             [index.tableView reloadData];
 			[self.navigationController popViewControllerAnimated:NO];
 		} else {

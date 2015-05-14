@@ -32,6 +32,7 @@
 - (void)insertChatroom2:(CHATROOM2 *)chatRoom2 {
 	//先删除重复的
 	[self removeFromAWSandLocal:chatRoom2];
+    NSLog(@"删除重复房间车成功");
 	AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
 	[[dynamoDBObjectMapper save:chatRoom2] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
 	    if (task.error) {
@@ -39,6 +40,7 @@
 		}
         
 	    if (task.result) {
+            NSLog(@"查询AWS成功，现在插入本地数据库");
 	        [self.chatRoom2Dao insertLocalChatroom2:chatRoom2];
 		}
 	    return nil;

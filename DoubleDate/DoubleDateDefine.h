@@ -23,4 +23,6 @@
 
 #define DD_DEBUG YES
 
+#define TOTAL_SECONDS 60*5
+
 #endif

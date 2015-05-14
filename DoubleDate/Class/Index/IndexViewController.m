@@ -107,6 +107,15 @@ static DDUser *uuser;
 	[self initdduser];
 }
 
+-(void) reloadChatRoom2{
+    [self.chatRoom2DynamoDB refreshListWithBlock: ^(NSArray *chatRoom2s) {
+        [self addDataSourceIgnoreSame:chatRoom2s];
+        [self.tableView reloadData];
+    }];
+    
+}
+
+
 - (void)viewDidAppear:(BOOL)animated {
 	//获取好友列表
 	self.haveFriend = [self haveDoubleFriend];

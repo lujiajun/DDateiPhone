@@ -510,7 +510,7 @@
                                                                    chatroom4.isLikeUID4=[NSNumber numberWithInt:0];
                                                                    chatroom4.roomStatus=@"New";
                                                                    
-                                                                   chatroom4.systemTimeNumber=[NSString stringWithFormat:@"%@",[NSNumber numberWithLong:[[NSDate date] timeIntervalSince1970]*1000+5*60*1000]];
+                                                                   chatroom4.systemTimeNumber=[NSString stringWithFormat:@"%@",[NSNumber numberWithLong:[[NSDate date] timeIntervalSince1970]*1000+TOTAL_SECONDS*1000]];
                                                                    
                                                                    AWSDynamoDB_ChatRoom4 *chatroom4DB=[[AWSDynamoDB_ChatRoom4 alloc]init];
                                                                    [chatroom4DB insertChatroom4:chatroom4];
