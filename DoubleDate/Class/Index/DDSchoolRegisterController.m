@@ -11,20 +11,14 @@
 #import "DDRegisterFinishController.h"
 #import "DDUser.h"
 
-
-
-@interface DDSchoolRegisterController ()
+@interface DDSchoolRegisterController () <UITextFieldDelegate>
 {
     
 }
 
-
 @property (strong,nonatomic)  NSString *username;
 @property (strong,nonatomic)  NSString *password;
-
-
 @property  (strong,nonatomic) UITextField  *cityvalue;
-
 
 
 @end
@@ -49,6 +43,8 @@ static DDUser   *dduser;
     imageView.backgroundColor=[UIColor lightGrayColor];
     imageView.frame = CGRectMake(0, 0, self.view.frame.size.width, 250);
     [self.view addSubview:imageView];
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTap:)];
+    [imageView addGestureRecognizer:tapGesture];
     
     UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(5, imageView.frame.size.height+5, 80, 20)];
     city.text=@"所在城市:";
@@ -60,15 +56,14 @@ static DDUser   *dduser;
     _cityvalue.userInteractionEnabled=YES;
     _cityvalue.placeholder = @"请输入所在城市"; //默认显示的字
     [self.view addSubview:_cityvalue];
-    
+    _cityvalue.returnKeyType = UIReturnKeyGo;
+    _cityvalue.delegate = self;
     
     UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, imageView.frame.size.height+city.frame.size.height*2+40, self.view.frame.size.width, 30)];
     registerButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [registerButton setTitle:@"下一步" forState:UIControlStateNormal];
     [self.view addSubview:registerButton];
     [registerButton addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
-
-
 }
 
 //注册账号
@@ -77,9 +72,7 @@ static DDUser   *dduser;
         DDRegisterFinishController *personsign=[[DDRegisterFinishController alloc] init:_username password:_password city:_cityvalue.text];
         [self.navigationController pushViewController:personsign animated:YES];
     }
-    
 }
-
 
 
 - (void)didReceiveMemoryWarning
@@ -104,6 +97,20 @@ static DDUser   *dduser;
     return ret;
 }
 
+#pragma mark - Touch events
+- (void) onTap: (id) sender {
+    [self.view endEditing:YES];
+}
 
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField;              // called when 'return' key pressed. return NO to ignore.
+{
+    if ([self isEmpty]) {
+        return NO;
+    }
+    
+    [self next];
+    return YES;
+}
 
 @end
