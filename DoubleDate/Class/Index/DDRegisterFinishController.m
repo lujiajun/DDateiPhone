@@ -21,7 +21,7 @@
 
 
 
-@interface DDRegisterFinishController () <UITextFieldDelegate>
+@interface DDRegisterFinishController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
     
 }
@@ -239,9 +239,6 @@ static DDUser   *dduser;
     
     [self showHudInView:self.view hint:NSLocalizedString(@"register.ongoing", @"Is to register...")];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"doRegisterAWSHX" object:@NO];
-    
-    
-    
 }
 
 -(void) newDoRegister{
@@ -440,8 +437,7 @@ static DDUser   *dduser;
     if ([type isEqualToString:@"public.image"])
     {
         //先把图片转成NSData
-        UIImage* image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
-        
+        UIImage* image = [info objectForKey: UIImagePickerControllerEditedImage];
         
         if (UIImagePNGRepresentation(image) == nil)
         {
