@@ -46,7 +46,7 @@
 //@property(strong,nonatomic) UIButton *girl;
 @property(strong, nonatomic) UISegmentedControl *genderControl;
 @property(strong,nonatomic) UIImageView *imageView ;
-
+@property(strong, nonatomic) UIScrollView *scrollView;
 
 
 @end
@@ -74,14 +74,18 @@ static DDUser   *dduser;
     
     [super viewDidLoad];
     self.title = @"注册";
-    self.view.backgroundColor = [UIColor whiteColor];
+    UIScrollView* scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+//    scrollView.contentSize =CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height * 2);
+    scrollView.backgroundColor = [UIColor whiteColor];
+    self.scrollView = scrollView;
+    [self.view addSubview:scrollView];
     
     //头像
     _imageView = [[UIImageView alloc] init];
     _imageView.backgroundColor=[UIColor grayColor];
     _imageView.frame =CGRectMake(self.view.frame.size.width/2-75, 20, 150, 150);
     _imageView.image=[UIImage imageNamed:@"Logo_new"];
-    [self.view addSubview:_imageView];
+    [scrollView addSubview:_imageView];
     [_imageView setUserInteractionEnabled:YES];
     _imageView.layer.masksToBounds =YES;
     _imageView.layer.cornerRadius =75;
@@ -92,13 +96,13 @@ static DDUser   *dduser;
     _nickname.text=@"昵称:";
     _nickname.font=[UIFont fontWithName:@"Helvetica" size:12];
     _nickname.textAlignment=NSTextAlignmentLeft;
-    [self.view addSubview:_nickname];
+    [scrollView addSubview:_nickname];
     
     _nicknamevalue=[[UITextField alloc]initWithFrame:CGRectMake(_nickname.frame.size.width+4, _nickname.frame.origin.y, self.view.frame.size.width-70, 30)];
     _nicknamevalue.placeholder=@"填写昵称";
     _nicknamevalue.textAlignment=NSTextAlignmentLeft;
     [_nicknamevalue setBorderStyle:UITextBorderStyleRoundedRect];
-    [self.view addSubview:_nicknamevalue];
+    [scrollView addSubview:_nicknamevalue];
     _nicknamevalue.delegate = self;
     
     //性别
@@ -106,7 +110,7 @@ static DDUser   *dduser;
     gender.text=@"性别:";
     gender.font=[UIFont fontWithName:@"Helvetica" size:12];
     gender.textAlignment=NSTextAlignmentLeft;
-    [self.view addSubview:gender];
+    [scrollView addSubview:gender];
     
 //    NSArray* genderItems = @[
 //                             [UIImage imageNamed:@"sexboy"],
@@ -115,7 +119,7 @@ static DDUser   *dduser;
     _genderControl = [[UISegmentedControl alloc] initWithItems:genderItems];
     _genderControl.frame = CGRectMake(60, _nickname.frame.origin.y+ 35, 80, 25);
     _genderControl.selectedSegmentIndex = 0;
-    [self.view addSubview:_genderControl];
+    [scrollView addSubview:_genderControl];
     //
     //    _gendervalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4,_nickname.frame.origin.y+ 35, 120, 30)];
     //    _gendervalue.placeholder=@"性别";
@@ -139,12 +143,12 @@ static DDUser   *dduser;
     city.text=@"城市:     ";
     city.font=[UIFont fontWithName:@"Helvetica" size:12];
     city.textAlignment=NSTextAlignmentLeft;
-    [self.view addSubview:city];
+    [scrollView addSubview:city];
     
     UILabel *cityValue=[[UILabel alloc]initWithFrame:CGRectMake(city.frame.origin.x+city.frame.size.width, city.frame.origin.y, self.view.frame.size.width-60, 30)];
     cityValue.text=_city;
     cityValue.textAlignment=NSTextAlignmentLeft;
-    [self.view  addSubview:cityValue];
+    [scrollView  addSubview:cityValue];
     
     
     //年级
@@ -163,21 +167,54 @@ static DDUser   *dduser;
     birdate.text=@"出生日期:";
     birdate.textAlignment=NSTextAlignmentLeft;
     birdate.font=[UIFont fontWithName:@"Helvetica" size:12];
-    [self.view addSubview:birdate];
+    [scrollView addSubview:birdate];
     _birdatevalue=[[UITextField alloc]initWithFrame:CGRectMake(70, city.frame.origin.y+33, 200, 30)];
     _birdatevalue.placeholder=@"birthday";
     _birdatevalue.textAlignment=NSTextAlignmentLeft;
     [_birdatevalue setBorderStyle:UITextBorderStyleRoundedRect];
-    [self.view addSubview:_birdatevalue];
+    [scrollView addSubview:_birdatevalue];
     _birdatevalue.delegate = self;
     
     UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, birdate.frame.origin.y+33, self.view.frame.size.width, 30)];
     registerButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [registerButton setTitle:@"注册" forState:UIControlStateNormal];
-    [self.view addSubview:registerButton];
+    [scrollView addSubview:registerButton];
     [registerButton addTarget:self action:@selector(registerUser) forControlEvents:UIControlEventTouchUpInside];
+    
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGFloat heightDelta = kbSize.height - 150;
+    if (heightDelta > 0) {
+        [self.scrollView setContentOffset:CGPointMake(0, heightDelta) animated:YES];
+    }
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    [self.scrollView setContentOffset:CGPointZero animated:YES];
+}
 
 -(void) registerUser{
     
@@ -434,7 +471,13 @@ static DDUser   *dduser;
 
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
     return  (textField.text.length) > 0;
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    if (textField == _birdatevalue) {
+        [self.scrollView scrollRectToVisible:textField.frame animated:YES];
+    }
+}
 @end
