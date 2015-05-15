@@ -21,7 +21,7 @@
 
 
 
-@interface DDRegisterFinishController ()
+@interface DDRegisterFinishController () <UITextFieldDelegate>
 {
     
 }
@@ -42,16 +42,16 @@
 @property (strong,nonatomic) UILabel *nickname;
 @property (strong,nonatomic) NSString *picpath;
 @property(strong,nonatomic)  NSData *data;
-@property(strong,nonatomic) UIButton *boy;
-@property(strong,nonatomic) UIButton *girl;
-
+//@property(strong,nonatomic) UIButton *boy;
+//@property(strong,nonatomic) UIButton *girl;
+@property(strong, nonatomic) UISegmentedControl *genderControl;
 @property(strong,nonatomic) UIImageView *imageView ;
 
 
 
 @end
 static DDUser   *dduser;
-NSNumber *sex;
+// NSNumber *sex;
 
 @implementation DDRegisterFinishController
 
@@ -59,13 +59,13 @@ NSNumber *sex;
     _username=username;
     _password=password;
     _city=city;
-//    _university=university;
+    //    _university=university;
     return self;
 }
 
 - (id)init:(NSString *)nickname gender:(NSString *)gender grade:(NSString *)grade university:(NSString *)university city:(NSString *)city{
     _nickname.text=nickname;
-//    _gendervalue.text=gender;
+    //    _gendervalue.text=gender;
     return self;
 }
 
@@ -75,12 +75,9 @@ NSNumber *sex;
     [super viewDidLoad];
     self.title = @"注册";
     self.view.backgroundColor = [UIColor whiteColor];
-    if(sex==nil){
-      sex=[[NSNumber alloc]initWithInt:0];
-    }
-   
+    
     //头像
-     _imageView = [[UIImageView alloc] init];
+    _imageView = [[UIImageView alloc] init];
     _imageView.backgroundColor=[UIColor grayColor];
     _imageView.frame =CGRectMake(self.view.frame.size.width/2-75, 20, 150, 150);
     _imageView.image=[UIImage imageNamed:@"Logo_new"];
@@ -98,11 +95,11 @@ NSNumber *sex;
     [self.view addSubview:_nickname];
     
     _nicknamevalue=[[UITextField alloc]initWithFrame:CGRectMake(_nickname.frame.size.width+4, _nickname.frame.origin.y, self.view.frame.size.width-70, 30)];
-    _nicknamevalue.placeholder=@"nicknamevalue";
+    _nicknamevalue.placeholder=@"填写昵称";
     _nicknamevalue.textAlignment=NSTextAlignmentLeft;
     [_nicknamevalue setBorderStyle:UITextBorderStyleRoundedRect];
     [self.view addSubview:_nicknamevalue];
-    
+    _nicknamevalue.delegate = self;
     
     //性别
     UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(10,_nickname.frame.origin.y+ 35 , 50, 30)];
@@ -111,36 +108,34 @@ NSNumber *sex;
     gender.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:gender];
     
-    _boy=[[UIButton alloc]initWithFrame:CGRectMake(60,_nickname.frame.origin.y+ 35, 25, 25 )];
-    [_boy setImage:[UIImage imageNamed:@"sexboy"] forState:UIControlStateNormal];
-    [_boy addTarget:self action:@selector(changeBoySex) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_boy];
-    
-    _girl=[[UIButton alloc]initWithFrame:CGRectMake(_boy.frame.origin.x+_boy.frame.size.width+15    ,_nickname.frame.origin.y+ 35, 25, 25 )];
-    _girl.backgroundColor=[UIColor grayColor];
-    [_girl setImage:[UIImage imageNamed:@"sexgirl"] forState:UIControlStateNormal];
-    [_girl addTarget:self action:@selector(changeGirlSex) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_girl];
-//
-//    _gendervalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4,_nickname.frame.origin.y+ 35, 120, 30)];
-//    _gendervalue.placeholder=@"性别";
-//    [_gendervalue setBorderStyle:UITextBorderStyleRoundedRect];
-//    _gendervalue.textAlignment=NSTextAlignmentLeft;
-//    [self.view addSubview:_gendervalue];
+//    NSArray* genderItems = @[
+//                             [UIImage imageNamed:@"sexboy"],
+//                             [UIImage imageNamed:@"sexgirl"]];
+    NSArray* genderItems = @[@"男", @"女"];
+    _genderControl = [[UISegmentedControl alloc] initWithItems:genderItems];
+    _genderControl.frame = CGRectMake(60, _nickname.frame.origin.y+ 35, 80, 25);
+    _genderControl.selectedSegmentIndex = 0;
+    [self.view addSubview:_genderControl];
+    //
+    //    _gendervalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4,_nickname.frame.origin.y+ 35, 120, 30)];
+    //    _gendervalue.placeholder=@"性别";
+    //    [_gendervalue setBorderStyle:UITextBorderStyleRoundedRect];
+    //    _gendervalue.textAlignment=NSTextAlignmentLeft;
+    //    [self.view addSubview:_gendervalue];
     
     //学校
-//    UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*3+10, 60, 30)];
-//    university.text=@"学校:";
-//    university.textAlignment=NSTextAlignmentLeft;
-//    [self.view addSubview:university];
-//    UILabel *universityvalue=[[UILabel alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*3+10, 180, 30)];
-//    universityvalue.text=_university;
-//    universityvalue.textAlignment=NSTextAlignmentLeft;
-//    [self.view addSubview:universityvalue];
-//    
+    //    UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*3+10, 60, 30)];
+    //    university.text=@"学校:";
+    //    university.textAlignment=NSTextAlignmentLeft;
+    //    [self.view addSubview:university];
+    //    UILabel *universityvalue=[[UILabel alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*3+10, 180, 30)];
+    //    universityvalue.text=_university;
+    //    universityvalue.textAlignment=NSTextAlignmentLeft;
+    //    [self.view addSubview:universityvalue];
+    //
     //城市
-    UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(10, _boy.frame.origin.y+35, 50, 30)];
-  
+    UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(10, _genderControl.frame.origin.y+35, 50, 30)];
+    
     city.text=@"城市:     ";
     city.font=[UIFont fontWithName:@"Helvetica" size:12];
     city.textAlignment=NSTextAlignmentLeft;
@@ -153,15 +148,15 @@ NSNumber *sex;
     
     
     //年级
-//    UILabel *grade=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*5+10, 60, 30)];
-//    grade.text=@"年级:";
-//    grade.textAlignment=NSTextAlignmentLeft;
-//    [self.view addSubview:grade];
-//    _gradevalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*5+10, 180, 30)];
-//    [_gradevalue setBorderStyle:UITextBorderStyleRoundedRect];
-//    _gradevalue.placeholder=@"gradevalue";
-//    _gradevalue.textAlignment=NSTextAlignmentLeft;
-//    [self.view addSubview:_gradevalue];
+    //    UILabel *grade=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*5+10, 60, 30)];
+    //    grade.text=@"年级:";
+    //    grade.textAlignment=NSTextAlignmentLeft;
+    //    [self.view addSubview:grade];
+    //    _gradevalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*5+10, 180, 30)];
+    //    [_gradevalue setBorderStyle:UITextBorderStyleRoundedRect];
+    //    _gradevalue.placeholder=@"gradevalue";
+    //    _gradevalue.textAlignment=NSTextAlignmentLeft;
+    //    [self.view addSubview:_gradevalue];
     
     //出生日期
     UITextField *birdate=[[UITextField alloc]initWithFrame:CGRectMake(10,city.frame.origin.y+35, 70, 30)];
@@ -174,6 +169,7 @@ NSNumber *sex;
     _birdatevalue.textAlignment=NSTextAlignmentLeft;
     [_birdatevalue setBorderStyle:UITextBorderStyleRoundedRect];
     [self.view addSubview:_birdatevalue];
+    _birdatevalue.delegate = self;
     
     UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, birdate.frame.origin.y+33, self.view.frame.size.width, 30)];
     registerButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
@@ -182,20 +178,6 @@ NSNumber *sex;
     [registerButton addTarget:self action:@selector(registerUser) forControlEvents:UIControlEventTouchUpInside];
 }
 
--(void) changeBoySex{
-    _girl.backgroundColor=[UIColor grayColor];
-    _boy.backgroundColor=nil;
-    sex=[[NSNumber alloc]initWithInt:0];
-    
-}
-
-
--(void) changeGirlSex{
-    _boy.backgroundColor=[UIColor grayColor];
-    _girl.backgroundColor=nil;
-    sex=[[NSNumber alloc]initWithInt:1];
-    
-}
 
 -(void) registerUser{
     
@@ -221,8 +203,8 @@ NSNumber *sex;
     [self showHudInView:self.view hint:NSLocalizedString(@"register.ongoing", @"Is to register...")];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"doRegisterAWSHX" object:@NO];
     
-
-
+    
+    
 }
 
 -(void) newDoRegister{
@@ -242,7 +224,7 @@ NSNumber *sex;
             
             return;
         }//判断是否是中文，但不支持中英文混编
-      //url post token注册
+        //url post token注册
         if([Util registerUser:_username password:_password]){
             AliCloudController *aliCloud=[AliCloudController alloc];
             [aliCloud uploadPic:self.data name:self.picpath];
@@ -251,7 +233,7 @@ NSNumber *sex;
             DDUser  *user=[DDUser new];
             user.nickName=self.nicknamevalue.text;
             user.UID=self.username;
-            user.gender=sex;
+            user.gender=@(_genderControl.selectedSegmentIndex);
             //        user.grade=_gradevalue.text;
             user.password=self.password;
             user.city=self.city;
@@ -275,76 +257,76 @@ NSNumber *sex;
         
         
     }
-
+    
 }
 
 //注册账号
 - (void)doRegisterAWSHX{
     //注册
     
-        //隐藏键盘
-        [self.view endEditing:YES];
-        //判断是否是中文，但不支持中英文混编
-          
-            
-        //异步注册账号
-        [[EaseMob sharedInstance].chatManager asyncRegisterNewAccount:_username
-                                                             password:_password
-                                                       withCompletion:
-         ^(NSString *username, NSString *password, EMError *error) {
-            
-             if (!error) {
-                 //上传图片
-                 AliCloudController *aliCloud=[AliCloudController alloc];
-                 [aliCloud uploadPic:self.data name:self.picpath];
-                 
-                 AWSDynamoDB_DDUser *ddbDynamoDB=[AWSDynamoDB_DDUser new];
-                 DDUser  *user=[DDUser new];
-                 user.nickName=self.nicknamevalue.text;
-                 user.UID=self.username;
-                 user.gender=sex;
-                 //        user.grade=_gradevalue.text;
-                 user.password=self.password;
-                 user.city=self.city;
-                 user.birthday=self.birdatevalue.text;
-                 //        user.university=_university;
-                 //                NSNumber *isName=NSNUmber num;
-                 user.isDoublerID=[NSNumber numberWithInt:1];
-                 user.isPic=[NSNumber numberWithInt:1];
-                 
-                 if(self.picpath==nil){
-                     user.picPath=@"Logo_new";
-                 }else{
-                     user.picPath=self.picpath;
-                 }
-                 [ddbDynamoDB insertDDUser:user];
-                                  
-
-                 [self.navigationController popToRootViewControllerAnimated:NO];
-                 
-                 TTAlertNoTitle(NSLocalizedString(@"register.success", @"Registered successfully, please log in"));
-                 
+    //隐藏键盘
+    [self.view endEditing:YES];
+    //判断是否是中文，但不支持中英文混编
+    
+    
+    //异步注册账号
+    [[EaseMob sharedInstance].chatManager asyncRegisterNewAccount:_username
+                                                         password:_password
+                                                   withCompletion:
+     ^(NSString *username, NSString *password, EMError *error) {
+         
+         if (!error) {
+             //上传图片
+             AliCloudController *aliCloud=[AliCloudController alloc];
+             [aliCloud uploadPic:self.data name:self.picpath];
+             
+             AWSDynamoDB_DDUser *ddbDynamoDB=[AWSDynamoDB_DDUser new];
+             DDUser  *user=[DDUser new];
+             user.nickName=self.nicknamevalue.text;
+             user.UID=self.username;
+             user.gender=@(self.genderControl.selectedSegmentIndex);
+             //        user.grade=_gradevalue.text;
+             user.password=self.password;
+             user.city=self.city;
+             user.birthday=self.birdatevalue.text;
+             //        user.university=_university;
+             //                NSNumber *isName=NSNUmber num;
+             user.isDoublerID=[NSNumber numberWithInt:1];
+             user.isPic=[NSNumber numberWithInt:1];
+             
+             if(self.picpath==nil){
+                 user.picPath=@"Logo_new";
              }else{
-                 switch (error.errorCode) {
-                     case EMErrorServerNotReachable:
-                         TTAlertNoTitle(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
-                         break;
-                     case EMErrorServerDuplicatedAccount:
-                         TTAlertNoTitle(NSLocalizedString(@"register.repeat", @"You registered user already exists!"));
-                         break;
-                     case EMErrorServerTimeout:
-                         TTAlertNoTitle(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
-                         break;
-                     default:
-                         TTAlertNoTitle(NSLocalizedString(@"register.fail", @"Registration failed"));
-                         break;
-                 }
-                 [self.navigationController popToRootViewControllerAnimated:NO];
-
+                 user.picPath=self.picpath;
              }
-         } onQueue:nil];
-      
-
+             [ddbDynamoDB insertDDUser:user];
+             
+             
+             [self.navigationController popToRootViewControllerAnimated:NO];
+             
+             TTAlertNoTitle(NSLocalizedString(@"register.success", @"Registered successfully, please log in"));
+             
+         }else{
+             switch (error.errorCode) {
+                 case EMErrorServerNotReachable:
+                     TTAlertNoTitle(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
+                     break;
+                 case EMErrorServerDuplicatedAccount:
+                     TTAlertNoTitle(NSLocalizedString(@"register.repeat", @"You registered user already exists!"));
+                     break;
+                 case EMErrorServerTimeout:
+                     TTAlertNoTitle(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
+                     break;
+                 default:
+                     TTAlertNoTitle(NSLocalizedString(@"register.fail", @"Registration failed"));
+                     break;
+             }
+             [self.navigationController popToRootViewControllerAnimated:NO];
+             
+         }
+     } onQueue:nil];
+    
+    
     
 }
 //判断账号和密码是否为空
@@ -423,7 +405,7 @@ NSNumber *sex;
         //先把图片转成NSData
         UIImage* image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
         
-       
+        
         if (UIImagePNGRepresentation(image) == nil)
         {
             _data = UIImageJPEGRepresentation(image, 1.0);
@@ -434,30 +416,25 @@ NSNumber *sex;
             
         }
         //关闭相册界面
-        [picker dismissModalViewControllerAnimated:YES];
+        [picker dismissViewControllerAnimated:YES completion:^{}];
         UIImageView *smallimage = [[UIImageView alloc] initWithFrame:
-                                  CGRectMake(self.view.frame.size.width/2-75, 20, 150, 150)];
-        _imageView.removeFromSuperview;
+                                   CGRectMake(self.view.frame.size.width/2-75, 20, 150, 150)];
+        [_imageView removeFromSuperview];
         smallimage.layer.masksToBounds =YES;
         smallimage.layer.cornerRadius =75;
         smallimage.image = image;
         //加在视图中
         [self.view addSubview:smallimage];
         //上传
-       
+        
         _picpath=[_username stringByAppendingString:@"_head_pic" ];
-        
-        
     }
     
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    return  (textField.text.length) > 0;
 }
-
-
 
 @end
