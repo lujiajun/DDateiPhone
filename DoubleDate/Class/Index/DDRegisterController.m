@@ -21,7 +21,7 @@
 #import "AWSDynamoDB_DDUser.h"
 
 
-@interface DDRegisterController ()
+@interface DDRegisterController () <UITextFieldDelegate>
 {
    
 }
@@ -37,7 +37,6 @@
 
 @end
 static DDUser   *dduser;
-static BOOL isDebug=YES;
 @implementation DDRegisterController
 
 
@@ -71,22 +70,25 @@ static BOOL isDebug=YES;
 
      _code = [[UITextField alloc] initWithFrame:CGRectMake(0, 45, 250, 30)];
     [_code setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
+    _code.keyboardType = UIKeyboardTypeNumberPad;
     _code.placeholder = @"请输入验证码"; //默认显示的字
     [imageView addSubview:_code];
+    _code.delegate = self;
     
     _passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 80, 250, 30)];
+    _passwordTextField.returnKeyType = UIReturnKeyGo;
+    _passwordTextField.secureTextEntry = YES;
     [_passwordTextField setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
     _passwordTextField.placeholder = @"请输入不少于6位密码"; //默认显示的字
     
     [imageView addSubview:_passwordTextField];
+    _passwordTextField.delegate = self;
     
     UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 120, self.view.frame.size.width, 30)];
     registerButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [registerButton setTitle:@"下一步" forState:UIControlStateNormal];
     [imageView addSubview:registerButton];
     [registerButton addTarget:self action:@selector(doRegister) forControlEvents:UIControlEventTouchUpInside];
-    
-   
 }
 
 -(void)getCode
@@ -236,5 +238,15 @@ static BOOL isDebug=YES;
     return ret;
 }
 
+#pragma mark - UITextFieldDelegate
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField;              // called when 'return' key pressed. return NO to ignore.
+{
+    if ([self isEmpty]) {
+        return NO;
+    }
+
+    [self doRegister];
+    return YES;
+}
 @end
