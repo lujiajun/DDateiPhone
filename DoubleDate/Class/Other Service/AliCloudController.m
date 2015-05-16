@@ -97,6 +97,18 @@ static OSSBucket *bucket;
     
 }
 
+-(void) asynUploadPic:(NSData *) upData key:(NSString *) key callback:(void (^)(BOOL, NSError *)) cb{
+    
+    OSSData *testData = [[OSSData alloc] initWithBucket:bucket withKey: key];
+    [testData setData:upData withType:@"jpeg"];
+    
+    [testData uploadWithUploadCallback:cb
+                  withProgressCallback:^(float progress) {
+                      NSLog(@"current get %f", progress);
+    }];
+}
+
+
 -(NSString *) uploadPic:(NSData *)upData{
     NSError *error = nil;
     NSString *name=self.createUUID;

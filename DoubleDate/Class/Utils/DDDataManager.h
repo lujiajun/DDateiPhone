@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "DDUserDAO.h"
+#import "AliCloudController.h"
 
 @interface DDDataManager : NSObject
 
@@ -17,5 +18,6 @@
 - (int) loadUser: (NSString*) uid;
 - (DDUser*) user;
 - (void) saveUser: (DDUser*) user;
+- (AliCloudController*) aliCloud;
 
 @end

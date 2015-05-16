@@ -25,6 +25,7 @@
 #import "AddFriendViewController.h"
 #import "DDDataManager.h"
 #import "SVProgressHUD.h"
+#import "DDPersonalUpdateController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -41,6 +42,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     UIBarButtonItem *_addFriendItem;
     UIBarButtonItem *_inviteFriendItem;
     UIBarButtonItem *_createGroupItem;
+    UIBarButtonItem *_editProfileItem;
     
     UIButton *_inviteButton;
 }
@@ -81,8 +83,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callOutWithChatter:) name:@"callOutWithChatter" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callControllerClose:) name:@"callControllerClose" object:nil];
     
-    [self setupSubviews];
-    self.selectedIndex = 0;
 
        //好友邀请页面button
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
@@ -101,6 +101,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [createGroupButton addTarget:self action:@selector(createGroup) forControlEvents:UIControlEventTouchUpInside];
     _createGroupItem = [[UIBarButtonItem alloc] initWithCustomView:createGroupButton];
     
+    _editProfileItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(onEditProfile:)];
+
     self.navigationItem.rightBarButtonItem = _inviteFriendItem;
     [self setupUnreadMessageCount];
     [self setupUntreatedApplyCount];
@@ -111,6 +113,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     if (! user) {
         [[DDDataManager sharedManager] loadUser:loginUsername];
     }
+    
+    [self setupSubviews];
+    self.selectedIndex = 0;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -174,7 +179,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         [self.navigationItem setTitleView:nil];
 	} else if (item.tag == 3)  {
 		self.title = NSLocalizedString(@"title.setting", @"Setting");
-		self.navigationItem.rightBarButtonItem = nil;
+		self.navigationItem.rightBarButtonItem = _editProfileItem;
         [self.navigationItem setTitleView:nil];
 		[_settingsVC refreshConfig];
     }
@@ -373,6 +378,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self.navigationController pushViewController:createChatroom animated:YES];
 }
 
+- (void) onEditProfile: (id) sender {
+    DDPersonalUpdateController *vc = [[DDPersonalUpdateController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 #pragma mark - IChatManagerDelegate 消息变化
 
 - (void)didUpdateConversationList:(NSArray *)conversationList
