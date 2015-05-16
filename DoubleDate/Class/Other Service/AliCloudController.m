@@ -68,7 +68,7 @@ static OSSBucket *bucket;
 //1|2|3|4
 -(void) asynUploadPic:(NSData *) upData name:(NSString *) picname username:(NSString *) username{
 
-    OSSData *testData = [[OSSData alloc] initWithBucket:bucket withKey:[[username stringByAppendingString:@"_photo_"]stringByAppendingString:picname]];
+    OSSData *testData = [[OSSData alloc] initWithBucket:bucket withKey: DD_PHOTO_KEY(username, picname)];
     [testData setData:upData withType:@"jpeg"];
     [testData uploadWithUploadCallback:^(BOOL isSuccess, NSError *error) {
         if (isSuccess) {

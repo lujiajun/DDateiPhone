@@ -13,6 +13,7 @@
 #import "Constants.h"
 #import "PersonalSignController.h"
 #import "AWSDynamoDB_DDUser.h"
+#import "DDDataManager.h"
 
 
 
@@ -125,14 +126,14 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    
+    DDUser* user = [DDDataManager sharedManager].user;
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             cell.textLabel.text = @"头像";
             _imghead=[UIImage alloc];
             
-            if(IndexViewController.instanceDDuser && IndexViewController.instanceDDuser.picPath){
-                NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:IndexViewController.instanceDDuser.picPath]]];
+            if(user && user.picPath) {
+                NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[DDPicPath stringByAppendingString:user.picPath]]];
                 _imghead = [UIImage imageWithData:data];
             }else {
                 _imghead=[UIImage imageNamed:@"Logo_new.png"];
@@ -148,7 +149,7 @@
         
             cell.textLabel.text = @"昵称";
             UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 80, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, 100, self.pushDisplaySwitch.frame.size.height)];
-            mylable.text=IndexViewController.instanceDDuser.nickName;
+            mylable.text=user.nickName;
             mylable.textAlignment=NSTextAlignmentRight;
             [cell.contentView addSubview:mylable];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -156,7 +157,7 @@
             cell.textLabel.text = @"密码";
             UILabel *mylable=[[UILabel alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width - self.pushDisplaySwitch.frame.size.width - 80, (cell.contentView.frame.size.height - self.pushDisplaySwitch.frame.size.height) / 2, 100, self.pushDisplaySwitch.frame.size.height)];
         
-            mylable.text=[IndexViewController instanceDDuser].university;
+            mylable.text=user.university;
             
             mylable.textAlignment=NSTextAlignmentRight;
             [cell.contentView addSubview:mylable];
@@ -341,17 +342,11 @@
         AliCloudController *aliCloud=[AliCloudController alloc];
        
         NSString *name= [aliCloud uploadPic:data];
-     
-        
+
         //修改头像
-        AWSDynamoDB_DDUser *userDynamoDB = [[AWSDynamoDB_DDUser alloc] init];
-        DDUser *user=[DDUser new];
-        user=IndexViewController.instanceDDuser;
+        DDUser* user = [DDDataManager sharedManager].user;
         user.picPath=name;
-        [IndexViewController setDDUser:user];
-       
-        [userDynamoDB updateDDUser:user];
-    
+        [[DDDataManager sharedManager] saveUser:user];
     }
     
 }

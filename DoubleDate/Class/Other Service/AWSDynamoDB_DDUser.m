@@ -56,24 +56,23 @@
     
 }
 
-- (DDUser *)getTableUser:(NSString *)uid {
-	[[self.dynamoDBObjectMapper load:[DDUser class] hashKey:uid rangeKey:nil]
-	 continueWithBlock: ^id (BFTask *task) {
-	    if (task.error) {
-	        NSLog(@"The request failed. Error: [%@]", task.error);
-		}
-	    if (task.exception) {
-	        NSLog(@"The request failed. Exception: [%@]", task.exception);
-		}
-	    if (task.result) {
-	        DDUser *user = task.result;
-	        return user;
-
-	        //Do something with the result.
-		}
-	    return nil;
-	}];
-	return nil;
+- (void)getUserByUID:(NSString *) uid withBlock:(SuccussBlock)block  {
+    BFTask *task = [self.dynamoDBObjectMapper load:[DDUser class] hashKey:uid rangeKey:nil];
+    [task continueWithBlock: ^id (BFTask *task) {
+         if (task.error) {
+             NSLog(@"The request failed. Error: [%@]", task.error);
+         }
+         if (task.exception) {
+             NSLog(@"The request failed. Exception: [%@]", task.exception);
+         }
+         if (task.result) {
+             DDUser *user = task.result;
+             block(user);
+         } else {
+             block(nil);
+         }
+         return nil;
+     }];
 }
 
 - (void)getDDuserAndInsertLocal:(NSString *)uid {
@@ -105,11 +104,6 @@
 		return user;
 	}
 	return nil;
-}
-
-- (void)getUserByUID:(SuccussBlock)successBlock UID:(NSString *) UID{
-    
-        
 }
 
 @end

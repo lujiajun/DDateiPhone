@@ -28,6 +28,7 @@
 #import "AWSDynamoDB_ChatRoom2.h"
 #import "Util.h"
 #import "PersonInfoController.h"
+#import "DDDataManager.h"
 
 @interface ChatRoomDetail ()
 
@@ -101,7 +102,7 @@
     //判断性别
     if(_chatroom2!=nil&&_uuser1!=nil&&_uuser2!=nil){
         if(_uuser1.gender!=nil){
-            if(_uuser1.gender.intValue == [IndexViewController instanceDDuser].gender.intValue){
+            if(_uuser1.gender.intValue == [DDDataManager sharedManager].user.gender.intValue){
                 [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
                                         message:NSLocalizedString(@"group.notSameSex", @"Please join in the other sex room")
                              customizationBlock:nil

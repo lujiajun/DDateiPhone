@@ -19,6 +19,7 @@
 #import "WCAlertView.h"
 #import "PersonalController.h"
 #import "IndexViewController.h"
+#import "DDDataManager.h"
 
 
 
@@ -263,7 +264,7 @@
             [[ApplyViewController shareController] clear];
             [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
         }
-        [IndexViewController setDDUser:nil];
+        [[DDDataManager sharedManager] saveUser: nil];
     } onQueue:nil];
 }
  

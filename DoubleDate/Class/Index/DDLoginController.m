@@ -15,6 +15,8 @@
 #import "OSSArgs.h"
 #import "DDRegisterController.h"
 #import "DDLoginController.h"
+#import "DDDataManager.h"
+#import "SVProgressHUD.h"
 
 @interface DDLoginController ()<IChatManagerDelegate,UITextFieldDelegate>
 
@@ -72,10 +74,6 @@
     [registerButton setTitle:@"登录" forState:UIControlStateNormal];
     [imageView addSubview:registerButton];
     [registerButton addTarget:self action:@selector(doLogin) forControlEvents:UIControlEventTouchUpInside];
-
- 
-    
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -110,7 +108,8 @@
              if (!error) {
                  error = [[EaseMob sharedInstance].chatManager loadDataFromDatabase];
              }
-             
+
+
              //发送自动登陆状态通知
              [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
              

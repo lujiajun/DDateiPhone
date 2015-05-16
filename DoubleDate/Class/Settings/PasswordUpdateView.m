@@ -3,6 +3,8 @@
 #import "Util.h"
 #import "AWSDynamoDB_DDUser.h"
 #import "SettingsViewController.h"
+#import "DDDataManager.h"
+
 @interface PasswordUpdateView()
 
 @property(strong,nonatomic)  UITextField *oldText;
@@ -84,14 +86,13 @@
             return;
         }
         //修改环信
-        DDUser *user=[IndexViewController instanceDDuser];
+        DDUser *user=[DDDataManager sharedManager].user;
         if([Util updatePassword:_confirmText.text username:user.UID oldpassword:user.password]){
             //修改数据库
             
             user.password=_confirmText.text;
-            AWSDynamoDB_DDUser  *awsdao=[[AWSDynamoDB_DDUser alloc]init];
-            [awsdao updateDDUser:user];
-            [IndexViewController setDDUser:user];
+            [[DDDataManager sharedManager] saveUser:user];
+            
             //退出登录
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle:NSLocalizedString(@"prompt", @"prompt")
@@ -138,8 +139,9 @@
         return  ret;
     }
     //老密码验证
+    DDUser *user=[DDDataManager sharedManager].user;
 //    NSLog([IndexViewController instanceDDuser].password);
-    if(![_oldText.text isEqualToString:[IndexViewController instanceDDuser].password]){
+    if(![_oldText.text isEqualToString:user.password]){
         ret = YES;
         [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
                                 message:@"原密码输入错误哦，请检查后重新输入啦"

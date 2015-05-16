@@ -41,7 +41,7 @@
 #import "IndexViewController.h"
 #import "AWSDynamoDB_ChatRoom4.h"
 #import "MainChatListViewController.h"
-#import "UIImageView+WebCache.h"
+#import "DDDataManager.h"
 #define KPageCount 20
 
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, IDeviceManagerDelegate>
@@ -101,7 +101,7 @@ NSDateFormatter *dateformatter;
 	_isNewRoom = isNewRoom;
 	_chatroom4 = room4;
 	if (friend == nil) {
-		DDUser *login =  [IndexViewController instanceDDuser];
+		DDUser *login =  [DDDataManager sharedManager].user;
 		if (_userDao == nil) {
 			_userDao = [[DDUserDAO alloc]init];
 		}

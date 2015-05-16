@@ -51,6 +51,10 @@
 		3CBB931C1A14B227007FED9E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBB931B1A14B227007FED9E /* libsqlite3.dylib */; };
 		3CBF90C019302F5000AD68AE /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBF90BF19302F5000AD68AE /* BaseViewController.m */; };
 		3CE6293319A1B13700829632 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE6293219A1B13700829632 /* CoreText.framework */; };
+		555C1C811B0724B000D2E28E /* DDDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 555C1C801B0724B000D2E28E /* DDDataManager.m */; };
+		555C1C891B073CB500D2E28E /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 555C1C841B073CB500D2E28E /* SVIndefiniteAnimatedView.m */; };
+		555C1C8A1B073CB500D2E28E /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 555C1C861B073CB500D2E28E /* SVProgressHUD.bundle */; };
+		555C1C8B1B073CB500D2E28E /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 555C1C881B073CB500D2E28E /* SVProgressHUD.m */; };
 		8A038C2F1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C1C1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m */; };
 		8A038C301AF51A54007A05BE /* ChatRoomDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C1E1AF51A54007A05BE /* ChatRoomDetail.m */; };
 		8A038C311AF51A54007A05BE /* Commbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C201AF51A54007A05BE /* Commbox.m */; };
@@ -544,6 +548,14 @@
 		3CBF90BE19302F5000AD68AE /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		3CBF90BF19302F5000AD68AE /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		3CE6293219A1B13700829632 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		555C1C7F1B0724B000D2E28E /* DDDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDDataManager.h; path = Utils/DDDataManager.h; sourceTree = "<group>"; };
+		555C1C801B0724B000D2E28E /* DDDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDDataManager.m; path = Utils/DDDataManager.m; sourceTree = "<group>"; };
+		555C1C831B073CB500D2E28E /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		555C1C841B073CB500D2E28E /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		555C1C851B073CB500D2E28E /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		555C1C861B073CB500D2E28E /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		555C1C871B073CB500D2E28E /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		555C1C881B073CB500D2E28E /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		8A038C1B1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWSDynamoDB_ChatRoom4.h; path = "Other Service/AWSDynamoDB_ChatRoom4.h"; sourceTree = "<group>"; };
 		8A038C1C1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWSDynamoDB_ChatRoom4.m; path = "Other Service/AWSDynamoDB_ChatRoom4.m"; sourceTree = "<group>"; };
 		8A038C1D1AF51A54007A05BE /* ChatRoomDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatRoomDetail.h; path = Index/ChatRoomDetail.h; sourceTree = "<group>"; };
@@ -1258,6 +1270,8 @@
 			children = (
 				18F7F4EE1AF693100085EEB8 /* Util.h */,
 				18F7F4EF1AF693100085EEB8 /* Util.m */,
+				555C1C7F1B0724B000D2E28E /* DDDataManager.h */,
+				555C1C801B0724B000D2E28E /* DDDataManager.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1350,6 +1364,19 @@
 				3C9DDAB3193871D8007C765A /* EMSearchDisplayController.m */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		555C1C821B073CB500D2E28E /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				555C1C831B073CB500D2E28E /* SVIndefiniteAnimatedView.h */,
+				555C1C841B073CB500D2E28E /* SVIndefiniteAnimatedView.m */,
+				555C1C851B073CB500D2E28E /* SVProgressHUD-Prefix.pch */,
+				555C1C861B073CB500D2E28E /* SVProgressHUD.bundle */,
+				555C1C871B073CB500D2E28E /* SVProgressHUD.h */,
+				555C1C881B073CB500D2E28E /* SVProgressHUD.m */,
+			);
+			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
 		8A4020B51AE3579F00806014 /* Oss-Universal */ = {
@@ -1827,6 +1854,7 @@
 		90911056192EEAED008A48AA /* 3rdparty */ = {
 			isa = PBXGroup;
 			children = (
+				555C1C821B073CB500D2E28E /* SVProgressHUD */,
 				90A705A11A8B63B200376154 /* MWPhotoBrowser */,
 				909308B919604821005013BD /* Emoji */,
 				9003D9191939D9C300DC38A4 /* UMeng */,
@@ -2769,7 +2797,7 @@
 				ORGANIZATIONNAME = "___FULLUSERNAME___";
 				TargetAttributes = {
 					90911023192EEA70008A48AA = {
-						DevelopmentTeam = YL49D2HU6K;
+						DevelopmentTeam = M54LAUT7S6;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -3057,6 +3085,7 @@
 				EBD2AB261A7CDAC000D16528 /* VoiceSearchFeedback011@2x.png in Resources */,
 				8AA113481AFA8134002DB7F5 /* like1.png in Resources */,
 				8AA1134C1AFA8166002DB7F5 /* likeGo.png in Resources */,
+				555C1C8A1B073CB500D2E28E /* SVProgressHUD.bundle in Resources */,
 				EBD2AB371A7CDAC000D16528 /* VoiceSearchFeedback020.png in Resources */,
 				EBD2AB161A7CDAC000D16528 /* VoiceSearchFeedback003@2x.png in Resources */,
 				8AD911DC1AFBC4080024D4DE /* back.png in Resources */,
@@ -3111,6 +3140,7 @@
 				9003D8A11939D8D000DC38A4 /* EMChatImageBubbleView.m in Sources */,
 				90A706051A8B63B200376154 /* EMSDWebImageDecoder.m in Sources */,
 				90EF2CEF192F2B4E00BDC549 /* SRSlimeView.m in Sources */,
+				555C1C811B0724B000D2E28E /* DDDataManager.m in Sources */,
 				9003D9131939D8D000DC38A4 /* AddFriendCell.m in Sources */,
 				9003D8741939D8D000DC38A4 /* FacialView.m in Sources */,
 				90EF2CEE192F2B4E00BDC549 /* SRRefreshView.m in Sources */,
@@ -3237,6 +3267,7 @@
 				9003D8751939D8D000DC38A4 /* DXChatBarMoreView.m in Sources */,
 				180E1A441AEF2C5A007EC1C3 /* MainChatListViewController.m in Sources */,
 				181782AA1AFA80420007BD3B /* CHATROOM2.m in Sources */,
+				555C1C891B073CB500D2E28E /* SVIndefiniteAnimatedView.m in Sources */,
 				90A706061A8B63B200376154 /* EMSDWebImageDownloader.m in Sources */,
 				EB3CC3A31ACD343D00FB8662 /* CallSessionViewController.m in Sources */,
 				3C13D94B1A12095D00903622 /* GroupBansViewController.m in Sources */,
@@ -3259,6 +3290,7 @@
 				9091111B192EEAED008A48AA /* UIResponder+Router.m in Sources */,
 				18F7F4F41AF6A60D0085EEB8 /* ChatRoom4DAO.m in Sources */,
 				18F7F4F01AF693100085EEB8 /* Util.m in Sources */,
+				555C1C8B1B073CB500D2E28E /* SVProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3449,7 +3481,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SMS_SDK",
