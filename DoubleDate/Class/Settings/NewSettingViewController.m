@@ -265,7 +265,8 @@
 						//图片显示
 						UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(_scrollView.frame.origin.x + PIC_WIDTH * i, cell.frame.origin.y, PIC_WIDTH, PIC_HEIGHT)];
 
-						[imageView sd_setImageWithURL:[NSURL URLWithString:[[DDPicPath stringByAppendingString:[_loginname stringByAppendingString:@"_photo_"]] stringByAppendingString:element]] placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+                        NSString* url = DD_PHOTO_URL(_loginname, element);
+						[imageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"Logo_new"]];
 
 						//获取图片的框架，得到长、宽
 						//赋值
@@ -513,7 +514,7 @@
 			return (NSComparisonResult)NSOrderedSame;
 		};
 		NSArray *array = [_addedPicArray sortedArrayUsingComparator:cmptr];
-		return [NSString stringWithFormat:@"%ld",  [array.lastObject longValue] + 1];
+		return [NSString stringWithFormat:@"%d", [array.lastObject intValue] + 1];
 	}
 }
 

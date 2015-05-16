@@ -164,8 +164,6 @@
     [self.view addSubview:registerButton];
     [registerButton addTarget:self action:@selector(updateDDUser) forControlEvents:UIControlEventTouchUpInside];
 
-    
-    
 }
 
 //xiugai账号
