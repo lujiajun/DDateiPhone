@@ -113,10 +113,16 @@
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(execute:) name:@"NOTIFICATION_NAME" object:nil];
 }
 
-//-(void)execute:(NSNotification *) notification {
-//    ///////to do your logic
-//    [self.tableView reloadData];
-//}
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(onEdit:)];
+    [self.tableView reloadData];
+}
+
+- (void) onEdit: (id) sender {
+    DDPersonalUpdateController *blackController = [DDPersonalUpdateController alloc];
+    [self.navigationController pushViewController:blackController animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
@@ -303,11 +309,11 @@
 //			imageView.frame = CGRectMake(140, mylable.frame.origin.y, 20, 15);
 //			[bakview addSubview:imageView];
 
-			//BIANJI
-			UIImageView *bianjiView = [[UIImageView alloc] init];
-			bianjiView.image = [UIImage imageNamed:@"bianji.png"];
-			bianjiView.frame = CGRectMake(self.view.frame.size.width - 30, mylable.frame.origin.y, 15, 15);
-			[bakview addSubview:bianjiView];
+//			//BIANJI
+//			UIImageView *bianjiView = [[UIImageView alloc] init];
+//			bianjiView.image = [UIImage imageNamed:@"bianji.png"];
+//			bianjiView.frame = CGRectMake(self.view.frame.size.width - 30, mylable.frame.origin.y, 15, 15);
+//			[bakview addSubview:bianjiView];
 
 			UILabel *university = [[UILabel alloc]initWithFrame:CGRectMake(30, mylable.frame.origin.y + 20, 260, 20)];
 			university.text = [Util str1:@"学校：   " appendStr2:[IndexViewController instanceDDuser].university == nil ? @"请编辑学校信息" : [IndexViewController instanceDDuser].university];
@@ -507,16 +513,12 @@
 			return (NSComparisonResult)NSOrderedSame;
 		};
 		NSArray *array = [_addedPicArray sortedArrayUsingComparator:cmptr];
-		return [NSString stringWithFormat:@"%ld",  [array.lastObject integerValue] + 1];
+		return [NSString stringWithFormat:@"%ld",  [array.lastObject longValue] + 1];
 	}
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
 	[picker dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [self.tableView reloadData];
 }
 
 
@@ -534,9 +536,7 @@
 		}
 
 		case 2: {
-			DDPersonalUpdateController *blackController = [DDPersonalUpdateController alloc];
-			[self.navigationController pushViewController:blackController animated:YES];
-			break;
+            break;
 		}
 
 		case 3: {

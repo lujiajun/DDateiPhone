@@ -40,13 +40,9 @@
 @property (strong,nonatomic) UITextField *signvalue;
 @property (strong,nonatomic) UILabel *nickname;
 @property (strong,nonatomic) NSString *picpath;
-@property(strong,nonatomic) UIButton *boy;
-@property(strong,nonatomic) UIButton *girl;
-
-
+@property(strong, nonatomic) UISegmentedControl *genderControl;
 
 @end
-NSNumber *sex;
 
 @implementation DDPersonalUpdateController
 
@@ -68,12 +64,8 @@ NSNumber *sex;
 {
     
     [super viewDidLoad];
-    self.title = @"注册信息修改";
+    self.title = @"修改个人资料";
     self.view.backgroundColor = [UIColor whiteColor];
-    if(sex==nil){
-        sex=[IndexViewController instanceDDuser].gender;
-    }
-
 
     //学校
     UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+10, self.view.frame.origin.y+20, 60, 30)];
@@ -121,22 +113,11 @@ NSNumber *sex;
     gender.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:gender];
     
-    _boy=[[UIButton alloc]initWithFrame:CGRectMake(city.frame.origin.x+50,gender.frame.origin.y, 25, 25 )];
-    [_boy setImage:[UIImage imageNamed:@"sexboy"] forState:UIControlStateNormal];
-    if([IndexViewController instanceDDuser].gender.intValue==1){
-        _boy.backgroundColor=[UIColor grayColor];
-    }
-    [_boy addTarget:self action:@selector(changeBoySex) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_boy];
-    
-    _girl=[[UIButton alloc]initWithFrame:CGRectMake(_boy.frame.origin.x+_boy.frame.size.width+15    ,gender.frame.origin.y, 25, 25 )];
-    if([IndexViewController instanceDDuser].gender.intValue==0){
-        _girl.backgroundColor=[UIColor grayColor];
-    }
-    [_girl setImage:[UIImage imageNamed:@"sexgirl"] forState:UIControlStateNormal];
-    [_girl addTarget:self action:@selector(changeGirlSex) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_girl];
-
+    NSArray* genderItems = @[@"男", @"女"];
+    _genderControl = [[UISegmentedControl alloc] initWithItems:genderItems];
+    _genderControl.frame = CGRectMake(gender.frame.origin.x+50, gender.frame.origin.y, 80, 25);
+    _genderControl.selectedSegmentIndex = [[IndexViewController instanceDDuser].gender integerValue];
+    [self.view addSubview:_genderControl];
     
     //出生日期
     UITextField *birdate=[[UITextField alloc]initWithFrame:CGRectMake(10, gender.frame.origin.y+40, 60, 30)];
@@ -186,26 +167,13 @@ NSNumber *sex;
     
     
 }
--(void) changeBoySex{
-    _girl.backgroundColor=[UIColor grayColor];
-    _boy.backgroundColor=nil;
-    sex=[[NSNumber alloc]initWithInt:0];
-    
-}
 
-
--(void) changeGirlSex{
-    _boy.backgroundColor=[UIColor grayColor];
-    _girl.backgroundColor=nil;
-    sex=[[NSNumber alloc]initWithInt:1];
-    
-}
 //xiugai账号
 - (void)updateDDUser {
 	AWSDynamoDB_DDUser *userDynamoDB = [[AWSDynamoDB_DDUser alloc] init];
 	DDUser *user = [IndexViewController instanceDDuser];
 	user.university = _universityvalue.text == nil ? user.university : _universityvalue.text;
-	user.gender = sex;
+	user.gender = @(self.genderControl.selectedSegmentIndex);
 	user.city = _cityvalue.text == nil ? user.city : _cityvalue.text;
 	user.hobbies = _hobbiesvalue.text == nil ? user.hobbies : _hobbiesvalue.text;
 	user.sign = _signvalue.text == nil ? user.sign : _signvalue.text;
