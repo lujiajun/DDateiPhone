@@ -26,7 +26,7 @@
 @property (nonatomic, strong) NSString *roomStatus;
 @property (nonatomic, strong) NSString *subGID1;
 @property (nonatomic, strong) NSString *subGID2;
-@property (nonatomic,strong) NSNumber *systemTimeNumber;
+@property (nonatomic, strong) NSNumber *systemTimeNumber;
 
 
 @end

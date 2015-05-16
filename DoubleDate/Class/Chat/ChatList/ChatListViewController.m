@@ -25,15 +25,15 @@
 #import "IndexViewController.h"
 #import "UIImageView+WebCache.h"
 
-@interface ChatListViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchDisplayDelegate,SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
+@interface ChatListViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchDisplayDelegate, SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
 
-@property (strong, nonatomic) NSMutableArray        *dataSource;
+@property (nonatomic, strong) NSMutableArray *dataSource;
 
-@property (strong, nonatomic) UITableView           *tableView;
-@property (nonatomic, strong) EMSearchBar           *searchBar;
-@property (nonatomic, strong) SRRefreshView         *slimeView;
-@property (nonatomic, strong) UIView                *networkStateView;
-@property(nonatomic) DDUserDAO      *userDao;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) EMSearchBar *searchBar;
+@property (nonatomic, strong) SRRefreshView *slimeView;
+@property (nonatomic, strong) UIView *networkStateView;
+@property (nonatomic, strong) DDUserDAO *userDao;
 
 @property (strong, nonatomic) EMSearchDisplayController *searchController;
 
@@ -46,6 +46,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _dataSource = [NSMutableArray array];
+        _userDao = [[DDUserDAO alloc] init];
     }
     return self;
 }
@@ -55,16 +56,12 @@
     [super viewDidLoad];
     [self removeEmptyConversationsFromDB];
 
-    if(_userDao==nil){
-        _userDao=[[DDUserDAO alloc] init];
-    }
     [self.view addSubview:self.searchBar];
     [self.view addSubview:self.tableView];
     [self.tableView addSubview:self.slimeView];
     [self networkStateView];
 
     [self searchController];
-    
 }
 
 - (void)didReceiveMemoryWarning

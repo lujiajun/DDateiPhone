@@ -523,6 +523,10 @@
 	[self refreshDataSource];
 }
 
+- (void)didAcceptInvitationFromGroup:(EMGroup *)group error:(EMError *)error {
+    [self refreshDataSource];
+}
+
 #pragma mark - registerNotifications
 - (void)registerNotifications {
 	[self unregisterNotifications];
@@ -540,21 +544,27 @@
 #pragma mark - public
 
 - (void)refreshDataSource {
-	ChatRoom4DAO *room4Dao = [[ChatRoom4DAO alloc] init];
+	[[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion: ^(NSArray *groups, EMError *error) {
+	    if (!error) {
+	        for (EMGroup *group in groups) {
+	            [self.chatRoom4DynamoDB getChatroom4InsertLocal:group.groupId];
+			}
 
-	NSArray *sortedArray = [[room4Dao queryChatRoom4s] sortedArrayUsingComparator:
-	                        ^(CHATROOM4 *obj1, CHATROOM4 *obj2) {
-	    if (obj1.systemTimeNumber < obj2.systemTimeNumber) {
-	        return (NSComparisonResult)NSOrderedAscending;
-		} else {
-	        return (NSComparisonResult)NSOrderedDescending;
+	        ChatRoom4DAO *room4Dao = [[ChatRoom4DAO alloc] init];
+	        NSArray *sortedArray = [[room4Dao queryChatRoom4s] sortedArrayUsingComparator:
+	                                ^(CHATROOM4 *obj1, CHATROOM4 *obj2) {
+	            if (obj1.systemTimeNumber < obj2.systemTimeNumber) {
+	                return (NSComparisonResult)NSOrderedAscending;
+				} else {
+	                return (NSComparisonResult)NSOrderedDescending;
+				}
+			}];
+	        [self.dataSource removeAllObjects];
+	        [self.dataSource addObjectsFromArray:sortedArray];
+	        [self.tableView reloadData];
+	        [self hideHud];
 		}
-	}];
-//    _conversationSource=[self loadDataSource];
-	[self.dataSource removeAllObjects];
-	[self.dataSource addObjectsFromArray:sortedArray];
-	[self.tableView reloadData];
-	[self hideHud];
+	} onQueue:dispatch_get_main_queue()];
 }
 
 - (void)isConnect:(BOOL)isConnect {

@@ -204,7 +204,7 @@ static BOOL haveFriend=NO;
             
             EMBuddy *buddy = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
             //查询用户头像
-            DDUser *user=[[self userDao] selectDDuserByUid:buddy.username];
+            DDUser *user=[weakSelf.userDao selectDDuserByUid:buddy.username];
             UIImageView *us=[[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40)] ;
             [us sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]]
                   placeholderImage:[UIImage imageNamed:@"Logo_new"]];
