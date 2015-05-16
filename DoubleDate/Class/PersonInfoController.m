@@ -45,7 +45,6 @@
 @property(strong,nonatomic) UIImagePickerController  *imagePicker;
 @property(nonatomic)  NSUInteger *picnumber;
 @property(strong,nonatomic) NSMutableArray *addedPicArray;
-@property(strong,nonatomic) AliCloudController *aliCloud;
 @property(strong,nonatomic) NSString *loginname;
 @property(strong,nonatomic) UIImageView *plusImageView;
 @property(strong,nonatomic) DDUser *user;
@@ -84,12 +83,6 @@
     
     self.tableView.backgroundColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
     self.tableView.tableFooterView = self.footerView;
-    
-    if(_aliCloud==nil){
-        _aliCloud=[AliCloudController alloc];
-        [_aliCloud initSdk];
-        
-    }
    
     if(_plusImageView==nil){
         //添加按钮

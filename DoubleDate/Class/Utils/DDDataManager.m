@@ -9,13 +9,14 @@
 #import "DDDataManager.h"
 #import "AWSDynamoDB_DDUser.h"
 #import "SVProgressHUD.h"
+
 static DDDataManager *dataManager;
 
 @interface DDDataManager()
 {
     unsigned int _state;
     AWSDynamoDB_DDUser *_awsDBUser;
-    
+    AliCloudController *_aliCloud;
 }
 
 @property (nonatomic, retain) DDUser *user;
@@ -31,6 +32,8 @@ static DDDataManager *dataManager;
         dataManager = [[DDDataManager alloc] init];
         dataManager->_state = 0;
         dataManager->_awsDBUser = [[AWSDynamoDB_DDUser alloc] init];
+        dataManager->_aliCloud = [AliCloudController alloc];
+        [dataManager->_aliCloud initSdk];
     });
     return dataManager;
 }
@@ -66,6 +69,10 @@ static DDDataManager *dataManager;
         _state = 0;
         self.user = nil;
     }
+}
+
+- (AliCloudController*) aliCloud {
+    return _aliCloud;
 }
 
 @end

@@ -6,7 +6,6 @@
 
 - (void)refreshConfig;
 
--(void) btnClick;
 
 -(id) initUser:(DDUser *)user;
 

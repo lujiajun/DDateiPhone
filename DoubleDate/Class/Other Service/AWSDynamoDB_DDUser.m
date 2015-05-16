@@ -43,17 +43,16 @@
     [[self.dynamoDBObjectMapper save:dduser]
      continueWithBlock:^id(BFTask *task) {
          if (task.error) {
-             NSLog(@"The request failed. Error: [%@]", task.error);
+             NSLog(@"updateDDUser failed. Error: [%@]", task.error);
          }
          if (task.exception) {
-             NSLog(@"The request failed. Exception: [%@]", task.exception);
+             NSLog(@"updateDDUser failed. Exception: [%@]", task.exception);
          }
          if (task.result) {
             [self.dduserDao updateByUID:dduser];
          }
          return nil;
      }];
-    
 }
 
 - (void)getUserByUID:(NSString *) uid withBlock:(SuccussBlock)block  {

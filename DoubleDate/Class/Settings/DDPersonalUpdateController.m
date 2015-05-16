@@ -15,6 +15,7 @@
 #import "NewSettingViewController.h"
 #import "DDDataManager.h"
 #import "UIImageView+WebCache.h"
+#import "SVProgressHUD.h"
 
 #define  PIC_WIDTH 80
 #define  PIC_HEIGHT 80
@@ -35,12 +36,13 @@
 @property (strong,nonatomic) UITextField *signvalue;
 @property (strong,nonatomic) UILabel *nickname;
 @property (strong,nonatomic) NSString *picpath;
-@property(strong, nonatomic) UISegmentedControl *genderControl;
+@property (strong, nonatomic) UISegmentedControl *genderControl;
 @property (strong, nonatomic) UIView *headerView;
 @property (strong, nonatomic) UIView *bodyView;
 
 @property (strong, nonatomic) UIScrollView *scrollView;
-
+@property (strong, nonatomic) UIImageView *plusImageView;
+@property (strong, nonatomic) NSMutableArray *photoArray;
 @end
 
 @implementation DDPersonalUpdateController
@@ -167,40 +169,51 @@
     [registerButton setTitle:@"修改" forState:UIControlStateNormal];
     [_bodyView addSubview:registerButton];
     [registerButton addTarget:self action:@selector(updateDDUser) forControlEvents:UIControlEventTouchUpInside];
+    
+    NSCharacterSet *cs = [NSCharacterSet characterSetWithCharactersInString: @","];
+    NSString *photo = [user.photos stringByTrimmingCharactersInSet:cs];
+    self.photoArray = [[photo componentsSeparatedByString:@","] mutableCopy];
+    
+    UIImage *image = [UIImage imageNamed:@"addpic"];
+    _plusImageView = [[UIImageView alloc] initWithImage:image];
+    _plusImageView.userInteractionEnabled = YES;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    [self refreshCoverView];
+}
+
+- (void) refreshCoverView {
     // reload images
     DDUser* user = [DDDataManager sharedManager].user;
-    NSCharacterSet *cs = [NSCharacterSet characterSetWithCharactersInString: @","];
-    NSString *photo = [user.photos stringByTrimmingCharactersInSet:cs];
-    NSArray *photoArray = [photo componentsSeparatedByString:@","];
-    if (photoArray.count> 0) {
-        int i = 0;
-        for (id element in photoArray) {
-            if (element != nil && ![element isEqual:@""]) {
-                //图片显示
-                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(PIC_WIDTH * i, 0, PIC_WIDTH, PIC_HEIGHT)];
-                
-                NSString* url = DD_PHOTO_URL(user.UID, element);
-                [imageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"Logo_new"]];
-                
-                //获取图片的框架，得到长、宽
-                //赋值
-                imageView.tag = i;
-                //ScrollView添加子视图
-                [_headerView addSubview:imageView];
-                i++;
-            }
+    [[_headerView subviews] enumerateObjectsUsingBlock:^(UIView* obj, NSUInteger p, BOOL* stop) {
+        [obj removeFromSuperview];
+    }];
+    int i = 0;
+    for (id element in self.photoArray) {
+        if (element != nil && ![element isEqual:@""]) {
+            //图片显示
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(PIC_WIDTH * i, 0, PIC_WIDTH, PIC_HEIGHT)];
+            
+            NSString* url = DD_PHOTO_URL(user.UID, element);
+            [imageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+            
+            //获取图片的框架，得到长、宽
+            //赋值
+            imageView.tag = i;
+            //ScrollView添加子视图
+            [_headerView addSubview:imageView];
+            i++;
         }
-        //_headerView.frame = cell.contentView.bounds;
-        _headerView.frame = CGRectMake(0, 10, CGRectGetWidth(_scrollView.frame), 100);
-
-    } else {
-        _headerView.frame = CGRectZero;
     }
+    //_headerView.frame = cell.contentView.bounds;
+    _headerView.frame = CGRectMake(0, 10, CGRectGetWidth(_scrollView.frame), 100);
+    
+    _plusImageView.frame = CGRectMake(PIC_WIDTH * i, _scrollView.frame.origin.y, PIC_WIDTH, PIC_HEIGHT);
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClick:)];
+    [_plusImageView addGestureRecognizer:singleTap];//点击图片事件
+    [_headerView addSubview:_plusImageView];
     
     _bodyView.frame = CGRectMake(0, CGRectGetMaxY(_headerView.frame) + 10, CGRectGetWidth(_scrollView.frame), CGRectGetMaxY(_scrollView.frame));
 }
@@ -208,12 +221,23 @@
 //xiugai账号
 - (void)updateDDUser {
     DDUser* user = [DDDataManager sharedManager].user;
-	user.university = _universityvalue.text == nil ? user.university : _universityvalue.text;
-	user.gender = @(self.genderControl.selectedSegmentIndex);
-	user.city = _cityvalue.text == nil ? user.city : _cityvalue.text;
-	user.hobbies = _hobbiesvalue.text == nil ? user.hobbies : _hobbiesvalue.text;
-	user.sign = _signvalue.text == nil ? user.sign : _signvalue.text;
-	user.birthday = _birdatevalue.text == nil ? user.birthday : _birdatevalue.text;
+    if (_universityvalue.text.length) {
+        user.university = _universityvalue.text;
+    }
+    user.gender = @(self.genderControl.selectedSegmentIndex);
+    if (_cityvalue.text.length) {
+        user.city = _cityvalue.text;
+    }
+    if (_hobbiesvalue.text.length) {
+        user.hobbies = _hobbiesvalue.text;
+    }
+    if (_signvalue.text.length) {
+        user.sign = _signvalue.text;
+    }
+    if (_birdatevalue.text.length) {
+        user.birthday = _birdatevalue.text;
+    }
+    user.photos = [self.photoArray componentsJoinedByString:@","];
     [[DDDataManager sharedManager] saveUser:user];
     
 //    NewSettingViewController *settings=[NewSettingViewController alloc];
@@ -284,47 +308,62 @@
     }
 }
 
-#pragma mark -
-#pragma UIImagePickerController Delegate
-//当选择一张图片后进入这里
--(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 
-{
-    
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
     
     //当选择的类型是图片
-    if ([type isEqualToString:@"public.image"])
-    {
+    if ([type isEqualToString:@"public.image"]) {
         //先把图片转成NSData
-        UIImage* image = [info objectForKey:UIImagePickerControllerEditedImage];
+        UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
         
         NSData *data;
-        if (UIImagePNGRepresentation(image) == nil)
-        {
+        if (UIImagePNGRepresentation(image) == nil) {
             data = UIImageJPEGRepresentation(image, 1.0);
-        }
-        else
-        {
+        } else {
             data = UIImagePNGRepresentation(image);
-            
         }
-        //关闭相册界面
-        [picker disablesAutomaticKeyboardDismissal];
-        UIImageView *smallimage = [[UIImageView alloc] initWithFrame:
-                                   CGRectMake(_nickname.frame.size.width+ _nicknamevalue.frame.size.width+10,10,50,50)];
+        //关闭相册
+        [picker dismissViewControllerAnimated:YES completion:nil];
         
-        smallimage.image = image;
-        //加在视图中
-        [self.view addSubview:smallimage];
-        //上传
-        AliCloudController *aliCloud=[AliCloudController alloc];
-        
-        NSString *name= [aliCloud uploadPic:data];
-        _picpath=name;
-        
+        //先显示，在上传
+        //获得addPicArry中得最大值
+        NSString *picname = [self getNewPicName];
+        if (picname.length) {
+            DDUser* user = [DDDataManager sharedManager].user;
+            [SVProgressHUD show];
+            [[DDDataManager sharedManager].aliCloud asynUploadPic:data key: DD_PHOTO_KEY(user.UID, picname) callback:^(BOOL sucess, NSError* e) {
+                if (sucess) {
+                    [self.photoArray addObject:picname];
+                    [self refreshCoverView];
+                    [SVProgressHUD dismiss];
+                    return ;
+                }
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat: @"上传到阿里云失败: %@", e]];
+            }];
+        }
     }
-    
+}
+
+//最大值加1
+- (NSString *)getNewPicName {
+    NSComparator cmptr = ^(id obj1, id obj2) {
+        if ([obj1 integerValue] > [obj2 integerValue]) {
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        
+        if ([obj1 integerValue] < [obj2 integerValue]) {
+            return (NSComparisonResult)NSOrderedAscending;
+        }
+        return (NSComparisonResult)NSOrderedSame;
+    };
+    NSArray *array = [self.photoArray sortedArrayUsingComparator:cmptr];
+    return [NSString stringWithFormat:@"%d", [array.lastObject intValue] + 1];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void) cancelDatePicker: (id) sender {

@@ -38,18 +38,17 @@
 @interface NewSettingViewController () <UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (strong, nonatomic) UIView *footerView;
+@property (strong, nonatomic) UIView *headerView;
 
 @property (strong, nonatomic) UISwitch *autoLoginSwitch;
 @property (strong, nonatomic) UISwitch *ipSwitch;
 
 @property (strong, nonatomic) UISwitch *beInvitedSwitch;
 @property (strong, nonatomic) UILabel *beInvitedLabel;
-@property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
 @property (strong, nonatomic) NSMutableArray *addedPicArray;
-@property (strong, nonatomic) AliCloudController *aliCloud;
 @property (strong, nonatomic) NSString *loginname;
-@property (strong, nonatomic) UIImageView *plusImageView;
+// @property (strong, nonatomic) UIImageView *plusImageView;
 
 @property (nonatomic)  NSUInteger *picnumber;
 
@@ -62,8 +61,8 @@
 @synthesize ipSwitch = _ipSwitch;
 
 
-#define  PIC_WIDTH 120
-#define  PIC_HEIGHT 120
+#define  PIC_WIDTH 80
+#define  PIC_HEIGHT 80
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -71,42 +70,21 @@
 	self.tableView.backgroundColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
 	self.tableView.tableFooterView = self.footerView;
 
-	if (_aliCloud == nil) {
-		_aliCloud = [AliCloudController alloc];
-		[_aliCloud initSdk];
-	}
-	if (_loginname == nil) {
-		NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
-		_loginname = [loginInfo objectForKey:kSDKUsername];
-	}
-	
-	if (_plusImageView == nil) {
-		//添加按钮
-		UIImage *image = [UIImage imageNamed:@"addpic"];
-		//图片显示
-		_plusImageView = [[UIImageView alloc] initWithImage:image];
-		_plusImageView.userInteractionEnabled = YES;
-	}
-	//出事scroview
-	[self refreshScrollView];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(execute:) name:@"NOTIFICATION_NAME" object:nil];
+    
+    _headerView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 130)];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(onEdit:)];
+    
+    DDUser* user = [DDDataManager sharedManager].user;
+    _loginname = user.UID;
+    if (user.photos) {
+        _addedPicArray = [[NSMutableArray alloc] initWithArray:[user.photos componentsSeparatedByString:@","]];
+    }
+
     [self.tableView reloadData];
 }
-
-- (void) onEdit: (id) sender {
-    DDPersonalUpdateController *blackController = [DDPersonalUpdateController alloc];
-    [self.navigationController pushViewController:blackController animated:YES];
-}
-
-- (void)didReceiveMemoryWarning {
-	[super didReceiveMemoryWarning];
-}
-
 
 #pragma mark - getter
 
@@ -134,25 +112,6 @@
 	return _beInvitedLabel;
 }
 
-- (void)refreshScrollView {
-	if (_scrollView == nil) {
-		_scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 400, 130)];
-	}
-
-	//循环执行，有多少张图片，执行几次
-	_scrollView.scrollEnabled = YES;
-	if (_addedPicArray.count > 1) {
-		CGSize contentSize = CGSizeMake(PIC_WIDTH * (_addedPicArray.count + 1), 130);
-		//shezhi滚动范围
-		_scrollView.contentSize = contentSize;
-	} else {
-		CGSize contentSize = CGSizeMake(PIC_WIDTH * (_addedPicArray.count + 2), 130);
-		//shezhi滚动范围
-		_scrollView.contentSize = contentSize;
-	}
-	[_scrollView setUserInteractionEnabled:YES];
-}
-
 #pragma mark - Table view datasource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -173,10 +132,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *cellIdentifier = @"Cell";
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-	if (cell == nil) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-	}
+	UITableViewCell *cell =  [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     
     DDUser* user = [DDDataManager sharedManager].user;
     
@@ -232,19 +188,12 @@
 		{
 			// 1.创建UIScrollView
 
-			if (_addedPicArray.count == 0) {
-				//赋值
-				_plusImageView.frame = CGRectMake(0, _scrollView.frame.origin.y, PIC_WIDTH, PIC_HEIGHT);
-				UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClick)];
-				[_plusImageView addGestureRecognizer:singleTap];//点击图片事件
-
-				[_scrollView addSubview:_plusImageView];
-			} else {
+			if (_addedPicArray.count> 0) {
 				int i = 0;
 				for (id element in _addedPicArray) {
 					if (element != nil && ![element isEqual:@""]) {
 						//图片显示
-						UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(_scrollView.frame.origin.x + PIC_WIDTH * i, cell.frame.origin.y, PIC_WIDTH, PIC_HEIGHT)];
+						UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(PIC_WIDTH * i, cell.frame.origin.y, PIC_WIDTH, PIC_HEIGHT)];
 
                         NSString* url = DD_PHOTO_URL(_loginname, element);
 						[imageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"Logo_new"]];
@@ -253,22 +202,13 @@
 						//赋值
 						imageView.tag = i;
 						//ScrollView添加子视图
-						[_scrollView addSubview:imageView];
+						[_headerView addSubview:imageView];
 						i++;
 					}
 				}
-				if (_addedPicArray.count > 1) {
-					_plusImageView.frame = CGRectMake(PIC_WIDTH * i, _scrollView.frame.origin.y, PIC_WIDTH, PIC_HEIGHT);
-					UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClick)];
-					[_plusImageView addGestureRecognizer:singleTap];//点击图片事件
-
-					[_scrollView addSubview:_plusImageView];
-				}
+                //_headerView.frame = cell.contentView.bounds;
+                [cell.contentView addSubview:_headerView];
 			}
-
-
-			[cell.contentView addSubview:_scrollView];
-
 			break;
 		}
 
@@ -285,17 +225,7 @@
 			mylable.textAlignment = NSTextAlignmentLeft;
 			mylable.font = [UIFont fontWithName:@"Helvetica" size:12];
 			[bakview addSubview:mylable];
-			//isdoubled
-//			UIImageView *imageView = [[UIImageView alloc] init];
-//			imageView.image = [UIImage imageNamed:@"confirm.png"];
-//			imageView.frame = CGRectMake(140, mylable.frame.origin.y, 20, 15);
-//			[bakview addSubview:imageView];
 
-//			//BIANJI
-//			UIImageView *bianjiView = [[UIImageView alloc] init];
-//			bianjiView.image = [UIImage imageNamed:@"bianji.png"];
-//			bianjiView.frame = CGRectMake(self.view.frame.size.width - 30, mylable.frame.origin.y, 15, 15);
-//			[bakview addSubview:bianjiView];
 
 			UILabel *university = [[UILabel alloc]initWithFrame:CGRectMake(30, mylable.frame.origin.y + 20, 260, 20)];
 			university.text = [Util str1:@"学校：   " appendStr2:user.university == nil ? @"请编辑学校信息" : user.university];
@@ -432,78 +362,6 @@
 			break;
 	}
 }
-
-#pragma mark - UIImagePickerControllerDelegate
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-	NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
-
-	//当选择的类型是图片
-	if ([type isEqualToString:@"public.image"]) {
-		//先把图片转成NSData
-		UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-
-		NSData *data;
-		if (UIImagePNGRepresentation(image) == nil) {
-			data = UIImageJPEGRepresentation(image, 1.0);
-		} else {
-			data = UIImagePNGRepresentation(image);
-		}
-		//关闭相册
-		[picker dismissViewControllerAnimated:YES completion:nil];
-		//添加图片
-		UIImageView *aImageView = [[UIImageView alloc]initWithImage:image];
-		[aImageView setFrame:CGRectMake(_plusImageView.frame.origin.x, _plusImageView.frame.origin.y, PIC_WIDTH, PIC_HEIGHT)];
-		[_scrollView addSubview:aImageView];
-		//放置图片到指定位置
-
-		CABasicAnimation *positionAnim = [CABasicAnimation animationWithKeyPath:@"position"];
-		[positionAnim setFromValue:[NSValue valueWithCGPoint:CGPointMake(_plusImageView.center.x, _plusImageView.center.y)]];
-		[positionAnim setToValue:[NSValue valueWithCGPoint:CGPointMake(_plusImageView.center.x + PIC_WIDTH, _plusImageView.center.y)]];
-		[positionAnim setDelegate:self];
-		[positionAnim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-		[positionAnim setDuration:0.25f];
-		[_plusImageView.layer addAnimation:positionAnim forKey:nil];
-		[_plusImageView setCenter:CGPointMake(_plusImageView.center.x + PIC_WIDTH, _plusImageView.center.y)];
-
-		//先显示，在上传
-		//获得addPicArry中得最大值
-		NSString *picname = [self getNewPicName];
-		if (picname != nil && ![picname isEqualToString:@""]) {
-			[_addedPicArray addObject:picname];
-		}
-
-		[self refreshScrollView];
-		[[self tableView] reloadData];
-        
-        DDUser* user = [DDDataManager sharedManager].user;
-		[_aliCloud asynUploadPic:data name:picname username:user.UID];
-	}
-}
-
-//最大值加1
-- (NSString *)getNewPicName {
-	if (_addedPicArray == nil || _addedPicArray.count == 0) {
-		return @"1";
-	} else {
-		NSComparator cmptr = ^(id obj1, id obj2) {
-			if ([obj1 integerValue] > [obj2 integerValue]) {
-				return (NSComparisonResult)NSOrderedDescending;
-			}
-
-			if ([obj1 integerValue] < [obj2 integerValue]) {
-				return (NSComparisonResult)NSOrderedAscending;
-			}
-			return (NSComparisonResult)NSOrderedSame;
-		};
-		NSArray *array = [_addedPicArray sortedArrayUsingComparator:cmptr];
-		return [NSString stringWithFormat:@"%d", [array.lastObject intValue] + 1];
-	}
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-	[picker dismissViewControllerAnimated:YES completion:nil];
-}
-
 
 #pragma mark - Table view delegate
 
