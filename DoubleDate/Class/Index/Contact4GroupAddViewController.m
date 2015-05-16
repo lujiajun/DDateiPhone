@@ -38,10 +38,10 @@
 @property (strong, nonatomic) UIView *footerView;
 @property (strong, nonatomic) UIScrollView *footerScrollView;
 @property (strong, nonatomic) UIButton *doneButton;
-@property(strong,nonatomic) CHATROOM2 *room2;
-@property(strong) DDUserDAO *userDao;
-@property(strong,nonatomic) NSString *username;
-@property(strong,nonatomic) NSString *toAddFriend;
+@property (strong, nonatomic) CHATROOM2 *room2;
+@property (strong, nonatomic) DDUserDAO *userDao;
+@property (strong, nonatomic) NSString *username;
+@property (strong, nonatomic) NSString *toAddFriend;
 @end
 
 @implementation Contact4GroupAddViewController
@@ -171,7 +171,7 @@
             }
             
             EMBuddy *buddy = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            DDUser *user=[self.userDao selectDDuserByUid:buddy.username];
+            DDUser *user=[weakSelf.userDao selectDDuserByUid:buddy.username];
             UIImageView *us=[[UIImageView alloc]initWithFrame:CGRectMake(cell.frame.origin.x+5, cell.frame.origin.y+5, 40, 40)] ;
             [us sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]]
                   placeholderImage:[UIImage imageNamed:@"Logo_new"]];

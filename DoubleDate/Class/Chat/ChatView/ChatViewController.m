@@ -41,6 +41,7 @@
 #import "IndexViewController.h"
 #import "AWSDynamoDB_ChatRoom4.h"
 #import "MainChatListViewController.h"
+#import "UIImageView+WebCache.h"
 #define KPageCount 20
 
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, IDeviceManagerDelegate>
@@ -74,23 +75,23 @@
 
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (nonatomic) BOOL isScrollToBottom;
-@property(strong,nonatomic) UILabel *lab;
+@property (strong, nonatomic) UILabel *lab;
 @property (nonatomic) BOOL isPlayingAudio;
-@property(strong,nonatomic) NSTimer *countDownTimer;
-@property(strong,nonatomic) CHATROOM4 *chatroom4;
-@property(strong,nonatomic) NSString *friendname;
-@property(strong,nonatomic) DDUser *friend;
-@property(strong,nonatomic) DDUserDAO *userDao;
+@property (strong, nonatomic) NSTimer *countDownTimer;
+@property (strong, nonatomic) CHATROOM4 *chatroom4;
+@property (strong, nonatomic) NSString *friendname;
+@property (strong, nonatomic) DDUser *friend;
+@property (strong, nonatomic) DDUserDAO *userDao;
 @property (strong, nonatomic) UIButton *view1;
 @property (nonatomic) NSNumber *count;
 
 
 @property (nonatomic) BOOL isNewRoom;
-@property(nonatomic) BOOL isSubGroup;
+@property (nonatomic) BOOL isSubGroup;
 @end
 
 @implementation ChatViewController
-long secondsCountDown = TOTAL_SECONDS;
+int secondsCountDown = TOTAL_SECONDS;
 
 
 NSDateFormatter *dateformatter;
@@ -204,44 +205,36 @@ NSDateFormatter *dateformatter;
     [self.view addSubview:self.tableView];
     [self.tableView addSubview:self.slimeView];
     [self.tableView setUserInteractionEnabled:YES];
-    if(!_isSubGroup&&_isChatGroup){
-        [self.view addSubview:[self getFriendFrame]];
-    }
     
-    if(_isChatGroup){
-        
-        //初始化count数量
-        [self initClickCout];
-        if(_count<[NSNumber numberWithInt:4] &&[_chatroom4.roomStatus isEqualToString:@"New" ]){
-            //计算倒计时时间
-            secondsCountDown= ([_chatroom4.systemTimeNumber longLongValue] -[[NSDate date] timeIntervalSince1970]*1000)/1000;
-//            NSLog([NSString stringWithFormat:@"%u",secondsCountDown ]);
-            _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
-        }
-  
-//        dateformatter = [[NSDateFormatter alloc]init] ;//定义NSDateFormatter用来显示格式
-//        [dateformatter setDateFormat:@"hh mm ss"];//设定格式
+	if (!_isSubGroup && _isChatGroup) {
+		[self.view addSubview:[self getFriendFrame]];
+	}
     
-        
-    
-        UIView *bak=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-60, 10, 200, 25)];
-    
-        _view1 = [[UIButton alloc] initWithFrame:CGRectMake(5, 0, 120, 25)];
-        [_view1 setImage:[UIImage imageNamed:@"like0"] forState:UIControlStateNormal];
-        [_view1 addTarget:self action:@selector(clickLike) forControlEvents:UIControlEventTouchUpInside];
-    
-        [bak addSubview:_view1];
-        self.lab=[[UILabel alloc]initWithFrame:CGRectMake(_view1.frame.origin.x+_view1.frame.size.width+3, _view1.frame.origin.y, 80, _view1.frame.size.height)];
-        self.lab.text=@"";
-        self.lab.font=[UIFont fontWithName:@"Helvetica" size:12];
-        [bak addSubview:self.lab];
-    
-        [self.navigationItem setTitleView:bak];
-    }else{
-          [_view1 setImage:[UIImage imageNamed:@"likeGo"] forState:UIControlStateNormal];
-    }
+	if (_isChatGroup) {
+		//初始化count数量
+		[self initClickCout];
+		if (self.count.intValue < 4 && [_chatroom4.roomStatus isEqualToString:@"New"]) {
+			//计算倒计时时间
+			secondsCountDown = ([_chatroom4.systemTimeNumber longLongValue] - [[NSDate date] timeIntervalSince1970] * 1000) / 1000;
+			_countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
+		}
 
-    [self.view addSubview:self.chatToolBar];
+		UIView *bak = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 60, 10, 200, 25)];
+
+		_view1 = [[UIButton alloc] initWithFrame:CGRectMake(5, 0, 120, 25)];
+		[_view1 setImage:[UIImage imageNamed:@"like0"] forState:UIControlStateNormal];
+		[_view1 addTarget:self action:@selector(clickLike) forControlEvents:UIControlEventTouchUpInside];
+
+		[bak addSubview:_view1];
+		self.lab = [[UILabel alloc]initWithFrame:CGRectMake(_view1.frame.origin.x + _view1.frame.size.width + 3, _view1.frame.origin.y, 80, _view1.frame.size.height)];
+		self.lab.text = @"";
+		self.lab.font = [UIFont fontWithName:@"Helvetica" size:12];
+		[bak addSubview:self.lab];
+
+		[self.navigationItem setTitleView:bak];
+	}
+
+	[self.view addSubview:self.chatToolBar];
     
  
     //将self注册为chatToolBar的moreView的代理
@@ -256,296 +249,252 @@ NSDateFormatter *dateformatter;
     [self loadMoreMessages];
 }
 
--(void)timeFireMethod{
-    //60秒倒计时
-    secondsCountDown--;
-    long hour=secondsCountDown/3600;
-    long minte=secondsCountDown%3600/60;
-    long seconds=secondsCountDown-hour*3600-minte*60;
-    self.lab.text = [NSString stringWithFormat:@"%d时%d分%d秒", hour,minte, seconds];
-    
-    if(secondsCountDown==0 ||secondsCountDown<0){
-        [_countDownTimer invalidate];
-        NSLog(@"删除数据库记录和AWS数据");
-        AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
-        [room4Da deleteRoom4:_chatroom4.GID];
-        NSLog(@"删除环信数据");
-        [self dissolvegRroup];
-        //        删除本地数据
-        [self.lab removeFromSuperview];
-        //调回
-        [self.navigationController popToRootViewControllerAnimated:YES];
+- (void)timeFireMethod {
+	//60秒倒计时
+	secondsCountDown--;
+	int hour = secondsCountDown / 3600;
+	int minte = secondsCountDown % 3600 / 60;
+	int seconds = secondsCountDown - hour * 3600 - minte * 60;
+	self.lab.text = [NSString stringWithFormat:@"%d时%d分%d秒", hour, minte, seconds];
+
+	if (secondsCountDown <= 0) {
+		[_countDownTimer invalidate];
+		NSLog(@"删除数据库记录和AWS数据");
+		AWSDynamoDB_ChatRoom4 *room4Da = [[AWSDynamoDB_ChatRoom4 alloc]init];
+		[room4Da deleteRoom4:_chatroom4.GID];
+		NSLog(@"删除环信数据");
+		[self dissolvegRroup];
         
-      
-        
-        
-    }
+		[self.lab removeFromSuperview];
+		//调回
+		[self.navigationController popToRootViewControllerAnimated:YES];
+	}
 }
 
 //解散群组
-- (void)dissolvegRroup
-{
-    __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"group.destroy", @"dissolution of the group")];
-    [[EaseMob sharedInstance].chatManager asyncDestroyGroup:_chatroom4.GID completion:^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
-        [weakSelf hideHud];
-        if (error) {
-            [weakSelf showHint:NSLocalizedString(@"group.destroyFail", @"dissolution of group failure")];
-        }
-        else{
-            [weakSelf showHint:NSLocalizedString(@"group is over time", @"group is dimissed because of over time")];
-            IndexViewController *selectionController = [[IndexViewController alloc] init];
-            [self.navigationController pushViewController:selectionController animated:YES];
-            
-            
-        }
-    } onQueue:nil];
-    
-    //    [[EaseMob sharedInstance].chatManager asyncLeaveGroup:_chatGroup.groupId];
+- (void)dissolvegRroup {
+	__weak typeof(self) weakSelf = self;
+
+	[self showHudInView:self.view hint:NSLocalizedString(@"group.destroy", @"dissolution of the group")];
+	[[EaseMob sharedInstance].chatManager asyncDestroyGroup:_chatroom4.GID completion: ^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
+	    [weakSelf hideHud];
+	    if (error) {
+	        [weakSelf showHint:NSLocalizedString(@"group.destroyFail", @"dissolution of group failure")];
+		} else {
+	        [weakSelf showHint:NSLocalizedString(@"group is over time", @"group is dimissed because of over time")];
+	        IndexViewController *selectionController = [[IndexViewController alloc] init];
+	        [self.navigationController pushViewController:selectionController animated:YES];
+		}
+	} onQueue:nil];
 }
 
 
--(void) clickLike{
-   //修改数据库和本地数据记录
-    _count=[NSNumber numberWithInt: _count.intValue+1];
-    if([_count isEqual: [NSNumber numberWithInt:4]]){
-        _chatroom4.roomStatus=@"Match";
-    }
-//    NSLog(  [NSString stringWithFormat: @"%d", _count]);
-    if([_count isEqualToNumber:[NSNumber numberWithInt:1]]){
-        [_view1 setImage:[UIImage imageNamed:@"like1"] forState:UIControlStateNormal];
-        [_view1 setUserInteractionEnabled:NO];
+- (void)clickLike {
+	//修改数据库和本地数据记录
+	_count = [NSNumber numberWithInt:_count.intValue + 1];
+	if ([_count isEqual:[NSNumber numberWithInt:4]]) {
+		_chatroom4.roomStatus = @"Match";
+	}
+	if ([_count isEqualToNumber:[NSNumber numberWithInt:1]]) {
+		[_view1 setImage:[UIImage imageNamed:@"like1"] forState:UIControlStateNormal];
+		[_view1 setUserInteractionEnabled:NO];
 //        _view1.alpha=0.4;
-    }else if ([_count isEqualToNumber:[NSNumber numberWithInt:2]]){
-        [_view1 setImage:[UIImage imageNamed:@"like2"] forState:UIControlStateNormal];
-        [_view1 setUserInteractionEnabled:NO];
+	} else if ([_count isEqualToNumber:[NSNumber numberWithInt:2]])  {
+		[_view1 setImage:[UIImage imageNamed:@"like2"] forState:UIControlStateNormal];
+		[_view1 setUserInteractionEnabled:NO];
 //        _view1.alpha=0.4;
-    }else if ([_count isEqualToNumber:[NSNumber numberWithInt:3]]){
-        [_view1 setImage:[UIImage imageNamed:@"like3"] forState:UIControlStateNormal];
-        [_view1 setUserInteractionEnabled:NO];
+	} else if ([_count isEqualToNumber:[NSNumber numberWithInt:3]])  {
+		[_view1 setImage:[UIImage imageNamed:@"like3"] forState:UIControlStateNormal];
+		[_view1 setUserInteractionEnabled:NO];
 //        _view1.alpha=0.4;
-    }else if ([_count isEqualToNumber:[NSNumber numberWithInt:4]]){
-        //计时停止
-        [_countDownTimer invalidate];
-        //去除
-        [self.lab removeFromSuperview];
-        [_view1 setUserInteractionEnabled:NO];
+	} else if ([_count isEqualToNumber:[NSNumber numberWithInt:4]])  {
+		//计时停止
+		[_countDownTimer invalidate];
+		//去除
+		[self.lab removeFromSuperview];
+		[_view1 setUserInteractionEnabled:NO];
 //        _view1.alpha=0.4;
-        [_view1 setImage:[UIImage imageNamed:@"likeGo"] forState:UIControlStateNormal];
+		[_view1 setImage:[UIImage imageNamed:@"likeGo"] forState:UIControlStateNormal];
+	}
+	//修改记录
 
-    }
-    //修改记录
-    
-    NSString *username = [[[EaseMob sharedInstance].chatManager loginInfo] objectForKey:kSDKUsername];
-    if([_chatroom4.UID1 isEqualToString:username]){
-        _chatroom4.isLikeUID1=[NSNumber numberWithInt:1];
-       
-    }
-    if([_chatroom4.UID2 isEqualToString:username]){
-        _chatroom4.isLikeUID2=[NSNumber numberWithInt:1];
-
-    }
-    if([_chatroom4.UID3 isEqualToString:username]){
-        _chatroom4.isLikeUID3=[NSNumber numberWithInt:1];
-
-    }
-    if([_chatroom4.UID4 isEqualToString:username]){
-        _chatroom4.isLikeUID4=[NSNumber numberWithInt:1];
-        
-    }
-    AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
-    [room4Da updateLikeByGID:_chatroom4];
-    
+	NSString *username = [[[EaseMob sharedInstance].chatManager loginInfo] objectForKey:kSDKUsername];
+	if ([_chatroom4.UID1 isEqualToString:username]) {
+		_chatroom4.isLikeUID1 = [NSNumber numberWithInt:1];
+	}
+	if ([_chatroom4.UID2 isEqualToString:username]) {
+		_chatroom4.isLikeUID2 = [NSNumber numberWithInt:1];
+	}
+	if ([_chatroom4.UID3 isEqualToString:username]) {
+		_chatroom4.isLikeUID3 = [NSNumber numberWithInt:1];
+	}
+	if ([_chatroom4.UID4 isEqualToString:username]) {
+		_chatroom4.isLikeUID4 = [NSNumber numberWithInt:1];
+	}
+	AWSDynamoDB_ChatRoom4 *room4Da = [[AWSDynamoDB_ChatRoom4 alloc]init];
+	[room4Da updateLikeByGID:_chatroom4];
 }
 
--(void) initClickCout{
-    if(_count==nil){
-        _count=[NSNumber numberWithInt:0];
-    }
-    if(_count==0){
-        if(_chatroom4.isLikeUID1!=nil&&[_chatroom4.isLikeUID1 isEqualToNumber:[NSNumber numberWithInt:1]]){
-            _count=[NSNumber numberWithInt: _count.intValue+1];
-
-        }
-        if(_chatroom4.isLikeUID2!=nil&&[_chatroom4.isLikeUID2 isEqualToNumber:[NSNumber numberWithInt:1]]){
-            _count=[NSNumber numberWithInt: _count.intValue+1];
-        }
-         if(_chatroom4.isLikeUID3!=nil&&[_chatroom4.isLikeUID3 isEqualToNumber:[NSNumber numberWithInt:1]]){
-             _count=[NSNumber numberWithInt: _count.intValue+1];
-
-        }
-        if(_chatroom4.isLikeUID4!=nil&&[_chatroom4.isLikeUID4 isEqualToNumber:[NSNumber numberWithInt:1]]){
-            _count=[NSNumber numberWithInt: _count.intValue+1];
-            [_view1 setUserInteractionEnabled:NO];
-          
-            
-        }
-    }
-
+- (void)initClickCout {
+	if (_count == nil) {
+		_count = [NSNumber numberWithInt:0];
+	}
+    
+	if (_count == 0) {
+		if (_chatroom4.isLikeUID1 != nil && _chatroom4.isLikeUID1.intValue ==  1) {
+			_count = [NSNumber numberWithInt:_count.intValue + 1];
+		}
+		if (_chatroom4.isLikeUID2 != nil && _chatroom4.isLikeUID2.intValue == 1) {
+			_count = [NSNumber numberWithInt:_count.intValue + 1];
+		}
+		if (_chatroom4.isLikeUID3 != nil && _chatroom4.isLikeUID3.intValue == 1) {
+			_count = [NSNumber numberWithInt:_count.intValue + 1];
+		}
+		if (_chatroom4.isLikeUID4 != nil && _chatroom4.isLikeUID4.intValue == 1) {
+			_count = [NSNumber numberWithInt:_count.intValue + 1];
+			[_view1 setUserInteractionEnabled:NO];
+		}
+	}
 }
+
 //聊天通栏
--(UIButton *) getFriendFrame{
-    UIButton *bak=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
-    
-    [bak setImage:[UIImage imageNamed:@"chatbak"] forState:UIControlStateNormal];
-    [bak setImage:[UIImage imageNamed:@"jianbian"] forState:UIControlStateSelected];
-    [bak addTarget:self action:@selector(dragInside) forControlEvents:UIControlEventTouchUpInside];
-    bak.userInteractionEnabled = YES;
-    
-    UIImageView *head=[[UIImageView alloc]initWithFrame:CGRectMake(5,bak.frame.origin.y+5, 30, 30)] ;
-    if(_friend==nil){
-        
-        _friend= [_userDao selectDDuserByUid:_friendname];
-    }
-    
-    if(_friend!=nil){
+- (UIButton *)getFriendFrame {
+	UIButton *bak = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
 
-        [head sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:_friend.picPath]]
-                placeholderImage:[UIImage imageNamed:@"Logo_new"]];
-    }else {
-        head.image=[UIImage imageNamed:@"Logo_new"];
-    }
-    
-    head.frame=CGRectMake(5,bak.frame.origin.y+5, 30, 30);
-    
-    [bak addSubview:head];
-    
-    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(head.frame.origin.x+head.frame.size.width+10, bak.frame.origin.y+5,200, 10)];
-    label.text=@"你当前的Double好友是";
-    label.font= [UIFont fontWithName:@"Helvetica" size:11];
-    [bak addSubview:label];
-    UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(label.frame.origin.x, label.frame.origin.y+15,200, 10)];
-    name.text=_friend.nickName;
-    name.font= [UIFont fontWithName:@"Helvetica" size:11];
-    [bak addSubview:name];
-    
-    return bak;
-    
+	[bak setImage:[UIImage imageNamed:@"chatbak"] forState:UIControlStateNormal];
+	[bak setImage:[UIImage imageNamed:@"jianbian"] forState:UIControlStateSelected];
+	[bak addTarget:self action:@selector(dragInside) forControlEvents:UIControlEventTouchUpInside];
+	bak.userInteractionEnabled = YES;
+
+	UIImageView *head = [[UIImageView alloc]initWithFrame:CGRectMake(5, bak.frame.origin.y + 5, 30, 30)];
+	if (_friend == nil) {
+		_friend = [_userDao selectDDuserByUid:_friendname];
+	}
+
+	if (_friend != nil) {
+		[head sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:_friend.picPath]]
+		        placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+	} else {
+		head.image = [UIImage imageNamed:@"Logo_new"];
+	}
+
+	head.frame = CGRectMake(5, bak.frame.origin.y + 5, 30, 30);
+
+	[bak addSubview:head];
+
+	UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(head.frame.origin.x + head.frame.size.width + 10, bak.frame.origin.y + 5, 200, 10)];
+	label.text = @"你当前的Double好友是";
+	label.font = [UIFont fontWithName:@"Helvetica" size:11];
+	[bak addSubview:label];
+	UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(label.frame.origin.x, label.frame.origin.y + 15, 200, 10)];
+	name.text = _friend.nickName;
+	name.font = [UIFont fontWithName:@"Helvetica" size:11];
+	[bak addSubview:name];
+
+	return bak;
 }
 
 -(void)backtochatlist{
    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
--(void)dragInside{
-    //好友的name //创建两人聊天室，并添加到四人表中
-    NSString *username = [[[EaseMob sharedInstance].chatManager loginInfo] objectForKey:kSDKUsername];
-    if([_chatroom4.UID1 isEqualToString:username] || [_chatroom4.UID2 isEqualToString:username]){
-        if(_chatroom4.subGID1!=nil){
-            //跳到原来的房间
-            ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:_chatroom4.subGID1 isGroup:NO isSubGroup:YES];
-            [self.navigationController pushViewController:chatController animated:YES];
-        }else{
-            //新建
-//            _isSubGroup=YES;
-            [self doneAction:self];
-//            [self createTwoNewGroup:_chatroom4.UID1 UID2:_chatroom4.UID2 isSubG:YES];
-            
-        }
-    }else{
-        if(_chatroom4.subGID2!=nil){
-            //跳到原来的房间
-            ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:_chatroom4.subGID2 isGroup:NO isSubGroup:YES];
-            [self.navigationController pushViewController:chatController animated:YES];
-        }else{
-            //新建
-//            _isSubGroup=NO;
-//            [self createTwoNewGroup:_chatroom4.UID3 UID2:_chatroom4.UID4 isSubG:NO];
-            [self doneSUBAction:self];
-        }
-        
-    }
-    
+- (void)dragInside {
+	//好友的name //创建两人聊天室，并添加到四人表中
+	NSString *username = [[[EaseMob sharedInstance].chatManager loginInfo] objectForKey:kSDKUsername];
+	if ([_chatroom4.UID1 isEqualToString:username] || [_chatroom4.UID2 isEqualToString:username]) {
+		if (_chatroom4.subGID1 != nil) {
+			//跳到原来的房间
+			ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:_chatroom4.subGID1 isGroup:NO isSubGroup:YES];
+			[self.navigationController pushViewController:chatController animated:YES];
+		} else {
+			//新建
+			[self doneAction:self];
+		}
+	} else {
+		if (_chatroom4.subGID2 != nil) {
+			//跳到原来的房间
+			ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:_chatroom4.subGID2 isGroup:NO isSubGroup:YES];
+			[self.navigationController pushViewController:chatController animated:YES];
+		} else {
+			//新建
+			[self doneSUBAction:self];
+		}
+	}
 }
 
 - (void)doneAction:(id)sender
 {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(createTwoMainNewGroup)
-                                                     name:@"createTwoMainNewGroup"
-                                                   object:nil];
-        
-        
-        
-        [self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"createTwoMainNewGroup" object:@NO];
-    
-    
-    
+	[[NSNotificationCenter defaultCenter] addObserver:self
+	                                         selector:@selector(createTwoMainNewGroup)
+	                                             name:@"createTwoMainNewGroup"
+	                                           object:nil];
+
+
+	[self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"createTwoMainNewGroup" object:@NO];
 }
 
--(void)createTwoMainNewGroup{
+- (void)createTwoMainNewGroup {
+	EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
+	groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
+	[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[Util str1:@"临时聊天组"  appendStr2:_chatroom4.UID1]
+	                                                      description:[Util str1:@"临时聊天组"  appendStr2:_chatroom4.UID1]
+	                                                         invitees:@[_chatroom4.UID1, _chatroom4.UID2]
+	                                            initialWelcomeMessage:@"邀请您加入群组"
+	                                                     styleSetting:groupStyleSetting
+	                                                       completion: ^(EMGroup *group, EMError *error) {
+	    if (!error) {
+	        self.chatroom4.subGID1 = group.groupId;
 
-    
-    EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
-    groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
-    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[Util str1:@"临时聊天组"  appendStr2:_chatroom4.UID1]
-                                                          description:[Util str1:@"临时聊天组"  appendStr2:_chatroom4.UID1]
-                                                             invitees:@[_chatroom4.UID1,_chatroom4.UID2]
-                                                initialWelcomeMessage:@"邀请您加入群组"
-                                                         styleSetting:groupStyleSetting
-                                                           completion:^(EMGroup *group, EMError *error) {
-                                                               if(!error){
-                                                                   self.chatroom4.subGID1=group.groupId;
-                                                                   
-                                                                   AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
-                                                                   [room4Da updateSubGroupTable:self.chatroom4];
-                                                                   
-                                                                   ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:YES];
-                                                                   chatController.title = @"临时聊天室";
-                                                                   [self.navigationController pushViewController:chatController animated:YES];
-                                                                   
-                                                                   NSLog(@"创建成功 -- %@",group);
-                                                               }
-                                                           } onQueue:nil];
-    
+	        AWSDynamoDB_ChatRoom4 *room4Da = [[AWSDynamoDB_ChatRoom4 alloc]init];
+	        [room4Da updateSubGroupTable:self.chatroom4];
 
+	        ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:YES];
+	        chatController.title = @"临时聊天室";
+	        [self.navigationController pushViewController:chatController animated:YES];
+
+	        NSLog(@"创建成功 -- %@", group);
+		}
+	} onQueue:nil];
 }
 
 
 
 - (void)doneSUBAction:(id)sender
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(createSUBTwoMainNewGroup)
-                                                 name:@"createSUBTwoMainNewGroup"
-                                               object:nil];
-    
-    
-    
-    [self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"createSUBTwoMainNewGroup" object:@NO];
-    
-    
-    
+	[[NSNotificationCenter defaultCenter] addObserver:self
+	                                         selector:@selector(createSUBTwoMainNewGroup)
+	                                             name:@"createSUBTwoMainNewGroup"
+	                                           object:nil];
+
+
+
+	[self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"createSUBTwoMainNewGroup" object:@NO];
 }
 
--(void)createSUBTwoMainNewGroup{
-    
-    
-    EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
-    groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
-    [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:    [Util str1:@"临时聊天组"  appendStr2:_chatroom4.UID3]
-                                                          description:    [Util str1:@"临时聊天组"  appendStr2:_chatroom4.UID4]
-                                                             invitees:@[_chatroom4.UID3,_chatroom4.UID4]
-                                                initialWelcomeMessage:@"邀请您加入群组"
-                                                         styleSetting:groupStyleSetting
-                                                           completion:^(EMGroup *group, EMError *error) {
-                                                               if(!error){
-                                                                   self.chatroom4.subGID2=group.groupId;
-                                                                   
-                                                                   AWSDynamoDB_ChatRoom4 *room4Da=[[AWSDynamoDB_ChatRoom4 alloc]init];
-                                                                   [room4Da updateSubGroupTable:self.chatroom4];
-                                                                   
-                                                                   ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:YES];
-                                                                   chatController.title = @"临时聊天室";
-                                                                   [self.navigationController pushViewController:chatController animated:YES];
-                                                                   
-                                                                   NSLog(@"创建成功 -- %@",group);
-                                                               }
-                                                           } onQueue:nil];
-    
-    
+- (void)createSUBTwoMainNewGroup {
+	EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
+	groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
+	[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[Util str1:@"临时聊天组"  appendStr2:_chatroom4.UID3]
+	                                                      description:[Util str1:@"临时聊天组"  appendStr2:_chatroom4.UID4]
+	                                                         invitees:@[_chatroom4.UID3, _chatroom4.UID4]
+	                                            initialWelcomeMessage:@"邀请您加入群组"
+	                                                     styleSetting:groupStyleSetting
+	                                                       completion: ^(EMGroup *group, EMError *error) {
+	    if (!error) {
+	        self.chatroom4.subGID2 = group.groupId;
+
+	        AWSDynamoDB_ChatRoom4 *room4Da = [[AWSDynamoDB_ChatRoom4 alloc]init];
+	        [room4Da updateSubGroupTable:self.chatroom4];
+
+	        ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:YES];
+	        chatController.title = @"临时聊天室";
+	        [self.navigationController pushViewController:chatController animated:YES];
+
+	        NSLog(@"创建成功 -- %@", group);
+		}
+	} onQueue:nil];
 }
 
 
@@ -804,11 +753,11 @@ NSDateFormatter *dateformatter;
             MessageModel *model = (MessageModel *)obj;
             //查询用户头像
             DDUser *user=[[self userDao] selectDDuserByUid:model.username];
-            if(user!=nil&&user.picPath!=nil){
-                  model.headImageURL=[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]];
-            }else{
-                model.image=[UIImage imageNamed:@"Logo_new"];
-            }
+			if (user != nil && user.picPath != nil) {
+				model.headImageURL = [NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]];
+			} else {
+				model.image = [UIImage imageNamed:@"Logo_new"];
+			}
 
             NSString *cellIdentifier = [EMChatViewCell cellIdentifierForMessageModel:model];
             EMChatViewCell *cell = (EMChatViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
