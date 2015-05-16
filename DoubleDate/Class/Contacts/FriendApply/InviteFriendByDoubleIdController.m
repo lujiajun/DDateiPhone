@@ -4,6 +4,7 @@
 #import "Util.h"
 #import <SMS_SDK/SMS_SDK.h>
 #import <ShareSDK/ShareSDK.h>
+#import "DDDataManager.h"
 
 @implementation InviteFriendByDoubleIdController
 
@@ -37,7 +38,7 @@
     
     UITextField *info2=[[UITextField alloc]initWithFrame:CGRectMake(10, info1.frame.origin.y+info1.frame.size.height+20, self.view.frame.size.width-20, 60)];
 
-    info2.text=    [Util str1:@"你当前的double号是:" appendStr2:IndexViewController.instanceDDuser.UID];
+    info2.text=    [Util str1:@"你当前的double号是:" appendStr2:[DDDataManager sharedManager].user.UID];
     info2.textAlignment=NSTextAlignmentCenter;
     info2.backgroundColor= RGBACOLOR(232, 85, 70, 1);
     [self.view addSubview:info2];
@@ -74,7 +75,7 @@
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK" ofType:@"png"];
     
     //构造分享内容 ;
-    NSString *content=[[@"我发现了一款特别好玩的四人交友App，名字叫Double Date，两男两女一起组队参加哦，现在邀请你跟我一起组队，下载链接是：wwww.22dateapp.com，我的Double号是:" stringByAppendingString:[IndexViewController instanceDDuser].UID] stringByAppendingString:@";快快下载来跟我Double一下吧"];
+    NSString *content=[[@"我发现了一款特别好玩的四人交友App，名字叫Double Date，两男两女一起组队参加哦，现在邀请你跟我一起组队，下载链接是：wwww.22dateapp.com，我的Double号是:" stringByAppendingString:[DDDataManager sharedManager].user.UID] stringByAppendingString:@";快快下载来跟我Double一下吧"];
     id<ISSContainer> publishContent = [ShareSDK content:content
                                        defaultContent:@"double date together"
                                                 image:[ShareSDK imageWithPath:imagePath]

@@ -24,6 +24,8 @@
 #import "Util.h"
 #import "Constants.h"
 #import "UIImageView+WebCache.h"
+#import "DDDataManager.h"
+
 @interface AddFriendViewController ()<UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *dataSource;
@@ -175,9 +177,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //好友性别验证
-    if(_toadduser && _toadduser.gender.intValue != [IndexViewController instanceDDuser].gender.intValue){
+    if(_toadduser && _toadduser.gender.intValue != [DDDataManager sharedManager].user.gender.intValue){
         [self showHint:NSLocalizedString(@"friend.checkApplyFail", @"check friend  fails, please operate again")];
         return;
     }

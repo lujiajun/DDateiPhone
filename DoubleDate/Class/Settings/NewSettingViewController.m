@@ -32,6 +32,9 @@
 #import "DDupdatePicAndName.h"
 #import "Util.h"
 #import "IndexViewController.h"
+#import "DDDataManager.h"
+
+
 @interface NewSettingViewController () <UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (strong, nonatomic) UIView *footerView;
@@ -47,7 +50,6 @@
 @property (strong, nonatomic) AliCloudController *aliCloud;
 @property (strong, nonatomic) NSString *loginname;
 @property (strong, nonatomic) UIImageView *plusImageView;
-@property (strong, nonatomic) DDUser *user;
 
 @property (nonatomic)  NSUInteger *picnumber;
 
@@ -63,18 +65,6 @@
 #define  PIC_WIDTH 120
 #define  PIC_HEIGHT 120
 
-
-
-
-- (instancetype)init {
-	if (self = [super init]) {
-		IndexViewController *index = [[IndexViewController alloc] init];
-		[index initdduser];
-		_user = [IndexViewController instanceDDuser];
-	}
-	return self;
-}
-
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
@@ -89,18 +79,7 @@
 		NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
 		_loginname = [loginInfo objectForKey:kSDKUsername];
 	}
-	if (_addedPicArray == nil) {
-		_addedPicArray = [[NSMutableArray alloc]init];
-		_user = [IndexViewController instanceDDuser];
-		if (_user == nil || ![_user.UID isEqualToString:_loginname]) {
-			IndexViewController *index = [IndexViewController alloc];
-			[index initdduser];
-			_user = [IndexViewController instanceDDuser];
-		}
-		if (_user.photos != nil) {
-			_addedPicArray = [[NSMutableArray alloc] initWithArray:[_user.photos componentsSeparatedByString:@","]];
-		}
-	}
+	
 	if (_plusImageView == nil) {
 		//添加按钮
 		UIImage *image = [UIImage imageNamed:@"addpic"];
@@ -198,7 +177,9 @@
 	if (cell == nil) {
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 	}
-
+    
+    DDUser* user = [DDDataManager sharedManager].user;
+    
 	switch (indexPath.section) {
 		case 0:
 		{
@@ -211,7 +192,7 @@
 
 
 			UIImageView *imgHead = [[UIImageView alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width / 2 - 50, 10, 100, 100)];
-			[imgHead sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:[IndexViewController instanceDDuser].picPath]] placeholderImage:[UIImage imageNamed:@"80"]];
+			[imgHead sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:user.picPath]] placeholderImage:[UIImage imageNamed:@"80"]];
 			imgHead.layer.cornerRadius = 50;
 			imgHead.layer.masksToBounds = YES;
 			[imgHead setContentMode:UIViewContentModeScaleToFill];
@@ -219,14 +200,14 @@
 			[bakview addSubview:imgHead];
 			//添加nickname
 			UILabel *mylable = [[UILabel alloc]initWithFrame:CGRectMake(0, 112, self.view.frame.size.width, 20)];
-			mylable.text = [IndexViewController instanceDDuser].nickName;
+			mylable.text = user.nickName;
 			mylable.textAlignment = NSTextAlignmentCenter;
 			mylable.font = [UIFont fontWithName:@"Helvetica" size:14];
 			[bakview addSubview:mylable];
 			//添加性别图标
 			NSString *sex;
 
-			if ([IndexViewController instanceDDuser].gender.intValue == 0) {
+			if (user.gender.intValue == 0) {
 				sex = @"sexboy";
 			} else {
 				sex = @"sexgirl";
@@ -239,7 +220,7 @@
 			//添加double 号
 			UILabel *doubledate = [[UILabel alloc]initWithFrame:CGRectMake(0, 134, self.view.frame.size.width, 20)];
 
-			doubledate.text = [Util str1:@"Double号:" appendStr2:[IndexViewController instanceDDuser].UID];
+			doubledate.text = [Util str1:@"Double号:" appendStr2:user.UID];
 			doubledate.textAlignment = NSTextAlignmentCenter;
 			doubledate.font = [UIFont fontWithName:@"Helvetica" size:14];
 			[bakview addSubview:doubledate];
@@ -300,7 +281,7 @@
 
 			UILabel *mylable = [[UILabel alloc]initWithFrame:CGRectMake(30, bakview.frame.origin.y + 5, 250, 20)];
 
-			mylable.text = [Util str1:@"城市：   " appendStr2:[IndexViewController instanceDDuser].city == nil ? @"请编辑城市信息" : [IndexViewController instanceDDuser].city];
+			mylable.text = [Util str1:@"城市：   " appendStr2:user.city == nil ? @"请编辑城市信息" : user.city];
 			mylable.textAlignment = NSTextAlignmentLeft;
 			mylable.font = [UIFont fontWithName:@"Helvetica" size:12];
 			[bakview addSubview:mylable];
@@ -317,7 +298,7 @@
 //			[bakview addSubview:bianjiView];
 
 			UILabel *university = [[UILabel alloc]initWithFrame:CGRectMake(30, mylable.frame.origin.y + 20, 260, 20)];
-			university.text = [Util str1:@"学校：   " appendStr2:[IndexViewController instanceDDuser].university == nil ? @"请编辑学校信息" : [IndexViewController instanceDDuser].university];
+			university.text = [Util str1:@"学校：   " appendStr2:user.university == nil ? @"请编辑学校信息" : user.university];
 			university.font = [UIFont fontWithName:@"Helvetica" size:12];
 			[bakview addSubview:university];
 
@@ -330,7 +311,7 @@
 //            [bakview addSubview:school];
 
 			UILabel *gender = [[UILabel alloc]initWithFrame:CGRectMake(30, university.frame.origin.y + 20, 200, 20)];
-			if ([IndexViewController instanceDDuser].gender.intValue == 0) {
+			if (user.gender.intValue == 0) {
 				gender.text = @"性别：   男";
 			} else {
 				gender.text = @"性别：   女";
@@ -343,18 +324,18 @@
 
 			UILabel *birth = [[UILabel alloc]initWithFrame:CGRectMake(30, gender.frame.origin.y + 20, self.view.frame.size.width-40, 20)];
 
-			birth.text = [Util str1:@"BIRTH：   " appendStr2:[IndexViewController instanceDDuser].birthday == nil ? @"请编辑出生日期信息" : [IndexViewController instanceDDuser].birthday];
+			birth.text = [Util str1:@"BIRTH：   " appendStr2:user.birthday == nil ? @"请编辑出生日期信息" : user.birthday];
 
 			birth.font = [UIFont fontWithName:@"Helvetica" size:12];
 			[bakview addSubview:birth];
 
 			UILabel *intre = [[UILabel alloc]initWithFrame:CGRectMake(30, birth.frame.origin.y + 20, self.view.frame.size.width-40, 20)];
-			intre.text = [Util str1:@"爱好：   " appendStr2:[IndexViewController instanceDDuser].hobbies == nil ? @"请编辑爱好信息" : [IndexViewController instanceDDuser].hobbies];
+			intre.text = [Util str1:@"爱好：   " appendStr2:user.hobbies == nil ? @"请编辑爱好信息" : user.hobbies];
 			intre.font = [UIFont fontWithName:@"Helvetica" size:12];
 			[bakview addSubview:intre];
 
 			UILabel *sign = [[UILabel alloc]initWithFrame:CGRectMake(30, intre.frame.origin.y + 20, self.view.frame.size.width-40, 20)];
-			sign.text = [Util str1:@"签名：   " appendStr2:[IndexViewController instanceDDuser].sign == nil ? @"请编辑签名信息" : [IndexViewController instanceDDuser].sign];
+			sign.text = [Util str1:@"签名：   " appendStr2:user.sign == nil ? @"请编辑签名信息" : user.sign];
 			sign.font = [UIFont fontWithName:@"Helvetica" size:12];
 			[bakview addSubview:sign];
 			//            cell.textLabel.text = NSLocalizedString(@"title.buddyBlock", @"Black List");
@@ -493,8 +474,9 @@
 
 		[self refreshScrollView];
 		[[self tableView] reloadData];
-
-		[_aliCloud asynUploadPic:data name:picname username:[IndexViewController instanceDDuser].UID];
+        
+        DDUser* user = [DDDataManager sharedManager].user;
+		[_aliCloud asynUploadPic:data name:picname username:user.UID];
 	}
 }
 

@@ -2,13 +2,14 @@
 #import "IndexViewController.h"
 #import "Constants.h"
 #import "Util.h"
+#import "DDDataManager.h"
 
 @implementation DDHeadPicUpdate
 
 
 -(void)viewDidLoad{
     [super viewDidLoad];
-    DDUser *uuser=IndexViewController.instanceDDuser;
+    DDUser *uuser=[DDDataManager sharedManager].user;
     
     //touxiang 修改
     UIImage *img=[UIImage alloc];

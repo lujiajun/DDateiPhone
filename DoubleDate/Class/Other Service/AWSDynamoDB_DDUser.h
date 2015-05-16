@@ -11,7 +11,7 @@
 #import "DDUserDAO.h"
 #import "DDUser.h"
 
-typedef void(^SuccussBlock)();
+typedef void(^SuccussBlock)(DDUser* user);
 
 @interface AWSDynamoDB_DDUser : NSObject
 
@@ -24,7 +24,7 @@ typedef void(^SuccussBlock)();
 
 - (void)updateDDUser:(DDUser *)dduser;
 
-- (DDUser *)getTableUser:(NSString *)uid;
+- (void)getUserByUID:(NSString *) uid withBlock:(SuccussBlock)successBlock;
 
 - (DDUser *)getUserByUid:(NSString *)uid;
 

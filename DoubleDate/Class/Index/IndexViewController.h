@@ -7,10 +7,6 @@
 
 @property (nonatomic) BOOL showOppositeGender;
 
-+ (DDUser *)instanceDDuser;
-+ (void)setDDUser:(DDUser *)user;
-
-- (void)initdduser;
 - (BOOL)haveDoubleFriend;
 - (void)indexAddFriendAction;
 -(void) reloadChatRoom2;

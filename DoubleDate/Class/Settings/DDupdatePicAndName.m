@@ -9,6 +9,7 @@
 #import "AWSDynamoDB_DDUser.h"
 #import "UIImageView+EMWebCache.h"
 #import "Util.h"
+#import "DDDataManager.h"
 @interface DDupdatePicAndName ()
 @property(strong,nonatomic) UIImageView *imgHead;
 @property (strong,nonatomic) NSString *picpath;
@@ -23,7 +24,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    _username=[IndexViewController instanceDDuser].nickName;
+    _username=[DDDataManager sharedManager].user.nickName;
     
     self.title = @"修改头像";
     //touxiang
@@ -31,7 +32,7 @@
  
     _imgHead=[[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-50, 10, 100, 100)];
 
-    [_imgHead sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:[IndexViewController instanceDDuser].picPath]]];
+    [_imgHead sd_setImageWithURL:[NSURL URLWithString:[Util str1:DDPicPath appendStr2:[DDDataManager sharedManager].user.picPath]]];
     _imgHead.layer.masksToBounds =YES;
     _imgHead.layer.cornerRadius =50;
 
@@ -101,7 +102,7 @@
 //注册账号
 - (void)updateNick{
     if(![self isEmpty]){
-        DDUser *user=[IndexViewController instanceDDuser];
+        DDUser *user=[DDDataManager sharedManager].user;
         user.nickName=_nickvalue.text;
        
         
@@ -109,11 +110,7 @@
         
         [self.navigationController popToRootViewControllerAnimated:NO];
 
-        [IndexViewController setDDUser:user];
-        
-        AWSDynamoDB_DDUser *ddbDynamoDB=[AWSDynamoDB_DDUser new];
-        [ddbDynamoDB updateDDUser:user];
-       
+        [[DDDataManager sharedManager] saveUser:user];
         
         if(_picpath!=nil){
             user.picPath=_picpath;
@@ -212,7 +209,7 @@
 //        [self.view addSubview:smallimage];
         //上传
         
-        _picpath=[[IndexViewController instanceDDuser].UID stringByAppendingString:@"_head_pic" ];
+        _picpath=[[DDDataManager sharedManager].user.UID stringByAppendingString:@"_head_pic" ];
         
         
     }

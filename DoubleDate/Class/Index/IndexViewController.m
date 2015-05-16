@@ -66,14 +66,6 @@ static DDUser *uuser;
 
 @implementation IndexViewController
 
-+ (DDUser *)instanceDDuser {
-	return uuser;
-}
-
-+ (void)setDDUser:(DDUser *)user {
-	uuser = user;
-}
-
 - (instancetype)init {
 	if (self = [super init]) {
 		_userDao = [[DDUserDAO alloc] init];
@@ -102,9 +94,6 @@ static DDUser *uuser;
 	    [self addDataSourceIgnoreSame:chatRoom2s];
 	    [self.tableView reloadData];
 	}];
-
-	//首页button
-	[self initdduser];
 }
 
 -(void) reloadChatRoom2{
@@ -127,23 +116,6 @@ static DDUser *uuser;
 		    make.right.equalTo(self.view.mas_right);
 		    make.bottom.equalTo(self.view.mas_bottom).with.offset(-TAB_BAR_HEIGHT);
 		}];
-	}
-}
-
-- (void)initdduser {
-	if (uuser == nil) {
-		NSDictionary *loginInfo = [[EaseMob sharedInstance].chatManager loginInfo];
-		NSString *username = [loginInfo objectForKey:kSDKUsername];
-		uuser = [_userDao selectDDuserByUid:username];
-		if (uuser == nil) {
-			_dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-			[[_dynamoDBObjectMapper load:[DDUser class] hashKey:username rangeKey:nil]
-			 continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
-			    uuser = task.result;
-			    [self.userDao insertDDUser:uuser];
-			    return nil;
-			}];
-		}
 	}
 }
 

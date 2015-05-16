@@ -13,7 +13,7 @@
 #import "DDUserDAO.h"
 #import "AWSDynamoDB_DDUser.h"
 #import "NewSettingViewController.h"
-
+#import "DDDataManager.h"
 
 
 @interface DDPersonalUpdateController () <UIImagePickerControllerDelegate>
@@ -66,7 +66,8 @@
     [super viewDidLoad];
     self.title = @"修改个人资料";
     self.view.backgroundColor = [UIColor whiteColor];
-
+    DDUser* user = [DDDataManager sharedManager].user;
+    
     //学校
     UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+10, self.view.frame.origin.y+20, 60, 30)];
     university.text=@"学校:";
@@ -75,7 +76,7 @@
     [self.view addSubview:university];
     _universityvalue=[[UITextField alloc]initWithFrame:CGRectMake(university.frame.origin.x+50, self.view.frame.origin.y+20, 180, 30)];
     [_universityvalue setBorderStyle:UITextBorderStyleRoundedRect];
-    _universityvalue.text=[IndexViewController instanceDDuser].university;
+    _universityvalue.text= user.university;
     _universityvalue.textAlignment=NSTextAlignmentLeft;
     _universityvalue.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:_universityvalue];
@@ -87,7 +88,7 @@
     city.textAlignment=NSTextAlignmentLeft;
     [self.view addSubview:city];
     _cityvalue=[[UITextField alloc]initWithFrame:CGRectMake(city.frame.origin.x+50, university.frame.origin.y+40, 180, 30)];
-    _cityvalue.text=[IndexViewController instanceDDuser].city;
+    _cityvalue.text=user.city;
     [_cityvalue setBorderStyle:UITextBorderStyleRoundedRect];
     _cityvalue.textAlignment=NSTextAlignmentLeft;
     _cityvalue.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -101,7 +102,7 @@
 //    [self.view addSubview:grade];
 //    _gradevalue=[[UITextField alloc]initWithFrame:CGRectMake(grade.frame.origin.x+50, city.frame.origin.y+40, 180, 30)];
 //    [_gradevalue setBorderStyle:UITextBorderStyleRoundedRect];
-//    _gradevalue.placeholder=[IndexViewController instanceDDuser].grade;
+//    _gradevalue.placeholder=user.grade;
 //    _gradevalue.textAlignment=NSTextAlignmentLeft;
 //    _gradevalue.font=[UIFont fontWithName:@"Helvetica" size:12];
 //    [self.view addSubview:_gradevalue];
@@ -116,7 +117,7 @@
     NSArray* genderItems = @[@"男", @"女"];
     _genderControl = [[UISegmentedControl alloc] initWithItems:genderItems];
     _genderControl.frame = CGRectMake(gender.frame.origin.x+50, gender.frame.origin.y, 80, 25);
-    _genderControl.selectedSegmentIndex = [[IndexViewController instanceDDuser].gender integerValue];
+    _genderControl.selectedSegmentIndex = [user.gender integerValue];
     [self.view addSubview:_genderControl];
     
     //出生日期
@@ -126,7 +127,7 @@
     birdate.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:birdate];
     _birdatevalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.origin.x+50, gender.frame.origin.y+40, 180, 30)];
-    _birdatevalue.text=[IndexViewController instanceDDuser].birthday;
+    _birdatevalue.text=user.birthday;
     _birdatevalue.textAlignment=NSTextAlignmentLeft;
     [_birdatevalue setBorderStyle:UITextBorderStyleRoundedRect];
     _birdatevalue.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -139,7 +140,7 @@
     hobbies.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:hobbies];
     _hobbiesvalue=[[UITextField alloc]initWithFrame:CGRectMake(birdate.frame.origin.x+50, birdate.frame.origin.y+40, 180, 30)];
-    _hobbiesvalue.text=[IndexViewController instanceDDuser].hobbies;
+    _hobbiesvalue.text=user.hobbies;
     _hobbiesvalue.textAlignment=NSTextAlignmentLeft;
     [_hobbiesvalue setBorderStyle:UITextBorderStyleRoundedRect];
     _hobbiesvalue.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -152,7 +153,7 @@
     sign.font=[UIFont fontWithName:@"Helvetica" size:12];
     [self.view addSubview:sign];
     _signvalue=[[UITextField alloc]initWithFrame:CGRectMake(hobbies.frame.origin.x+50, hobbies.frame.origin.y+40, 180, 30)];
-    _signvalue.text=[IndexViewController instanceDDuser].sign;
+    _signvalue.text=user.sign;
     _signvalue.textAlignment=NSTextAlignmentLeft;
     [_signvalue setBorderStyle:UITextBorderStyleRoundedRect];
     _signvalue.font=[UIFont fontWithName:@"Helvetica" size:12];
@@ -168,19 +169,15 @@
 
 //xiugai账号
 - (void)updateDDUser {
-	AWSDynamoDB_DDUser *userDynamoDB = [[AWSDynamoDB_DDUser alloc] init];
-	DDUser *user = [IndexViewController instanceDDuser];
+    DDUser* user = [DDDataManager sharedManager].user;
 	user.university = _universityvalue.text == nil ? user.university : _universityvalue.text;
 	user.gender = @(self.genderControl.selectedSegmentIndex);
 	user.city = _cityvalue.text == nil ? user.city : _cityvalue.text;
 	user.hobbies = _hobbiesvalue.text == nil ? user.hobbies : _hobbiesvalue.text;
 	user.sign = _signvalue.text == nil ? user.sign : _signvalue.text;
 	user.birthday = _birdatevalue.text == nil ? user.birthday : _birdatevalue.text;
-
-	[userDynamoDB updateDDUser:user];
-	//XIUGAI BENDI
-	
-	[IndexViewController setDDUser:user];
+    [[DDDataManager sharedManager] saveUser:user];
+    
 //    NewSettingViewController *settings=[NewSettingViewController alloc];
 //    [settings.tableView reloadData];
 //    [self.navigationController pushViewController:settings animated:YES];

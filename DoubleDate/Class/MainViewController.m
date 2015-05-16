@@ -23,6 +23,8 @@
 #import "UIColor+Category.h"
 #import "ChatViewController.h"
 #import "AddFriendViewController.h"
+#import "DDDataManager.h"
+#import "SVProgressHUD.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -102,9 +104,18 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     self.navigationItem.rightBarButtonItem = _inviteFriendItem;
     [self setupUnreadMessageCount];
     [self setupUntreatedApplyCount];
+    
+    NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
+    NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
+    DDUser* user = [DDDataManager sharedManager].user;
+    if (! user) {
+        [[DDDataManager sharedManager] loadUser:loginUsername];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
 	if ([_indexVC haveDoubleFriend]) {
 		[_inviteButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
 	} else {
