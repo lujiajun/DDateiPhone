@@ -21,31 +21,28 @@
 #import "CreateGroupViewController.h"
 #import "MainChatListViewController.h"
 #import "UIColor+Category.h"
-#import "ChatViewController.h"
 #import "AddFriendViewController.h"
 #import "DDDataManager.h"
 #import "SVProgressHUD.h"
 #import "DDPersonalUpdateController.h"
+#import "InviteFriendByDoubleIdController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
-@interface MainViewController () <UIAlertViewDelegate, IChatManagerDelegate, EMCallManagerDelegate>
+@interface MainViewController () <UIAlertViewDelegate, IChatManagerDelegate, EMCallManagerDelegate, UIActionSheetDelegate>
 {
     IndexViewController *_indexVC;
     MainChatListViewController *_chatListVC;
     ContactsViewController *_contactsVC;
     NewSettingViewController *_settingsVC;
     CallSessionViewController *_callController;
-    ChatViewController *_chatViewController;
     
     UIBarButtonItem *_addFriendItem;
     UIBarButtonItem *_inviteFriendItem;
     UIBarButtonItem *_createGroupItem;
     UIBarButtonItem *_editProfileItem;
-    
-    UIButton *_inviteButton;
-}
+    }
 
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 @property (strong, nonatomic) UIButton *view1;
@@ -83,27 +80,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callOutWithChatter:) name:@"callOutWithChatter" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callControllerClose:) name:@"callControllerClose" object:nil];
     
-
-       //好友邀请页面button
-    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
-    [addButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
-    [addButton addTarget:_contactsVC action:@selector(addFriendAction) forControlEvents:UIControlEventTouchUpInside];
-    _addFriendItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
-    
-    //首页button
-    _inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
-    [_inviteButton addTarget:_indexVC action:@selector(indexAddFriendAction) forControlEvents:UIControlEventTouchUpInside];
-    _inviteFriendItem = [[UIBarButtonItem alloc] initWithCustomView:_inviteButton];
     
     //创建二人聊天室
-    UIButton *createGroupButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [createGroupButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
-    [createGroupButton addTarget:self action:@selector(createGroup) forControlEvents:UIControlEventTouchUpInside];
-    _createGroupItem = [[UIBarButtonItem alloc] initWithCustomView:createGroupButton];
-    
+    _createGroupItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createGroup)];
+    _addFriendItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(onAddFriend:)];
     _editProfileItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(onEditProfile:)];
 
-    self.navigationItem.rightBarButtonItem = _inviteFriendItem;
     [self setupUnreadMessageCount];
     [self setupUntreatedApplyCount];
     
@@ -121,29 +103,20 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-	if ([_indexVC haveDoubleFriend]) {
-		[_inviteButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+	if ([[DDDataManager sharedManager] haveAnyFriends]) {
+        _inviteFriendItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(onInviteFriend:)];
 	} else {
-		[_inviteButton setImage:[UIImage imageNamed:@"inviteFriend.png"] forState:UIControlStateNormal];
+        _inviteFriendItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(onInviteFriend:)];
 	}
-}
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
+    
+    if (self.selectedIndex == 0) {
+        self.navigationItem.rightBarButtonItem = _inviteFriendItem;
+    }
 }
 
 - (void)dealloc
 {
     [self unregisterNotifications];
-}
-
-- (void) inviteNewFriendAction{
-    AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
-    [self.navigationController pushViewController:addController animated:YES];
-    
-    
 }
 
 
@@ -282,8 +255,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self unSelectedTapTabBarItems:_settingsVC.tabBarItem];
     [self selectedTapTabBarItems:_settingsVC.tabBarItem];
     
-    _chatViewController.tabBarItem.tag=4;
-    
     self.viewControllers = @[_indexVC,_chatListVC, _contactsVC, _settingsVC];
     [self selectedTapTabBarItems:_indexVC.tabBarItem];
 }
@@ -382,6 +353,52 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     DDPersonalUpdateController *vc = [[DDPersonalUpdateController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+- (void) onInviteFriend: (id) sender {
+    //判断状态，进行跳转
+    if ([[DDDataManager sharedManager] haveAnyFriends]) {
+        CreateGroupViewController *createChatroom = [[CreateGroupViewController alloc] init];
+        [self.navigationController pushViewController:createChatroom animated:YES];
+    } else {
+        InviteFriendByDoubleIdController *addController = [[InviteFriendByDoubleIdController alloc] init];
+        [self.navigationController pushViewController:addController animated:YES];
+    }
+}
+
+- (void) onAddFriend: (id) sender {
+    UIActionSheet* actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:@""
+                                  delegate:self
+                                  cancelButtonTitle:@"取消"
+                                  destructiveButtonTitle:nil
+                                  otherButtonTitles:@"邀请好友",@"添加好友",nil];
+    [actionSheet showInView:self.view];
+}
+
+-(void) doContactsInviteFriend{
+    InviteFriendByDoubleIdController *addController = [InviteFriendByDoubleIdController alloc];
+    [self.navigationController pushViewController:addController animated:YES];
+}
+
+-(void) doContactsAddFriend{
+    AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
+    [self.navigationController pushViewController:addController animated:YES];
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != actionSheet.cancelButtonIndex) {
+        if (buttonIndex == 0) {
+            [self doContactsInviteFriend];
+        } else {
+            [self doContactsAddFriend];
+        }
+    }
+}
+
+
 #pragma mark - IChatManagerDelegate 消息变化
 
 - (void)didUpdateConversationList:(NSArray *)conversationList

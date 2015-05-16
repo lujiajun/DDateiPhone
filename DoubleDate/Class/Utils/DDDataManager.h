@@ -19,5 +19,5 @@
 - (DDUser*) user;
 - (void) saveUser: (DDUser*) user;
 - (AliCloudController*) aliCloud;
-
+- (BOOL) haveAnyFriends;
 @end
