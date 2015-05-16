@@ -98,34 +98,31 @@
 }
 
 
--(void) addUser{
-    //判断性别
-    if(_chatroom2!=nil&&_uuser1!=nil&&_uuser2!=nil){
-        if(_uuser1.gender!=nil){
-            if(_uuser1.gender.intValue == [DDDataManager sharedManager].user.gender.intValue){
-                [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
-                                        message:NSLocalizedString(@"group.notSameSex", @"Please join in the other sex room")
-                             customizationBlock:nil
-                                completionBlock:nil
-                              cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-                              otherButtonTitles: nil];
-                return;
-//                [self.navigationController popViewControllerAnimated:NO];
-            }
-        }else{
-            [WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
-                                    message:@"加入房间异常，请选择其他房间"
-                         customizationBlock:nil
-                            completionBlock:nil
-                          cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-                          otherButtonTitles: nil];
-//            [self.navigationController popViewControllerAnimated:NO];
-            return;
-        }
-        
-    }
-    Contact4GroupAddViewController *selectionController = [[[Contact4GroupAddViewController alloc] init] initGroupInfo:_chatroom2];
-    [self.navigationController pushViewController:selectionController animated:YES];
+- (void)addUser {
+	//判断性别
+	if (_chatroom2 != nil && _uuser1 != nil && _uuser2 != nil) {
+		if (_uuser1.gender != nil) {
+			if (_uuser1.gender.intValue == [DDDataManager sharedManager].user.gender.intValue) {
+				[WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
+				                        message:NSLocalizedString(@"group.notSameSex", @"Please join in the other sex room")
+				             customizationBlock:nil
+				                completionBlock:nil
+				              cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+				              otherButtonTitles:nil];
+				return;
+			}
+		} else {
+			[WCAlertView showAlertWithTitle:NSLocalizedString(@"prompt", @"Prompt")
+			                        message:@"加入房间异常，请选择其他房间"
+			             customizationBlock:nil
+			                completionBlock:nil
+			              cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
+			              otherButtonTitles:nil];
+			return;
+		}
+	}
+	Contact4GroupAddViewController *selectionController = [[[Contact4GroupAddViewController alloc] init] initGroupInfo:_chatroom2];
+	[self.navigationController pushViewController:selectionController animated:YES];
 }
 
 -(id) initChatRoom:(CHATROOM2 *) room  uuser1:(DDUser *) uuser1 uuser2:(DDUser *) uuser2{

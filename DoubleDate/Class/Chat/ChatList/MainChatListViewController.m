@@ -83,7 +83,7 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 
-	[self refreshDataSource];
+	[self refreshDataSourceWithLocalData];
 	[self registerNotifications];
 }
 
@@ -516,11 +516,11 @@
 #pragma mark - IChatMangerDelegate
 
 - (void)didUnreadMessagesCountChanged {
-	[self refreshDataSource];
+
 }
 
 - (void)didUpdateGroupList:(NSArray *)allGroups error:(EMError *)error {
-	[self refreshDataSource];
+	[self refreshDataSourceWithLocalData];
 }
 
 - (void)didAcceptInvitationFromGroup:(EMGroup *)group error:(EMError *)error {
@@ -550,21 +550,25 @@
 	            [self.chatRoom4DynamoDB getChatroom4InsertLocal:group.groupId];
 			}
 
-	        ChatRoom4DAO *room4Dao = [[ChatRoom4DAO alloc] init];
-	        NSArray *sortedArray = [[room4Dao queryChatRoom4s] sortedArrayUsingComparator:
-	                                ^(CHATROOM4 *obj1, CHATROOM4 *obj2) {
-	            if (obj1.systemTimeNumber < obj2.systemTimeNumber) {
-	                return (NSComparisonResult)NSOrderedAscending;
-				} else {
-	                return (NSComparisonResult)NSOrderedDescending;
-				}
-			}];
-	        [self.dataSource removeAllObjects];
-	        [self.dataSource addObjectsFromArray:sortedArray];
-	        [self.tableView reloadData];
-	        [self hideHud];
+	        [self refreshDataSourceWithLocalData];
 		}
 	} onQueue:dispatch_get_main_queue()];
+}
+
+- (void)refreshDataSourceWithLocalData {
+	ChatRoom4DAO *room4Dao = [[ChatRoom4DAO alloc] init];
+	NSArray *sortedArray = [[room4Dao queryChatRoom4s] sortedArrayUsingComparator:
+	                        ^(CHATROOM4 *obj1, CHATROOM4 *obj2) {
+	    if (obj1.systemTimeNumber < obj2.systemTimeNumber) {
+	        return (NSComparisonResult)NSOrderedAscending;
+		} else {
+	        return (NSComparisonResult)NSOrderedDescending;
+		}
+	}];
+	[self.dataSource removeAllObjects];
+	[self.dataSource addObjectsFromArray:sortedArray];
+	[self.tableView reloadData];
+	[self hideHud];
 }
 
 - (void)isConnect:(BOOL)isConnect {

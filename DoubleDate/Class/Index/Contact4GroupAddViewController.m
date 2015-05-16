@@ -507,12 +507,24 @@
 	        AWSDynamoDB_ChatRoom4 *chatroom4DB = [[AWSDynamoDB_ChatRoom4 alloc]init];
 	        [chatroom4DB insertChatroom4:chatroom4];
 
-	        ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:NO] initRoom4:chatroom4 friend:self.toAddFriend isNewRoom:YES];
-	        chatController.title = self.room2.Motto;
 
-	        [self.navigationController pushViewController:chatController animated:YES];
+	        //为加入四人聊天室的一对创建两人群聊
+	        [[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:group.groupId
+	                                                              description:@"加入四人聊天室的一对的私密群聊"
+	                                                                 invitees:@[self.toAddFriend]
+	                                                    initialWelcomeMessage:@"邀请您加入群组"
+	                                                             styleSetting:groupStyleSetting
+	                                                               completion: ^(EMGroup *group, EMError *error) {
+	            if (!error) {
+	                chatroom4.subGID2 = group.groupId;
+	                [chatroom4DB updateSubGroupTable:chatroom4];
 
-	        NSLog(@"创建成功 -- %@", group);
+	                ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:NO] initRoom4:chatroom4 friend:self.toAddFriend isNewRoom:YES];
+	                chatController.title = self.room2.Motto;
+	                [self.navigationController pushViewController:chatController animated:YES];
+	                NSLog(@"创建成功 -- %@", group);
+				}
+			} onQueue:nil];
 		}
 	} onQueue:nil];
 }
