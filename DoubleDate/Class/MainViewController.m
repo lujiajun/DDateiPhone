@@ -130,6 +130,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         _roomTypeControl = [[UISegmentedControl alloc] initWithItems: items];
         [_roomTypeControl addTarget:self action:@selector(onRoomTypeChanged:) forControlEvents:UIControlEventValueChanged];
         _roomTypeControl.selectedSegmentIndex = 0;
+        _roomTypeControl.tintColor = [UIColor whiteColor];
         [self.navigationItem setTitleView:_roomTypeControl];
     
 	} else if (item.tag == 1)  {
