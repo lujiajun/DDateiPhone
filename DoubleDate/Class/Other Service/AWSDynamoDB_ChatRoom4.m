@@ -49,6 +49,17 @@
 	}
 }
 
+- (void)updateChatroom4:(CHATROOM4 *)tableRow {
+    
+    if (tableRow != nil && tableRow.GID != nil) {
+        [[self.dynamoDBObjectMapper save:tableRow] continueWithSuccessBlock: ^id (BFTask *task) {
+            NSLog(@"insert to aws success");
+            [self.chatRoom4Dao updateChatroom4:tableRow];
+            return nil;
+        }];
+    }
+}
+
 -(void) updateLikeByGID:(CHATROOM4 *)tableRow{
     [[self.dynamoDBObjectMapper save: tableRow] continueWithSuccessBlock:^id(BFTask *task) {
         [self.chatRoom4Dao updateLikeByGID:tableRow];

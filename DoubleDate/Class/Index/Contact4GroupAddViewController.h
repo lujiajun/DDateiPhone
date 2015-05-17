@@ -18,5 +18,4 @@
 //已有选中的成员username，在该页面，这些成员不能被取消选择
 - (instancetype)initWithBlockSelectedUsernames:(NSArray *)blockUsernames;
 
--(id) initGroupInfo:(CHATROOM2 *) room2;
 @end

@@ -93,6 +93,49 @@ NSString *const ChatRoom4Table = @"ChatRoom4";
 	}];
 }
 
+- (void)updateChatroom4:(CHATROOM4 *)chatRoom4 {
+    if (chatRoom4 == nil || chatRoom4.GID == nil) {
+        return;
+    }
+    NSString *sql = [NSString stringWithFormat:@"Replace into %@ ( \
+                     GID, \
+                     CTIMEH, \
+                     CTIMER, \
+                     UID1, \
+                     UID2, \
+                     UId3, \
+                     UID4, \
+                     isLikeUID1, \
+                     isLikeUID2,\
+                     isLikeUID3,\
+                     isLikeUID4,\
+                     subGID1,\
+                     subGID2,\
+                     roomStatus,\
+                     systemTimeNumber) \
+                     values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)", ChatRoom4Table];
+    
+    [self.dbQueue inDatabase: ^(FMDatabase *db) {
+        [db executeUpdate:sql,
+         chatRoom4.GID,
+         chatRoom4.CTIMEH,
+         chatRoom4.CTIMER,
+         chatRoom4.UID1,
+         chatRoom4.UID2,
+         chatRoom4.UID3,
+         chatRoom4.UID4,
+         chatRoom4.isLikeUID1,
+         chatRoom4.isLikeUID2,
+         chatRoom4.isLikeUID3,
+         chatRoom4.isLikeUID4,
+         chatRoom4.subGID1,
+         chatRoom4.subGID2,
+         chatRoom4.roomStatus,
+         chatRoom4.systemTimeNumber];
+    }];
+}
+
+
 - (void)updateLikeByGID:(CHATROOM4 *)room4 {
 	[self.dbQueue inDatabase: ^(FMDatabase *db) {
 	    BOOL res = [db executeUpdate:@"UPDATE ChatRoom4 SET isLikeUID1= ?,isLikeUID2=?,isLikeUID3=?,isLikeUID4=? WHERE GID = ?",
