@@ -68,17 +68,7 @@
     
     [self searchController];
     //初始化聊天室信息到本地数据库
-    [self initLocalRoom4];
-}
-
-- (void)initLocalRoom4 {
-    [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion: ^(NSArray *groups, EMError *error) {
-        if (!error) {
-            for (EMGroup *group in groups) {
-                [self.chatRoom4DynamoDB getChatroom4InsertLocal:group.groupId];
-            }
-        }
-    } onQueue:nil];
+    [self refreshDataSource];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -88,7 +78,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self refreshDataSourceWithLocalData];
     [self registerNotifications];
 }
 
@@ -553,36 +542,35 @@
     
     [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion: ^(NSArray *groups, EMError *error) {
         if (!error) {
+            NSMutableArray* rooms = [[NSMutableArray alloc] init];
             for (EMGroup *group in groups) {
-                if (group.groupOccupantsCount == 4) {
-                    [self.chatRoom4DynamoDB syncGetChatroom4AndInsertLocal:group.groupId];
+                if (group.occupants.count == 4) {
+                    CHATROOM4 * room = [self.chatRoom4DynamoDB syncGetChatroom4AndInsertLocal:group.groupId];
+                    [rooms addObject: room];
                 }
             }
-            [self refreshDataSourceWithLocalData];
+            NSArray *sortedArray = [rooms sortedArrayUsingComparator:
+                                    ^(CHATROOM4 *obj1, CHATROOM4 *obj2) {
+                                        return [obj1.systemTimeNumber compare:obj2.systemTimeNumber];
+                                    }];
+            
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                [SVProgressHUD dismiss];
+                [self.dataSource removeAllObjects];
+                for (CHATROOM4* room in sortedArray) {
+                    if ([room hasTimeout]) {
+                        continue;
+                    }
+                    [self.dataSource addObject:room];
+                }
+                [self.tableView reloadData];
+                [self hideHud];
+            });
+            
         }
     } onQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
 }
 
-- (void)refreshDataSourceWithLocalData {
-    ChatRoom4DAO *room4Dao = [[ChatRoom4DAO alloc] init];
-    NSArray *sortedArray = [[room4Dao queryChatRoom4s] sortedArrayUsingComparator:
-                            ^(CHATROOM4 *obj1, CHATROOM4 *obj2) {
-                                return [obj1.systemTimeNumber compare:obj2.systemTimeNumber];
-                            }];
-    [self.dataSource removeAllObjects];
-
-    dispatch_async(dispatch_get_main_queue(), ^(){
-        [SVProgressHUD dismiss];
-        for (CHATROOM4* room in sortedArray) {
-            if ([room hasTimeout]) {
-                continue;
-            }
-            [self.dataSource addObject:room];
-        }
-        [self.tableView reloadData];
-        [self hideHud];
-    });
-}
 
 - (void)isConnect:(BOOL)isConnect {
     if (!isConnect) {

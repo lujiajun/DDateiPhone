@@ -402,7 +402,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 }
 
 - (void)didUpdateGroupList:(NSArray *)allGroups error:(EMError *)error {
-    [_chatListVC refreshDataSourceWithLocalData];
+    [_chatListVC refreshDataSource];
 }
 
 - (void)didAcceptInvitationFromGroup:(EMGroup *)group error:(EMError *)error {
