@@ -26,17 +26,16 @@
 
 
 - (void)updateLikeByGID:(CHATROOM4 *)tableRow;
--(void) updateSubGroupTable:(CHATROOM4 *)tableRow;
+- (void)updateSubGroupTable:(CHATROOM4 *)tableRow;
 
 
-- (void)insertChatroom4:(CHATROOM4 *) chatRoom4;
+- (void)insertChatroom4:(CHATROOM4 *)chatRoom4;
 - (void)updateChatroom4:(CHATROOM4 *)tableRow;
--(void) deleteRoom4:(NSString *) gid;
--(CHATROOM4 *)getCHATROOM4:(NSString*) uid;
+- (void)deleteRoom4:(NSString *)gid;
 
--(CHATROOM4 *)getChatroom4InsertLocal:(NSString*) uid;
+- (CHATROOM4 *)syncGetChatroom4ByGid:(NSString *)gid;
+- (CHATROOM4 *)syncGetChatroom4AndInsertLocal:(NSString *)gid;
 
-
-- (void)refreshList;
+- (CHATROOM4 *)getChatroom4InsertLocal:(NSString *)uid;
 
 @end
