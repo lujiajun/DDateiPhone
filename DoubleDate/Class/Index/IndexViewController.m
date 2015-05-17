@@ -72,7 +72,11 @@ static DDUser *uuser;
         _oppositeGenderDataSource = [NSMutableArray array];
 		
         //1.先用本地数据做展示
-		[_dataSource addObjectsFromArray:[self.chatRoom2DynamoDB refreshListWithLocalData]];
+        NSArray *array = [self.chatRoom2DynamoDB refreshListWithLocalData];
+        NSEnumerator *enumerator = [array reverseObjectEnumerator];
+        for (id element in enumerator) {
+            [_dataSource addObject:element];
+        }
 	}
 	return self;
 }
@@ -324,7 +328,7 @@ static DDUser *uuser;
 - (void)addDataSourceIgnoreSame:(NSArray *)data {
 	for (CHATROOM2 *chatRoom2 in data) {
 		if (![self isInDataSource:chatRoom2]) {
-			[self.dataSource addObject:chatRoom2];
+			[self.dataSource insertObject:chatRoom2 atIndex:0];
 		}
 	}
 }

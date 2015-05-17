@@ -342,7 +342,7 @@
 	//当选择的类型是图片
 	if ([type isEqualToString:@"public.image"]) {
 		//先把图片转成NSData
-		UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+		UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
 
 		NSData *data;
 		if (UIImagePNGRepresentation(image) == nil) {
