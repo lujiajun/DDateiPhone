@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface MainChatListViewController : BaseViewController
+@interface MainChatListViewController : BaseViewController <IChatManagerDelegate>
 
 - (void)refreshDataSource;
 

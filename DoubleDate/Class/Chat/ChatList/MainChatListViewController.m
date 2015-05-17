@@ -25,7 +25,7 @@
 #import "AWSDynamoDB_ChatRoom4.h"
 
 
-@interface MainChatListViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
+@interface MainChatListViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, SRRefreshDelegate, UISearchBarDelegate>
 {
     UILabel *_unreadLabel;
 }

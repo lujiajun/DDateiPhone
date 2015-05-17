@@ -397,11 +397,13 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 -(void)didUnreadMessagesCountChanged
 {
     [self setupUnreadMessageCount];
+    [_chatListVC didUnreadMessagesCountChanged];
 }
 
 - (void)didFinishedReceiveOfflineMessages:(NSArray *)offlineMessages
 {
     [self setupUnreadMessageCount];
+    [_chatListVC didFinishedReceiveOfflineMessages:offlineMessages];
 }
 
 - (void)didFinishedReceiveOfflineCmdMessages:(NSArray *)offlineCmdMessages
