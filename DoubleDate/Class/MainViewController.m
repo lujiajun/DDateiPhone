@@ -400,6 +400,15 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [_chatListVC didUnreadMessagesCountChanged];
 }
 
+- (void)didUpdateGroupList:(NSArray *)allGroups error:(EMError *)error {
+    [_chatListVC refreshDataSourceWithLocalData];
+}
+
+- (void)didAcceptInvitationFromGroup:(EMGroup *)group error:(EMError *)error {
+    [_chatListVC refreshDataSource];
+}
+
+
 - (void)didFinishedReceiveOfflineMessages:(NSArray *)offlineMessages
 {
     [self setupUnreadMessageCount];

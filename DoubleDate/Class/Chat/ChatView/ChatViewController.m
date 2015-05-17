@@ -265,15 +265,11 @@ NSDateFormatter *dateformatter;
 
 	if (secondsCountDown <= 0) {
 		[_countDownTimer invalidate];
-		NSLog(@"删除数据库记录和AWS数据");
-		AWSDynamoDB_ChatRoom4 *room4Da = [[AWSDynamoDB_ChatRoom4 alloc]init];
-		[room4Da deleteRoom4:_chatroom4.GID];
-		NSLog(@"删除环信数据");
+		
+        //删除环信数据
 		[self dissolvegRroup];
         
 		[self.lab removeFromSuperview];
-		//调回
-		[self.navigationController popToRootViewControllerAnimated:YES];
 	}
 }
 
@@ -282,12 +278,35 @@ NSDateFormatter *dateformatter;
 	__weak typeof(self) weakSelf = self;
 
 	[self showHudInView:self.view hint:NSLocalizedString(@"group.destroy", @"dissolution of the group")];
-	[[EaseMob sharedInstance].chatManager asyncDestroyGroup:_chatroom4.GID completion: ^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
+	[[EaseMob sharedInstance].chatManager asyncDestroyGroup:self.chatroom4.GID completion: ^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
 	    [weakSelf hideHud];
 	    if (error) {
 	        [weakSelf showHint:NSLocalizedString(@"group.destroyFail", @"dissolution of group failure")];
+            NSLog(@"destroy group %@ failed, error: %@", self.chatroom4.GID, error);
 		} else {
 	        [weakSelf showHint:NSLocalizedString(@"group is over time", @"group is dimissed because of over time")];
+
+	        AWSDynamoDB_ChatRoom4 *room4Da = [[AWSDynamoDB_ChatRoom4 alloc]init];
+	        [room4Da deleteRoom4:self.chatroom4.GID];
+            
+            //调回
+            [self.navigationController popToRootViewControllerAnimated:YES];
+
+	        [[EaseMob sharedInstance].chatManager asyncDestroyGroup:self.chatroom4.subGID1 completion: ^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
+	            if (error) {
+	                NSLog(@"destroy sub group1 %@ failed. error: %@", self.chatroom4.subGID1, error);
+				} else {
+	                NSLog(@"destroy sub group1 %@ success.", self.chatroom4.subGID1);
+				}
+			} onQueue:nil];
+
+	        [[EaseMob sharedInstance].chatManager asyncDestroyGroup:self.chatroom4.subGID2 completion: ^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
+	            if (error) {
+	                NSLog(@"destroy sub group2 %@ failed. error: %@", self.chatroom4.subGID2, error);
+				} else {
+	                NSLog(@"destroy sub group2 %@ success.", self.chatroom4.subGID2);
+				}
+			} onQueue:nil];
 		}
 	} onQueue:nil];
 }

@@ -12,6 +12,7 @@
 @interface MainChatListViewController : BaseViewController <IChatManagerDelegate>
 
 - (void)refreshDataSource;
+- (void)refreshDataSourceWithLocalData;
 
 - (void)isConnect:(BOOL)isConnect;
 - (void)networkChanged:(EMConnectionState)connectionState;

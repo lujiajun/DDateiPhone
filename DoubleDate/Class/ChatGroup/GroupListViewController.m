@@ -316,14 +316,17 @@
 
 #pragma mark - data
 
-- (void)reloadDataSource
-{
-    [self.dataSource removeAllObjects];
-    
-    NSArray *rooms = [[EaseMob sharedInstance].chatManager groupList];
-    [self.dataSource addObjectsFromArray:rooms];
-    
-    [self.tableView reloadData];
+- (void)reloadDataSource {
+	[self.dataSource removeAllObjects];
+
+	NSArray *rooms = [[EaseMob sharedInstance].chatManager groupList];
+	for (EMGroup *group in rooms) {
+		if (group.occupants.count == 4) {
+			[self.dataSource addObject:group];
+		}
+	}
+
+	[self.tableView reloadData];
 }
 
 #pragma mark - action

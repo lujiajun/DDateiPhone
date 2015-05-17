@@ -529,14 +529,6 @@
     _unreadLabel.hidden = (unreadCnt == 0);
 }
 
-- (void)didUpdateGroupList:(NSArray *)allGroups error:(EMError *)error {
-	[self refreshDataSourceWithLocalData];
-}
-
-- (void)didAcceptInvitationFromGroup:(EMGroup *)group error:(EMError *)error {
-    [self refreshDataSource];
-}
-
 #pragma mark - registerNotifications
 - (void)registerNotifications {
 	[self unregisterNotifications];
