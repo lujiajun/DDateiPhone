@@ -37,7 +37,7 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-
+    self.window.tintColor = [UIColor whiteColor];
     //注册mob 短信服务注册
     
     [SMS_SDK registerApp:@"75058c79bdb6" withSecret:@"82b79b974cc87fc82a831e26909e2073"];

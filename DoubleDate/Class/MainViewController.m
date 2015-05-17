@@ -42,12 +42,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     UIBarButtonItem *_inviteFriendItem;
     UIBarButtonItem *_createGroupItem;
     UIBarButtonItem *_editProfileItem;
+    
+    UISegmentedControl *_roomTypeControl;
     }
 
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
-@property (strong, nonatomic) UIButton *view1;
-@property (strong, nonatomic) UIButton *view2;
-@property(nonatomic) BOOL state; //YES:显示异性  NO：显示全部
 @end
 
 #define BLUE_GREEN_COLOR @"#00C8D3"
@@ -100,8 +99,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     self.selectedIndex = 0;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
 	if ([[DDDataManager sharedManager] haveAnyFriends]) {
         _inviteFriendItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(onInviteFriend:)];
@@ -111,6 +110,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     if (self.selectedIndex == 0) {
         self.navigationItem.rightBarButtonItem = _inviteFriendItem;
+        [self tabBar: self.tabBar didSelectItem:_indexVC.tabBarItem];
     }
 }
 
@@ -119,28 +119,18 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self unregisterNotifications];
 }
 
-
 #pragma mark - UITabBarDelegate
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
 	if (item.tag == 0) {
 		self.title = NSLocalizedString(@"title.index", @"Index");
 		self.navigationItem.rightBarButtonItem = _inviteFriendItem;
-        _state=YES;
-        UIView *bak=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-60, 10, 200, 25)];
-        
-        _view1 = [[UIButton alloc] initWithFrame:CGRectMake(5, 0, 80, 25)];
-        [_view1 setImage:[UIImage imageNamed:@"all_off"] forState:UIControlStateNormal];
-        [_view1 addTarget:self action:@selector(reloadIndexAll) forControlEvents:UIControlEventTouchUpInside];
-
-        [bak addSubview:_view1];
-        _view2= [[UIButton alloc]initWithFrame:CGRectMake(_view1.frame.origin.x+_view1.frame.size.width,_view1.frame.origin.y, 80, 25)];
-        [_view2 setImage:[UIImage imageNamed:@"other_on"] forState:UIControlStateNormal];
-        [_view2 addTarget:self action:@selector(reloadIndexNoAll) forControlEvents:UIControlEventTouchUpInside];
-        
-        [bak addSubview:_view2];
-//
-        [self.navigationItem setTitleView:bak];
+        // NSArray* items = @[[UIImage imageNamed:@"all_off"], [UIImage imageNamed:@"other_on"]];
+        NSArray* items =  @[@" 全部 ", @" 异性 "];
+        _roomTypeControl = [[UISegmentedControl alloc] initWithItems: items];
+        [_roomTypeControl addTarget:self action:@selector(onRoomTypeChanged:) forControlEvents:UIControlEventValueChanged];
+        _roomTypeControl.selectedSegmentIndex = 0;
+        [self.navigationItem setTitleView:_roomTypeControl];
     
 	} else if (item.tag == 1)  {
 		self.title = NSLocalizedString(@"title.conversation", @"Conversations");
@@ -158,16 +148,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     }
 }
 
-- (void)reloadIndexAll {
-	[_view1 setImage:[UIImage imageNamed:@"all_on"] forState:UIControlStateNormal];
-	[_view2 setImage:[UIImage imageNamed:@"other_off"] forState:UIControlStateNormal];
-    _indexVC.showOppositeGender = NO;
-}
-
-- (void)reloadIndexNoAll {
-	[_view1 setImage:[UIImage imageNamed:@"all_off"] forState:UIControlStateNormal];
-	[_view2 setImage:[UIImage imageNamed:@"other_on"] forState:UIControlStateNormal];
-    _indexVC.showOppositeGender = YES;
+- (void) onRoomTypeChanged: (id) sender {
+    if (_roomTypeControl.selectedSegmentIndex == 0) {
+        _indexVC.showOppositeGender = NO;
+    } else {
+        _indexVC.showOppositeGender = YES;
+    }
 }
 
 #pragma mark - UIAlertViewDelegate
