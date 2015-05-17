@@ -23,7 +23,7 @@
 
 #define DD_DEBUG YES
 
-#define TOTAL_SECONDS 60*5
+#define TOTAL_SECONDS 3660*24
 
 #define DD_PHOTO_SERVER @"http://doubledatelujiajun.oss-cn-beijing.aliyuncs.com/"
 #define DD_PHOTO_URL(name, idx) [NSString stringWithFormat:@"%@%@_photo_%@.jpeg", DD_PHOTO_SERVER, name,idx]
