@@ -223,7 +223,7 @@
 	CHATROOM2 *chatRoom2 = [CHATROOM2 new];
 	NSString *username2 = [[selectedSources objectAtIndex:0] username];
 	chatRoom2.RID = [Util str1:username appendStr2:@"_" appendStr3:username2];
-	chatRoom2.ClickNum = 0;
+	chatRoom2.ClickNum = @"0";
 	chatRoom2.Gender = [userDynamoDB.dduserDao selectDDuserByUid:username].gender;
 	chatRoom2.Motto = self.mottoTextView.text;
 	chatRoom2.PicturePath = self.coverImagePath;
