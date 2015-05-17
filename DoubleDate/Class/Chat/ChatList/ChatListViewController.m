@@ -424,7 +424,6 @@
     
     EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
     
-    ChatViewController *chatController;
     NSString *title = conversation.chatter;
     if (conversation.isGroup) {
         NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
@@ -437,7 +436,7 @@
     }
     
     NSString *chatter = conversation.chatter;
-    chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup isSubGroup:NO];
+    ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup isSubGroup:NO];
     chatController.title = title;
     [self.navigationController pushViewController:chatController animated:YES];
 }

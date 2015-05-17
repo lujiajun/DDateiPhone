@@ -168,15 +168,6 @@ NSDateFormatter *dateformatter;
 {
     [super viewDidLoad];
     _userDao=[[DDUserDAO alloc] init];
-    //隐藏默认返回按钮
-    [self.navigationItem setHidesBackButton:YES];
-    
-    UIButton *createButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 30, 30)];
-    [createButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-    [createButton addTarget:self action:@selector(backtochatlist) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *createGroupItem = [[UIBarButtonItem alloc] initWithCustomView:createButton];
-    
-    [self.navigationItem setLeftBarButtonItem:createGroupItem];
     
     //使用timer定时，每秒触发一次，然后就是写selector了。
     [self registerBecomeActive];
@@ -415,10 +406,6 @@ NSDateFormatter *dateformatter;
 	[bak addSubview:name];
 
 	return bak;
-}
-
--(void)backtochatlist{
-   [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)dragInside {
