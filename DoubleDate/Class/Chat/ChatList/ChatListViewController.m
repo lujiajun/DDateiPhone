@@ -270,18 +270,14 @@
 	NSMutableArray *conversations = [[NSMutableArray alloc] initWithArray:[[EaseMob sharedInstance].chatManager conversations]];
 
 	//剔除群聊
-	@try {
-		[conversations enumerateObjectsUsingBlock: ^(id obj, NSUInteger idx, BOOL *stop) {
-		    if ([obj isGroup]) {
-		        [conversations removeObject:obj];
-			}
-		}];
-	}
-	@catch (NSException *e)
-	{
-		NSLog(@"Exception: %@", e);
-	}
-
+    NSMutableArray *tempArray = [NSMutableArray array];
+    for (EMConversation * conversation in conversations) {
+        if ([conversation isGroup]) {
+            [tempArray addObject:conversation];
+        }
+    }
+    [conversations removeObjectsInArray:tempArray];
+    
 	NSArray *sorte = [conversations sortedArrayUsingComparator:
 	                  ^(EMConversation *obj1, EMConversation *obj2) {
 	    EMMessage *message1 = [obj1 latestMessage];
