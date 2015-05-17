@@ -4,9 +4,6 @@
 
 @interface PersonInfoController : UITableViewController
 
-- (void)refreshConfig;
-
-
 -(id) initUser:(DDUser *)user;
 
 @end

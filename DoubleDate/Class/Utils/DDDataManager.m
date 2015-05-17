@@ -46,6 +46,7 @@ static DDDataManager *dataManager;
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD show];
     });
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [_awsDBUser getUserByUID:uid withBlock:^(DDUser* user) {
         if (user) {
             self.user = user;
@@ -53,6 +54,7 @@ static DDDataManager *dataManager;
         } else {
             self->_state = 0;
         }
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
         });
