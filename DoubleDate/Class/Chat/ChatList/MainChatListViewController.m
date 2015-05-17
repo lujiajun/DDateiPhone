@@ -26,11 +26,15 @@
 
 
 @interface MainChatListViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
-
+{
+    UILabel *_unreadLabel;
+}
 @property (strong, nonatomic) NSMutableArray *dataSource;
 @property (strong, nonatomic) DDUserDAO *ddUserDao;
 
 @property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) UIView *tableHeaderView;
+
 @property (strong, nonatomic) EMSearchBar *searchBar;
 @property (strong, nonatomic) SRRefreshView *slimeView;
 @property (strong, nonatomic) UIView *networkStateView;
@@ -152,9 +156,36 @@
 		_tableView.tableFooterView = [[UIView alloc] init];
 		_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		[_tableView registerClass:[ChatListCell class] forCellReuseIdentifier:@"chatListCell"];
+        
+        // _tableView.tableHeaderView = [self tableHeaderView];
 	}
 
 	return _tableView;
+}
+
+- (UIView*) tableHeaderView {
+    if (_tableHeaderView == nil) {
+        _tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_tableView.bounds), 50)];
+        UIImageView *head=[[UIImageView alloc]initWithFrame:CGRectMake(10,5, 40, 40)];
+        head.image=[UIImage imageNamed:@"Hi"];
+        [_tableHeaderView addSubview:head];
+        UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(60, 12, 200, 30)];
+        name.text=@"两人窃窃私语";;
+        [_tableHeaderView addSubview:name];
+        
+        _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, 20, 20)];
+        _unreadLabel.backgroundColor = [UIColor redColor];
+        _unreadLabel.textColor = [UIColor whiteColor];
+        
+        _unreadLabel.textAlignment = NSTextAlignmentCenter;
+        _unreadLabel.font = [UIFont systemFontOfSize:11];
+        _unreadLabel.layer.cornerRadius = 10;
+        _unreadLabel.clipsToBounds = YES;
+        [_tableHeaderView addSubview:_unreadLabel];
+        [_unreadLabel setHidden: YES];
+    }
+    
+    return _tableHeaderView;
 }
 
 - (EMSearchDisplayController *)searchController {
@@ -192,7 +223,7 @@
 		    cell.detailMsg = [weakSelf subTitleMessageByConversation:conversation];
         
 		    cell.time = [weakSelf lastMessageTimeByConversation:conversation];
-		    cell.unreadCount = [weakSelf unreadMessageCountByConversation:conversation];
+		    cell.unreadCount = conversation.unreadMessagesCount;
 		    if (indexPath.row % 2 == 1) {
 		        cell.contentView.backgroundColor = RGBACOLOR(246, 246, 246, 1);
 			} else {
@@ -251,14 +282,6 @@
 	return ret;
 }
 
-// 得到未读消息条数
-- (NSInteger)unreadMessageCountByConversation:(EMConversation *)conversation {
-	NSInteger ret = 0;
-	ret = conversation.unreadMessagesCount;
-
-	return ret;
-}
-
 // 得到最后消息文字或者类型
 - (NSString *)subTitleMessageByConversation:(EMConversation *)conversation {
 	NSString *ret = @"";
@@ -300,27 +323,17 @@
 #pragma mark - TableViewDelegate & TableViewDatasource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 3;
+	return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static NSString *cellIdentifier = @"Cell";
-	UITableViewCell *normalCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-	if (normalCell == nil) {
-		normalCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-	}
 
-	if (indexPath.section == 0) {
-        //按照用户名搜索头像
-        UIImageView *head=[[UIImageView alloc]initWithFrame:CGRectMake(10,5, 40, 40)];
-        head.image=[UIImage imageNamed:@"Hi"];
-        [normalCell.contentView addSubview:head];
-        UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(60, 12, 200, 30)];
-        name.text=@"两人窃窃私语";;
-        [normalCell.contentView addSubview:name];
-	} else if (indexPath.section == 1) {
-		normalCell.textLabel.text = @"四人聊聊聊~liao";
-	} else if (indexPath.section == 2) {
+    if (indexPath.section == 0) {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        [cell.contentView addSubview: [self tableHeaderView]];
+        return cell;
+    }
+    
 		static NSString *identify = @"chatRoom4ListCell";
 		ChatRoom4ListCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
 
@@ -388,23 +401,19 @@
 			cell.contentView.backgroundColor = [UIColor whiteColor];
 		}
 		return cell;
-	}
-	return normalCell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	if (section == 0 || section == 1) {
-		return 1;
-	}
+    if (section == 0) {
+        return 1;
+    }
 	return self.dataSource.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath.section == 0) {
-		return 50;
-	} else if (indexPath.section == 1) {
-		return 40;
-	}
+    if (indexPath.section == 0) {
+        return 50;
+    }
     return [ChatRoom4ListCell tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
@@ -412,7 +421,7 @@
 	if (indexPath.section == 0) {
         ChatListViewController *root2ListVC = [[ChatListViewController alloc] init];
         [self.navigationController pushViewController:root2ListVC animated:YES];
-	} else if (indexPath.section == 2) {
+	} else if (indexPath.section == 1) {
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
         
        
@@ -425,11 +434,8 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath.section == 0 || indexPath.section == 1) {
-		return NO;
-	} else {
-		return YES;
-	}
+	
+    return indexPath.section > 0;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -442,24 +448,18 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	if (section == 0) {
-		return 0;
-	} else {
-		return 22;
-	}
+    if (section == 0) {
+        return 0;
+    }
+    return 22;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-	if (section == 0) {
-		return nil;
-	}
-
-	UIView *contentView = [[UIView alloc] init];
-	[contentView setBackgroundColor:[UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0]];
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 22)];
-	label.backgroundColor = [UIColor clearColor];
-	[contentView addSubview:label];
-	return contentView;
+- (NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"";
+    }
+    
+    return @"我的群组";
 }
 
 #pragma mark - UISearchBarDelegate
@@ -516,7 +516,17 @@
 #pragma mark - IChatMangerDelegate
 
 - (void)didUnreadMessagesCountChanged {
-
+    if (! _unreadLabel) return;
+    NSArray* conversations = [[EaseMob sharedInstance].chatManager conversations];
+    __block int unreadCnt = 0;
+    [conversations enumerateObjectsUsingBlock: ^(EMConversation* c, NSUInteger idx, BOOL *stop) {
+        if ([c isGroup]) {
+            return;
+        }
+        unreadCnt += c.unreadMessagesCount;
+    }];
+    _unreadLabel.text = [NSString stringWithFormat:@"%d", unreadCnt];
+    _unreadLabel.hidden = (unreadCnt == 0);
 }
 
 - (void)didUpdateGroupList:(NSArray *)allGroups error:(EMError *)error {
