@@ -26,7 +26,7 @@
 #import "ChatRoomDetail.h"
 #import "ChatRoom2DAO.h"
 #import "DDUserDAO.h"
-#import "SRRefreshView.h"
+#import "SVPullToRefresh.h"
 #import "AddFriendViewController.h"
 #import "HomePageListCell.h"
 #import "UIImageView+WebCache.h"
@@ -36,11 +36,9 @@
 #import "CreateGroupViewController.h"
 #import "View+MASAdditions.h"
 
-@interface IndexViewController () <UITableViewDelegate, UITableViewDataSource, SRRefreshDelegate>
+@interface IndexViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) UIView *headerView;
-
-@property (strong, nonatomic) SRRefreshView *slimeView;
 
 @property (strong, nonatomic) AWSDynamoDBObjectMapper *dynamoDBObjectMapper;
 
@@ -74,7 +72,11 @@ static DDUser *uuser;
         _oppositeGenderDataSource = [NSMutableArray array];
 		
         //1.先用本地数据做展示
-		[_dataSource addObjectsFromArray:[self.chatRoom2DynamoDB refreshListWithLocalData]];
+        NSArray *array = [self.chatRoom2DynamoDB refreshListWithLocalData];
+        NSEnumerator *enumerator = [array reverseObjectEnumerator];
+        for (id element in enumerator) {
+            [_dataSource addObject:element];
+        }
 	}
 	return self;
 }
@@ -207,16 +209,6 @@ static DDUser *uuser;
     return 0;
 }
 
-#pragma mark - SRRefreshDelegate
-
-- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView {
-	__weak IndexViewController *weakSelf = self;
-	[self.chatRoom2DynamoDB refreshListWithBlock:^(NSArray *chatRoom2s) {
-        [self addDataSourceIgnoreSame:chatRoom2s];
-        [self.tableView reloadData];
-        [weakSelf.slimeView endRefresh];
-    }];
-}
 
 - (void)indexAddFriendAction {
 	//判断状态，进行跳转
@@ -230,17 +222,6 @@ static DDUser *uuser;
 		InviteFriendByDoubleIdController *addController = [InviteFriendByDoubleIdController alloc];
 		[self.navigationController pushViewController:addController animated:YES];
 	}
-}
-
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-	[_slimeView scrollViewDidScroll];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-	[_slimeView scrollViewDidEndDraging];
 }
 
 #pragma mark - setter
@@ -267,7 +248,17 @@ static DDUser *uuser;
         _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        [_tableView addSubview:self.slimeView];
+        __weak IndexViewController *weakSelf = self;
+        
+        [_tableView addPullToRefreshWithActionHandler:^(){
+            [weakSelf.chatRoom2DynamoDB refreshListWithBlock:^(NSArray *chatRoom2s) {
+                [weakSelf addDataSourceIgnoreSame:chatRoom2s];
+                [weakSelf.tableView reloadData];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.tableView.pullToRefreshView stopAnimating];
+                });
+            }];
+        }];
 	}
 	return _tableView;
 }
@@ -326,22 +317,6 @@ static DDUser *uuser;
     return _headerView;
 }
 
-- (SRRefreshView *)slimeView {
-    if (_slimeView == nil) {
-        _slimeView = [[SRRefreshView alloc] init];
-        _slimeView.delegate = self;
-        _slimeView.upInset = 0;
-        _slimeView.slimeMissWhenGoingBack = YES;
-        _slimeView.slime.bodyColor = [UIColor grayColor];
-        _slimeView.slime.skinColor = [UIColor grayColor];
-        _slimeView.slime.lineWith = 1;
-        _slimeView.slime.shadowBlur = 4;
-        _slimeView.slime.shadowColor = [UIColor grayColor];
-    }
-    
-    return _slimeView;
-}
-
 #pragma mark - Private
 - (void)addFriend:(id *)sender {
     AddFriendViewController *addController = [[AddFriendViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -353,7 +328,7 @@ static DDUser *uuser;
 - (void)addDataSourceIgnoreSame:(NSArray *)data {
 	for (CHATROOM2 *chatRoom2 in data) {
 		if (![self isInDataSource:chatRoom2]) {
-			[self.dataSource addObject:chatRoom2];
+			[self.dataSource insertObject:chatRoom2 atIndex:0];
 		}
 	}
 }

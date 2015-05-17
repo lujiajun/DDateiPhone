@@ -55,6 +55,8 @@
 		555C1C891B073CB500D2E28E /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 555C1C841B073CB500D2E28E /* SVIndefiniteAnimatedView.m */; };
 		555C1C8A1B073CB500D2E28E /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 555C1C861B073CB500D2E28E /* SVProgressHUD.bundle */; };
 		555C1C8B1B073CB500D2E28E /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 555C1C881B073CB500D2E28E /* SVProgressHUD.m */; };
+		5561C92A1B0848660017F757 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 5561C9271B0848660017F757 /* UIScrollView+SVInfiniteScrolling.m */; };
+		5561C92B1B0848660017F757 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 5561C9291B0848660017F757 /* UIScrollView+SVPullToRefresh.m */; };
 		8A038C2F1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C1C1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m */; };
 		8A038C301AF51A54007A05BE /* ChatRoomDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C1E1AF51A54007A05BE /* ChatRoomDetail.m */; };
 		8A038C311AF51A54007A05BE /* Commbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C201AF51A54007A05BE /* Commbox.m */; };
@@ -556,6 +558,11 @@
 		555C1C861B073CB500D2E28E /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		555C1C871B073CB500D2E28E /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		555C1C881B073CB500D2E28E /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		5561C9251B0848660017F757 /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
+		5561C9261B0848660017F757 /* UIScrollView+SVInfiniteScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVInfiniteScrolling.h"; sourceTree = "<group>"; };
+		5561C9271B0848660017F757 /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
+		5561C9281B0848660017F757 /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
+		5561C9291B0848660017F757 /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
 		8A038C1B1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWSDynamoDB_ChatRoom4.h; path = "Other Service/AWSDynamoDB_ChatRoom4.h"; sourceTree = "<group>"; };
 		8A038C1C1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWSDynamoDB_ChatRoom4.m; path = "Other Service/AWSDynamoDB_ChatRoom4.m"; sourceTree = "<group>"; };
 		8A038C1D1AF51A54007A05BE /* ChatRoomDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatRoomDetail.h; path = Index/ChatRoomDetail.h; sourceTree = "<group>"; };
@@ -930,7 +937,6 @@
 		90F3ED461A75F3A4005A0135 /* ChatViewController+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatViewController+Category.m"; sourceTree = "<group>"; };
 		9146CF418CFB3F6BFD3F5A46 /* Pods-DoubleDate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DoubleDate.release.xcconfig"; path = "Pods/Target Support Files/Pods-DoubleDate/Pods-DoubleDate.release.xcconfig"; sourceTree = "<group>"; };
 		B1DFD96D96693465E3E174F5 /* libPods-DoubleDate.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DoubleDate.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B7A7D49E66EDE566E813A0B2 /* libPods-ChatDemo-UI2.0.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ChatDemo-UI2.0.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB3CC39F1ACD343D00FB8662 /* callRing.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = callRing.mp3; sourceTree = "<group>"; };
 		EB3CC3A01ACD343D00FB8662 /* CallSessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallSessionViewController.h; sourceTree = "<group>"; };
 		EB3CC3A11ACD343D00FB8662 /* CallSessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallSessionViewController.m; sourceTree = "<group>"; };
@@ -1379,6 +1385,18 @@
 			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
+		5561C9241B0848660017F757 /* SVPullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				5561C9251B0848660017F757 /* SVPullToRefresh.h */,
+				5561C9261B0848660017F757 /* UIScrollView+SVInfiniteScrolling.h */,
+				5561C9271B0848660017F757 /* UIScrollView+SVInfiniteScrolling.m */,
+				5561C9281B0848660017F757 /* UIScrollView+SVPullToRefresh.h */,
+				5561C9291B0848660017F757 /* UIScrollView+SVPullToRefresh.m */,
+			);
+			path = SVPullToRefresh;
+			sourceTree = "<group>";
+		};
 		8A4020B51AE3579F00806014 /* Oss-Universal */ = {
 			isa = PBXGroup;
 			children = (
@@ -1807,7 +1825,6 @@
 				90911027192EEA70008A48AA /* Foundation.framework */,
 				3C1CEF7E196EA37600DBA56B /* ImageIO.framework */,
 				90F1BED01930493100121AEC /* libiconv.dylib */,
-				B7A7D49E66EDE566E813A0B2 /* libPods-ChatDemo-UI2.0.a */,
 				902DEC541931D934006CA75E /* libresolv.dylib */,
 				3CBB931B1A14B227007FED9E /* libsqlite3.dylib */,
 				90F1BEC81930491600121AEC /* libxml2.dylib */,
@@ -1854,6 +1871,7 @@
 		90911056192EEAED008A48AA /* 3rdparty */ = {
 			isa = PBXGroup;
 			children = (
+				5561C9241B0848660017F757 /* SVPullToRefresh */,
 				555C1C821B073CB500D2E28E /* SVProgressHUD */,
 				90A705A11A8B63B200376154 /* MWPhotoBrowser */,
 				909308B919604821005013BD /* Emoji */,
@@ -3137,6 +3155,7 @@
 				8A4BD0B31AE20F2900FFDFF1 /* AppDelegate.m in Sources */,
 				90A7061F1A8B63B200376154 /* PSTGridLayoutSection.m in Sources */,
 				90A706111A8B63B200376154 /* UIImageView+EMWebCache.m in Sources */,
+				5561C92B1B0848660017F757 /* UIScrollView+SVPullToRefresh.m in Sources */,
 				9003D8A11939D8D000DC38A4 /* EMChatImageBubbleView.m in Sources */,
 				90A706051A8B63B200376154 /* EMSDWebImageDecoder.m in Sources */,
 				90EF2CEF192F2B4E00BDC549 /* SRSlimeView.m in Sources */,
@@ -3177,6 +3196,7 @@
 				8A038C351AF51A54007A05BE /* DDRegisterFinishController.m in Sources */,
 				90A706141A8B63B200376154 /* PSTCollectionView.m in Sources */,
 				8A038C361AF51A54007A05BE /* DDSchoolRegisterController.m in Sources */,
+				5561C92A1B0848660017F757 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				90A7061E1A8B63B200376154 /* PSTGridLayoutRow.m in Sources */,
 				8A038C4A1AF51A95007A05BE /* LocalDbService.m in Sources */,
 				9003D89F1939D8D000DC38A4 /* EMChatAudioBubbleView.m in Sources */,
