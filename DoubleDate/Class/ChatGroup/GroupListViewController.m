@@ -285,19 +285,18 @@
 
 - (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
 {
-    [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion:^(NSArray *groups, EMError *error) {
-        if (!error) {
-            [self.dataSource removeAllObjects];
-            [self.dataSource addObjectsFromArray:groups];
-            [self.tableView reloadData];
-        }
-    } onQueue:nil];
-    
-//    [[EaseMob sharedInstance].chatManager asyncFetchAllPrivateGroupsWithCompletion:^(NSArray *groups, EMError *error) {
-//        
-//    } onQueue:nil];
-    
-    [_slimeView endRefresh];
+	[[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion: ^(NSArray *groups, EMError *error) {
+	    if (!error) {
+	        [self.dataSource removeAllObjects];
+	        for (EMGroup *group in groups) {
+	            if (group.occupants.count == 4) {
+	                [self.dataSource addObject:group];
+				}
+			}
+	        [self.tableView reloadData];
+		}
+	    [self.slimeView endRefresh];
+	} onQueue:nil];
 }
 
 #pragma mark - IChatManagerDelegate
