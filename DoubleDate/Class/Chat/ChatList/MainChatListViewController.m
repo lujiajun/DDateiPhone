@@ -525,14 +525,17 @@
         }
         unreadCnt += c.unreadMessagesCount;
     }];
-    _unreadLabel.text = [NSString stringWithFormat:@"%d", unreadCnt];
-    _unreadLabel.hidden = (unreadCnt == 0);
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        _unreadLabel.text = [NSString stringWithFormat:@"%d", unreadCnt];
+        _unreadLabel.hidden = (unreadCnt == 0);
+    });
 }
 
 #pragma mark - registerNotifications
 - (void)registerNotifications {
 	[self unregisterNotifications];
-	[[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
+	[[EaseMob sharedInstance].chatManager addDelegate:self
+                                        delegateQueue: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
 }
 
 - (void)unregisterNotifications {
