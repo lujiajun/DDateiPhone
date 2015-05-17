@@ -28,5 +28,7 @@
 @property (nonatomic, strong) NSString *subGID2;
 @property (nonatomic, strong) NSNumber *systemTimeNumber;
 
+- (int) count;
+- (BOOL) hasTimeout;
 
 @end

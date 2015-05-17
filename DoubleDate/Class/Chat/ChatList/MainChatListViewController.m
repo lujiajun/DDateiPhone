@@ -571,7 +571,13 @@
                                 }
                             }];
     [self.dataSource removeAllObjects];
-    [self.dataSource addObjectsFromArray:sortedArray];
+
+    for (CHATROOM4* room in sortedArray) {
+        if ([room hasTimeout]) {
+            continue;
+        }
+        [self.dataSource addObject:room];
+    }
     [self.tableView reloadData];
     [self hideHud];
 }

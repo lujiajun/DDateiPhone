@@ -84,9 +84,6 @@
 @property (strong, nonatomic) DDUser *friend;
 @property (strong, nonatomic) DDUserDAO *userDao;
 @property (strong, nonatomic) UIButton *view1;
-@property (nonatomic) NSNumber *count;
-
-
 
 @property (nonatomic) BOOL isNewRoom;
 @property (nonatomic) BOOL isSubGroup;
@@ -203,18 +200,15 @@ NSDateFormatter *dateformatter;
 	}
     
 	if (_isChatGroup) {
-		//初始化count数量
-		[self initClickCout];
-        
-		if (self.count.intValue < 4) {
-			int currentSeconds = [[NSDate date] timeIntervalSince1970];
+		if ([self.chatroom4 count] < 4) {
+			NSTimeInterval currentSeconds = [[NSDate date] timeIntervalSince1970];
 			//计算倒计时时间
-			if ([self.chatroom4.systemTimeNumber longValue] + TOTAL_SECONDS < currentSeconds * 1000) {
+			if ([self.chatroom4.systemTimeNumber longLongValue]/1000 + TOTAL_SECONDS < currentSeconds) {
 				[self dissolvegRroup];
 				return;
 			}
 			_countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
-			secondsCountDown = TOTAL_SECONDS - (int)(currentSeconds - [self.chatroom4.systemTimeNumber longValue] / 1000);
+			secondsCountDown = TOTAL_SECONDS - (NSTimeInterval) (currentSeconds - [self.chatroom4.systemTimeNumber longLongValue] / 1000);
 		}
 
 		UIView *bak = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 60, 10, 200, 25)];
@@ -305,23 +299,20 @@ NSDateFormatter *dateformatter;
 
 - (void)clickLike {
 	//修改数据库和本地数据记录
-	_count = [NSNumber numberWithInt:_count.intValue + 1];
-	if ([_count isEqual:[NSNumber numberWithInt:4]]) {
-		_chatroom4.roomStatus = @"Match";
-	}
-	if ([_count isEqualToNumber:[NSNumber numberWithInt:1]]) {
+	
+	if ([_chatroom4 count] == 0) {
 		[_view1 setImage:[UIImage imageNamed:@"like1"] forState:UIControlStateNormal];
 		[_view1 setUserInteractionEnabled:NO];
 //        _view1.alpha=0.4;
-	} else if ([_count isEqualToNumber:[NSNumber numberWithInt:2]])  {
+	} else if ([_chatroom4 count] == 1) {
 		[_view1 setImage:[UIImage imageNamed:@"like2"] forState:UIControlStateNormal];
 		[_view1 setUserInteractionEnabled:NO];
 //        _view1.alpha=0.4;
-	} else if ([_count isEqualToNumber:[NSNumber numberWithInt:3]])  {
+	} else if ([_chatroom4 count] == 2) {
 		[_view1 setImage:[UIImage imageNamed:@"like3"] forState:UIControlStateNormal];
 		[_view1 setUserInteractionEnabled:NO];
 //        _view1.alpha=0.4;
-	} else if ([_count isEqualToNumber:[NSNumber numberWithInt:4]])  {
+	} else if ([_chatroom4 count] == 3) {
 		//计时停止
 		[_countDownTimer invalidate];
 		//去除
@@ -330,8 +321,7 @@ NSDateFormatter *dateformatter;
 //        _view1.alpha=0.4;
 		[_view1 setImage:[UIImage imageNamed:@"likeGo"] forState:UIControlStateNormal];
 	}
-	//修改记录
-
+	
 	NSString *username = [[[EaseMob sharedInstance].chatManager loginInfo] objectForKey:kSDKUsername];
 	if ([_chatroom4.UID1 isEqualToString:username]) {
 		_chatroom4.isLikeUID1 = [NSNumber numberWithInt:1];
@@ -345,31 +335,14 @@ NSDateFormatter *dateformatter;
 	if ([_chatroom4.UID4 isEqualToString:username]) {
 		_chatroom4.isLikeUID4 = [NSNumber numberWithInt:1];
 	}
+    //修改记录
+    if ([_chatroom4 count] == 4) {
+        _chatroom4.roomStatus = @"Match";
+    }
 	AWSDynamoDB_ChatRoom4 *room4Da = [[AWSDynamoDB_ChatRoom4 alloc]init];
 	[room4Da updateLikeByGID:_chatroom4];
 }
 
-- (void)initClickCout {
-	if (_count == nil) {
-		_count = [NSNumber numberWithInt:0];
-	}
-    
-	if (_count == 0) {
-		if (_chatroom4.isLikeUID1 != nil && _chatroom4.isLikeUID1.intValue ==  1) {
-			_count = [NSNumber numberWithInt:_count.intValue + 1];
-		}
-		if (_chatroom4.isLikeUID2 != nil && _chatroom4.isLikeUID2.intValue == 1) {
-			_count = [NSNumber numberWithInt:_count.intValue + 1];
-		}
-		if (_chatroom4.isLikeUID3 != nil && _chatroom4.isLikeUID3.intValue == 1) {
-			_count = [NSNumber numberWithInt:_count.intValue + 1];
-		}
-		if (_chatroom4.isLikeUID4 != nil && _chatroom4.isLikeUID4.intValue == 1) {
-			_count = [NSNumber numberWithInt:_count.intValue + 1];
-			[_view1 setUserInteractionEnabled:NO];
-		}
-	}
-}
 
 //聊天通栏
 - (UIButton *)getFriendFrame {
