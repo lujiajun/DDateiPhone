@@ -35,6 +35,11 @@
 #import "ChatViewController.h"
 
 @interface ChatRoomDetail () <EMChooseViewDelegate>
+{
+    EMGroup *_emgroup;
+    EMBuddy *_embuddy;
+    int _state;
+}
 
 @property (strong, nonatomic) UIView *footerView;
 
@@ -47,8 +52,6 @@
 @property (strong, nonatomic) DDUser *uuser2;
 @property (strong, nonatomic) CHATROOM2 *chatroom2;
 @property (strong, nonatomic) CHATROOM4 *chatroom4;
-
-@property (strong, nonatomic) NSString *groupId;
 
 
 @end
@@ -91,7 +94,7 @@
     
     //更新点击数
     [self updateClickNumber];
-  
+    _state = 0;
 }
 
 -(void) getUser1DetailInfo{
@@ -318,7 +321,6 @@
 	    if (!error) {
 	        self.chatroom4 = [CHATROOM4 new];
 	        self.chatroom4.GID = group.groupId;
-            self.groupId = group.groupId;
 	        self.chatroom4.RID = self.chatroom2.RID;
 	        self.chatroom4.UID1 = self.chatroom2.UID1;
 	        self.chatroom4.UID2 = self.chatroom2.UID2;
@@ -331,8 +333,13 @@
 
 	        AWSDynamoDB_ChatRoom4 *chatroom4DB = [[AWSDynamoDB_ChatRoom4 alloc]init];
 	        [chatroom4DB insertChatroom4:self.chatroom4];
+            self->_emgroup = group;
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                self->_emgroup = group;
+                [self tryAddToGroup];
+            });
 		}
-	} onQueue:nil];
+	} onQueue: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
 }
 
 #pragma mark - EMChooseViewDelegate
@@ -340,15 +347,30 @@
 - (void)viewController:(EMChooseViewController *)viewController didFinishSelectedSources:(NSArray *)selectedSources {
 	[self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
 
-	NSString *doublerId = nil;
 	id obj = [selectedSources objectAtIndex:0];
 	if ([obj isKindOfClass:[EMBuddy class]]) {
-		EMBuddy *doubler = (EMBuddy *)obj;
-		doublerId = doubler.username;
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            self->_embuddy = (EMBuddy *)obj;
+            [self tryAddToGroup];
+        });
 	}
+}
 
+- (void) tryAddToGroup {
+    if (! _embuddy) {
+        return;
+    }
+    if (! _emgroup) {
+        return;
+    }
+    if (_state > 0) {
+        return;
+    }
+    
+    _state = 1;
+    NSString *doublerId = _embuddy.username;
 	EMError *error = nil;
-	[[EaseMob sharedInstance].chatManager addOccupants:@[doublerId] toGroup:self.groupId welcomeMessage:@"邀请信息" error:&error];
+	[[EaseMob sharedInstance].chatManager addOccupants:@[doublerId] toGroup:_emgroup.groupId welcomeMessage:@"邀请信息" error:&error];
 	[self hideHud];
 
 	if (!error) {
@@ -356,13 +378,14 @@
         
 		EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
 		groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin;
-		[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[Util str1:self.groupId appendStr2:@"_subID2"]
+		[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[Util str1:self->_emgroup.groupId appendStr2:@"_subID2"]
 		                                                      description:@"加入四人聊天室的一对的私密群聊"
 		                                                         invitees:@[doublerId]
 		                                            initialWelcomeMessage:@"邀请您加入群组"
 		                                                     styleSetting:groupStyleSetting
 		                                                       completion: ^(EMGroup *group, EMError *error) {
 		    [self hideHud];
+            self->_state = 2;
 		    if (!error) {
 		        AWSDynamoDB_ChatRoom4 *chatroom4DB = [[AWSDynamoDB_ChatRoom4 alloc]init];
                 self.chatroom4.UID4 = doublerId;
@@ -380,11 +403,10 @@
 			} else {
 		        [self showHint:[NSString stringWithFormat:@"创建两人私密群聊失败, error: %@", error]];
 			}
-		} onQueue:nil];
+		} onQueue: dispatch_get_main_queue()];
 	} else {
 		NSLog(@"加入第四个人失败, error: %@", error);
 	}
 }
-
 
 @end
