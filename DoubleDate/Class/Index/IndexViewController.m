@@ -35,6 +35,7 @@
 #import "InviteFriendByDoubleIdController.h"
 #import "CreateGroupViewController.h"
 #import "View+MASAdditions.h"
+#import "DDDataManager.h"
 
 @interface IndexViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -55,8 +56,6 @@
 @property (nonatomic) BOOL haveFriend;
 
 @end
-
-static DDUser *uuser;
 
 #define kIMGCOUNT 5
 
@@ -189,19 +188,11 @@ static DDUser *uuser;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-	if (indexPath.section == 0) {
-		for (NSUInteger i = 0; i < self.dataSource.count; i++) {
-			if (indexPath.row == i) {
-				CHATROOM2 *room = [[self.dataSource objectAtIndex:i] copy];
-				ChatRoomDetail *chatroom = [[ChatRoomDetail alloc]initChatRoom:room uuser1:[self.userDao selectDDuserByUid:room.UID1] uuser2:[self.userDao selectDDuserByUid:room.UID2]];
-//                 self.navigationController.navigationBarHidden=YES;
-                
-				[self.navigationController pushViewController:chatroom animated:YES];
-			}
-		}
-	}
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    CHATROOM2 *room = self.showOppositeGender ? [self.oppositeGenderDataSource objectAtIndex:indexPath.row] : [self.dataSource objectAtIndex:indexPath.row];
+    ChatRoomDetail *chatroom = [[ChatRoomDetail alloc]initChatRoom:room uuser1:[self.userDao selectDDuserByUid:room.UID1] uuser2:[self.userDao selectDDuserByUid:room.UID2]];
+    [self.navigationController pushViewController:chatroom animated:YES];
 }
 
 //每行缩进
@@ -231,8 +222,9 @@ static DDUser *uuser;
 		_showOppositeGender = showOppositeGender;
 		if (showOppositeGender) {
 			[self.oppositeGenderDataSource removeAllObjects];
+            DDUser* user = [DDDataManager sharedManager].user;
 			for (CHATROOM2 *chatRoom2 in self.dataSource) {
-				if (chatRoom2.Gender.intValue != uuser.gender.intValue) {
+				if (chatRoom2.Gender.intValue != user.gender.intValue) {
 					[self.oppositeGenderDataSource addObject:chatRoom2];
 				}
 			}
