@@ -44,7 +44,6 @@
 @property(strong,nonatomic) UIScrollView *scrollView;
 @property(strong,nonatomic) UIImagePickerController  *imagePicker;
 @property(nonatomic)  NSUInteger *picnumber;
-@property(strong,nonatomic) NSMutableArray *addedPicArray;
 @property(strong,nonatomic) NSString *loginname;
 @property(strong,nonatomic) UIImageView *plusImageView;
 @property(strong,nonatomic) DDUser *user;
@@ -56,21 +55,8 @@
 @synthesize autoLoginSwitch = _autoLoginSwitch;
 @synthesize ipSwitch = _ipSwitch;
 
-
-#define  PIC_WIDTH 120
-#define  PIC_HEIGHT 120
-
-
-
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        
-    }
-    return self;
-}
+#define  PIC_WIDTH 80
+#define  PIC_HEIGHT 80
 
 -(id) initUser:(DDUser *)user{
     _user=user;
@@ -92,9 +78,10 @@
         _plusImageView.userInteractionEnabled=YES;
         
     }
-    //出事scroview
-    [self refreshScrollView];
     
+    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 400, 130)];
+    [_scrollView setUserInteractionEnabled:YES];
+
 }
 
 
@@ -131,29 +118,6 @@
     }
     
     return _beInvitedLabel;
-}
-
--(void) refreshScrollView{
-    
-    if(_scrollView==nil){
-        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 400, 130)];
-    }
-    
-    //循环执行，有多少张图片，执行几次
-    _scrollView.scrollEnabled=YES;
-    if(_addedPicArray.count>1){
-        
-        CGSize contentSize=CGSizeMake(PIC_WIDTH*(_addedPicArray.count+1), 130);
-        //shezhi滚动范围
-        _scrollView.contentSize=contentSize;
-        
-    }else{
-        
-        CGSize contentSize=CGSizeMake(PIC_WIDTH*(_addedPicArray.count+2), 130);
-        //shezhi滚动范围
-        _scrollView.contentSize=contentSize;
-    }
-    [_scrollView setUserInteractionEnabled:YES];
 }
 
 #pragma mark - Table view datasource
@@ -244,39 +208,27 @@
         case 1:
         {
             // 1.创建UIScrollView
+            NSCharacterSet *cs = [NSCharacterSet characterSetWithCharactersInString: @","];
+            NSString *photo = [_user.photos stringByTrimmingCharactersInSet:cs];
+            NSArray *photoArray = [photo componentsSeparatedByString:@","];
             
-            if(_addedPicArray.count==0){
-                UILabel * info=[[UILabel alloc]initWithFrame:CGRectMake(0, cell.frame.size.height/2, cell.frame.size.width, 30)];
-                info.text=@"用户暂时没有上传照片哟";
-                info.textAlignment=NSTextAlignmentCenter;
-                [cell.contentView addSubview:info];
-              
-            }else{
-                int i=0;
-                for (id element in _addedPicArray) {
-                    if(element!=nil&&![element isEqual:@""]){
-                        
-                        //图片显示
-                        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(_scrollView.frame.origin.x+PIC_WIDTH*i,cell.frame.origin.y, PIC_WIDTH, PIC_HEIGHT)];
-                        
-                        [imageView sd_setImageWithURL:[NSURL URLWithString: DD_PHOTO_URL(_loginname, element)] placeholderImage:[UIImage imageNamed:@"Logo_new"]];
-                        
-                        //获取图片的框架，得到长、宽
-                        //赋值
-                        imageView.tag = i;
-                        //ScrollView添加子视图
-                        [_scrollView addSubview:imageView];
-                        i++;
-                        
-                    }
+            int i = 0;
+            for (id element in photoArray) {
+                if (element != nil && ![element isEqual:@""]) {
+                    //图片显示
+                    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(PIC_WIDTH * i, 0, PIC_WIDTH, PIC_HEIGHT)];
                     
+                    NSString* url = DD_PHOTO_URL(_user.UID, element);
+                    [imageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"Logo_new"]];
+                    
+                    //获取图片的框架，得到长、宽
+                    //赋值
+                    imageView.tag = i;
+                    //ScrollView添加子视图
+                    [_scrollView addSubview:imageView];
+                    i++;
                 }
-                    
-                
-                
             }
-            
-            
             [cell.contentView addSubview:_scrollView];
             
             break;

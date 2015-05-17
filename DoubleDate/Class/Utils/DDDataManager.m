@@ -75,4 +75,8 @@ static DDDataManager *dataManager;
     return _aliCloud;
 }
 
+- (BOOL) haveAnyFriends {
+    NSArray *buddyList = [[EaseMob sharedInstance].chatManager buddyList];
+    return buddyList.count > 0;
+}
 @end
