@@ -110,7 +110,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     if (self.selectedIndex == 0) {
         self.navigationItem.rightBarButtonItem = _inviteFriendItem;
-        [self tabBar: self.tabBar didSelectItem:_indexVC.tabBarItem];
     }
 }
 
@@ -244,6 +243,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     self.viewControllers = @[_indexVC,_chatListVC, _contactsVC, _settingsVC];
     [self selectedTapTabBarItems:_indexVC.tabBarItem];
+    
+    [self tabBar: self.tabBar didSelectItem:_indexVC.tabBarItem];
 }
 
 - (void)unSelectedTapTabBarItems:(UITabBarItem *)tabBarItem {
