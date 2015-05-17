@@ -30,6 +30,7 @@
 
 
 - (void)insertChatroom4:(CHATROOM4 *) chatRoom4;
+- (void)updateChatroom4:(CHATROOM4 *)tableRow;
 -(void) deleteRoom4:(NSString *) gid;
 -(CHATROOM4 *)getCHATROOM4:(NSString*) uid;
 

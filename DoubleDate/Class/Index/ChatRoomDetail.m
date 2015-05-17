@@ -28,20 +28,27 @@
 #import "AWSDynamoDB_ChatRoom2.h"
 #import "Util.h"
 #import "PersonInfoController.h"
+#import "CHATROOM4.h"
+#import "AWSDynamoDB_ChatRoom4.h"
 #import "DDDataManager.h"
+#import "EMBuddy.h"
+#import "ChatViewController.h"
 
-@interface ChatRoomDetail ()
+@interface ChatRoomDetail () <EMChooseViewDelegate>
 
 @property (strong, nonatomic) UIView *footerView;
 
-@property(strong,nonatomic) UIScrollView *scrollView;
-@property(strong,nonatomic) UIImagePickerController  *imagePicker;
-@property(strong,nonatomic) NSMutableArray *datasouce;
-@property(strong,nonatomic) AWSDynamoDB_DDUser *userDynamoDB;
-@property(strong,nonatomic) AWSDynamoDBObjectMapper *dynamoDBObjectMapper;
-@property(strong,nonatomic) DDUser *uuser1;
-@property(strong,nonatomic) DDUser *uuser2;
-@property(strong,nonatomic) CHATROOM2 *chatroom2;
+@property (strong, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) UIImagePickerController *imagePicker;
+@property (strong, nonatomic) NSMutableArray *datasouce;
+@property (strong, nonatomic) AWSDynamoDB_DDUser *userDynamoDB;
+@property (strong, nonatomic) AWSDynamoDBObjectMapper *dynamoDBObjectMapper;
+@property (strong, nonatomic) DDUser *uuser1;
+@property (strong, nonatomic) DDUser *uuser2;
+@property (strong, nonatomic) CHATROOM2 *chatroom2;
+@property (strong, nonatomic) CHATROOM4 *chatroom4;
+
+@property (strong, nonatomic) NSString *groupId;
 
 
 @end
@@ -121,7 +128,11 @@
 			return;
 		}
 	}
-	Contact4GroupAddViewController *selectionController = [[[Contact4GroupAddViewController alloc] init] initGroupInfo:_chatroom2];
+    
+    [self creat3Groups];
+    
+	Contact4GroupAddViewController *selectionController = [[Contact4GroupAddViewController alloc] init];
+	selectionController.delegate = self;
 	[self.navigationController pushViewController:selectionController animated:YES];
 }
 
@@ -295,7 +306,80 @@
     
 }
 
+- (void)creat3Groups {
+	EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
+	groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin; // 创建不同类型的群组，这里需要才传入不同的类型
+	[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:self.chatroom2.RID
+	                                                      description:self.chatroom2.Motto
+	                                                         invitees:@[self.chatroom2.UID1, self.chatroom2.UID2]
+	                                            initialWelcomeMessage:@"邀请您加入群组"
+	                                                     styleSetting:groupStyleSetting
+	                                                       completion: ^(EMGroup *group, EMError *error) {
+	    if (!error) {
+	        self.chatroom4 = [CHATROOM4 new];
+	        self.chatroom4.GID = group.groupId;
+            self.groupId = group.groupId;
+	        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+	        [formatter setDateFormat:@"yyyyMMdd_HHmmss"];
+	        self.chatroom4.CTIMER = [formatter stringFromDate:[NSDate date]];
+	        self.chatroom4.CTIMEH = @"Time";
+	        self.chatroom4.RID = self.chatroom2.RID;
+	        self.chatroom4.UID1 = self.chatroom2.UID1;
+	        self.chatroom4.UID2 = self.chatroom2.UID2;
+            self.chatroom4.UID3 = [DDDataManager sharedManager].user.UID;
+	        self.chatroom4.isLikeUID1 = [NSNumber numberWithInt:0];
+	        self.chatroom4.isLikeUID2 = [NSNumber numberWithInt:0];
+	        self.chatroom4.isLikeUID3 = [NSNumber numberWithInt:0];
+	        self.chatroom4.isLikeUID4 = [NSNumber numberWithInt:0];
+	        self.chatroom4.roomStatus = @"New";
+	        self.chatroom4.systemTimeNumber = [NSNumber numberWithLong:[[NSDate date] timeIntervalSince1970] * 1000];
 
+	        AWSDynamoDB_ChatRoom4 *chatroom4DB = [[AWSDynamoDB_ChatRoom4 alloc]init];
+	        [chatroom4DB insertChatroom4:self.chatroom4];
+		}
+	} onQueue:nil];
+}
+
+#pragma mark - EMChooseViewDelegate
+
+- (void)viewController:(EMChooseViewController *)viewController didFinishSelectedSources:(NSArray *)selectedSources {
+	[self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
+
+	NSString *doublerId = nil;
+	id obj = [selectedSources objectAtIndex:0];
+	if ([obj isKindOfClass:[EMBuddy class]]) {
+		EMBuddy *doubler = (EMBuddy *)obj;
+		doublerId = doubler.username;
+	}
+
+	EMError *error = nil;
+	[[EaseMob sharedInstance].chatManager addOccupants:@[doublerId] toGroup:self.groupId welcomeMessage:@"邀请信息" error:&error];
+	[self hideHud];
+	if (!error) {
+		NSLog(@"添加第四个人进入四人聊天室成功");
+		[self showHint:NSLocalizedString(@"group.create.success", @"create group success")];
+
+		EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
+		groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin;
+		[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:self.groupId
+		                                                      description:@"加入四人聊天室的一对的私密群聊"
+		                                                         invitees:@[doublerId]
+		                                            initialWelcomeMessage:@"邀请您加入群组"
+		                                                     styleSetting:groupStyleSetting
+		                                                       completion: ^(EMGroup *group, EMError *error) {
+		    if (!error) {
+		        AWSDynamoDB_ChatRoom4 *chatroom4DB = [[AWSDynamoDB_ChatRoom4 alloc]init];
+                self.chatroom4.UID4 = doublerId;
+		        self.chatroom4.subGID2 = group.groupId;
+		        [chatroom4DB updateChatroom4:self.chatroom4];
+
+		        ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:NO] initRoom4:self.chatroom4 friend:doublerId isNewRoom:YES];
+		        chatController.title = self.chatroom2.Motto;
+		        [self.navigationController pushViewController:chatController animated:YES];
+			}
+		} onQueue:nil];
+	}
+}
 
 
 @end
