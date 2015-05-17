@@ -84,7 +84,7 @@ static DDUser   *dduser;
     _imageView = [[UIImageView alloc] init];
     _imageView.backgroundColor=[UIColor grayColor];
     _imageView.frame =CGRectMake(self.view.frame.size.width/2-75, 20, 150, 150);
-    _imageView.image=[UIImage imageNamed:@"Logo_new"];
+    _imageView.image=[UIImage imageNamed:@"camera.png"];
     [scrollView addSubview:_imageView];
     [_imageView setUserInteractionEnabled:YES];
     _imageView.layer.masksToBounds =YES;

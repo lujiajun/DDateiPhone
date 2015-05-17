@@ -57,6 +57,7 @@
 		555C1C8B1B073CB500D2E28E /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 555C1C881B073CB500D2E28E /* SVProgressHUD.m */; };
 		5561C92A1B0848660017F757 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 5561C9271B0848660017F757 /* UIScrollView+SVInfiniteScrolling.m */; };
 		5561C92B1B0848660017F757 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 5561C9291B0848660017F757 /* UIScrollView+SVPullToRefresh.m */; };
+		5579EBA91B09323500988928 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 5579EBA81B09323500988928 /* camera.png */; };
 		8A038C2F1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C1C1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m */; };
 		8A038C301AF51A54007A05BE /* ChatRoomDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C1E1AF51A54007A05BE /* ChatRoomDetail.m */; };
 		8A038C311AF51A54007A05BE /* Commbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A038C201AF51A54007A05BE /* Commbox.m */; };
@@ -563,6 +564,7 @@
 		5561C9271B0848660017F757 /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
 		5561C9281B0848660017F757 /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
 		5561C9291B0848660017F757 /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
+		5579EBA81B09323500988928 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera.png; path = dd/camera.png; sourceTree = "<group>"; };
 		8A038C1B1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWSDynamoDB_ChatRoom4.h; path = "Other Service/AWSDynamoDB_ChatRoom4.h"; sourceTree = "<group>"; };
 		8A038C1C1AF51A54007A05BE /* AWSDynamoDB_ChatRoom4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWSDynamoDB_ChatRoom4.m; path = "Other Service/AWSDynamoDB_ChatRoom4.m"; sourceTree = "<group>"; };
 		8A038C1D1AF51A54007A05BE /* ChatRoomDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatRoomDetail.h; path = Index/ChatRoomDetail.h; sourceTree = "<group>"; };
@@ -1561,6 +1563,7 @@
 		8ADB38511AE28F3400FCC6FC /* dd */ = {
 			isa = PBXGroup;
 			children = (
+				5579EBA81B09323500988928 /* camera.png */,
 				8ABE781C1B01088D0020BD6C /* Hi.png */,
 				8AD43E711AFF5A4E00F05E8D /* weibo.png */,
 				8AD43E341AFC801200F05E8D /* addFriend.png */,
@@ -3014,6 +3017,7 @@
 				EBD2ABA31A7CDAC000D16528 /* group_detail@2x.png in Resources */,
 				8AD911DD1AFBC4080024D4DE /* back@2x.png in Resources */,
 				EBD2ABA21A7CDAC000D16528 /* delete@2x.png in Resources */,
+				5579EBA91B09323500988928 /* camera.png in Resources */,
 				EBD2AB461A7CDAC000D16528 /* chatBar_more_cardSelected@2x.png in Resources */,
 				EBD2AB171A7CDAC000D16528 /* VoiceSearchFeedback004.png in Resources */,
 				EBD2AB851A7CDAC000D16528 /* chat_receiver_audio_playing000@2x.png in Resources */,
