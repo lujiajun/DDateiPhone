@@ -23,6 +23,7 @@
 #import "ChatRoom4DAO.h"
 #import "Util.h"
 #import "AWSDynamoDB_ChatRoom4.h"
+#import "SVProgressHUD.h"
 
 
 @interface MainChatListViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, SRRefreshDelegate, UISearchBarDelegate>
@@ -548,38 +549,39 @@
 #pragma mark - public
 
 - (void)refreshDataSource {
+    [SVProgressHUD show];
+    
     [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion: ^(NSArray *groups, EMError *error) {
         if (!error) {
             for (EMGroup *group in groups) {
                 if (group.groupOccupantsCount == 4) {
-                    [self.chatRoom4DynamoDB getChatroom4InsertLocal:group.groupId];
+                    [self.chatRoom4DynamoDB syncGetChatroom4AndInsertLocal:group.groupId];
                 }
             }
             [self refreshDataSourceWithLocalData];
         }
-    } onQueue:dispatch_get_main_queue()];
+    } onQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
 }
 
 - (void)refreshDataSourceWithLocalData {
     ChatRoom4DAO *room4Dao = [[ChatRoom4DAO alloc] init];
     NSArray *sortedArray = [[room4Dao queryChatRoom4s] sortedArrayUsingComparator:
                             ^(CHATROOM4 *obj1, CHATROOM4 *obj2) {
-                                if (obj1.systemTimeNumber < obj2.systemTimeNumber) {
-                                    return (NSComparisonResult)NSOrderedAscending;
-                                } else {
-                                    return (NSComparisonResult)NSOrderedDescending;
-                                }
+                                return [obj1.systemTimeNumber compare:obj2.systemTimeNumber];
                             }];
     [self.dataSource removeAllObjects];
 
-    for (CHATROOM4* room in sortedArray) {
-        if ([room hasTimeout]) {
-            continue;
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        [SVProgressHUD dismiss];
+        for (CHATROOM4* room in sortedArray) {
+            if ([room hasTimeout]) {
+                continue;
+            }
+            [self.dataSource addObject:room];
         }
-        [self.dataSource addObject:room];
-    }
-    [self.tableView reloadData];
-    [self hideHud];
+        [self.tableView reloadData];
+        [self hideHud];
+    });
 }
 
 - (void)isConnect:(BOOL)isConnect {
