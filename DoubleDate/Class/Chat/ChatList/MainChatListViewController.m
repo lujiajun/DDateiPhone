@@ -549,9 +549,10 @@
 	[[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion: ^(NSArray *groups, EMError *error) {
 	    if (!error) {
 	        for (EMGroup *group in groups) {
-	            [self.chatRoom4DynamoDB getChatroom4InsertLocal:group.groupId];
+	            if (group.groupOccupantsCount == 4) {
+	                [self.chatRoom4DynamoDB getChatroom4InsertLocal:group.groupId];
+				}
 			}
-
 	        [self refreshDataSourceWithLocalData];
 		}
 	} onQueue:dispatch_get_main_queue()];
