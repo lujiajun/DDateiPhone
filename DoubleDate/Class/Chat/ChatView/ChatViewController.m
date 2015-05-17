@@ -414,7 +414,7 @@ NSDateFormatter *dateformatter;
 - (void)createTwoMainNewGroup {
 	EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
 	groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin;
-	[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:self.chatter
+	[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[Util str1:self.chatroom4.GID appendStr2:@"_subID1"]
 	                                                      description:@"创建四人聊天室的一对的私密群聊"
 	                                                         invitees:@[_chatroom4.UID1, _chatroom4.UID2]
 	                                            initialWelcomeMessage:@"邀请您加入群组"
