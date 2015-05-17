@@ -355,9 +355,9 @@
 	EMError *error = nil;
 	[[EaseMob sharedInstance].chatManager addOccupants:@[doublerId] toGroup:self.groupId welcomeMessage:@"邀请信息" error:&error];
 	[self hideHud];
+
 	if (!error) {
-		NSLog(@"添加第四个人进入四人聊天室成功");
-		[self showHint:NSLocalizedString(@"group.create.success", @"create group success")];
+		[self showHudInView:self.view hint:NSLocalizedString(@"group.create.success", @"create group success")];
 
 		EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
 		groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin;
@@ -367,17 +367,22 @@
 		                                            initialWelcomeMessage:@"邀请您加入群组"
 		                                                     styleSetting:groupStyleSetting
 		                                                       completion: ^(EMGroup *group, EMError *error) {
+		    [self hideHud];
 		    if (!error) {
 		        AWSDynamoDB_ChatRoom4 *chatroom4DB = [[AWSDynamoDB_ChatRoom4 alloc]init];
-                self.chatroom4.UID4 = doublerId;
+		        self.chatroom4.UID4 = doublerId;
 		        self.chatroom4.subGID2 = group.groupId;
 		        [chatroom4DB updateChatroom4:self.chatroom4];
 
 		        ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:NO] initRoom4:self.chatroom4 friend:doublerId isNewRoom:YES];
 		        chatController.title = self.chatroom2.Motto;
 		        [self.navigationController pushViewController:chatController animated:YES];
+			} else {
+		        [self showHint:[NSString stringWithFormat:@"创建两人私密群聊失败, error: %@", error]];
 			}
 		} onQueue:nil];
+	} else {
+		NSLog(@"加入第四个人失败, error: %@", error);
 	}
 }
 
