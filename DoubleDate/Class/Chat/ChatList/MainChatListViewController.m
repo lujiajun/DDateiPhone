@@ -29,6 +29,7 @@
 @interface MainChatListViewController () <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, SRRefreshDelegate, UISearchBarDelegate>
 {
     UILabel *_unreadLabel;
+    BOOL _loading;
 }
 @property (strong, nonatomic) NSMutableArray *dataSource;
 @property (strong, nonatomic) DDUserDAO *ddUserDao;
@@ -79,6 +80,9 @@
     [super viewWillAppear:animated];
     
     [self registerNotifications];
+    if (_loading) {
+        [SVProgressHUD show];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -538,7 +542,10 @@
 #pragma mark - public
 
 - (void)refreshDataSource {
-    [SVProgressHUD show];
+    _loading = YES;
+    if ([self isBeingPresented]) {
+        [SVProgressHUD show];
+    }
     
     [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion: ^(NSArray *groups, EMError *error) {
         if (!error) {
@@ -555,6 +562,7 @@
                                     }];
             
             dispatch_async(dispatch_get_main_queue(), ^(){
+                self->_loading = NO;
                 [SVProgressHUD dismiss];
                 [self.dataSource removeAllObjects];
                 for (CHATROOM4* room in sortedArray) {
