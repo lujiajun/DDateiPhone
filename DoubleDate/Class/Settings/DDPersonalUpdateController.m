@@ -101,6 +101,7 @@
     _genderControl = [[UISegmentedControl alloc] initWithItems:genderItems];
     _genderControl.frame = CGRectMake(gender.frame.origin.x+50, gender.frame.origin.y, 80, 25);
     _genderControl.selectedSegmentIndex = [user.gender integerValue];
+    [_genderControl setEnabled: NO];
     [_bodyView addSubview:_genderControl];
     
     //出生日期
