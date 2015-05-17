@@ -31,18 +31,17 @@
 @implementation AWSDynamoDB_ChatRoom4
 
 - (instancetype)init {
-    if (self = [super init]) {
-        _chatRoom4Dao = [[ChatRoom4DAO alloc] init];
-        _dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    }
-    return self;
+	if (self = [super init]) {
+		_chatRoom4Dao = [[ChatRoom4DAO alloc] init];
+		_dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+	}
+	return self;
 }
 
 - (void)insertChatroom4:(CHATROOM4 *)tableRow {
-   
 	if (tableRow != nil && tableRow.GID != nil) {
 		[[self.dynamoDBObjectMapper save:tableRow] continueWithSuccessBlock: ^id (BFTask *task) {
-            NSLog(@"insert to aws success");
+		    NSLog(@"insert to aws success");
 		    [self.chatRoom4Dao insertChatroom4:tableRow];
 		    return nil;
 		}];
@@ -50,152 +49,80 @@
 }
 
 - (void)updateChatroom4:(CHATROOM4 *)tableRow {
-    
-    if (tableRow != nil && tableRow.GID != nil) {
-        [[self.dynamoDBObjectMapper save:tableRow] continueWithSuccessBlock: ^id (BFTask *task) {
-            NSLog(@"insert to aws success");
-            [self.chatRoom4Dao updateChatroom4:tableRow];
-            return nil;
-        }];
-    }
+	if (tableRow != nil && tableRow.GID != nil) {
+		[[self.dynamoDBObjectMapper save:tableRow] continueWithSuccessBlock: ^id (BFTask *task) {
+		    NSLog(@"insert to aws success");
+		    [self.chatRoom4Dao updateChatroom4:tableRow];
+		    return nil;
+		}];
+	}
 }
 
--(void) updateLikeByGID:(CHATROOM4 *)tableRow{
-    [[self.dynamoDBObjectMapper save: tableRow] continueWithSuccessBlock:^id(BFTask *task) {
-        [self.chatRoom4Dao updateLikeByGID:tableRow];
-        return nil;
-    }];
+- (void)updateLikeByGID:(CHATROOM4 *)tableRow {
+	[[self.dynamoDBObjectMapper save:tableRow] continueWithSuccessBlock: ^id (BFTask *task) {
+	    [self.chatRoom4Dao updateLikeByGID:tableRow];
+	    return nil;
+	}];
 }
 
--(void) updateSubGroupTable:(CHATROOM4 *)tableRow{
-    [[self.dynamoDBObjectMapper save: tableRow] continueWithSuccessBlock:^id(BFTask *task) {
-        [self.chatRoom4Dao updateSubGroupByGID:tableRow];
-        return nil;
-    }];
-}
--(void) deleteRoom4:(NSString *) gid{
-    CHATROOM4 *room4 = [CHATROOM4 new];
-    room4.GID = gid;
-     AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    [[dynamoDBObjectMapper remove:room4]
-     continueWithBlock:^id(BFTask *task) {
-         
-         if (task.error) {
-             NSLog(@"The request failed. Error: [%@]", task.error);
-         }
-         if (task.exception) {
-             NSLog(@"The request failed. Exception: [%@]", task.exception);
-         }
-         //删除
-         [self.chatRoom4Dao delChatRoom4ByRid:gid];
-         return nil;
-     }];
+- (void)updateSubGroupTable:(CHATROOM4 *)tableRow {
+	[[self.dynamoDBObjectMapper save:tableRow] continueWithSuccessBlock: ^id (BFTask *task) {
+	    [self.chatRoom4Dao updateSubGroupByGID:tableRow];
+	    return nil;
+	}];
 }
 
--(CHATROOM4 *)getCHATROOM4:(NSString*) uid{
-    AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    
-    [[dynamoDBObjectMapper load:[CHATROOM4 class] hashKey:uid rangeKey:nil]
-     continueWithBlock:^id(BFTask *task) {
-         if (task.error) {
-             NSLog(@"The request failed. Error: [%@]", task.error);
-         }
-         if (task.exception) {
-             NSLog(@"The request failed. Exception: [%@]", task.exception);
-         }
-         if (task.result) {
-             CHATROOM4 *room4 = task.result;
-             return  room4;
-             //Do something with the result.
-         }
-         return nil;
-     }];
-    return nil;
-}
-
--(CHATROOM4 *)getChatroom4InsertLocal:(NSString*) uid{
-        AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-//    NSLog(uid);
-        [[dynamoDBObjectMapper load:[CHATROOM4 class] hashKey:uid rangeKey:nil]
-         continueWithBlock:^id(BFTask *task) {
-             if (task.error) {
-                 NSLog(@"The request failed. Error: [%@]", task.error);
-             }
-             if (task.exception) {
-                 NSLog(@"The request failed. Exception: [%@]", task.exception);
-             }
-             if (task.result) {
-                 CHATROOM4 *room4 = task.result;
-                 if(room4!=nil&&room4.GID!=nil){
-//                     NSLog(@"开始插入四人房间");
-                     ChatRoom4DAO *room4Dao=[[ChatRoom4DAO alloc] init];
-                     [room4Dao insertChatroom4:room4];
-                     return  room4;
-                     
-                 }
-                 //Do something with the result.
-             }
-             return nil;
-         }];
-        return nil;
-  
-}
-
-- (void)refreshList {
-    //先查询，没有在网络数据库
-    self.chatroom4s = [self.chatRoom4Dao getLocalChatRoom4ByCount:10];
-    if (self.chatroom4s == nil || [self.chatroom4s count] == 0) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        
-        AWSDynamoDBScanExpression *scanExpression = [AWSDynamoDBScanExpression new];
-        scanExpression.limit = @20;
-        
-        [[self.dynamoDBObjectMapper scan:[CHATROOM2 class]
-                         expression:scanExpression]
-         continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock: ^id (BFTask *task) {
-             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-             if (task.error) {
-                 NSLog(@"The request failed. Error: [%@]", task.error);
-             }
-             
-             if (task.exception) {
-                 NSLog(@"The request failed. Exception: [%@]", task.exception);
-             }
-             
-             AWSDynamoDBPaginatedOutput *paginatedOutput = task.result;
-             self.chatroom4s = paginatedOutput.items;
-             for (CHATROOM4 *chatroom4 in paginatedOutput.items) {
-                 if (chatroom4.GID != nil && chatroom4.UID1 != nil & chatroom4.UID2 != nil & chatroom4.UID3 != nil & chatroom4.UID4 != nil) {
-                     //插入本地数据 item
-                     if ([self.chatRoom4Dao getChatRoom4ByRid:chatroom4.GID] == nil) {
-                         [self insertChatroom4:chatroom4];
-                     }
-                     
-                     AWSDynamoDB_DDUser *userDynamoDB = [[AWSDynamoDB_DDUser alloc] init];
-                     if ([userDynamoDB.dduserDao selectDDuserByUid:chatroom4.UID1] == nil) {
-                         [userDynamoDB getDDuserAndInsertLocal:chatroom4.UID1];
-                     }
-                     if ([userDynamoDB.dduserDao selectDDuserByUid:chatroom4.UID2] == nil) {
-                         [userDynamoDB getDDuserAndInsertLocal:chatroom4.UID2];
-                     }
-                     if ([userDynamoDB.dduserDao selectDDuserByUid:chatroom4.UID3] == nil) {
-                         [userDynamoDB getDDuserAndInsertLocal:chatroom4.UID3];
-                     }
-                     if ([userDynamoDB.dduserDao selectDDuserByUid:chatroom4.UID4] == nil) {
-                         [userDynamoDB getDDuserAndInsertLocal:chatroom4.UID4];
-                     }
-                 }
-             }
-             
-             return nil;
-         }];
-    }
+- (void)deleteRoom4:(NSString *)gid {
+	CHATROOM4 *room4 = [CHATROOM4 new];
+	room4.GID = gid;
+	[[self.dynamoDBObjectMapper remove:room4] continueWithBlock: ^id (BFTask *task) {
+	    if (task.error) {
+	        NSLog(@"The request failed. Error: [%@]", task.error);
+		}
+	    if (task.exception) {
+	        NSLog(@"The request failed. Exception: [%@]", task.exception);
+		}
+	    //删除
+	    [self.chatRoom4Dao delChatRoom4ByRid:gid];
+	    return nil;
+	}];
 }
 
 
+- (CHATROOM4 *)syncGetChatroom4ByGid:(NSString *)gid {
+	BFTask *task = [self.dynamoDBObjectMapper load:[CHATROOM4 class] hashKey:gid rangeKey:nil];
+	[task waitUntilFinished];
+	return task.result;
+}
 
+- (CHATROOM4 *)syncGetChatroom4AndInsertLocal:(NSString *)gid {
+	BFTask *task = [self.dynamoDBObjectMapper load:[CHATROOM4 class] hashKey:gid rangeKey:nil];
+	[task waitUntilFinished];
+	[self.chatRoom4Dao insertChatroom4:task.result];
+	return task.result;
+}
+
+
+- (CHATROOM4 *)getChatroom4InsertLocal:(NSString *)uid {
+	[[self.dynamoDBObjectMapper load:[CHATROOM4 class] hashKey:uid rangeKey:nil]
+	 continueWithBlock: ^id (BFTask *task) {
+	    if (task.error) {
+	        NSLog(@"The request failed. Error: [%@]", task.error);
+		}
+	    if (task.exception) {
+	        NSLog(@"The request failed. Exception: [%@]", task.exception);
+		}
+	    if (task.result) {
+	        CHATROOM4 *room4 = task.result;
+	        if (room4 != nil && room4.GID != nil) {
+	            ChatRoom4DAO *room4Dao = [[ChatRoom4DAO alloc] init];
+	            [room4Dao insertChatroom4:room4];
+	            return room4;
+			}
+		}
+	    return nil;
+	}];
+	return nil;
+}
 
 @end
-
-
-
