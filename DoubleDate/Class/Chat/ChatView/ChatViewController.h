@@ -14,14 +14,10 @@
 #import "CHATROOM4.h"
 @interface ChatViewController : UIViewController
 
-- (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup isSubGroup:(BOOL) isSubGroup;
+- (instancetype)initWithChatter:(NSString *)chatter isGroup:(BOOL)isGroup isSubGroup:(BOOL)isSubGroup;
 
 - (void)reloadData;
 
-
--(id)initRoom4:(CHATROOM4 *) room4 friend:(NSString *) friend isNewRoom:(BOOL) isNewRoom;
-
--(void)createTwoMainNewGroup;
-
+- (id)initRoom4:(CHATROOM4 *)room4 friend:(NSString *)friend isNewRoom:(BOOL)isNewRoom;
 
 @end

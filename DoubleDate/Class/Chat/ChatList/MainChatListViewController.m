@@ -8,7 +8,6 @@
 
 #import "MainChatListViewController.h"
 #import "SRRefreshView.h"
-#import "ChatListCell.h"
 #import "EMSearchBar.h"
 #import "NSDate+Category.h"
 #import "RealtimeSearchUtil.h"
@@ -142,44 +141,40 @@
 
 - (UITableView *)tableView {
     if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.searchBar.frame.size.height) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.searchBar.frame.size.height)];
         _tableView.backgroundColor = [UIColor whiteColor];
-        _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableFooterView = [[UIView alloc] init];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [_tableView registerClass:[ChatListCell class] forCellReuseIdentifier:@"chatListCell"];
-        
-        // _tableView.tableHeaderView = [self tableHeaderView];
     }
     
     return _tableView;
 }
 
-- (UIView*) tableHeaderView {
-    if (_tableHeaderView == nil) {
-        _tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_tableView.bounds), 50)];
-        UIImageView *head=[[UIImageView alloc]initWithFrame:CGRectMake(10,5, 40, 40)];
-        head.image=[UIImage imageNamed:@"Hi"];
-        [_tableHeaderView addSubview:head];
-        UILabel *name=[[UILabel alloc]initWithFrame:CGRectMake(60, 12, 200, 30)];
-        name.text=@"两人窃窃私语";;
-        [_tableHeaderView addSubview:name];
-        
-        _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, 20, 20)];
-        _unreadLabel.backgroundColor = [UIColor redColor];
-        _unreadLabel.textColor = [UIColor whiteColor];
-        
-        _unreadLabel.textAlignment = NSTextAlignmentCenter;
-        _unreadLabel.font = [UIFont systemFontOfSize:11];
-        _unreadLabel.layer.cornerRadius = 10;
-        _unreadLabel.clipsToBounds = YES;
-        [_tableHeaderView addSubview:_unreadLabel];
-        [_unreadLabel setHidden: YES];
-    }
-    
-    return _tableHeaderView;
+- (UIView *)tableHeaderView {
+	if (_tableHeaderView == nil) {
+		_tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_tableView.bounds), 50)];
+		UIImageView *head = [[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 40, 40)];
+		head.image = [UIImage imageNamed:@"Hi"];
+		[_tableHeaderView addSubview:head];
+		UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(60, 12, 200, 30)];
+		name.text = @"两人窃窃私语";
+		[_tableHeaderView addSubview:name];
+
+		_unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, 20, 20)];
+		_unreadLabel.backgroundColor = [UIColor redColor];
+		_unreadLabel.textColor = [UIColor whiteColor];
+
+		_unreadLabel.textAlignment = NSTextAlignmentCenter;
+		_unreadLabel.font = [UIFont systemFontOfSize:11];
+		_unreadLabel.layer.cornerRadius = 10;
+		_unreadLabel.clipsToBounds = YES;
+		[_tableHeaderView addSubview:_unreadLabel];
+		[_unreadLabel setHidden:YES];
+	}
+
+	return _tableHeaderView;
 }
 
 - (EMSearchDisplayController *)searchController {
@@ -190,33 +185,16 @@
         
         __weak MainChatListViewController *weakSelf = self;
         [_searchController setCellForRowAtIndexPathCompletion: ^UITableViewCell *(UITableView *tableView, NSIndexPath *indexPath) {
-            static NSString *CellIdentifier = @"ChatListCell";
-            ChatListCell *cell = (ChatListCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            static NSString *CellIdentifier = @"chatRoom4ListCell";
+            ChatRoom4ListCell *cell = (ChatRoom4ListCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             
             // Configure the cell...
             if (cell == nil) {
-                cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                cell = [[ChatRoom4ListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
             
             EMConversation *conversation = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            cell.name = conversation.chatter;
-            if (!conversation.isGroup) {
-                cell.placeholderImage = [UIImage imageNamed:@"chatListCellHead.png"];
-            } else {
-                NSString *imageName = @"groupPublicHeader";
-                NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
-                for (EMGroup *group in groupArray) {
-                    if ([group.groupId isEqualToString:conversation.chatter]) {
-                        cell.name = group.groupSubject;
-                        imageName = group.isPublic ? @"groupPublicHeader" : @"groupPrivateHeader";
-                        break;
-                    }
-                }
-                cell.placeholderImage = [UIImage imageNamed:imageName];
-            }
-            cell.detailMsg = [weakSelf subTitleMessageByConversation:conversation];
-            
-            cell.time = [weakSelf lastMessageTimeByConversation:conversation];
+            cell.timeLabel.text = [weakSelf lastMessageTimeByConversation:conversation];
             cell.unreadCount = conversation.unreadMessagesCount;
             if (indexPath.row % 2 == 1) {
                 cell.contentView.backgroundColor = RGBACOLOR(246, 246, 246, 1);
@@ -227,7 +205,7 @@
         }];
         
         [_searchController setHeightForRowAtIndexPathCompletion: ^CGFloat (UITableView *tableView, NSIndexPath *indexPath) {
-            return [ChatListCell tableView:tableView heightForRowAtIndexPath:indexPath];
+            return [ChatRoom4ListCell tableView:tableView heightForRowAtIndexPath:indexPath];
         }];
         
         [_searchController setDidSelectRowAtIndexPathCompletion: ^(UITableView *tableView, NSIndexPath *indexPath) {
@@ -519,8 +497,8 @@
         unreadCnt += c.unreadMessagesCount;
     }];
     dispatch_async(dispatch_get_main_queue(), ^(){
-        _unreadLabel.text = [NSString stringWithFormat:@"%d", unreadCnt];
-        _unreadLabel.hidden = (unreadCnt == 0);
+        self->_unreadLabel.text = [NSString stringWithFormat:@"%d", unreadCnt];
+        self->_unreadLabel.hidden = (unreadCnt == 0);
     });
 }
 
@@ -542,41 +520,37 @@
 #pragma mark - public
 
 - (void)refreshDataSource {
-    _loading = YES;
-    if ([self isBeingPresented]) {
-        [SVProgressHUD show];
-    }
-    
-    [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion: ^(NSArray *groups, EMError *error) {
-        if (!error) {
-            NSMutableArray* rooms = [[NSMutableArray alloc] init];
-            for (EMGroup *group in groups) {
-                if (group.occupants.count == 4) {
-                    CHATROOM4 * room = [self.chatRoom4DynamoDB syncGetChatroom4AndInsertLocal:group.groupId];
-                    [rooms addObject: room];
-                }
-            }
-            NSArray *sortedArray = [rooms sortedArrayUsingComparator:
-                                    ^(CHATROOM4 *obj1, CHATROOM4 *obj2) {
-                                        return [obj1.systemTimeNumber compare:obj2.systemTimeNumber];
-                                    }];
-            
-            dispatch_async(dispatch_get_main_queue(), ^(){
-                self->_loading = NO;
-                [SVProgressHUD dismiss];
-                [self.dataSource removeAllObjects];
-                for (CHATROOM4* room in sortedArray) {
-                    if ([room hasTimeout]) {
-                        continue;
-                    }
-                    [self.dataSource addObject:room];
-                }
-                [self.tableView reloadData];
-                [self hideHud];
-            });
-            
-        }
-    } onQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+	_loading = YES;
+	if ([self isBeingPresented]) {
+		[SVProgressHUD show];
+	}
+
+	[[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion: ^(NSArray *groups, EMError *error) {
+	    if (!error) {
+	        NSMutableArray *rooms = [[NSMutableArray alloc] init];
+	        for (EMGroup *group in groups) {
+	            CHATROOM4 *room = [self.chatRoom4DynamoDB syncGetChatroom4AndInsertLocal:group.groupId];
+	            if (room.GID) {
+	                [rooms addObject:room];
+				}
+			}
+	        NSArray *sortedArray = [rooms sortedArrayUsingComparator:
+	                                ^(CHATROOM4 *obj1, CHATROOM4 *obj2) {
+	            return [obj1.systemTimeNumber compare:obj2.systemTimeNumber];
+			}];
+
+	        self->_loading = NO;
+	        [SVProgressHUD dismiss];
+	        [self.dataSource removeAllObjects];
+	        for (CHATROOM4 *room in sortedArray) {
+	            if ([room hasTimeout]) {
+	                continue;
+				}
+	            [self.dataSource addObject:room];
+			}
+	        [self->_tableView reloadData];
+		}
+	} onQueue:dispatch_get_main_queue()];
 }
 
 

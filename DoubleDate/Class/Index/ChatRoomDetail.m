@@ -319,21 +319,6 @@
 	                                                     styleSetting:groupStyleSetting
 	                                                       completion: ^(EMGroup *group, EMError *error) {
 	    if (!error) {
-	        self.chatroom4 = [CHATROOM4 new];
-	        self.chatroom4.GID = group.groupId;
-	        self.chatroom4.RID = self.chatroom2.RID;
-	        self.chatroom4.UID1 = self.chatroom2.UID1;
-	        self.chatroom4.UID2 = self.chatroom2.UID2;
-            self.chatroom4.UID3 = [DDDataManager sharedManager].user.UID;
-	        self.chatroom4.isLikeUID1 = [NSNumber numberWithInt:0];
-	        self.chatroom4.isLikeUID2 = [NSNumber numberWithInt:0];
-	        self.chatroom4.isLikeUID3 = [NSNumber numberWithInt:0];
-	        self.chatroom4.isLikeUID4 = [NSNumber numberWithInt:0];
-	        self.chatroom4.roomStatus = @"New";
-
-	        AWSDynamoDB_ChatRoom4 *chatroom4DB = [[AWSDynamoDB_ChatRoom4 alloc]init];
-	        [chatroom4DB insertChatroom4:self.chatroom4];
-            self->_emgroup = group;
             dispatch_async(dispatch_get_main_queue(), ^(){
                 self->_emgroup = group;
                 [self tryAddToGroup];
@@ -345,8 +330,6 @@
 #pragma mark - EMChooseViewDelegate
 
 - (void)viewController:(EMChooseViewController *)viewController didFinishSelectedSources:(NSArray *)selectedSources {
-	[self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
-
 	id obj = [selectedSources objectAtIndex:0];
 	if ([obj isKindOfClass:[EMBuddy class]]) {
         dispatch_async(dispatch_get_main_queue(), ^(){
@@ -356,26 +339,55 @@
 	}
 }
 
-- (void) tryAddToGroup {
-    if (! _embuddy) {
-        return;
-    }
-    if (! _emgroup) {
-        return;
-    }
-    if (_state > 0) {
-        return;
-    }
-    
-    _state = 1;
-    NSString *doublerId = _embuddy.username;
+- (void)tryAddToGroup {
+	if (!_embuddy) {
+		return;
+	}
+	if (!_emgroup) {
+		return;
+	}
+	if (_state > 0) {
+		return;
+	}
+
+	[self showHint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
+	_state = 1;
+	NSString *doublerId = _embuddy.username;
 	EMError *error = nil;
 	[[EaseMob sharedInstance].chatManager addOccupants:@[doublerId] toGroup:_emgroup.groupId welcomeMessage:@"邀请信息" error:&error];
 	[self hideHud];
 
 	if (!error) {
-		[self showHudInView:self.view hint:NSLocalizedString(@"group.create.success", @"create group success")];
-        
+		[self showHint:NSLocalizedString(@"group.create.success", @"create group success")];
+
+		self.chatroom4 = [CHATROOM4 new];
+        self.chatroom4.GID = _emgroup.groupId;
+		self.chatroom4.RID = self.chatroom2.RID;
+		self.chatroom4.UID1 = self.chatroom2.UID1;
+		self.chatroom4.UID2 = self.chatroom2.UID2;
+		self.chatroom4.UID3 = [DDDataManager sharedManager].user.UID;
+		self.chatroom4.UID4 = doublerId;
+
+		self.chatroom4.isLikeUID1 = [NSNumber numberWithInt:0];
+		self.chatroom4.isLikeUID2 = [NSNumber numberWithInt:0];
+		self.chatroom4.isLikeUID3 = [NSNumber numberWithInt:0];
+		self.chatroom4.isLikeUID4 = [NSNumber numberWithInt:0];
+
+		self.chatroom4.roomStatus = @"New";
+		NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+		[formatter setDateFormat:@"yyyyMMdd_HHmmss"];
+		self.chatroom4.CTIMER = [formatter stringFromDate:[NSDate date]];
+		self.chatroom4.CTIMEH = @"Time";
+		self.chatroom4.systemTimeNumber = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000];
+
+
+		AWSDynamoDB_ChatRoom4 *chatroom4DB = [[AWSDynamoDB_ChatRoom4 alloc]init];
+		[chatroom4DB insertChatroom4:self.chatroom4];
+
+		ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:_emgroup.groupId isGroup:YES isSubGroup:NO] initRoom4:self.chatroom4 friend:doublerId isNewRoom:YES];
+		chatController.title = self.chatroom2.Motto;
+		[self.navigationController pushViewController:chatController animated:YES];
+
 		EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
 		groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin;
 		[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[Util str1:self->_emgroup.groupId appendStr2:@"_subID2"]
@@ -384,28 +396,32 @@
 		                                            initialWelcomeMessage:@"邀请您加入群组"
 		                                                     styleSetting:groupStyleSetting
 		                                                       completion: ^(EMGroup *group, EMError *error) {
-		    [self hideHud];
-            self->_state = 2;
+		    self->_state = 2;
 		    if (!error) {
+		        self.chatroom4.subGID2 = group.groupId;
 		        AWSDynamoDB_ChatRoom4 *chatroom4DB = [[AWSDynamoDB_ChatRoom4 alloc]init];
-                self.chatroom4.UID4 = doublerId;
-                self.chatroom4.subGID2 = group.groupId;
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"yyyyMMdd_HHmmss"];
-                self.chatroom4.CTIMER = [formatter stringFromDate:[NSDate date]];
-                self.chatroom4.CTIMEH = @"Time";
-                self.chatroom4.systemTimeNumber = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] * 1000];
-		        [chatroom4DB updateChatroom4:self.chatroom4];
-
-		        ChatViewController *chatController = [[[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:NO] initRoom4:self.chatroom4 friend:doublerId isNewRoom:YES];
-		        chatController.title = self.chatroom2.Motto;
-		        [self.navigationController pushViewController:chatController animated:YES];
+		        [chatroom4DB updateSubGroupTable:self.chatroom4];
 			} else {
 		        [self showHint:[NSString stringWithFormat:@"创建两人私密群聊失败, error: %@", error]];
 			}
-		} onQueue: dispatch_get_main_queue()];
+		} onQueue:dispatch_get_main_queue()];
+        
+        _embuddy = nil;
+        _emgroup = nil;
+        _state = 0;
 	} else {
-		NSLog(@"加入第四个人失败, error: %@", error);
+		[[EaseMob sharedInstance].chatManager asyncDestroyGroup:_emgroup.groupId completion: ^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
+		    if (error) {
+		        NSLog(@"destroy three group %@ failed. error: %@", self->_emgroup.groupId, error);
+			} else {
+		        NSLog(@"destroy three group %@ success.", self->_emgroup.groupId);
+			}
+		} onQueue:nil];
+        [self showHint:@"加入第四个人失败"];
+        
+        _embuddy = nil;
+        _emgroup = nil;
+        _state = 0;
 	}
 }
 

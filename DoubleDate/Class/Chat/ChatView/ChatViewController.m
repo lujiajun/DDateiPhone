@@ -78,10 +78,12 @@
 @property (nonatomic) BOOL isScrollToBottom;
 @property (strong, nonatomic) UILabel *lab;
 @property (nonatomic) BOOL isPlayingAudio;
+
 @property (strong, nonatomic) NSTimer *countDownTimer;
 @property (strong, nonatomic) CHATROOM4 *chatroom4;
 @property (strong, nonatomic) NSString *friendname;
 @property (strong, nonatomic) DDUser *friend;
+@property (strong, nonatomic) NSString *subGroupId;
 @property (strong, nonatomic) DDUserDAO *userDao;
 @property (strong, nonatomic) UIButton *view1;
 
@@ -164,6 +166,12 @@ NSDateFormatter *dateformatter;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    [self.navigationItem setLeftBarButtonItem:backItem];
+
     _userDao=[[DDUserDAO alloc] init];
     
     //使用timer定时，每秒触发一次，然后就是写selector了。
@@ -382,57 +390,77 @@ NSDateFormatter *dateformatter;
 }
 
 - (void)dragInside {
-	//好友的name //创建两人聊天室，并添加到四人表中
+    [self updateChatRoom4];
+    if (self.subGroupId) {
+        ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:self.subGroupId isGroup:NO isSubGroup:YES];
+        [self.navigationController pushViewController:chatController animated:YES];
+    } else {
+        [self showHint:@"正在创建两人私密会话，请稍后"];
+        [self createSubGroup];
+    }
+}
+
+- (void)updateChatRoom4 {
 	NSString *username = [[[EaseMob sharedInstance].chatManager loginInfo] objectForKey:kSDKUsername];
-	if ([_chatroom4.UID1 isEqualToString:username] || [_chatroom4.UID2 isEqualToString:username]) {
-		if (_chatroom4.subGID1 != nil) {
-			//跳到原来的房间
-			ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:_chatroom4.subGID1 isGroup:NO isSubGroup:YES];
-			[self.navigationController pushViewController:chatController animated:YES];
-		} else {
-			//新建
-			[self doneAction:self];
-		}
-	} else {
-		ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:_chatroom4.subGID2 isGroup:NO isSubGroup:YES];
-		[self.navigationController pushViewController:chatController animated:YES];
+	AWSDynamoDB_ChatRoom4 *roo4db = [[AWSDynamoDB_ChatRoom4 alloc] init];
+	CHATROOM4 *room4 = [roo4db syncGetChatroom4AndInsertLocal:self.chatroom4.GID];
+    self.chatroom4 = room4;
+    
+	if ([room4.UID1 isEqualToString:username]) {
+		self.friendname = room4.UID2;
+		self.subGroupId = room4.subGID1;
+	}
+
+	if ([room4.UID2 isEqualToString:username]) {
+		self.friendname = room4.UID1;
+		self.subGroupId = room4.subGID1;
+	}
+
+	if ([room4.UID3 isEqualToString:username]) {
+		self.friendname = room4.UID4;
+		self.subGroupId = room4.subGID2;
+	}
+
+	if ([room4.UID4 isEqualToString:username]) {
+		self.friendname = room4.UID3;
+		self.subGroupId = room4.subGID2;
 	}
 }
 
-- (void)doneAction:(id)sender
-{
-	[[NSNotificationCenter defaultCenter] addObserver:self
-	                                         selector:@selector(createTwoMainNewGroup)
-	                                             name:@"createTwoMainNewGroup"
-	                                           object:nil];
-
-
-	[self showHudInView:self.view hint:NSLocalizedString(@"group.create.ongoing", @"create a group...")];
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"createTwoMainNewGroup" object:@NO];
-}
-
-- (void)createTwoMainNewGroup {
+- (void)createSubGroup {
 	EMGroupStyleSetting *groupStyleSetting = [[EMGroupStyleSetting alloc] init];
 	groupStyleSetting.groupStyle = eGroupStyle_PublicOpenJoin;
-	[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[Util str1:self.chatroom4.GID appendStr2:@"_subID1"]
+
+	[[EaseMob sharedInstance].chatManager asyncCreateGroupWithSubject:[Util str1:self.chatroom4.GID appendStr2:[self isSubGroup1] ? @"_subID1" : @"_subID2"]
 	                                                      description:@"创建四人聊天室的一对的私密群聊"
-	                                                         invitees:@[_chatroom4.UID1, _chatroom4.UID2]
+	                                                         invitees:@[self.friendname]
 	                                            initialWelcomeMessage:@"邀请您加入群组"
 	                                                     styleSetting:groupStyleSetting
 	                                                       completion: ^(EMGroup *group, EMError *error) {
 	    if (!error) {
-	        self.chatroom4.subGID1 = group.groupId;
+            
+            if ([self subGroupId]) {
+                self.chatroom4.subGID1 = group.groupId;
+            } else {
+                self.chatroom4.subGID2 = group.groupId;
+            }
 
 	        AWSDynamoDB_ChatRoom4 *room4Da = [[AWSDynamoDB_ChatRoom4 alloc] init];
 	        [room4Da updateSubGroupTable:self.chatroom4];
 
-	        ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES isSubGroup:YES];
-	        chatController.title = @"临时聊天室";
-	        [self.navigationController pushViewController:chatController animated:YES];
-
-	        NSLog(@"创建成功 -- %@", group);
+            [self showHint:@"创建两人私密会话成功"];
 		}
 	} onQueue:nil];
+}
+
+- (BOOL)isSubGroup1 {
+	NSString *username = [[[EaseMob sharedInstance].chatManager loginInfo] objectForKey:kSDKUsername];
+
+	if ([username isEqualToString:self.chatroom4.UID1] || [username isEqualToString:self.chatroom4.UID2]) {
+		return YES;
+	} else {
+		return NO;
+	}
 }
 
 //顶部bar
