@@ -29,4 +29,6 @@
 #define DD_PHOTO_URL(name, idx) [NSString stringWithFormat:@"%@%@_photo_%@.jpeg", DD_PHOTO_SERVER, name,idx]
 #define DD_PHOTO_KEY(name, idx) [NSString stringWithFormat:@"%@_photo_%@.jpeg", name,idx]
 
+#define TAB_BAR_HEIGHT self.tabBarController.tabBar.frame.size.height
+
 #endif

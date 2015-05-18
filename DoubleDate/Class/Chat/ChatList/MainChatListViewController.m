@@ -536,21 +536,23 @@
 			}
 	        NSArray *sortedArray = [rooms sortedArrayUsingComparator:
 	                                ^(CHATROOM4 *obj1, CHATROOM4 *obj2) {
-	            return [obj1.systemTimeNumber compare:obj2.systemTimeNumber];
+	            return [obj2.systemTimeNumber compare:obj1.systemTimeNumber];
 			}];
 
-	        self->_loading = NO;
-	        [SVProgressHUD dismiss];
-	        [self.dataSource removeAllObjects];
-	        for (CHATROOM4 *room in sortedArray) {
-	            if ([room hasTimeout]) {
-	                continue;
+	        dispatch_async(dispatch_get_main_queue(), ^() {
+				self->_loading = NO;
+				[SVProgressHUD dismiss];
+				[self.dataSource removeAllObjects];
+				for (CHATROOM4 *room in sortedArray) {
+				    if ([room hasTimeout]) {
+				        continue;
+					}
+				    [self.dataSource addObject:room];
 				}
-	            [self.dataSource addObject:room];
-			}
-	        [self->_tableView reloadData];
+				[self->_tableView reloadData];
+			});
 		}
-	} onQueue:dispatch_get_main_queue()];
+	} onQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
 }
 
 

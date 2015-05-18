@@ -203,20 +203,18 @@ NSDateFormatter *dateformatter;
     [self.tableView addSubview:self.slimeView];
     [self.tableView setUserInteractionEnabled:YES];
     
-	if (!_isSubGroup && _isChatGroup) {
+	if (_isChatGroup && !_isSubGroup) {
 		[self.view addSubview:[self getFriendFrame]];
-	}
-    
-	if (_isChatGroup) {
+
 		if ([self.chatroom4 count] < 4) {
 			NSTimeInterval currentSeconds = [[NSDate date] timeIntervalSince1970];
 			//计算倒计时时间
-			if ([self.chatroom4.systemTimeNumber longLongValue]/1000 + TOTAL_SECONDS < currentSeconds) {
+			if ([self.chatroom4.systemTimeNumber longLongValue] / 1000 + TOTAL_SECONDS < currentSeconds) {
 				[self dissolvegRroup];
 				return;
 			}
 			_countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
-			secondsCountDown = TOTAL_SECONDS - (NSTimeInterval) (currentSeconds - [self.chatroom4.systemTimeNumber longLongValue] / 1000);
+			secondsCountDown = TOTAL_SECONDS - (NSTimeInterval)(currentSeconds - [self.chatroom4.systemTimeNumber longLongValue] / 1000);
 		}
 
 		UIView *bak = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 60, 10, 200, 25)];
@@ -392,7 +390,7 @@ NSDateFormatter *dateformatter;
 - (void)dragInside {
     [self updateChatRoom4];
     if (self.subGroupId) {
-        ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:self.subGroupId isGroup:NO isSubGroup:YES];
+        ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:self.subGroupId isGroup:YES isSubGroup:YES];
         [self.navigationController pushViewController:chatController animated:YES];
     } else {
         [self showHint:@"正在创建两人私密会话，请稍后"];
@@ -466,21 +464,19 @@ NSDateFormatter *dateformatter;
 //顶部bar
 - (void)setupBarButtonItem
 {
-    
-    if (_isChatGroup) {
-        //跳转到详情页面，需要修改
-        
-        UIButton *detailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-        [detailButton setImage:[UIImage imageNamed:@"group_detail"] forState:UIControlStateNormal];
-        [detailButton addTarget:self action:@selector(showRoomContact:) forControlEvents:UIControlEventTouchUpInside];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:detailButton];
-    }
-    else{
-        UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-        [clearButton setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
-        [clearButton addTarget:self action:@selector(removeAllMessages:) forControlEvents:UIControlEventTouchUpInside];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:clearButton];
-    }
+	if (_isChatGroup && !_isSubGroup) {
+		//跳转到详情页面，需要修改
+
+		UIButton *detailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+		[detailButton setImage:[UIImage imageNamed:@"group_detail"] forState:UIControlStateNormal];
+		[detailButton addTarget:self action:@selector(showRoomContact:) forControlEvents:UIControlEventTouchUpInside];
+		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:detailButton];
+	} else {
+		UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+		[clearButton setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+		[clearButton addTarget:self action:@selector(removeAllMessages:) forControlEvents:UIControlEventTouchUpInside];
+		self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:clearButton];
+	}
 }
 
 - (void)didReceiveMemoryWarning
