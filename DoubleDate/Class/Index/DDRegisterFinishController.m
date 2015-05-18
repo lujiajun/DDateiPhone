@@ -92,13 +92,13 @@ static DDUser   *dduser;
     [_imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClick:)]];
     
     //nickname
-    _nickname=[[UILabel alloc]initWithFrame:CGRectMake(10, _imageView.frame.origin.y+_imageView.frame.size.height+10, 60, 30)];
+    _nickname=[[UILabel alloc]initWithFrame:CGRectMake(10, _imageView.frame.origin.y+_imageView.frame.size.height+10, 60, 40)];
     _nickname.text=@"昵称:";
-    _nickname.font=[UIFont fontWithName:@"Helvetica" size:12];
+    _nickname.font=[UIFont fontWithName:@"Helvetica" size:14];
     _nickname.textAlignment=NSTextAlignmentLeft;
     [scrollView addSubview:_nickname];
     
-    _nicknamevalue=[[UITextField alloc]initWithFrame:CGRectMake(_nickname.frame.size.width+4, _nickname.frame.origin.y, self.view.frame.size.width-70, 30)];
+    _nicknamevalue=[[UITextField alloc]initWithFrame:CGRectMake(_nickname.frame.size.width+4, _nickname.frame.origin.y, self.view.frame.size.width-70, 40)];
     _nicknamevalue.placeholder=@"填写昵称";
     _nicknamevalue.textAlignment=NSTextAlignmentLeft;
     [_nicknamevalue setBorderStyle:UITextBorderStyleRoundedRect];
@@ -106,79 +106,49 @@ static DDUser   *dduser;
     _nicknamevalue.delegate = self;
     
     //性别
-    UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(10,_nickname.frame.origin.y+ 35 , 50, 30)];
+    UILabel *gender=[[UILabel alloc]initWithFrame:CGRectMake(10,_nickname.frame.origin.y+ 45 , 50, 30)];
     gender.text=@"性别:";
-    gender.font=[UIFont fontWithName:@"Helvetica" size:12];
+    gender.font=[UIFont fontWithName:@"Helvetica" size:14];
     gender.textAlignment=NSTextAlignmentLeft;
     [scrollView addSubview:gender];
     
-//    NSArray* genderItems = @[
-//                             [UIImage imageNamed:@"sexboy"],
-//                             [UIImage imageNamed:@"sexgirl"]];
     NSArray* genderItems = @[@"男", @"女"];
     _genderControl = [[UISegmentedControl alloc] initWithItems:genderItems];
-    _genderControl.frame = CGRectMake(60, _nickname.frame.origin.y+ 35, 80, 25);
+    _genderControl.frame = CGRectMake(gender.frame.origin.x+gender.frame.size.width+5, gender.frame.origin.y+5, 80, 25);
     _genderControl.selectedSegmentIndex = 0;
     [scrollView addSubview:_genderControl];
-    //
-    //    _gendervalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4,_nickname.frame.origin.y+ 35, 120, 30)];
-    //    _gendervalue.placeholder=@"性别";
-    //    [_gendervalue setBorderStyle:UITextBorderStyleRoundedRect];
-    //    _gendervalue.textAlignment=NSTextAlignmentLeft;
-    //    [self.view addSubview:_gendervalue];
-    
-    //学校
-    //    UILabel *university=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*3+10, 60, 30)];
-    //    university.text=@"学校:";
-    //    university.textAlignment=NSTextAlignmentLeft;
-    //    [self.view addSubview:university];
-    //    UILabel *universityvalue=[[UILabel alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*3+10, 180, 30)];
-    //    universityvalue.text=_university;
-    //    universityvalue.textAlignment=NSTextAlignmentLeft;
-    //    [self.view addSubview:universityvalue];
-    //
+  
     //城市
-    UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(10, _genderControl.frame.origin.y+35, 50, 30)];
+    UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(10, _genderControl.frame.origin.y+_genderControl.frame.size.height+5, 50, 40)];
     
-    city.text=@"城市:     ";
-    city.font=[UIFont fontWithName:@"Helvetica" size:12];
+    city.text=@"城市:";
+    city.font=[UIFont fontWithName:@"Helvetica" size:14];
     city.textAlignment=NSTextAlignmentLeft;
     [scrollView addSubview:city];
     
-    UILabel *cityValue=[[UILabel alloc]initWithFrame:CGRectMake(city.frame.origin.x+city.frame.size.width, city.frame.origin.y, self.view.frame.size.width-60, 30)];
+    UILabel *cityValue=[[UILabel alloc]initWithFrame:CGRectMake(city.frame.origin.x+city.frame.size.width+3, city.frame.origin.y, self.view.frame.size.width-60, 40)];
     cityValue.text=_city;
     cityValue.textAlignment=NSTextAlignmentLeft;
     [scrollView  addSubview:cityValue];
     
-    
-    //年级
-    //    UILabel *grade=[[UILabel alloc]initWithFrame:CGRectMake(10, _nickname.frame.size.height*5+10, 60, 30)];
-    //    grade.text=@"年级:";
-    //    grade.textAlignment=NSTextAlignmentLeft;
-    //    [self.view addSubview:grade];
-    //    _gradevalue=[[UITextField alloc]initWithFrame:CGRectMake(gender.frame.size.width+4, _nickname.frame.size.height*5+10, 180, 30)];
-    //    [_gradevalue setBorderStyle:UITextBorderStyleRoundedRect];
-    //    _gradevalue.placeholder=@"gradevalue";
-    //    _gradevalue.textAlignment=NSTextAlignmentLeft;
-    //    [self.view addSubview:_gradevalue];
-    
     //出生日期
-    UITextField *birdate=[[UITextField alloc]initWithFrame:CGRectMake(10,city.frame.origin.y+35, 70, 30)];
+    UILabel *birdate=[[UILabel alloc]initWithFrame:CGRectMake(10,city.frame.origin.y+40, 70, 40)];
     birdate.text=@"出生日期:";
     birdate.textAlignment=NSTextAlignmentLeft;
-    birdate.font=[UIFont fontWithName:@"Helvetica" size:12];
+    birdate.font=[UIFont fontWithName:@"Helvetica" size:14];
     [scrollView addSubview:birdate];
-    _birdatevalue=[[UITextField alloc]initWithFrame:CGRectMake(70, city.frame.origin.y+33, 200, 30)];
+    _birdatevalue=[[UITextField alloc]initWithFrame:CGRectMake(70, city.frame.origin.y+33, self.view.frame.size.width-80, 40)];
     _birdatevalue.placeholder=@"birthday";
     _birdatevalue.textAlignment=NSTextAlignmentLeft;
     [_birdatevalue setBorderStyle:UITextBorderStyleRoundedRect];
     [scrollView addSubview:_birdatevalue];
     _birdatevalue.delegate = self;
     
-    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, birdate.frame.origin.y+33, self.view.frame.size.width, 30)];
+    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(20,_birdatevalue.frame.origin.y+_birdatevalue.frame.size.height+20, self.view.frame.size.width-40, 45)];
     registerButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [registerButton setTitle:@"注册" forState:UIControlStateNormal];
     [scrollView addSubview:registerButton];
+    registerButton.titleLabel.font = [UIFont systemFontOfSize:20.0];
     [registerButton addTarget:self action:@selector(registerUser) forControlEvents:UIControlEventTouchUpInside];
     
 }

@@ -45,6 +45,13 @@ static DDUser   *dduser;
     
     [super viewDidLoad];
     self.title = @"注册";
+    //隐藏导航栏上得文字
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
+    
+                                                         forBarMetrics:UIBarMetricsDefault];
+
     //背景
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
@@ -54,28 +61,33 @@ static DDUser   *dduser;
     [self.view addSubview:imageView];
    
    
-    _usernameTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 10, 250, 30)];
+    _usernameTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width-20, 40)];
     [_usernameTextField setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
     _usernameTextField.placeholder = @"请输入11位手机号"; //默认显示的字
     _usernameTextField.userInteractionEnabled=YES;
 
     [imageView addSubview:_usernameTextField];
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(260, 10, 50, 30)];
-    [button setImage:[UIImage imageNamed:@"getCode.png"] forState:UIControlStateNormal];
-    button.layer.cornerRadius = 5;
-    button.layer.masksToBounds = YES;
-    [imageView addSubview:button];
-    [button addTarget:self action:@selector(getCode) forControlEvents:UIControlEventTouchUpInside];
-
-     _code = [[UITextField alloc] initWithFrame:CGRectMake(0, 45, 250, 30)];
+  
+     _code = [[UITextField alloc] initWithFrame:CGRectMake(10, _usernameTextField.frame.origin.y+_usernameTextField.frame.size.height+10, 250, 40)];
     [_code setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
     _code.keyboardType = UIKeyboardTypeNumberPad;
     _code.placeholder = @"请输入验证码"; //默认显示的字
     [imageView addSubview:_code];
     _code.delegate = self;
     
-    _passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 80, 250, 30)];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(_code.frame.origin.x+_code.frame.size.width+5, _code.frame.origin.y, 100, _code.frame.size.height)];
+    button.backgroundColor=RGBACOLOR(232, 79, 60, 1);
+    [button setTitle:@"获取验证码" forState:UIControlStateNormal];
+
+    button.titleLabel.font = [UIFont systemFontOfSize:14.0];
+//    button.layer.cornerRadius = 5;
+//    button.layer.masksToBounds = YES;
+    [imageView addSubview:button];
+    [button addTarget:self action:@selector(getCode) forControlEvents:UIControlEventTouchUpInside];
+
+    _passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, _code.frame.origin.y+_code
+                                                                       .frame.size.height+10, self.view.frame.size.width-20, 40)];
     _passwordTextField.returnKeyType = UIReturnKeyGo;
     _passwordTextField.secureTextEntry = YES;
     [_passwordTextField setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
@@ -84,10 +96,12 @@ static DDUser   *dduser;
     [imageView addSubview:_passwordTextField];
     _passwordTextField.delegate = self;
     
-    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 120, self.view.frame.size.width, 30)];
+    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(10,  _passwordTextField.frame.origin.y+_passwordTextField
+                                                                          .frame.size.height+20, self.view.frame.size.width-20, 45)];
     registerButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [registerButton setTitle:@"下一步" forState:UIControlStateNormal];
     [imageView addSubview:registerButton];
+    registerButton.titleLabel.font = [UIFont systemFontOfSize:20.0];
     [registerButton addTarget:self action:@selector(doRegister) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -112,21 +126,21 @@ static DDUser   *dduser;
         if (_usernameTextField.text.length!=11)
         {
             //手机号码不正确
-            UIAlertView* alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"notice", nil)
-                                                          message:NSLocalizedString(@"errorphonenumber", nil)
+            UIAlertView* alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"提示", nil)
+                                                          message:NSLocalizedString(@"错误的电话号码", nil)
                                                          delegate:self
-                                                cancelButtonTitle:NSLocalizedString(@"sure", nil)
+                                                cancelButtonTitle:NSLocalizedString(@"确定", nil)
                                                 otherButtonTitles:nil, nil];
             [alert show];
             return;
         }
     }
-    NSString* str=[NSString stringWithFormat:@"%@:%@ %@",NSLocalizedString(@"willsendthecodeto", nil),@"+86",_usernameTextField.text];
+    NSString* str=[NSString stringWithFormat:@"%@:%@ %@",NSLocalizedString(@"我们将要发送验证码到", nil),@"+86",_usernameTextField.text];
     
-    UIAlertView* alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"surephonenumber", nil)
+    UIAlertView* alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"电话确认", nil)
                                                   message:str delegate:self
-                                        cancelButtonTitle:NSLocalizedString(@"cancel", nil)
-                                        otherButtonTitles:NSLocalizedString(@"sure", nil), nil];
+                                        cancelButtonTitle:NSLocalizedString(@"取消", nil)
+                                        otherButtonTitles:NSLocalizedString(@"确认", nil), nil];
     [alert show];
 }
 

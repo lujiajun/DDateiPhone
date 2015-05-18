@@ -45,9 +45,12 @@
     _usernameTextField.delegate = self;
     
     [_useIpSwitch setOn:[[EaseMob sharedInstance].chatManager isUseIp] animated:YES];
-    
-    
+
+    //隐藏导航栏上得文字
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
+                                                         forBarMetrics:UIBarMetricsDefault];
     //背景
+    self.view.backgroundColor =[UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1.0];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
     imageView.image = [UIImage imageNamed:@"registerbak.png"];
@@ -57,22 +60,23 @@
     
     
     self.title = @"登录";
-    _usernameTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 10, self.view.frame.size.width, 30)];
+    _usernameTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width-20, 40)];
     [_usernameTextField setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
     _usernameTextField.placeholder = @"请输入用户名"; //默认显示的字
     
     [imageView addSubview:_usernameTextField];
     
-    _passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width, 30)];
+    _passwordTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, _usernameTextField.frame.origin.y+_usernameTextField.frame.size.height+5, self.view.frame.size.width-20, 40)];
     [_passwordTextField setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
     _passwordTextField.placeholder = @"请输入不少于6位密码"; //默认显示的字
     _passwordTextField.secureTextEntry = YES;
     [self.view addSubview:_passwordTextField];
     
-    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, 30)];
+    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(10,  _passwordTextField.frame.origin.y+_passwordTextField.frame.size.height+5, self.view.frame.size.width-20, 45)];
     registerButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [registerButton setTitle:@"登录" forState:UIControlStateNormal];
     [imageView addSubview:registerButton];
+    registerButton.titleLabel.font = [UIFont systemFontOfSize:20.0];
     [registerButton addTarget:self action:@selector(doLogin) forControlEvents:UIControlEventTouchUpInside];
 }
 

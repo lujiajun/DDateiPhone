@@ -46,12 +46,13 @@ static DDUser   *dduser;
     UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTap:)];
     [imageView addGestureRecognizer:tapGesture];
     
-    UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(5, imageView.frame.size.height+5, 80, 20)];
+    UILabel *city=[[UILabel alloc]initWithFrame:CGRectMake(5, imageView.frame.size.height+5, 70, 40)];
     city.text=@"所在城市:";
-    city.font=[UIFont fontWithName:@"Helvetica" size:12];
+    city.textAlignment=NSTextAlignmentCenter;
+    city.font=[UIFont fontWithName:@"Helvetica" size:15];
     [self.view addSubview:city];
    
-    _cityvalue = [[UITextField alloc] initWithFrame:CGRectMake(city.frame.origin.x+city.frame.size.width, city.frame.origin.y, 260, 30)];
+    _cityvalue = [[UITextField alloc] initWithFrame:CGRectMake(city.frame.origin.x+city.frame.size.width, city.frame.origin.y, self.view.frame.size.width-80, 40)];
     [_cityvalue setBorderStyle:UITextBorderStyleRoundedRect]; //外框类型
     _cityvalue.userInteractionEnabled=YES;
     _cityvalue.placeholder = @"请输入所在城市"; //默认显示的字
@@ -59,9 +60,10 @@ static DDUser   *dduser;
     _cityvalue.returnKeyType = UIReturnKeyGo;
     _cityvalue.delegate = self;
     
-    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(0, imageView.frame.size.height+city.frame.size.height*2+40, self.view.frame.size.width, 30)];
+    UIButton *registerButton = [[UIButton alloc] initWithFrame:CGRectMake(20, _cityvalue.frame.size.height+_cityvalue.frame.origin.y+20, self.view.frame.size.width-40, 45)];
     registerButton.backgroundColor=RGBACOLOR(232, 79, 60, 1);
     [registerButton setTitle:@"下一步" forState:UIControlStateNormal];
+    registerButton.titleLabel.font = [UIFont systemFontOfSize:20.0];
     [self.view addSubview:registerButton];
     [registerButton addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
 }
